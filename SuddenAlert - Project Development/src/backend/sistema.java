@@ -1,6 +1,6 @@
 package backend;
 
-public class Sistema {
+public class sistema {
 
     public static void main(String[] args) {
         
