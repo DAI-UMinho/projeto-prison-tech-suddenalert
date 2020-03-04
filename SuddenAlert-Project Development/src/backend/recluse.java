@@ -1,6 +1,7 @@
-package back;
+package backend;
+import java.io.Serializable;
 
-public class Recluse implements Serializable{
+public class recluse implements Serializable{
     private int id_recluse;
     private string recluseName;
     private string date_entry;
