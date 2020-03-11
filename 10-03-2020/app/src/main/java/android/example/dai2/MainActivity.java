@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private TextView dist;
     private ImageView imageView;
     int[] imagens ={R.mipmap.aceite};
+    int counter = 3;
+    private Button btnEntrar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,29 +57,50 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
         });
-        btnGetLocation      = findViewById(R.id.btnGetLocation);
-        txLocation      = findViewById(R.id.txLocation);
+        btnGetLocation = findViewById(R.id.btnGetLocation);
+        txLocation = findViewById(R.id.txLocation);
         dist = findViewById(R.id.dist);
-        imageView = (ImageView)findViewById((R.id.imageView12));
+        imageView = (ImageView) findViewById((R.id.imageView12));
 
+        btnEntrar = (Button) findViewById(R.id.btnEntrar);
 
 
         btnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED
                         && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED){
+                        != PackageManager.PERMISSION_GRANTED) {
 
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION}, GPS_REQUEST);
-                }else{
-                        getLocation();
+                } else {
+                    getLocation();
+                }
+            }
+        });
+        btnEntrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnGetLocation.getText().toString().equals(true) &&
+                        btnScan.getText().toString().equals(true)) {
+                    Toast.makeText(getApplicationContext(),
+                            "Redirecting...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "Wrong Credentials", Toast.LENGTH_SHORT).show();
+
+                    counter--;
+
+                    if (counter == 0) {
+                        btnEntrar.setEnabled(false);
+                    }
                 }
             }
         });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -140,11 +163,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             btnScan.setEnabled(true);
             imageView.setImageResource(imagens[0]);
         }
-
-
-
-
     }
+
+
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
