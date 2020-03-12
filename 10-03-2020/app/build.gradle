@@ -39,4 +39,5 @@ dependencies {
     implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.centurylink.mdw.assets:mysql:6.1.26'
 }
