@@ -43,6 +43,7 @@
         android:layout_height="71dp"
         android:backgroundTint="#FFFFFF"
         android:enabled="false"
+        android:onClick="verificarScan"
         android:text="Verificar Scan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.229"

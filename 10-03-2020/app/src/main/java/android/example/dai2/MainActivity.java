@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         btnEntrar = (Button) findViewById(R.id.btnEntrar);
 
 
+
+
         btnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,6 +185,24 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public void entrar (View v) {
-       /* startActivity(new Intent(this, android.example.dai2.Main2Activity.class));*/
+        if (btnGetLocation.getText().toString().equals(true) &&
+                btnScan.getText().toString().equals(true)) {
+            Toast.makeText(getApplicationContext(),
+                    "Redirecting...", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Wrong Credentials", Toast.LENGTH_SHORT).show();
+
+            counter--;
+
+            if (counter == 0) {
+                btnEntrar.setEnabled(false);
+            }
+        }
+    }
+
+    public void verificarScan(View v){
+        
     }
 }
