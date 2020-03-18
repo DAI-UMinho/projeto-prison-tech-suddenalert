@@ -133,6 +133,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public void entrar (View v) {
-        startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
+        startActivity(new Intent(this, android.example.dai2.Registar_Reclusos.class));
     }
 }
