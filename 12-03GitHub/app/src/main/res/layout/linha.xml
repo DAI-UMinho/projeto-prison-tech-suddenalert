@@ -10,14 +10,14 @@
         android:layout_height="101dp"
         android:layout_gravity="right"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="-2dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="5dp">
 
         <ImageView
-            android:id="@+id/imagem"
-            android:layout_width="82dp"
-            android:layout_marginTop="15dp"
-            android:layout_height="77dp"
+            android:id="@+id/imagemRec"
+            android:layout_width="60dp"
+            android:layout_height="82dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/ic_person_black_24dp" />
 
         <LinearLayout
@@ -40,7 +40,7 @@
                 tools:layout_editor_absoluteY="-2dp">
 
                 <TextView
-                    android:id="@+id/nome"
+                    android:id="@+id/nomeLRec"
                     android:layout_width="195dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
@@ -54,7 +54,7 @@
                     app:layout_constraintVertical_bias="0.785" />
 
                 <TextView
-                    android:id="@+id/doencas"
+                    android:id="@+id/doencasLRec"
                     android:layout_width="193dp"
                     android:layout_height="wrap_content"
                     android:text="Doenças"
@@ -68,7 +68,7 @@
                     app:layout_constraintVertical_bias="0.785" />
 
                 <TextView
-                    android:id="@+id/ala"
+                    android:id="@+id/alaLRec"
                     android:layout_width="193dp"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
@@ -82,7 +82,7 @@
                     app:layout_constraintVertical_bias="0.785" />
 
                 <TextView
-                    android:id="@+id/piso"
+                    android:id="@+id/pisoLRec"
                     android:layout_width="191dp"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"

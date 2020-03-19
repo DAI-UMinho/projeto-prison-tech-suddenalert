@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class ListarEntidades extends ArrayAdapter<Entidades> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.linhaent, parent, false);
-        TextView nome = (TextView) rowView.findViewById(R.id.nome);
+        TextView nome = (TextView) rowView.findViewById(R.id.nomeLRec);
         TextView email = (TextView) rowView.findViewById(R.id.email);
         TextView funcao = (TextView) rowView.findViewById(R.id.funcao);
         TextView pontos = (TextView) rowView.findViewById(R.id.pontos) ;

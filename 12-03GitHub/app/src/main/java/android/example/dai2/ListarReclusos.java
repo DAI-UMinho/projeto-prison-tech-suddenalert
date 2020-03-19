@@ -24,11 +24,11 @@ public class ListarReclusos extends ArrayAdapter<Reclusos> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.linha, parent, false);
-        TextView nomeRecluso = (TextView) rowView.findViewById(R.id.nome);
-        TextView ala = (TextView) rowView.findViewById(R.id.ala);
-        TextView doenca = (TextView) rowView.findViewById(R.id.doencas);
-        TextView piso = (TextView) rowView.findViewById(R.id.piso);
-        ImageView imagem = (ImageView) rowView.findViewById(R.id.imagem);
+        TextView nomeRecluso = (TextView) rowView.findViewById(R.id.nomeLRec);
+        TextView ala = (TextView) rowView.findViewById(R.id.alaLRec);
+        TextView doenca = (TextView) rowView.findViewById(R.id.doencasLRec);
+        TextView piso = (TextView) rowView.findViewById(R.id.pisoLRec);
+        ImageView imagem = (ImageView) rowView.findViewById(R.id.imagemRec);
 
 
         nomeRecluso.setText(elementos.get(position).getNome());

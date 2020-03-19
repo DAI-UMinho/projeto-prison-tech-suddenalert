@@ -1,6 +1,5 @@
 package android.example.dai2;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -31,10 +30,12 @@ public class Registar_Reclusos extends AppCompatActivity {
     private Button galeria;
     private final int PERMISSAO_REQUEST = 2;
     EditText nome, nascimento, piso, ala, doencas, entrada;
-    private static final String BD_URL = "jdbc:mysql://remotemysql.com:3306/e2PQBa5bVy";
-    private static final String USER = "e2PQBa5bVy";
-    private static final String PASS = "N7yuiLx3rm";
-
+    //private static final String BD_URL = "jdbc:mysql://remotemysql.com:3306/e2PQBa5bVy";
+    //private static final String USER = "e2PQBa5bVy";
+    //private static final String PASS = "N7yuiLx3rm";
+    //private static final String BD_URL = "jdbc:mysql://193.136.11.180:3306/suddenalert";
+   // private static final String USER = "suddenalertuser";
+    //private static final String PASS = "Suddenalert.0";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -120,16 +121,17 @@ public class Registar_Reclusos extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection(BD_URL, USER, PASS);
+                Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
                 if (conn == null){
                     msg = "Connection goes wrong";
                 } else {
-                    // String query1 = "INSERT INTO `Recluse` (``) VALUES ('"+text+"')";
-                    String query = "INSERT INTO `Recluse` (`id_recluse`, `name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`) VALUES ('4526', '"+name+"', '"+entrad+"', '"+nasciment+"', '"+pisoo+"', '"+alaa+"', '"+doenca+"');";
+                     //String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `date_left`) VALUES ('"+name+"', '"+entrad+"', '"+nasciment+"')";
+                    String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`) VALUES ('"+name+"', '"+entrad+"', '"+nasciment+"', '"+pisoo+"', '"+alaa+"', '"+doenca+"');";
                     Statement stmt = conn.createStatement();
                     stmt.executeUpdate(query);
                     msg = "Inserting Successfull!!!!";
                     System.out.println("ENTROU");
+
                 }
                 conn.close();
             } catch (Exception e){
