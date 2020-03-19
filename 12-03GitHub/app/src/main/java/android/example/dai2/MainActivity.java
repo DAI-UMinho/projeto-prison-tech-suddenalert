@@ -16,6 +16,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private TextView txLocation;
     private final int GPS_REQUEST = 200;
     private LocationManager locationManager;
+    private ImageView imageView;
+    int[] imagens = {R.mipmap.aceite};
+    private Button btnEntrar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +51,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
         });
-        btnGetLocation      = findViewById(R.id.btnGetLocation);
-        txLocation      = findViewById(R.id.txLocation);
+        btnGetLocation = findViewById(R.id.btnGetLocation);
+        txLocation = findViewById(R.id.txLocation);
+        imageView = (ImageView) findViewById((R.id.imageView12));
+        btnEntrar = (Button) findViewById(R.id.entrar);
 
         btnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     getLocation();
                 }
 
-            }  });
+            }
+        });
     }
 
     @Override
@@ -78,15 +86,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 construtorAlerta.setMessage(result.getContents());
                 AlertDialog meuAlerta = construtorAlerta.create();
                 meuAlerta.show();*/
-            }else{
+            } else {
                 alert("Scan Cancelado");
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-    private void alert(String msg){
-        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+
+    private void alert(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -102,10 +111,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     private void getLocation() {
-        try{
+        try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
-        }catch (SecurityException e){
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
     }
@@ -113,7 +122,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(Location location) {
 
-        txLocation.setText("Lat: " + location.getLatitude()+"\nLng: " + location.getLongitude());
+        txLocation.setText("Lat: " + location.getLatitude() + "\nLng: " + location.getLongitude());
+        double latitude, longitude, longitudePrisao, latitudePrisao, distancia;
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        longitudePrisao = 41.58;
+        latitudePrisao = -8.46;
+        distancia = Math.sqrt((longitudePrisao - longitude) * (longitudePrisao - longitude) + (latitudePrisao - latitude) * (latitudePrisao - latitude));
+        String stringdouble = Double.toString(distancia);
+        if (distancia < 9999.00) {
+            btnScan.setEnabled(true);
+            imageView.setImageResource(imagens[0]);
+        }
 
     }
 
@@ -132,7 +152,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     }
 
-    public void entrar (View v) {
-        startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
+    public void entrar(View v) {
+        if (btnScan.isEnabled()) {
+            startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Por favor leia o seu cartao QR", Toast.LENGTH_SHORT).show();
+        }
     }
 }
