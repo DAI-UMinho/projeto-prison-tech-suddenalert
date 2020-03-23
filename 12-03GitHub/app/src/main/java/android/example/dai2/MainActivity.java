@@ -7,31 +7,51 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONObject;
+
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements LocationListener {
-    Button btnScan;
+    private Button btnScan;
     private Button btnGetLocation;
     private TextView txLocation;
     private final int GPS_REQUEST = 200;
     private LocationManager locationManager;
     private ImageView imageView;
     int[] imagens = {R.mipmap.aceite};
-    private Button btnEntrar;
+    private String scanValor;
+    private boolean sucess = false;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_main);
         btnScan = (Button) findViewById(R.id.btnScan);
         final Activity activity = this;
+
+
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         btnGetLocation = findViewById(R.id.btnGetLocation);
         txLocation = findViewById(R.id.txLocation);
         imageView = (ImageView) findViewById((R.id.imageView12));
-        btnEntrar = (Button) findViewById(R.id.entrar);
+
 
         btnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +94,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
             }
         });
+
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        scanValor = result.getContents();
         if (result != null) {
             if (result.getContents() != null) {
-                alert(result.getContents());
+               /* Login login = new Login();
+                login.execute();*/
          /*       AlertDialog.Builder construtorAlerta;
                 construtorAlerta = new AlertDialog.Builder(this);
                 construtorAlerta.setTitle("O seu nome é...");
@@ -133,9 +159,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (distancia < 9999.00) {
             btnScan.setEnabled(true);
             imageView.setImageResource(imagens[0]);
+            Login login = new Login();
+            login.execute();
         }
 
     }
+
+
+
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -153,11 +184,74 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public void entrar(View v) {
-        if (btnScan.isEnabled()) {
+        if (sucess == true) {
             startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
         } else {
             Toast.makeText(getApplicationContext(),
                     "Por favor leia o seu cartao QR", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private class Login extends AsyncTask<String, String, String> {
+        String msg = "Profile não encontrado";
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(MainActivity.this, "Synchronising", "Searching for user...", true);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            System.out.println("Não");
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (conn == null) {
+                    sucess = false;
+                } else {
+                    System.out.println(scanValor);
+                    //String query = "SELECT scan, name, location, color, id_type, points FROM Profile WHERE scan='"+scanValor+"';";
+                    String query = "SELECT name FROM Profile WHERE scan like '"+scanValor+"';";
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    String name = rs.getString("name");
+                    System.out.println(name);
+                    /*if (rs != null) {
+                            try {
+                                perfilAtivo.add(new Profile(rs.getString("scan"), rs.getString("name"), rs.getString("location"), rs.getString("color"), rs.getInt("id_type"), rs.getInt("points")));
+                                System.out.println(perfilAtivo);
+                            } catch (Exception ex){
+                                ex.printStackTrace();
+                            }
+
+                        System.out.println("MERDAAAA");
+                        msg = "Found";
+                        sucess = true;
+                    } else {
+                        msg = "No Data Found";
+                        sucess = false;
+                        System.out.println("MERDAAAA22222");
+                    }*/
+                    if (rs.getString("name").equals(null)){
+                        sucess = false;
+                    } else {
+                        System.out.println("AInda nao deu");
+                        sucess = true;
+                    }
+                    System.out.println(sucess);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                sucess = false;
+            }
+            return msg;
+        }
+    }
 }
+
