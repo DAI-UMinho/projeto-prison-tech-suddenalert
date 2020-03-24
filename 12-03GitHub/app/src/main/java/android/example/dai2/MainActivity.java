@@ -37,6 +37,7 @@ import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -104,14 +105,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         scanValor = result.getContents();
         if (result != null) {
             if (result.getContents() != null) {
-               /* Login login = new Login();
-                login.execute();*/
-         /*       AlertDialog.Builder construtorAlerta;
-                construtorAlerta = new AlertDialog.Builder(this);
-                construtorAlerta.setTitle("O seu nome é...");
-                construtorAlerta.setMessage(result.getContents());
-                AlertDialog meuAlerta = construtorAlerta.create();
-                meuAlerta.show();*/
+                Login login = new Login();
+                login.execute();
             } else {
                 alert("Scan Cancelado");
             }
@@ -159,8 +154,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (distancia < 9999.00) {
             btnScan.setEnabled(true);
             imageView.setImageResource(imagens[0]);
-            Login login = new Login();
-            login.execute();
+
         }
 
     }
@@ -208,45 +202,29 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         @Override
         protected String doInBackground(String... strings) {
-            System.out.println("Não");
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    System.out.println(scanValor);
                     //String query = "SELECT scan, name, location, color, id_type, points FROM Profile WHERE scan='"+scanValor+"';";
                     String query = "SELECT name FROM Profile WHERE scan like '"+scanValor+"';";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
-                    String name = rs.getString("name");
-                    System.out.println(name);
-                    /*if (rs != null) {
-                            try {
-                                perfilAtivo.add(new Profile(rs.getString("scan"), rs.getString("name"), rs.getString("location"), rs.getString("color"), rs.getInt("id_type"), rs.getInt("points")));
-                                System.out.println(perfilAtivo);
-                            } catch (Exception ex){
-                                ex.printStackTrace();
-                            }
-
-                        System.out.println("MERDAAAA");
-                        msg = "Found";
-                        sucess = true;
-                    } else {
-                        msg = "No Data Found";
-                        sucess = false;
-                        System.out.println("MERDAAAA22222");
-                    }*/
-                    if (rs.getString("name").equals(null)){
-                        sucess = false;
-                    } else {
-                        System.out.println("AInda nao deu");
-                        sucess = true;
+                    while (rs.next()) {
+                        String name = rs.getString("name");
+                        if (name.equals(null)) {
+                            sucess = false;
+                        } else {
+                            msg = "Utilizador encontrado!";
+                            sucess = true;
+                        }
+                        System.out.println(sucess);
                     }
-                    System.out.println(sucess);
+                    rs.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
                 sucess = false;
             }
