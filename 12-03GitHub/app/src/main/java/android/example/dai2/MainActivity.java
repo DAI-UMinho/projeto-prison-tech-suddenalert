@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
@@ -17,6 +18,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,6 +42,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
     private Button btnScan;
@@ -47,10 +51,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private TextView txLocation;
     private final int GPS_REQUEST = 200;
     private LocationManager locationManager;
-    private ImageView imageView;
+    private ImageView imageView, imageView2;
     int[] imagens = {R.mipmap.aceite};
     private String scanValor;
     private boolean sucess = false;
+    private String latitudePris;
+    private String longitudePris;
+    private String coordenadas;
+
 
 
 
@@ -77,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         btnGetLocation = findViewById(R.id.btnGetLocation);
         txLocation = findViewById(R.id.txLocation);
         imageView = (ImageView) findViewById((R.id.imageView12));
-
+        imageView2 = (ImageView) findViewById(R.id.imageView11);
 
         btnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (result.getContents() != null) {
                 Login login = new Login();
                 login.execute();
+                btnGetLocation.setEnabled(true);
             } else {
                 alert("Scan Cancelado");
             }
@@ -147,12 +156,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         double latitude, longitude, longitudePrisao, latitudePrisao, distancia;
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        longitudePrisao = 41.58;
-        latitudePrisao = -8.46;
+        longitudePrisao = Double.parseDouble(longitudePris);
+        latitudePrisao = Double.parseDouble(latitudePris);
+
         distancia = Math.sqrt((longitudePrisao - longitude) * (longitudePrisao - longitude) + (latitudePrisao - latitude) * (latitudePrisao - latitude));
         String stringdouble = Double.toString(distancia);
         if (distancia < 9999.00) {
-            btnScan.setEnabled(true);
             imageView.setImageResource(imagens[0]);
 
         }
@@ -190,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         String msg = "Profile não encontrado";
         ProgressDialog progressDialog;
 
+
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
@@ -200,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             progressDialog = ProgressDialog.show(MainActivity.this, "Synchronising", "Searching for user...", true);
         }
 
+        @SuppressLint("WrongThread")
         @Override
         protected String doInBackground(String... strings) {
             try {
@@ -209,18 +220,24 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     sucess = false;
                 } else {
                     //String query = "SELECT scan, name, location, color, id_type, points FROM Profile WHERE scan='"+scanValor+"';";
-                    String query = "SELECT name FROM Profile WHERE scan like '"+scanValor+"';";
+                    String query = "SELECT name, location FROM Profile WHERE scan like '"+scanValor+"';";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         String name = rs.getString("name");
+                        coordenadas = rs.getString("location");
+                        String[] points = coordenadas.split("\\s*[,]\\s*");
+                        longitudePris = points[0];
+                        latitudePris = points[1];
                         if (name.equals(null)) {
                             sucess = false;
                         } else {
                             msg = "Utilizador encontrado!";
                             sucess = true;
+                            imageView2.setImageResource(imagens[0]);
                         }
                         System.out.println(sucess);
+
                     }
                     rs.close();
                 }
