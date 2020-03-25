@@ -252,9 +252,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             return msg;
         }
     }
+
+    /**Este método converte valores em graus para radianos
+     * @param graus valor em graus a ser convertido
+     * @return double valor em radianos
+     * */
     private static double grausParaRadianos(double graus) {
         return graus * Math.PI / 180;
     }
+    /**Dados dois pontos (coordenadas geográficas) calcula a distância entre eles em km
+     * @param lat1 latitude ponto a
+     * @param lon1 longitude ponto a
+     * @param lat2 latitude ponto b
+     * @param lon2 longitude ponto b
+     * @return double distancia entre pontos em Km
+     * */
     private static double getDistanciaEntrePontosEmKm(double lat1, double lon1, double lat2, double lon2) {
         int raioTerraKm = 6371;
 
