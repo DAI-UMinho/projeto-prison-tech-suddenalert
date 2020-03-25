@@ -1,16 +1,27 @@
 package android.example.dai2;
 
-public class Profile {
-    private String scan, name, localation, color;
-    private int type, points;
+import java.util.Date;
 
-    public Profile(String scan, String name, String localation, String color, int type, int points) {
+public class Profile {
+    private String scan, name, localation;
+    private int type, points;
+    private Date nascimento;
+
+   /* public Profile(String scan, String name, String localation, int type, int points, Date nascimento) {
         this.scan = scan;
         this.name = name;
         this.localation = localation;
-        this.color = color;
         this.type = type;
         this.points = points;
+        this.nascimento = nascimento;
+    }*/
+
+    public Date getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(Date nascimento) {
+        this.nascimento = nascimento;
     }
 
     public String getScan() {
@@ -37,13 +48,6 @@ public class Profile {
         this.localation = localation;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 
     public int getType() {
         return type;

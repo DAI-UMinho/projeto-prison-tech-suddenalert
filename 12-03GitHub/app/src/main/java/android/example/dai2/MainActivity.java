@@ -42,6 +42,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,13 +54,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private LocationManager locationManager;
     private ImageView imageView, imageView2;
     int[] imagens = {R.mipmap.aceite};
-    private String scanValor;
+    public static String scanValor;
     private boolean sucess = false;
     private boolean isSucess = false;
     private String latitudePris;
     private String longitudePris;
     private String coordenadas;
-
 
 
 
@@ -231,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         String name = rs.getString("name");
                         coordenadas = rs.getString("location");
                         String[] points = coordenadas.split("\\s*[,]\\s*");
-                        longitudePris = points[0];
-                        latitudePris = points[1];
+                        latitudePris = points[0];
+                        longitudePris = points[1];
                         if (name.equals(null)) {
                             sucess = false;
                         } else {

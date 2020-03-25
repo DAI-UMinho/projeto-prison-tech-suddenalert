@@ -82,7 +82,7 @@
         app:srcCompat="@mipmap/pp_perfil_foreground" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/pontosPerfil"
         android:layout_width="140dp"
         android:layout_height="67dp"
         android:background="#eeeeee"
