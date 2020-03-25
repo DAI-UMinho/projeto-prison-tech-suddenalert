@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     int[] imagens = {R.mipmap.aceite};
     private String scanValor;
     private boolean sucess = false;
+    private boolean isSucess = false;
     private String latitudePris;
     private String longitudePris;
     private String coordenadas;
@@ -158,11 +159,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         longitude = location.getLongitude();
         longitudePrisao = Double.parseDouble(longitudePris);
         latitudePrisao = Double.parseDouble(latitudePris);
-
-        distancia = Math.sqrt((longitudePrisao - longitude) * (longitudePrisao - longitude) + (latitudePrisao - latitude) * (latitudePrisao - latitude));
-        String stringdouble = Double.toString(distancia);
-        if (distancia < 9999.00) {
+        if (getDistanciaEntrePontosEmKm(latitude, longitude, latitudePrisao, longitudePrisao) < 999999999.00) {
             imageView.setImageResource(imagens[0]);
+            isSucess = true;
+        } else {
+            alert("Localização inválida");
 
         }
 
@@ -187,11 +188,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public void entrar(View v) {
-        if (sucess == true) {
+        if (sucess == true && isSucess==true) {
             startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
         } else {
-            Toast.makeText(getApplicationContext(),
-                    "Por favor leia o seu cartao QR", Toast.LENGTH_SHORT).show();
+            if (sucess==false) {
+                Toast.makeText(getApplicationContext(), "Erro na Procura de Utilizador!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Erro na Localização de Utilizador!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -247,6 +251,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
             return msg;
         }
+    }
+    private static double grausParaRadianos(double graus) {
+        return graus * Math.PI / 180;
+    }
+    private static double getDistanciaEntrePontosEmKm(double lat1, double lon1, double lat2, double lon2) {
+        int raioTerraKm = 6371;
+
+        double dLat = grausParaRadianos(lat2-lat1);
+        double dLon = grausParaRadianos(lon2-lon1);
+
+        lat1 = grausParaRadianos(lat1);
+        lat2 = grausParaRadianos(lat2);
+
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        double distanciaEntrePontosKm= raioTerraKm * c;
+        return distanciaEntrePontosKm;
     }
 }
 
