@@ -30,12 +30,7 @@ public class Registar_Reclusos extends AppCompatActivity {
     private Button galeria;
     private final int PERMISSAO_REQUEST = 2;
     EditText nome, nascimento, piso, ala, doencas, entrada;
-    //private static final String BD_URL = "jdbc:mysql://remotemysql.com:3306/e2PQBa5bVy";
-    //private static final String USER = "e2PQBa5bVy";
-    //private static final String PASS = "N7yuiLx3rm";
-    //private static final String BD_URL = "jdbc:mysql://193.136.11.180:3306/suddenalert";
-   // private static final String USER = "suddenalertuser";
-    //private static final String PASS = "Suddenalert.0";
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

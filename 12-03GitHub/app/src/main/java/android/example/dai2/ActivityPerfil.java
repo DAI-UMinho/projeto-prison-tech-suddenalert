@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 public class ActivityPerfil extends AppCompatActivity {
     TextView localidade;
     TextView tipo, nome, nascimento, pontos;
-   private String scan = MainActivity.scanValor;
+     private String scan = MainActivity.scanValor;
      private String localizacao, name, typeUser, nascimento1;
     int tipo1, points;
 

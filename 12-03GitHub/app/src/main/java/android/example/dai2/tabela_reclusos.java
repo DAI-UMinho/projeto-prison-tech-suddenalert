@@ -180,7 +180,7 @@ public class tabela_reclusos extends AppCompatActivity {
                 viewHolder.doencaa.setText(recluseList.get(position).getDoencaRec() + "");
                 viewHolder.alaa.setText(recluseList.get(position).getAlaRec() + "");
                 viewHolder.pisoo.setText(recluseList.get(position).getPisoRec() + "");
-                Picasso.with(context).load(recluseList.get(position).getImg()).into(viewHolder.imageView);
+                Picasso.get().load(recluseList.get(position).getImg()).into(viewHolder.imageView);
 
                 return rowView;
 

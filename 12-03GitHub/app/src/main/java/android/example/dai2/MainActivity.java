@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private String latitudePris;
     private String longitudePris;
     private String coordenadas;
+    private ProgressDialog progressDialog1;
 
 
 
@@ -116,9 +117,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (result.getContents() != null) {
                 Login login = new Login();
                 login.execute();
-                btnGetLocation.setEnabled(true);
+               // btnGetLocation.setEnabled(true);
             } else {
                 alert("Scan Cancelado");
+            }
+            if (sucess == true) {
+                Toast.makeText(getApplicationContext(), "Utilizador encontrado!", Toast.LENGTH_SHORT).show();
+                btnGetLocation.setEnabled(true);
+                imageView2.setImageResource(imagens[0]);
+            } else {
+                Toast.makeText(getApplicationContext(), "Utilizador não encontrado!", Toast.LENGTH_LONG).show();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -152,19 +160,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(Location location) {
+        if (sucess == true) {
+            txLocation.setText("Lat: " + location.getLatitude() + "\nLng: " + location.getLongitude());
+            double latitude, longitude, longitudePrisao, latitudePrisao, distancia;
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            longitudePrisao = Double.parseDouble(longitudePris);
+            latitudePrisao = Double.parseDouble(latitudePris);
+            if (getDistanciaEntrePontosEmKm(latitude, longitude, latitudePrisao, longitudePrisao) < 999999999.00) {
+                imageView.setImageResource(imagens[0]);
+                isSucess = true;
+            } else {
+                alert("Localização inválida");
 
-        txLocation.setText("Lat: " + location.getLatitude() + "\nLng: " + location.getLongitude());
-        double latitude, longitude, longitudePrisao, latitudePrisao, distancia;
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        longitudePrisao = Double.parseDouble(longitudePris);
-        latitudePrisao = Double.parseDouble(latitudePris);
-        if (getDistanciaEntrePontosEmKm(latitude, longitude, latitudePrisao, longitudePrisao) < 999999999.00) {
-            imageView.setImageResource(imagens[0]);
-            isSucess = true;
+            }
         } else {
-            alert("Localização inválida");
-
+            Toast.makeText(getApplicationContext(), "Erro na Procura de Utilizador!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -214,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             progressDialog = ProgressDialog.show(MainActivity.this, "Synchronising", "Searching for user...", true);
         }
 
-        @SuppressLint("WrongThread")
+
         @Override
         protected String doInBackground(String... strings) {
             try {
@@ -229,16 +240,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         String name = rs.getString("name");
+                        System.out.println(name);
+
                         coordenadas = rs.getString("location");
                         String[] points = coordenadas.split("\\s*[,]\\s*");
                         latitudePris = points[0];
                         longitudePris = points[1];
-                        if (name.equals(null)) {
+                        System.out.println(latitudePris);
+                        if (name.equals(null) || coordenadas.equals(false)) {
                             sucess = false;
                         } else {
                             msg = "Utilizador encontrado!";
                             sucess = true;
-                            imageView2.setImageResource(imagens[0]);
                         }
                         System.out.println(sucess);
 
