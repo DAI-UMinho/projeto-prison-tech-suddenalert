@@ -117,16 +117,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (result.getContents() != null) {
                 Login login = new Login();
                 login.execute();
-               // btnGetLocation.setEnabled(true);
+                if (sucess == true) {
+                    Toast.makeText(getApplicationContext(), "Utilizador encontrado!", Toast.LENGTH_SHORT).show();
+                    btnGetLocation.setEnabled(true);
+                    imageView2.setImageResource(imagens[0]);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Utilizador não encontrado!", Toast.LENGTH_LONG).show();
+                }
             } else {
-                alert("Scan Cancelado");
-            }
-            if (sucess == true) {
-                Toast.makeText(getApplicationContext(), "Utilizador encontrado!", Toast.LENGTH_SHORT).show();
-                btnGetLocation.setEnabled(true);
-                imageView2.setImageResource(imagens[0]);
-            } else {
-                Toast.makeText(getApplicationContext(), "Utilizador não encontrado!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Scan Cancelado", Toast.LENGTH_SHORT).show();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

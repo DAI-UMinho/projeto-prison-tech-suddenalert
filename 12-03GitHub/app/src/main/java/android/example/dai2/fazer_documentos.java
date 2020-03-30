@@ -46,7 +46,7 @@ public class fazer_documentos extends AppCompatActivity {
         } else {
             CriarRelatorio criarRelatorio = new CriarRelatorio();
             criarRelatorio.execute();
-            if (sucess = true) {
+            if (sucess == true) {
                 Toast.makeText(this, "Relatório criado com sucesso!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
             } else {
@@ -115,7 +115,7 @@ public class fazer_documentos extends AppCompatActivity {
         String scan = MainActivity.scanValor;
         //String identificacao1 = identificacao.getText().toString();
         // String relatorio = relatorioo.getText().toString();
-        int valor;
+        int valor = 0;
 
 
 
@@ -134,21 +134,24 @@ public class fazer_documentos extends AppCompatActivity {
                     ResultSet resultSet1 = statement1.executeQuery(query1);
                     while (resultSet1.next()) {
                         valor = resultSet1.getInt("COUNT(1)");
+                      //  System.out.println(valor);
+
+                        if (valor == 1) {
+                            System.out.println(valor);
+                            String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + t_identific + "');";
+                            Statement statement = connection.createStatement();
+                            statement.executeUpdate(query);
+                            msg = "Inserido com sucesso";
+                            sucess = true;
+                            // prenchido = true;
+                            System.out.println(sucess);
+                            //  System.out.println(prenchido);
+                        } else {
+                            sucess = false;
+                            msg = "Identificação de Recluso inválida!";
+                        }
+                        //   }
                     }
-                    if (valor > 0 && valor < 2) {
-                        String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + t_identific + "');";
-                        Statement statement = connection.createStatement();
-                        statement.executeUpdate(query);
-                        msg = "Inserido com sucesso";
-                        sucess = true;
-                        // prenchido = true;
-                        System.out.println(sucess);
-                        //  System.out.println(prenchido);
-                    } else {
-                        sucess = false;
-                        msg = "Identificação de Recluso inválida!";
-                    }
-                    //   }
                 }
 
                 connection.close();
