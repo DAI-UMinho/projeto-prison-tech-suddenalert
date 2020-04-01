@@ -49,10 +49,10 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="195dp"
-        android:layout_height="199dp"
+        android:layout_width="197dp"
+        android:layout_height="170dp"
         android:layout_marginStart="216dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="112dp"
         android:onClick="entrarhor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

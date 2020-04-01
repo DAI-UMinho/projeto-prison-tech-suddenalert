@@ -25,6 +25,8 @@ public class fazer_documentos extends AppCompatActivity {
     private boolean sucess = false, prenchido = true;
     Button regRelat;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,54 +48,26 @@ public class fazer_documentos extends AppCompatActivity {
         } else {
             CriarRelatorio criarRelatorio = new CriarRelatorio();
             criarRelatorio.execute();
+<<<<<<< HEAD
+            try {
+                Thread.sleep(1000);
+            }
+            catch (Exception e){
+                System.out.print("erro");
+            }
+
+=======
+>>>>>>> d89ec9efa3f623386982877e3b57463687788efd
             if (sucess == true) {
                 Toast.makeText(this, "Relatório criado com sucesso!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
+
             } else {
                 Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
             }
         }
     }
-   /* public void onRegisterRelat(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
-            String msg;
-            int valor=0;
-            if (connection == null){
-                sucess = false;
-                msg = "Não foi possível realizar connection";
-            } else {
-                //if (prenchido == true) {
-                String query1 = "SELECT COUNT(1) FROM Recluse WHERE id_recluse like '" + t_identific + "';";
-                Statement statement1 = connection.createStatement();
-                ResultSet resultSet1 = statement1.executeQuery(query1);
-                while (resultSet1.next()) {
-                    valor = resultSet1.getInt("COUNT(1)");
-                }
-                if (valor > 0 && valor < 2) {
-                    String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`) VALUES ('" + t_relatorio + "', '" + MainActivity.scanValor + "', '" + t_identific + "');";
-                    Statement statement = connection.createStatement();
-                    statement.executeUpdate(query);
-                    msg = "Inserido com sucesso";
-                    sucess = true;
-                    // prenchido = true;
-                    System.out.println(sucess);
-                    //  System.out.println(prenchido);
-                } else {
-                    Toast.makeText(this, "IDentifiacação nao encontrada!", Toast.LENGTH_SHORT).show();
-                    sucess = false;
-                    msg = "Identificação de Recluso inválida!";
-                }
-                //   }
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-    }*/
     public  boolean validate(){
         boolean valid = true;
         if (t_identific.isEmpty()){
@@ -134,6 +108,26 @@ public class fazer_documentos extends AppCompatActivity {
                     ResultSet resultSet1 = statement1.executeQuery(query1);
                     while (resultSet1.next()) {
                         valor = resultSet1.getInt("COUNT(1)");
+<<<<<<< HEAD
+                        System.out.println(valor);
+
+                    }
+                    if (valor == 1 ) {
+                        String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + t_identific + "');";
+                        Statement statement = connection.createStatement();
+                        statement.executeUpdate(query);
+                        msg = "Inserido com sucesso";
+                        sucess = true;
+                        // prenchido = true;
+                        System.out.println(sucess);
+                        //  System.out.println(prenchido);
+
+                    } else {
+                        sucess = false;
+                        msg = "Identificação de Recluso inválida!";
+                    }
+                    //   }
+=======
                       //  System.out.println(valor);
 
                         if (valor == 1) {
@@ -152,6 +146,7 @@ public class fazer_documentos extends AppCompatActivity {
                         }
                         //   }
                     }
+>>>>>>> d89ec9efa3f623386982877e3b57463687788efd
                 }
 
                 connection.close();
