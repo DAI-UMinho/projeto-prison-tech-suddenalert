@@ -117,6 +117,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (result.getContents() != null) {
                 Login login = new Login();
                 login.execute();
+                try {
+                    Thread.sleep(500);
+                }
+                catch (Exception e){
+                    System.out.print("erro");
+                }
                 if (sucess == true) {
                     Toast.makeText(getApplicationContext(), "Utilizador encontrado!", Toast.LENGTH_SHORT).show();
                     btnGetLocation.setEnabled(true);
