@@ -48,10 +48,7 @@ public class fazer_documentos extends AppCompatActivity {
         } else {
             CriarRelatorio criarRelatorio = new CriarRelatorio();
             criarRelatorio.execute();
-<<<<<<< HEAD
 
-=======
->>>>>>> bdd1464430b97b75f00a69ce67c8827ad1ba9896
             try {
                 Thread.sleep(1000);
             }
@@ -109,7 +106,6 @@ public class fazer_documentos extends AppCompatActivity {
                     ResultSet resultSet1 = statement1.executeQuery(query1);
                     while (resultSet1.next()) {
                         valor = resultSet1.getInt("COUNT(1)");
-<<<<<<< HEAD
 
                         System.out.println(valor);
 
@@ -134,27 +130,6 @@ public class fazer_documentos extends AppCompatActivity {
 
                         //   }
                     }
-
-=======
-                        System.out.println(valor);
-
-                        if (valor == 1) {
-                            String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + t_identific + "');";
-                            Statement statement = connection.createStatement();
-                            statement.executeUpdate(query);
-                            msg = "Inserido com sucesso";
-                            sucess = true;
-                            // prenchido = true;
-                            System.out.println("deuuuuuu");
-                            //  System.out.println(prenchido);
-
-                        } else {
-                            sucess = false;
-                            msg = "Identificação de Recluso inválida!";
-                        }
-                    }
-                }
->>>>>>> bdd1464430b97b75f00a69ce67c8827ad1ba9896
 
                 connection.close();
             } catch (Exception e){
