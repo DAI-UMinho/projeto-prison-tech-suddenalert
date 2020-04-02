@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private String latitudePris;
     private String longitudePris;
     private String coordenadas;
-    private ProgressDialog progressDialog1;
+
 
 
 
@@ -239,26 +239,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    //String query = "SELECT scan, name, location, color, id_type, points FROM Profile WHERE scan='"+scanValor+"';";
                     String query = "SELECT name, location FROM Profile WHERE scan like '"+scanValor+"';";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         String name = rs.getString("name");
-                        System.out.println(name);
-
                         coordenadas = rs.getString("location");
                         String[] points = coordenadas.split("\\s*[,]\\s*");
                         latitudePris = points[0];
                         longitudePris = points[1];
-                        System.out.println(latitudePris);
                         if (name.equals(null) || coordenadas.equals(false)) {
                             sucess = false;
                         } else {
                             msg = "Utilizador encontrado!";
                             sucess = true;
                         }
-                        System.out.println(sucess);
 
                     }
                     rs.close();

@@ -50,7 +50,7 @@ public class fazer_documentos extends AppCompatActivity {
             criarRelatorio.execute();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }
             catch (Exception e){
                 System.out.print("erro");
