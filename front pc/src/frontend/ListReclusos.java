@@ -4,13 +4,16 @@
  * and open the template in the editor.
  */
 package frontend;
-
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static javax.swing.text.html.HTML.Tag.I;
 
@@ -20,6 +23,42 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class ListReclusos extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
+    
+       public ArrayList<Recluso> reclusoList(){
+        ArrayList<Recluso> reclusosList = new ArrayList<>();
+         try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1="SELECT * FROM Recluse";
+            Statement st= con.createStatement();
+            ResultSet rs= st.executeQuery(query1);
+            Recluso recluso;
+            while(rs.next()){
+                recluso = new Recluso(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("wing"), rs.getString("floor"), rs.getString("disease"));
+                reclusosList.add(recluso);
+            }
+         }
+         catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+         return reclusosList;
+    }
+       public void show_recluso() {
+           ArrayList<Recluso> list = reclusoList();
+           DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
+           Object[] row = new Object[6];
+            for(int i=0;i<list.size();i++){
+            row[0]=list.get(i).getid();
+            row[1]=list.get(i).getnome();
+            row[2]=list.get(i).getala();
+            row[3]=list.get(i).getpiso();
+            row[4]=list.get(i).getdoenças();
+            model.addRow(row);
+        }
+       }
     
     /**
      * Creates new form Reclusos
@@ -32,8 +71,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         Image img2 = img1.getScaledInstance(jButton1.getWidth(), jButton1.getWidth(), Image.SCALE_SMOOTH);
         ImageIcon i = new ImageIcon(img2);
         jButton1.setIcon(i);*/
+        show_recluso();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,7 +89,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable_Display_Reclusos = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -100,16 +140,16 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_Display_Reclusos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"João Silva", "233", "2", "1", null}
+
             },
             new String [] {
-                "Nome", "Número do recluso", "Ala", "Piso", "Doenças"
+                "Número", "Nome", "Ala", "Piso", "Doenças"
             }
         ));
-        jTable1.setVerifyInputWhenFocusTarget(false);
-        jScrollPane2.setViewportView(jTable1);
+        jTable_Display_Reclusos.setVerifyInputWhenFocusTarget(false);
+        jScrollPane2.setViewportView(jTable_Display_Reclusos);
 
         jTextField1.setInheritsPopupMenu(true);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -422,12 +462,12 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             .addComponent(doc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(hor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(ent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
             .addComponent(lrecl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(recl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(sidepane9Layout.createSequentialGroup()
                 .addGap(135, 135, 135)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
             .addGroup(sidepane9Layout.createSequentialGroup()
                 .addGroup(sidepane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sidepane9Layout.createSequentialGroup()
@@ -494,7 +534,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(sidepane9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 747, Short.MAX_VALUE)
         );
 
         pack();
@@ -875,88 +915,33 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
     private rsbuttom.RSButtonMetro doc;
-    private rsbuttom.RSButtonMetro doc4;
-    private rsbuttom.RSButtonMetro doc5;
-    private rsbuttom.RSButtonMetro doc6;
-    private rsbuttom.RSButtonMetro doc7;
-    private rsbuttom.RSButtonMetro doc8;
     private rsbuttom.RSButtonMetro ent;
-    private rsbuttom.RSButtonMetro ent4;
-    private rsbuttom.RSButtonMetro ent5;
-    private rsbuttom.RSButtonMetro ent6;
-    private rsbuttom.RSButtonMetro ent7;
-    private rsbuttom.RSButtonMetro ent8;
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
-    private rsbuttom.RSButtonMetro hor4;
-    private rsbuttom.RSButtonMetro hor5;
-    private rsbuttom.RSButtonMetro hor6;
-    private rsbuttom.RSButtonMetro hor7;
-    private rsbuttom.RSButtonMetro hor8;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable_Display_Reclusos;
     private javax.swing.JTextField jTextField1;
     private java.awt.Label label1;
     private rsbuttom.RSButtonMetro lent;
-    private rsbuttom.RSButtonMetro lent4;
-    private rsbuttom.RSButtonMetro lent5;
-    private rsbuttom.RSButtonMetro lent6;
-    private rsbuttom.RSButtonMetro lent7;
-    private rsbuttom.RSButtonMetro lent8;
     private rsbuttom.RSButtonMetro lrecl;
-    private rsbuttom.RSButtonMetro lrecl4;
-    private rsbuttom.RSButtonMetro lrecl5;
-    private rsbuttom.RSButtonMetro lrecl6;
-    private rsbuttom.RSButtonMetro lrecl7;
-    private rsbuttom.RSButtonMetro lrecl8;
     private rsbuttom.RSButtonMetro recl;
-    private rsbuttom.RSButtonMetro recl4;
-    private rsbuttom.RSButtonMetro recl5;
-    private rsbuttom.RSButtonMetro recl6;
-    private rsbuttom.RSButtonMetro recl7;
-    private rsbuttom.RSButtonMetro recl8;
-    private javax.swing.JPanel sidepane4;
-    private javax.swing.JPanel sidepane5;
-    private javax.swing.JPanel sidepane6;
-    private javax.swing.JPanel sidepane7;
-    private javax.swing.JPanel sidepane8;
     private javax.swing.JPanel sidepane9;
     // End of variables declaration//GEN-END:variables
 
