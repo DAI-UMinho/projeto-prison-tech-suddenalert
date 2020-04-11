@@ -20,8 +20,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class fazer_documentos extends AppCompatActivity {
-    private EditText identificacao, relatorioo;
-    private String t_identific, t_relatorio;
+    private EditText identificacao, relatorioo, tituloRel;
+    private String t_identific, t_relatorio, t_titulo;
     private boolean sucess = false, prenchido = true;
     Button regRelat;
 
@@ -33,6 +33,7 @@ public class fazer_documentos extends AppCompatActivity {
         setContentView(R.layout.activity_fazer_documentos);
         identificacao = (EditText) findViewById(R.id.identificacao);
         relatorioo = (EditText) findViewById(R.id.relatorio);
+        tituloRel = (EditText) findViewById(R.id.tituloRel);
         regRelat = (Button) findViewById(R.id.button7);
         regRelat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,11 +77,16 @@ public class fazer_documentos extends AppCompatActivity {
             relatorioo.setError("Introduza um relatorio");
             valid = false;
         }
+        if (t_titulo.isEmpty()){
+            tituloRel.setError("Introduz um titulo");
+            valid = false;
+        }
         return valid;
     }
     public void intialize(){
         t_identific = identificacao.getText().toString().trim();
         t_relatorio = relatorioo.getText().toString().trim();
+        t_titulo = tituloRel.getText().toString().trim();
     }
     private class CriarRelatorio extends AsyncTask<String, String, String>{
         String msg = "";
@@ -111,7 +117,7 @@ public class fazer_documentos extends AppCompatActivity {
 
                     }
                     if (valor == 1 ) {
-                        String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + t_identific + "');";
+                        String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`, `title`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + t_identific + "', '"+t_titulo +"');";
                         Statement statement = connection.createStatement();
                         statement.executeUpdate(query);
                         msg = "Inserido com sucesso";
@@ -126,10 +132,10 @@ public class fazer_documentos extends AppCompatActivity {
                     }
                     //   }
 
-                      //  System.out.println(valor);
+                    //  System.out.println(valor);
 
-                        //   }
-                    }
+                    //   }
+                }
 
                 connection.close();
             } catch (Exception e){
