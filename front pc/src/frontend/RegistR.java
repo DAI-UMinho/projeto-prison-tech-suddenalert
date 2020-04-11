@@ -65,12 +65,12 @@ setSize(larg,alt);
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel_ala = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel_piso = new javax.swing.JLabel();
+        jLabel_numero = new javax.swing.JLabel();
+        jlabel_nome = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         label1 = new java.awt.Label();
@@ -174,8 +174,8 @@ setSize(larg,alt);
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel7.setText("Ala:");
+        jLabel_ala.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jLabel_ala.setText("Ala:");
 
         jLabel6.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         jLabel6.setText("Data de entrada:");
@@ -183,14 +183,14 @@ setSize(larg,alt);
         jLabel5.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         jLabel5.setText("Data de nascimento:");
 
-        jLabel4.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel4.setText("Piso:");
+        jLabel_piso.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jLabel_piso.setText("Piso:");
 
-        jLabel3.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel3.setText("Número:");
+        jLabel_numero.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jLabel_numero.setText("Número:");
 
-        jLabel1.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel1.setText("Nome:");
+        jlabel_nome.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jlabel_nome.setText("Nome:");
 
         jLabel9.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         jLabel9.setText("Doenças:");
@@ -232,13 +232,13 @@ setSize(larg,alt);
                                 .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel_ala, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jlabel_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel4Layout.createSequentialGroup()
                                     .addGap(153, 153, 153)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel_piso, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel4Layout.createSequentialGroup()
                                     .addGap(117, 117, 117)
                                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -259,16 +259,16 @@ setSize(larg,alt);
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
+                        .addComponent(jlabel_nome)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(37, 37, 37)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
+                        .addComponent(jLabel_numero)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(48, 48, 48)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel7)
+                        .addComponent(jLabel_piso)
+                        .addComponent(jLabel_ala)
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(51, 51, 51)
@@ -510,12 +510,12 @@ setSize(larg,alt);
             .addComponent(doc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(hor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(ent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
             .addComponent(lrecl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(recl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(sidepane4Layout.createSequentialGroup()
                 .addGap(135, 135, 135)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
             .addGroup(sidepane4Layout.createSequentialGroup()
                 .addGroup(sidepane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sidepane4Layout.createSequentialGroup()
@@ -633,10 +633,6 @@ setSize(larg,alt);
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
@@ -997,6 +993,10 @@ setSize(larg,alt);
         this.dispose();
     }//GEN-LAST:event_homeActionPerformed
 
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1010,20 +1010,19 @@ setSize(larg,alt);
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel_ala;
+    private javax.swing.JLabel jLabel_numero;
+    private javax.swing.JLabel jLabel_piso;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -1038,6 +1037,7 @@ setSize(larg,alt);
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JLabel jlabel_nome;
     private java.awt.Label label1;
     private rsbuttom.RSButtonMetro lent;
     private rsbuttom.RSButtonMetro lrecl;
