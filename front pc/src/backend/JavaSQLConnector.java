@@ -11,7 +11,7 @@ public class JavaSQLConnector {
         Connection conn1 = null;
         
         try {
-            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert";
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             

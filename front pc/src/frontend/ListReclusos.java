@@ -28,7 +28,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         ArrayList<Recluso> reclusosList = new ArrayList<>();
          try{
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert";
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
@@ -907,7 +907,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert";
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
