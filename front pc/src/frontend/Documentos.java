@@ -520,6 +520,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_entActionPerformed
 
     private void lentMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lentMousePressed
@@ -569,6 +570,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_lentActionPerformed
 
     private void docMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_docMousePressed
@@ -618,6 +620,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_docActionPerformed
 
     private void horMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_horMousePressed
@@ -667,6 +670,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
             this.hor.setColorHover(new Color(255, 102, 102));
             this.hor.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_horActionPerformed
 
     private void reclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reclMousePressed
@@ -717,6 +721,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
             this.recl.setColorHover(new Color(255, 102, 102));
             this.recl.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_reclActionPerformed
 
     private void lreclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lreclMousePressed
@@ -766,6 +771,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_lreclActionPerformed
 
     private void homeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMousePressed
@@ -815,6 +821,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
             this.home.setColorHover(new Color(255, 102, 102));
             this.home.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_homeActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

@@ -554,24 +554,28 @@ setSize(larg,alt);
         Horario xHor = new Horario();
         xHor.setLocationRelativeTo(null);
         xHor.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         ListEnt xListEnt = new ListEnt();
         xListEnt.setLocationRelativeTo(null); 
         xListEnt.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         ListReclusos xListR = new ListReclusos();
         xListR.setLocationRelativeTo(null); 
         xListR.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         RegistR xRegistR = new RegistR();
         xRegistR.setLocationRelativeTo(null); 
         xRegistR.setVisible(true);
+        this.dispose();
         /*RegistR registaRec = new RegistR();
         registaRec.setVisible(true);
         registaRec.setLocationRelativeTo(null);
@@ -582,12 +586,14 @@ setSize(larg,alt);
         RegistEnt xRegistEnt = new RegistEnt();
         xRegistEnt.setLocationRelativeTo(null); 
         xRegistEnt.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Documentos xDoc = new Documentos();
         xDoc.setLocationRelativeTo(null);
         xDoc.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

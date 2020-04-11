@@ -95,7 +95,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButton_Delete = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
         sidepane9 = new javax.swing.JPanel();
         ent = new rsbuttom.RSButtonMetro();
@@ -181,18 +181,18 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/delete.png"))); // NOI18N
-        jButton1.setText("Eliminar");
-        jButton1.setInheritsPopupMenu(true);
-        jButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton1.setMaximumSize(new java.awt.Dimension(69, 79));
-        jButton1.setMinimumSize(new java.awt.Dimension(69, 79));
-        jButton1.setPreferredSize(new java.awt.Dimension(69, 79));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Delete.setBackground(new java.awt.Color(255, 255, 255));
+        jButton_Delete.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/delete.png"))); // NOI18N
+        jButton_Delete.setText("Eliminar");
+        jButton_Delete.setInheritsPopupMenu(true);
+        jButton_Delete.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton_Delete.setMaximumSize(new java.awt.Dimension(69, 79));
+        jButton_Delete.setMinimumSize(new java.awt.Dimension(69, 79));
+        jButton_Delete.setPreferredSize(new java.awt.Dimension(69, 79));
+        jButton_Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton_DeleteActionPerformed(evt);
             }
         });
 
@@ -212,7 +212,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -247,7 +247,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(48, Short.MAX_VALUE))
@@ -587,6 +587,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_entActionPerformed
 
     private void lentMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lentMousePressed
@@ -636,6 +637,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_lentActionPerformed
 
     private void docMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_docMousePressed
@@ -685,6 +687,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_docActionPerformed
 
     private void horMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_horMousePressed
@@ -734,6 +737,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             this.hor.setColorHover(new Color(255, 102, 102));
             this.hor.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_horActionPerformed
 
     private void reclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reclMousePressed
@@ -784,6 +788,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             this.recl.setColorHover(new Color(255, 102, 102));
             this.recl.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_reclActionPerformed
 
     private void lreclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lreclMousePressed
@@ -833,6 +838,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_lreclActionPerformed
 
     private void homeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMousePressed
@@ -882,6 +888,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             this.home.setColorHover(new Color(255, 102, 102));
             this.home.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_homeActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -896,10 +903,29 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DeleteActionPerformed
+            
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            int row = jTable_Display_Reclusos.getSelectedRow();
+            String value = (jTable_Display_Reclusos.getModel().getValueAt(row, 0).toString());
+            String query = "DELETE FROM Recluse where id_recluse="+value;
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.executeUpdate();
+            DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
+            model.setRowCount(0);
+            show_recluso();
+            JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
+    }//GEN-LAST:event_jButton_DeleteActionPerformed
+        catch(Exception e) {
+           JOptionPane.showMessageDialog(null, e); 
+        }
+    }
+    
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         Menu xMenu = new Menu();
         xMenu.setLocationRelativeTo(null);
@@ -918,8 +944,8 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro ent;
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton_Delete;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
