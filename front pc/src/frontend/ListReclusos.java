@@ -32,7 +32,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query1="SELECT * FROM Recluse";
+            String query1="SELECT * FROM Recluse where deleted='0'";
             Statement st= con.createStatement();
             ResultSet rs= st.executeQuery(query1);
             Recluso recluso;
@@ -913,7 +913,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             Connection con = DriverManager.getConnection(url, user, pass);
             int row = jTable_Display_Reclusos.getSelectedRow();
             String value = (jTable_Display_Reclusos.getModel().getValueAt(row, 0).toString());
-            String query = "DELETE FROM Recluse where id_recluse="+value;
+            String query = "UPDATE Recluse SET deleted='1' where id_recluse="+value;
             PreparedStatement pst = con.prepareStatement(query);
             pst.executeUpdate();
             DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
