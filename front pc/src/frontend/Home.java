@@ -304,13 +304,13 @@ public class Home extends javax.swing.JFrame implements Serializable {
             .addComponent(doc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(hor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(ent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
             .addComponent(lrecl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(recl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(sidepaneLayout.createSequentialGroup()
                 .addGap(135, 135, 135)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
             .addGroup(sidepaneLayout.createSequentialGroup()
                 .addGroup(sidepaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sidepaneLayout.createSequentialGroup()
@@ -418,6 +418,7 @@ public class Home extends javax.swing.JFrame implements Serializable {
             this.recl.setColorHover(new Color(255, 102, 102));
             this.recl.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_reclActionPerformed
 
     private void lreclActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lreclActionPerformed
@@ -455,6 +456,7 @@ public class Home extends javax.swing.JFrame implements Serializable {
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_lreclActionPerformed
 
     private void reclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reclMousePressed
@@ -513,6 +515,7 @@ public class Home extends javax.swing.JFrame implements Serializable {
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_docActionPerformed
 
     private void entActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entActionPerformed
@@ -550,6 +553,7 @@ public class Home extends javax.swing.JFrame implements Serializable {
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_entActionPerformed
 
     private void entMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMousePressed
@@ -597,6 +601,7 @@ public class Home extends javax.swing.JFrame implements Serializable {
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_lentActionPerformed
 
     private void lentMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lentMousePressed
@@ -644,6 +649,7 @@ public class Home extends javax.swing.JFrame implements Serializable {
             this.hor.setColorHover(new Color(255, 102, 102));
             this.hor.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_horActionPerformed
 
     private void docMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_docMousePressed
@@ -701,6 +707,7 @@ public class Home extends javax.swing.JFrame implements Serializable {
             this.home.setColorHover(new Color(255, 102, 102));
             this.home.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_homeActionPerformed
 
     private void homeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMousePressed
