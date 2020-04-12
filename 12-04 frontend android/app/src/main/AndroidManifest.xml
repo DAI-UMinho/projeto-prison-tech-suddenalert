@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="android.example.dai2">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/principal"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".tabela_alert" />
+
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".inicio_diretor"
+            android:label="@string/title_inicio_diretor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".inicio_guarda"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".inicio_psicologo"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".horario_diretor"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tabela_reclusos"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".documentos_diretor"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".perfil_diretor"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tabela_guarda"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tabela_psicologo"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fazer_documentos"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".horario_entidades"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".documentos_entidades"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".perfil_psicologo"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".perfil_guarda"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tabela_ent_reclusos"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tabela_meus_alertas"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Main3Activity"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".historico"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".alerta_guarda"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Registar_Reclusos"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>
