@@ -246,14 +246,14 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jLabel7" min="-2" pref="82" max="-2" attributes="0"/>
-                                          <Component id="jLabel3" min="-2" pref="82" max="-2" attributes="0"/>
-                                          <Component id="jLabel1" min="-2" pref="82" max="-2" attributes="0"/>
+                                          <Component id="jLabel_ala" min="-2" pref="82" max="-2" attributes="0"/>
+                                          <Component id="jLabel_numero" min="-2" pref="82" max="-2" attributes="0"/>
+                                          <Component id="jlabel_nome" min="-2" pref="82" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
-                                              <Component id="jLabel4" min="-2" pref="82" max="-2" attributes="0"/>
+                                              <Component id="jLabel_piso" min="-2" pref="82" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
@@ -285,18 +285,18 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlabel_nome" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel_numero" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel_piso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel_ala" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -377,7 +377,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField7ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel7">
+                <Component class="javax.swing.JLabel" name="jLabel_ala">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Gadugi" size="18" style="1"/>
@@ -401,7 +401,7 @@
                     <Property name="text" type="java.lang.String" value="Data de nascimento:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel4">
+                <Component class="javax.swing.JLabel" name="jLabel_piso">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Gadugi" size="18" style="1"/>
@@ -409,7 +409,7 @@
                     <Property name="text" type="java.lang.String" value="Piso:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel3">
+                <Component class="javax.swing.JLabel" name="jLabel_numero">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Gadugi" size="18" style="1"/>
@@ -417,7 +417,7 @@
                     <Property name="text" type="java.lang.String" value="N&#xfa;mero:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel1">
+                <Component class="javax.swing.JLabel" name="jlabel_nome">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Gadugi" size="18" style="1"/>
@@ -484,12 +484,12 @@
                   <Component id="doc" alignment="0" max="32767" attributes="0"/>
                   <Component id="hor" alignment="0" max="32767" attributes="0"/>
                   <Component id="ent" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jPanel12" alignment="0" pref="241" max="32767" attributes="0"/>
+                  <Component id="jPanel12" alignment="0" pref="242" max="32767" attributes="0"/>
                   <Component id="lrecl" alignment="1" max="32767" attributes="0"/>
                   <Component id="recl" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
-                      <Component id="jPanel5" pref="106" max="32767" attributes="0"/>
+                      <Component id="jPanel5" pref="107" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">

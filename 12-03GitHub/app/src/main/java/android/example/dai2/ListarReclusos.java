@@ -25,16 +25,16 @@ public class ListarReclusos extends ArrayAdapter<Reclusos> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.linha, parent, false);
         TextView nomeRecluso = (TextView) rowView.findViewById(R.id.nomeLRec);
-        TextView ala = (TextView) rowView.findViewById(R.id.alaLRec);
-        TextView doenca = (TextView) rowView.findViewById(R.id.doencasLRec);
-        TextView piso = (TextView) rowView.findViewById(R.id.pisoLRec);
-        ImageView imagem = (ImageView) rowView.findViewById(R.id.imagemRec);
+       // TextView ala = (TextView) rowView.findViewById(R.id.alaLRec);
+       // TextView doenca = (TextView) rowView.findViewById(R.id.doencasLRec);
+       // TextView piso = (TextView) rowView.findViewById(R.id.pisoLRec);
+        ImageView imagem = (ImageView) rowView.findViewById(R.id.imagem);
 
 
         nomeRecluso.setText(elementos.get(position).getNome());
-        ala.setText(elementos.get(position).getAla());
-        doenca.setText(elementos.get(position).getDoencas());
-        piso.setText(elementos.get(position).getPiso());
+      //  ala.setText(elementos.get(position).getAla());
+       // doenca.setText(elementos.get(position).getDoencas());
+        //piso.setText(elementos.get(position).getPiso());
        imagem.setImageResource(elementos.get(position).getImagem());
         return rowView;
     }

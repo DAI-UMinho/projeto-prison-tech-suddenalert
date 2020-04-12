@@ -505,6 +505,7 @@ setSize(larg,alt);
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_entActionPerformed
 
     private void lentMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lentMousePressed
@@ -554,6 +555,7 @@ setSize(larg,alt);
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_lentActionPerformed
 
     private void docMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_docMousePressed
@@ -603,6 +605,7 @@ setSize(larg,alt);
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_docActionPerformed
 
     private void horMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_horMousePressed
@@ -652,6 +655,7 @@ setSize(larg,alt);
             this.hor.setColorHover(new Color(255, 102, 102));
             this.hor.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_horActionPerformed
 
     private void reclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reclMousePressed
@@ -702,6 +706,7 @@ setSize(larg,alt);
             this.recl.setColorHover(new Color(255, 102, 102));
             this.recl.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_reclActionPerformed
 
     private void lreclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lreclMousePressed
@@ -751,6 +756,7 @@ setSize(larg,alt);
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_lreclActionPerformed
 
     private void homeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMousePressed
@@ -800,6 +806,7 @@ setSize(larg,alt);
             this.home.setColorHover(new Color(255, 102, 102));
             this.home.setColorPressed(new Color(243, 243, 243));
         }
+        this.dispose();
     }//GEN-LAST:event_homeActionPerformed
 
     /**
