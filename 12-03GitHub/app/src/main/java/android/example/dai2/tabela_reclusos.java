@@ -46,9 +46,7 @@ public class tabela_reclusos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabela_reclusos);
-        //ArrayList<Reclusos> reclusos = adicionarReclusos();
-        // ArrayAdapter adapter = new ListarReclusos(this, reclusos);
-        //   lista.setAdapter(adapter);
+
         verDados = (Button) findViewById(R.id.button4);
         myDialog = new Dialog(this);
 
@@ -72,49 +70,11 @@ public class tabela_reclusos extends AppCompatActivity {
             }
         });
 
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent visorDetalles = new Intent(view.getContext(), Call.Details.class);
-                visorDetalles.putExtra("ala", itemArrayList.get(position).alaRec);
-                visorDetalles.putExtra("doenca", itemArrayList.get(position).doencaRec);
-                visorDetalles.putExtra("piso", itemArrayList.get(position).pisoRec);
-            }
-        });*/
 
-
-
-          /*      listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final int which_item = position;
-
-                new AlertDialog.Builder(tabela_reclusos.this)
-                        .setIcon(android.R.drawable.ic_delete)
-                        .setTitle("Dados")
-                        .setMessage("Doenças:" + itemArrayList.get(which_item).doencaRec)
-                        .setMessage("Ala:" + itemArrayList.get(which_item).alaRec)
-                        .setMessage("Piso:" + itemArrayList.get(which_item).pisoRec);
-                return true;
-            }
-
-        });*/
 
     }
 
 
-
-    /*private ArrayList<Reclusos> adicionarReclusos() {
-        ArrayList<Reclusos> reclusos = new ArrayList<Reclusos>();
-        Reclusos r = new Reclusos("João","A", "Demência", "1" , R.mipmap.preso1);
-                reclusos.add(r);
-        r = new Reclusos("Antonio","B", "Demência", "2", R.mipmap.preso2);
-        reclusos.add(r);
-        return reclusos;
-    }*/
-    /*public void entrarr (View v) {
-        startActivity(new Intent(this, android.example.dai2.Registar_Reclusos.class));
-    }*/
 
     private class SyncData extends AsyncTask<String, String, String> {
         String msg = "Internet/DB_Connection turn un error";
