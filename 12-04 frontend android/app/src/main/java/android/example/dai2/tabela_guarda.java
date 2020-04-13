@@ -2,12 +2,18 @@ package android.example.dai2;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,10 +27,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class tabela_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
+    public static  ArrayList<Entidades> entidadesArrayList;
+    private SyncDataGuardas.MyAppAdapter myAppAdapter;
+    private ListView listView;
+    private boolean sucess = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +51,8 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.tabela_guarda);
         myDialog = new Dialog(this);
 
-        ListView lista = (ListView) findViewById(R.id.lvE);
-        ArrayList<Entidades> entidades = adicionarEntidades();
-        ArrayAdapter adapter = new ListarGuarda(this, entidades);
-        lista.setAdapter(adapter);
+        listView = (ListView) findViewById(R.id.lvE);
+        entidadesArrayList = new ArrayList<Entidades>();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,6 +75,10 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        final SyncDataGuardas syncDataGuardas = new SyncDataGuardas();
+        syncDataGuardas.execute();
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -170,15 +191,6 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
     }
 
 
-    private ArrayList<Entidades> adicionarEntidades() {
-        // if funcao = guarda faz isto
-        ArrayList<Entidades> entidades = new ArrayList<Entidades>();
-        Entidades e = new Entidades("João","joao@gmail.com", "Psicólogo", "21");
-        entidades.add(e);
-        e = new Entidades("Antonio","Antonio@gmail.com","Guarda", "32");
-        entidades.add(e);
-        return entidades;
-    }
     public void entrare (View v) {
         startActivity(new Intent(this, android.example.dai2.Main3Activity.class));
     }
@@ -222,5 +234,119 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
     public void sair (View v) {
 
         startActivity(new Intent(this, MainActivity.class));
+    }
+    private class SyncDataGuardas extends AsyncTask<String, String, String>{
+        ProgressDialog progress;
+        String msg = "Internet/DB_Connection turn un error";
+
+        @Override
+        protected void onPreExecute() {
+            progress = ProgressDialog.show(tabela_guarda.this, "Synchronising", "ListView Loading wait...", true);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                System.out.println("1");
+                Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                System.out.println("2");
+                if (conn == null) {
+                    sucess = false;
+                } else {
+                    String query = "SELECT name, email, points, scan FROM Profile WHERE id_type like 1";
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs != null) {
+                        while (rs.next()) {
+                            try {
+                                System.out.println("3");
+                                entidadesArrayList.add(new Entidades(rs.getString("name"), rs.getString("email"), rs.getString("scan"), rs.getString("points")));
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        msg = "Found";
+                        sucess = true;
+                    } else {
+                        msg = "No Data Found";
+                        sucess = false;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Writer writer = new StringWriter();
+                e.printStackTrace(new PrintWriter(writer));
+                msg = writer.toString();
+                sucess = false;
+            }
+            return msg;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            progress.dismiss();
+            Toast.makeText(tabela_guarda.this, msg + "", Toast.LENGTH_LONG).show();
+            if (sucess == false) {
+            } else {
+                try {
+                    myAppAdapter = new MyAppAdapter(entidadesArrayList, tabela_guarda.this);
+                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                    listView.setAdapter(myAppAdapter);
+                } catch (Exception ex) {
+
+                }
+            }
+        }
+        public class MyAppAdapter extends BaseAdapter{
+            public class ViewHolder{
+                TextView nome, email, pontos;
+            }
+            public List<Entidades> entidadesList;
+            public Context context;
+            ArrayList<Entidades> arrayList;
+
+            public MyAppAdapter(List<Entidades> entidadesList, Context context) {
+                this.entidadesList = entidadesList;
+                this.context = context;
+                arrayList = new ArrayList<Entidades>();
+                arrayList.addAll(entidadesList);
+            }
+
+            @Override
+            public int getCount() {
+                return entidadesList.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return position;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View rowView = convertView;
+                ViewHolder viewHolder = null;
+                if (rowView == null){
+                    LayoutInflater inflater = getLayoutInflater();
+                    rowView = inflater.inflate(R.layout.linha_guarda, parent, false);
+                    viewHolder = new ViewHolder();
+                    viewHolder.nome = (TextView) rowView.findViewById(R.id.nome);
+                    viewHolder.email = (TextView) rowView.findViewById(R.id.email);
+                    viewHolder.pontos = (TextView) rowView.findViewById(R.id.pontos);
+                    rowView.setTag(viewHolder);
+                } else {
+                    viewHolder = (ViewHolder) convertView.getTag();
+                }
+                viewHolder.nome.setText(entidadesList.get(position).getNome());
+                viewHolder.email.setText(entidadesList.get(position).getEmail());
+                viewHolder.pontos.setText(entidadesList.get(position).getPontos());
+                return rowView;
+            }
+        }
     }
 }
