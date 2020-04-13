@@ -33,6 +33,7 @@ import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
     private SyncDataPsico.MyAppAdapter myAppAdapter;
     private ListView listView;
     private boolean sucess = false;
+    private int posicao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,7 +225,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT name, email, points, scan FROM Profile WHERE id_type like 2";
+                    String query = "SELECT name, email, points, scan FROM Profile WHERE id_type like 2 AND deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
@@ -251,6 +253,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
             }
             return msg;
         }
+
         @Override
         protected void onPostExecute(String s) {
             progress.dismiss();
@@ -266,10 +269,12 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                 }
             }
         }
+
         public class MyAppAdapter extends BaseAdapter {
-            public class ViewHolder{
+            public class ViewHolder {
                 TextView nome, email, pontos;
             }
+
             public List<Entidades> entidadesList;
             public Context context;
             ArrayList<Entidades> arrayList;
@@ -300,7 +305,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
             public View getView(int position, View convertView, ViewGroup parent) {
                 View rowView = convertView;
                 ViewHolder viewHolder = null;
-                if (rowView == null){
+                if (rowView == null) {
                     LayoutInflater inflater = getLayoutInflater();
                     rowView = inflater.inflate(R.layout.linha_psicologo, parent, false);
                     viewHolder = new ViewHolder();
@@ -312,9 +317,49 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                 }
                 viewHolder.nome.setText(entidadesList.get(position).getNome());
                 viewHolder.email.setText(entidadesList.get(position).getEmail());
-               
+
                 return rowView;
             }
         }
     }
+            public void eliminarPsicologo(View view){
+                posicao = listView.getPositionForView(view);
+                EliminarPsicologo eliminarGuarda  =new EliminarPsicologo();
+                eliminarGuarda.execute();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e){
+                    System.out.println(e);
+                }
+
+                startActivity(new Intent(tabela_psicologo.this, tabela_psicologo.class));
+                tabela_psicologo.this.finish();
+            }
+            private class EliminarPsicologo extends AsyncTask<String, String, String>{
+                String msg;
+                @Override
+                protected String doInBackground(String... strings) {
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                        if (connection == null){
+                            msg = "Connect failed";
+                        } else {
+                            System.out.println(posicao);
+                            String query = "UPDATE Profile SET deleted='1' where scan = '"+ entidadesArrayList.get(posicao).getScan()+ "'";
+                            Statement preparedStatement = connection.createStatement();
+                            System.out.println("qiui");
+                            preparedStatement.executeUpdate(query);
+                            System.out.println("1");
+                        }
+                        connection.close();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    return msg;
+                }
+            }
+
 }

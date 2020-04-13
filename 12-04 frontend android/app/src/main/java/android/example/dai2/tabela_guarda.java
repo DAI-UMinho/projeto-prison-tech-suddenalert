@@ -32,7 +32,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
     private SyncDataGuardas.MyAppAdapter myAppAdapter;
     private ListView listView;
     private boolean sucess = false;
+    int posicao;
 
 
     @Override
@@ -254,7 +257,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT name, email, points, scan FROM Profile WHERE id_type like 1";
+                    String query = "SELECT name, email, points, scan FROM Profile WHERE id_type like 1 AND deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
@@ -347,6 +350,45 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                 viewHolder.pontos.setText(entidadesList.get(position).getPontos());
                 return rowView;
             }
+        }
+    }
+    public void eliminarGuarda(View view){
+         posicao = listView.getPositionForView(view);
+        EliminarGuarda eliminarGuarda  =new EliminarGuarda();
+        eliminarGuarda.execute();
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        startActivity(new Intent(this, tabela_guarda.class));
+        tabela_guarda.this.finish();
+    }
+    private class EliminarGuarda extends AsyncTask<String, String, String>{
+        String msg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null){
+                    msg = "Connect failed";
+                } else {
+                    System.out.println(posicao);
+                    String query = "UPDATE Profile SET deleted='1' where scan = '"+ entidadesArrayList.get(posicao).getScan()+ "'";
+                    Statement preparedStatement = connection.createStatement();
+                    System.out.println("qiui");
+                    preparedStatement.executeUpdate(query);
+                    System.out.println("1");
+                }
+                connection.close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
         }
     }
 }
