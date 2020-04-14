@@ -6,9 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,33 +16,20 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.json.JSONObject;
-
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
     private Button btnScan;
@@ -90,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         });
         btnGetLocation = findViewById(R.id.btnGetLocation);
         txLocation = findViewById(R.id.txLocation);
-        imageView = (ImageView) findViewById((R.id.imageView12));
-        imageView2 = (ImageView) findViewById(R.id.imageView11);
+        imageView = (ImageView) findViewById((R.id.imageView11));
+        imageView2 = (ImageView) findViewById(R.id.imageView12);
 
         btnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 Login login = new Login();
                 login.execute();
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 }
                 catch (Exception e){
                     System.out.print("erro");
@@ -130,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 if (sucess == true) {
                     Toast.makeText(getApplicationContext(), "Utilizador encontrado!", Toast.LENGTH_SHORT).show();
                     btnGetLocation.setEnabled(true);
-                    imageView2.setImageResource(imagens[0]);
+                    imageView.setImageResource(imagens[0]);
                 } else {
                     Toast.makeText(getApplicationContext(), "Utilizador não encontrado!", Toast.LENGTH_LONG).show();
                 }
@@ -177,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             longitudePrisao = Double.parseDouble(longitudePris);
             latitudePrisao = Double.parseDouble(latitudePris);
             if (getDistanciaEntrePontosEmKm(latitude, longitude, latitudePrisao, longitudePrisao) < 999999999.00) {
-                imageView.setImageResource(imagens[0]);
+                imageView2.setImageResource(imagens[0]);
                 isSucess = true;
             } else {
                 alert("Localização inválida");
@@ -231,13 +216,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT name, location FROM Profile WHERE scan like '"+scanValor+"';";
+                    String query = "SELECT name, location, id_type FROM Profile WHERE scan like '"+scanValor+"' AND deleted like 0;";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         String name = rs.getString("name");
                         coordenadas = rs.getString("location");
                         estatuto = rs.getInt("id_type");
+                        //name = rs.getString("name");
                         String[] points = coordenadas.split("\\s*[,]\\s*");
                         latitudePris = points[0];
                         longitudePris = points[1];
@@ -256,6 +242,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 sucess = false;
             }
             return msg;
+
         }
     }
 
