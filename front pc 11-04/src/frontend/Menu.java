@@ -335,7 +335,7 @@ setSize(larg,alt);
         jLabel16.setFont(new java.awt.Font("Gadugi", 1, 28)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(102, 102, 102));
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Documentos");
+        jLabel16.setText("Relatórios");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
