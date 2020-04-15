@@ -909,7 +909,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        EditarRecluso xEditar = new EditarRecluso();
+        LerRecluso xEditar = new LerRecluso();
         xEditar.setLocationRelativeTo(null);
         xEditar.setVisible(true);
         this.dispose();
