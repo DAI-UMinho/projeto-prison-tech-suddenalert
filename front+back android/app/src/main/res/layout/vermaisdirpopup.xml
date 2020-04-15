@@ -9,6 +9,7 @@
     android:orientation="vertical"
     android:padding="5dp">
 
+
     <TextView
         android:id="@+id/doencas"
         android:layout_width="78dp"
@@ -164,25 +165,46 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageView17"
+        android:id="@+id/alterardados"
         android:layout_width="28dp"
         android:layout_height="36dp"
-        android:layout_marginStart="206dp"
-        android:layout_marginTop="7dp"
-        android:onClick="alterarRec"
+        android:layout_marginStart="212dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ala2"
-        app:srcCompat="@drawable/ic_alterar_foreground" />
+        app:srcCompat="@drawable/ic_alterar_foreground"
+        android:onClick="alteraDados_rec"/>
 
     <TextView
         android:id="@+id/alterarRec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="22dp"
         android:text="Alterar dados"
-        app:layout_constraintStart_toEndOf="@+id/imageView17"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ala2" />
+
+    <TextView
+        android:id="@+id/alterarRec2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="80dp"
+        android:text="Eliminar"
+        app:layout_constraintEnd_toStartOf="@+id/alterardados"
+        app:layout_constraintTop_toBottomOf="@+id/ala2" />
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="4dp"
+        android:onClick="eliminarRecluso"
+        app:layout_constraintEnd_toStartOf="@+id/alterarRec2"
+        app:layout_constraintTop_toBottomOf="@+id/nascimento1"
+        app:srcCompat="@drawable/ic_delete_foreground" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
