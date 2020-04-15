@@ -99,7 +99,6 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final int which_item = position;
-
                 new AlertDialog.Builder(tabela_reclusos.this)
                         .setIcon(android.R.drawable.ic_delete)
                         .setTitle("Dados")
@@ -108,7 +107,6 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                         .setMessage("Piso:" + itemArrayList.get(which_item).pisoRec);
                 return true;
             }
-
         });*/
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -250,13 +248,13 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
 
                 if (rowView == null) {
                     LayoutInflater inflater = getLayoutInflater();
-                    rowView = inflater.inflate(R.layout.linhadir, parent, false);
+                    rowView = inflater.inflate(R.layout.linha, parent, false);
                     viewHolder = new ViewHolder();
                     viewHolder.nome = (TextView) rowView.findViewById(R.id.nome);
-                    viewHolder.doencaa = (TextView) rowView.findViewById(R.id.doencas1);
+                   /* viewHolder.doencaa = (TextView) rowView.findViewById(R.id.doencas1);
                     viewHolder.alaa = (TextView) rowView.findViewById(R.id.ala1);
                     viewHolder.pisoo = (TextView) rowView.findViewById(R.id.piso1);
-                    viewHolder.nascimento = (TextView) rowView.findViewById(R.id.nascimento1);
+                    viewHolder.nascimento = (TextView) rowView.findViewById(R.id.nascimento1);*/
                     viewHolder.imageView = (ImageView) rowView.findViewById(R.id.imagem);
                     rowView.setTag(viewHolder);
 
@@ -266,10 +264,10 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
                 viewHolder.nome.setText(recluseList.get(position).getNomeRec() + "");
-                viewHolder.doencaa.setText(recluseList.get(position).getDoencaRec() + "");
+                /*viewHolder.doencaa.setText(recluseList.get(position).getDoencaRec() + "");
                 viewHolder.alaa.setText(recluseList.get(position).getAlaRec() + "");
                 viewHolder.pisoo.setText(recluseList.get(position).getPisoRec() + "");
-                viewHolder.nascimento.setText(recluseList.get(position).getNascimento()+ "");
+                viewHolder.nascimento.setText(recluseList.get(position).getNascimento()+ "");*/
                 Picasso.get().load(recluseList.get(position).getImg()).into(viewHolder.imageView);
 
 
@@ -342,15 +340,14 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         return true;
     }
 
-    /*public void verData(View view) {
-
+    public void verData(View view) {
         posicao = listView.getPositionForView(view);
         System.out.println(posicao);
         TextView txtclose;
         TextView doencas;
         TextView piso;
         TextView ala;
-        myDialog.setContentView(R.layout.vermaispopup);
+        myDialog.setContentView(R.layout.vermaisdirpopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         doencas = (TextView) myDialog.findViewById(R.id.doencas1);
         piso = (TextView) myDialog.findViewById(R.id.piso1);
@@ -366,9 +363,9 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         ala.setText(itemArrayList.get(posicao).getAlaRec());
         System.out.println(posicao);
         myDialog.show();
-    }*/
+    }
 
-    /*public void alterarDadosRec(View view){
+    public void alteraDados_rec (View view){
         posicao = listView.getPositionForView(view);
         TextView txtclose;
         TextView txtAlterar;
@@ -376,13 +373,13 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         EditText doencas;
         EditText piso;
         EditText ala;
-        editarRec.setContentView(R.layout.);
+        editarRec.setContentView(R.layout.alterarpopup);
         txtclose = (TextView) editarRec.findViewById(R.id.txtclose);
-        txtAlterar = (TextView) editarRec.findViewById(R.id.);
-        nome  = (EditText) editarRec.findViewById(R.id.) ;
-        doencas = (EditText) editarRec.findViewById(R.id.);
-        piso = (EditText) editarRec.findViewById(R.id.);
-        ala = (EditText) editarRec.findViewById(R.id.);
+        txtAlterar = (TextView) editarRec.findViewById(R.id.txtAlterar);
+        nome  = (EditText) editarRec.findViewById(R.id.alteraNome) ;
+        doencas = (EditText) editarRec.findViewById(R.id.alteraDoencas);
+        piso = (EditText) editarRec.findViewById(R.id.alteraPiso);
+        ala = (EditText) editarRec.findViewById(R.id.alteraAla);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -396,26 +393,24 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                 alterarDadosRec.execute();
             }
         });
-        doencas.setText(itemArrayList.get(posicao).getDoencaRec());
+      /* doencas.setText(itemArrayList.get(posicao).getDoencaRec());
         piso.setText(itemArrayList.get(posicao).getPisoRec());
         ala.setText(itemArrayList.get(posicao).getAlaRec());
-        nome.setText(itemArrayList.get(posicao).getNomeRec());
-        myDialog.show();
-
-
+        nome.setText(itemArrayList.get(posicao).getNomeRec());*/
+        editarRec.show();
     }
+
     private class AlterarDadosRec extends AsyncTask<String, String, String>{
         String msg = "";
         int id_recluso = itemArrayList.get(posicao).getId_recluse();
-        EditText nome  = (EditText) editarRec.findViewById(R.id.) ;
-        EditText doencas = (EditText) editarRec.findViewById(R.id.);
-        EditText piso = (EditText) editarRec.findViewById(R.id.);
-        EditText ala = (EditText) editarRec.findViewById(R.id.);
+        EditText nome  = (EditText) editarRec.findViewById(R.id.alteraNome) ;
+        EditText doencas = (EditText) editarRec.findViewById(R.id.alteraDoencas);
+        EditText piso = (EditText) editarRec.findViewById(R.id.alteraPiso);
+        EditText ala = (EditText) editarRec.findViewById(R.id.alteraAla);
         String t_nome = nome.getText().toString().trim();
         String t_doencas = doencas.getText().toString().trim();
         String t_piso = piso.getText().toString().trim();
         String t_ala = ala.getText().toString().trim();
-
         @Override
         protected String doInBackground(String... strings) {
             try {
@@ -436,6 +431,76 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
             }
             return msg;
         }
-    }*/
+    }}
+    /*
+    public void verData (View view) {
 
-}
+        posicao = listView.getPositionForView(view);
+        System.out.println(posicao);
+        TextView txtclose;
+        TextView doencas;
+        TextView piso;
+        TextView ala;
+        TextView nascimento;
+        ImageView alterardados;
+        myDialog.setContentView(R.layout.vermaisdirpopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        doencas = (TextView) myDialog.findViewById(R.id.doencas1);
+        piso = (TextView) myDialog.findViewById(R.id.piso1);
+        ala = (TextView) myDialog.findViewById(R.id.ala1);
+        nascimento = (TextView) myDialog.findViewById(R.id.nascimento1);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        doencas.setText(itemArrayList.get(posicao).getDoencaRec());
+        piso.setText(itemArrayList.get(posicao).getPisoRec());
+        ala.setText(itemArrayList.get(posicao).getAlaRec());
+        nascimento.setText(itemArrayList.get(posicao).getNascimento());
+        System.out.println(posicao);
+        alterardados = (ImageView) myDialog.findViewById(R.id.alterardados);
+        alterardados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alteraDados_rec(v);
+            }
+        });
+        myDialog.show();
+    }
+
+    public void alteraDados_rec(View view){
+        TextView txtclose;
+        EditText doencas;
+        EditText piso;
+        EditText ala;
+        EditText nascimento;
+        TextView txtAlterar;
+        txtAlterar = (TextView) myDialog.findViewById(R.id.txtAlterar);
+        myDialog.setContentView(R.layout.alterarpopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        doencas = (EditText) myDialog.findViewById(R.id.alteraDoencas);
+        piso = (EditText) myDialog.findViewById(R.id.alteraPiso);
+        ala = (EditText) myDialog.findViewById(R.id.alteraAla);
+        nascimento = (EditText) myDialog.findViewById(R.id.alteraNascimento);
+        doencas.setText(itemArrayList.get(posicao).getDoencaRec());
+        piso.setText(itemArrayList.get(posicao).getPisoRec());
+        ala.setText(itemArrayList.get(posicao).getAlaRec());
+        nascimento.setText(itemArrayList.get(posicao).getNascimento());
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        txtAlterar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlterarDadosRec alterarDadosRec = new AlterarDadosRec();
+                alterarDadosRec.execute();
+            }
+        });
+        myDialog.show();
+    }
+*/
