@@ -52,7 +52,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             ResultSet rs= st.executeQuery(query1);
             Recluso recluso;
             while(rs.next()){
-                recluso = new Recluso(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("wing"), rs.getString("floor"), rs.getString("disease"));
+                recluso = new Recluso(rs.getInt("id_recluse"), rs.getInt("numero_recluso"), rs.getString("name"), rs.getString("wing"), rs.getString("floor"), rs.getString("disease"));
                 reclusosList.add(recluso);
             }
          }
@@ -64,13 +64,14 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
        public void show_recluso() {
            ArrayList<Recluso> list = reclusoList();
            DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
-           Object[] row = new Object[5];
+           Object[] row = new Object[6];
             for(int i=0;i<list.size();i++){
-            row[0]=list.get(i).getid();
+            row[0]=list.get(i).getnumero_recluso();
             row[1]=list.get(i).getnome();
             row[2]=list.get(i).getala();
             row[3]=list.get(i).getpiso();
             row[4]=list.get(i).getdoenças();
+            row[5]=list.get(i).getid();
             model.addRow(row);
         }
        }
@@ -147,7 +148,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
 
             },
             new String [] {
-                "Número", "Nome", "Ala", "Piso", "Doenças"
+                "Número", "Nome", "Ala", "Piso", "Doenças", "Id"
             }
         ));
         jTable_Display_Reclusos.setSelectionBackground(new java.awt.Color(255, 102, 102));
@@ -921,7 +922,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
             int row = jTable_Display_Reclusos.getSelectedRow();
-            String value = (jTable_Display_Reclusos.getModel().getValueAt(row, 0).toString());
+            String value = (jTable_Display_Reclusos.getModel().getValueAt(row, 5).toString());
             String query = "UPDATE Recluse SET deleted='1' where id_recluse="+value;          
             PreparedStatement pst = con.prepareStatement(query);
             pst.executeUpdate();
