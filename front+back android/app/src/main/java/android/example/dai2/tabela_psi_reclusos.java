@@ -153,13 +153,13 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT name, disease, wing, floor, photo, birthday FROM Recluse";
+                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday FROM Recluse";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                itemArrayList.add(new ClassListReclusos(rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getString("photo"), rs.getString("birthday")));
+                                itemArrayList.add(new ClassListReclusos(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getString("photo"), rs.getString("birthday")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
