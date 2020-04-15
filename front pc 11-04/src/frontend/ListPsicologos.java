@@ -292,7 +292,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
 
         doc.setForeground(new java.awt.Color(153, 153, 153));
         doc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_doc.png"))); // NOI18N
-        doc.setText("         Documentos");
+        doc.setText("         Relatórios");
         doc.setColorTextNormal(new java.awt.Color(153, 153, 153));
         doc.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         doc.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
