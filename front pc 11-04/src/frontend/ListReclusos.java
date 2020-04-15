@@ -64,7 +64,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
        public void show_recluso() {
            ArrayList<Recluso> list = reclusoList();
            DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
-           Object[] row = new Object[6];
+           Object[] row = new Object[5];
             for(int i=0;i<list.size();i++){
             row[0]=list.get(i).getid();
             row[1]=list.get(i).getnome();
@@ -146,7 +146,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
 
             },
             new String [] {
-                "Nome", "Número do recluso", "Ala", "Piso", "Doenças"
+                "Número", "Nome", "Ala", "Piso", "Doenças"
             }
         ));
         jTable_Display_Reclusos.setSelectionBackground(new java.awt.Color(255, 102, 102));
@@ -906,11 +906,11 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        EliminarR xEliminarR = new EliminarR();
+        /*EliminarR xEliminarR = new EliminarR();
         xEliminarR.setLocationRelativeTo(null);
         xEliminarR.setVisible(true);
-        this.dispose();
-                try{
+        this.dispose();*/ 
+        try{
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
@@ -918,24 +918,24 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             Connection con = DriverManager.getConnection(url, user, pass);
             int row = jTable_Display_Reclusos.getSelectedRow();
             String value = (jTable_Display_Reclusos.getModel().getValueAt(row, 0).toString());
-            String query = "UPDATE Recluse SET deleted='1' where id_recluse="+value;
+            String query = "UPDATE Recluse SET deleted='1' where id_recluse="+value;          
             PreparedStatement pst = con.prepareStatement(query);
             pst.executeUpdate();
             DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
             model.setRowCount(0);
             show_recluso();
             JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
-    }                                              
-        catch(Exception e) {
+    }//GEN-LAST:event_jButton1ActionPerformed
+     catch(Exception e) {
            JOptionPane.showMessageDialog(null, e); 
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }                                        
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         Menu xMenu = new Menu();
         xMenu.setLocationRelativeTo(null);
         xMenu.setVisible(true);
-        this.dispose();
+        this.dispose();      
     }//GEN-LAST:event_BackButtonActionPerformed
 
     /**
