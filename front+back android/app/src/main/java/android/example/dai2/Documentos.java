@@ -39,12 +39,12 @@ public class Documentos {
     public String getNomeRel() {
         return nomeRel;
     }
-    public String getemail(){return email;}
+    public String getEmail(){return email;}
 
     public void setNomeRel(String nomeRel) {
         this.nomeRel = nomeRel;
     }
-    public void setemail(String email) {this.email = email;}
+    public void setEmail(String email) {this.email = email;}
 
     public String getNomeEn() {
         return nomeEn;
@@ -62,10 +62,10 @@ public class Documentos {
         this.data = data;
     }
 
-    public String getgravidade(){
+    public String getGravidade(){
         return gravidade;
     }
-    public void setgravidade(String gravidade) {this.gravidade = gravidade;}
+    public void setGravidade(String gravidade) {this.gravidade = gravidade;}
 
 
 }
