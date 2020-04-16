@@ -213,9 +213,9 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_psicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_psicActionPerformed
-        ListReclusos xListR = new ListReclusos();
-        xListR.setLocationRelativeTo(null);
-        xListR.setVisible(true);
+        LerRecluso xLerRecluso = new LerRecluso();
+        xLerRecluso.setLocationRelativeTo(null);
+        xLerRecluso.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_Button_psicActionPerformed
 
