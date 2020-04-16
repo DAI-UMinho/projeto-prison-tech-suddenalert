@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -44,7 +43,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myDialog = new Dialog(this);
-        setContentView(R.layout.documentos_diretor);
+        setContentView(R.layout.tabela_relatorios);
         listView = (ListView) findViewById(R.id.lvrel);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -60,7 +59,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        documentosArrayList = new ArrayList<Documentos>();
         SyncDataDoc syncDataDoc = new SyncDataDoc();
         syncDataDoc.execute();
 
@@ -98,32 +97,153 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Intent intent = new Intent(documentos_diretor.this,inicio_diretor.class);
+                Intent intent = new Intent(documentos_diretor.this,inicio_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(documentos_diretor.this, horario_diretor.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listahor;
+            Button meuhor;
+            myDialog.setContentView(R.layout.horariospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listahor = (Button) myDialog.findViewById(R.id.listahor);
+            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            listahor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_diretor.this, tabela_horario.class));
+                }
+            });
+            meuhor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_diretor.this, horario_diretor.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(documentos_diretor.this, documentos_diretor.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarel;
+            Button his;
+            myDialog.setContentView(R.layout.relatoriospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarel = (Button) myDialog.findViewById(R.id.listarel);
+            his = (Button) myDialog.findViewById(R.id.his);
+            listarel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_diretor.this, documentos_diretor.class));
+                }
+            });
+            his.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_diretor.this, historico.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(documentos_diretor.this,perfil_diretor.class);
+                Intent intent = new Intent(documentos_diretor.this,perfil_diretor.class);
             startActivity(intent);
-        }else if (id == R.id.nav_guardas){
-            Intent intent = new Intent(documentos_diretor.this,tabela_guarda.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_psicologos){
-            Intent intent = new Intent(documentos_diretor.this,tabela_psicologo.class);
-            startActivity(intent);
+        }else if (id == R.id.nav_entidades){
+            TextView txtclose;
+            Button listagem;
+            Button registo;
+            myDialog.setContentView(R.layout.entidadesinicio);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listagem = (Button) myDialog.findViewById(R.id.listagem);
+            registo = (Button) myDialog.findViewById(R.id.registo);
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            listagem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirEntidades(v);
+                }
+            });
+            registo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_diretor.this, Main3Activity.class));
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_reclusos){
-            Intent intent = new Intent(documentos_diretor.this, tabela_reclusos.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarec;
+            Button reg;
+            myDialog.setContentView(R.layout.reclusospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarec = (Button) myDialog.findViewById(R.id.listarec);
+            reg = (Button) myDialog.findViewById(R.id.reg);
+            listarec.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_diretor.this, tabela_reclusos.class));
+                }
+            });
+            reg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_diretor.this, Registar_Reclusos.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-
     }
+
+    public void abrirEntidades(View v){
+        TextView txtclose;
+        Button guardas;
+        Button psicologos;
+        myDialog.setContentView(R.layout.entidadespopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        guardas = (Button) myDialog.findViewById(R.id.guardas);
+        psicologos = (Button) myDialog.findViewById(R.id.psicologos);
+        guardas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(documentos_diretor.this, tabela_guarda.class));
+            }
+        });
+        psicologos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(documentos_diretor.this, tabela_psicologo.class));
+            }
+        });
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+    }
+
 
 
     /* public void ShowPopup3(View v){
@@ -171,9 +291,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
     private void alert(String msg){
         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
     }
-    public void entrarhist (View v){
-        startActivity(new Intent(this, android.example.dai2.historico.class));
-    }
+
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
@@ -284,7 +402,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
             public Context context;
             ArrayList<Documentos> arrayList;
 
-            private  MyAppAdapter(List<Documentos> apps, Context context){
+            private MyAppAdapter(List<Documentos> apps, Context context) {
                 this.reportList = apps;
                 this.context = context;
                 arrayList = new ArrayList<Documentos>();
@@ -310,28 +428,27 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
             public View getView(int position, View convertView, ViewGroup parent) {
                 View rowView = convertView;
                 ViewHolder viewHolder = null;
-                if (rowView == null){
+                if (rowView == null) {
                     LayoutInflater inflater = getLayoutInflater();
                     rowView = inflater.inflate(R.layout.linharel, parent, false);
                     viewHolder = new ViewHolder();
                     viewHolder.titulo = (TextView) rowView.findViewById(R.id.nomeRelatorio);
-                   // viewHolder.id = (TextView) rowView.findViewById(R.id.nomeEnt);
+                    // viewHolder.id = (TextView) rowView.findViewById(R.id.nomeEnt);
                     viewHolder.data = (TextView) rowView.findViewById(R.id.dataRelatorio);
-                   // viewHolder.email = (TextView) rowView.findViewById(R.id.email);
-                   // viewHolder.gravidade = (TextView) rowView.findViewById(R.id.gravidade);
+                    // viewHolder.email = (TextView) rowView.findViewById(R.id.email);
+                    // viewHolder.gravidade = (TextView) rowView.findViewById(R.id.gravidade);
                     rowView.setTag(viewHolder);
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
                 viewHolder.titulo.setText(reportList.get(position).getNomeRel());
-              //  viewHolder.id.setText(reportList.get(position).getNomeEn());
+                //  viewHolder.id.setText(reportList.get(position).getNomeEn());
                 viewHolder.data.setText(reportList.get(position).getData());
-               // viewHolder.email.setText(reportList.get(position).getemail());
-               // viewHolder.gravidade.setText(reportList.get(position).getgravidade());
+                // viewHolder.email.setText(reportList.get(position).getemail());
+                // viewHolder.gravidade.setText(reportList.get(position).getgravidade());
                 return rowView;
+
             }
-        }
-    }
     /*
     public void lerRelatorio(View view){
         int posicao = listView.getPositionForView(view);
@@ -351,7 +468,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
     }
 */
 
-
+        }}
 public void mostrarRelatorio(View view){
     int posicao = listView.getPositionForView(view);
 
@@ -371,8 +488,8 @@ public void mostrarRelatorio(View view){
         dataRel = (TextView) myDialog.findViewById(R.id.dataRelato);
         relato = (TextView) myDialog.findViewById(R.id.relatoRelat);
         nomeEntRel.setText(documentosArrayList.get(posicao).getNomeEn());
-        gravidadeRel.setText(documentosArrayList.get(posicao).getgravidade());
-        emailRel.setText(documentosArrayList.get(posicao).getemail());
+        gravidadeRel.setText(documentosArrayList.get(posicao).getGravidade());
+        emailRel.setText(documentosArrayList.get(posicao).getEmail());
         nomeRel.setText(documentosArrayList.get(posicao).getNomeRel());
         dataRel.setText(documentosArrayList.get(posicao).getData());
         relato.setText(documentosArrayList.get(posicao).getRelatorio());
@@ -384,4 +501,5 @@ public void onClick(View v) {
         });
         myDialog.show();
         }
-        }
+}
+

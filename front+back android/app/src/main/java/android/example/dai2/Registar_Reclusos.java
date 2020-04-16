@@ -207,11 +207,8 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         }else if (id == R.id.nav_perfil){
             Intent intent = new Intent(Registar_Reclusos.this,perfil_diretor.class);
             startActivity(intent);
-        }else if (id == R.id.nav_guardas){
+        }else if (id == R.id.nav_entidades){
             Intent intent = new Intent(Registar_Reclusos.this,tabela_guarda.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_psicologos){
-            Intent intent = new Intent(Registar_Reclusos.this,tabela_psicologo.class);
             startActivity(intent);
         }else if (id == R.id.nav_reclusos){
             Intent intent = new Intent(Registar_Reclusos.this,tabela_reclusos.class);

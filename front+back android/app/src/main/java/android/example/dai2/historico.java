@@ -83,29 +83,150 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
             Intent intent = new Intent(historico.this,inicio_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(historico.this, horario_diretor.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listahor;
+            Button meuhor;
+            myDialog.setContentView(R.layout.horariospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listahor = (Button) myDialog.findViewById(R.id.listahor);
+            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            listahor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(historico.this, tabela_horario.class));
+                }
+            });
+            meuhor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(historico.this, horario_diretor.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(historico.this, documentos_diretor.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarel;
+            Button his;
+            myDialog.setContentView(R.layout.relatoriospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarel = (Button) myDialog.findViewById(R.id.listarel);
+            his = (Button) myDialog.findViewById(R.id.his);
+            listarel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(historico.this, documentos_diretor.class));
+                }
+            });
+            his.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(historico.this, historico.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_perfil){
             Intent intent = new Intent(historico.this,perfil_diretor.class);
             startActivity(intent);
-        }else if (id == R.id.nav_guardas){
-            Intent intent = new Intent(historico.this,tabela_guarda.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_psicologos){
-            Intent intent = new Intent(historico.this,tabela_psicologo.class);
-            startActivity(intent);
+        }else if (id == R.id.nav_entidades){
+            TextView txtclose;
+            Button listagem;
+            Button registo;
+            myDialog.setContentView(R.layout.entidadesinicio);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listagem = (Button) myDialog.findViewById(R.id.listagem);
+            registo = (Button) myDialog.findViewById(R.id.registo);
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            listagem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirEntidades(v);
+                }
+            });
+            registo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(historico.this, Main3Activity.class));
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_reclusos){
-            Intent intent = new Intent(historico.this, tabela_reclusos.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarec;
+            Button reg;
+            myDialog.setContentView(R.layout.reclusospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarec = (Button) myDialog.findViewById(R.id.listarec);
+            reg = (Button) myDialog.findViewById(R.id.reg);
+            listarec.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(historico.this, tabela_reclusos.class));
+                }
+            });
+            reg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(historico.this, Registar_Reclusos.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-
     }
+
+    public void abrirEntidades(View v){
+        TextView txtclose;
+        Button guardas;
+        Button psicologos;
+        myDialog.setContentView(R.layout.entidadespopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        guardas = (Button) myDialog.findViewById(R.id.guardas);
+        psicologos = (Button) myDialog.findViewById(R.id.psicologos);
+        guardas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(historico.this, tabela_guarda.class));
+            }
+        });
+        psicologos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(historico.this, tabela_psicologo.class));
+            }
+        });
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+    }
+
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {

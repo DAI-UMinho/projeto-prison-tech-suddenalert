@@ -147,11 +147,8 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         }else if (id == R.id.nav_perfil){
             Intent intent = new Intent(tabela_guarda.this,perfil_diretor.class);
             startActivity(intent);
-        }else if (id == R.id.nav_guardas){
+        }else if (id == R.id.nav_entidades){
             Intent intent = new Intent(tabela_guarda.this,tabela_guarda.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_psicologos){
-            Intent intent = new Intent(tabela_guarda.this,tabela_psicologo.class);
             startActivity(intent);
         }else if (id == R.id.nav_reclusos){
             Intent intent = new Intent(tabela_guarda.this,tabela_reclusos.class);
