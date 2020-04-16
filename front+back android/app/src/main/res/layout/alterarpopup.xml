@@ -182,7 +182,6 @@
         android:layout_width="32dp"
         android:layout_height="35dp"
         android:layout_marginEnd="4dp"
-        android:onClick="eliminarRecluso"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txtAlterar"
         app:srcCompat="@drawable/save_foreground" />

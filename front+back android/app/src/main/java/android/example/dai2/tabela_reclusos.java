@@ -49,7 +49,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     private boolean sucess = false;
     Dialog myDialog, editarRec;
     Button verDados;
-    int posicao;
+    int posicao, id_recluso;
 
 
     @Override
@@ -72,13 +72,13 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedFromList =(String) (listView.getItemAtPosition(position).toString());
-                System.out.println(selectedFromList );
+                String selectedFromList = (String) (listView.getItemAtPosition(position).toString());
+                System.out.println(selectedFromList);
 
 
                 int selectedItemPosition = listView.getItemAtPosition(position).hashCode();
 
-                System.out.println( selectedItemPosition);
+                System.out.println(selectedItemPosition);
 
             }
         });
@@ -114,7 +114,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,drawer,toolbar,R.string.navigation_drawer_open,
+                this, drawer, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -156,7 +156,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday FROM Recluse";
+                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday FROM Recluse WHERE deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
@@ -202,7 +202,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
 
         public class MyAppAdapter extends BaseAdapter {
             public class ViewHolder {
-                TextView nome, pisoo, alaa, doencaa,nascimento;
+                TextView nome, pisoo, alaa, doencaa, nascimento;
                 ImageView imageView;
 
             }
@@ -259,7 +259,6 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                     rowView.setTag(viewHolder);
 
 
-
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
@@ -274,7 +273,6 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                 return rowView;
 
 
-
             }
         }
 
@@ -283,6 +281,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     public void entrarRegRec(View v) {
         startActivity(new Intent(this, android.example.dai2.Registar_Reclusos.class));
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -291,9 +290,9 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     }
 
     @Override
-    public void onBackPressed(){
-        DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -303,7 +302,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -313,29 +312,29 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_home){
-            Intent intent = new Intent(tabela_reclusos.this,inicio_diretor.class);
+        if (id == R.id.nav_home) {
+            Intent intent = new Intent(tabela_reclusos.this, inicio_diretor.class);
             startActivity(intent);
-        }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(tabela_reclusos.this,horario_diretor.class);
+        } else if (id == R.id.nav_hor) {
+            Intent intent = new Intent(tabela_reclusos.this, horario_diretor.class);
             startActivity(intent);
-        }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(tabela_reclusos.this,documentos_diretor.class);
+        } else if (id == R.id.nav_doc) {
+            Intent intent = new Intent(tabela_reclusos.this, documentos_diretor.class);
             startActivity(intent);
-        }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(tabela_reclusos.this,perfil_diretor.class);
+        } else if (id == R.id.nav_perfil) {
+            Intent intent = new Intent(tabela_reclusos.this, perfil_diretor.class);
             startActivity(intent);
-        }else if (id == R.id.nav_guardas){
-            Intent intent = new Intent(tabela_reclusos.this,tabela_guarda.class);
+        } else if (id == R.id.nav_guardas) {
+            Intent intent = new Intent(tabela_reclusos.this, tabela_guarda.class);
             startActivity(intent);
-        }else if (id == R.id.nav_psicologos){
-            Intent intent = new Intent(tabela_reclusos.this,tabela_psicologo.class);
+        } else if (id == R.id.nav_psicologos) {
+            Intent intent = new Intent(tabela_reclusos.this, tabela_psicologo.class);
             startActivity(intent);
-        }else if (id == R.id.nav_reclusos){
-            Intent intent = new Intent(tabela_reclusos.this,tabela_reclusos.class);
+        } else if (id == R.id.nav_reclusos) {
+            Intent intent = new Intent(tabela_reclusos.this, tabela_reclusos.class);
             startActivity(intent);
         }
-        DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -347,102 +346,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         TextView doencas;
         TextView piso;
         TextView ala;
-        myDialog.setContentView(R.layout.vermaisdirpopup);
-        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-        doencas = (TextView) myDialog.findViewById(R.id.doencas1);
-        piso = (TextView) myDialog.findViewById(R.id.piso1);
-        ala = (TextView) myDialog.findViewById(R.id.ala1);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        doencas.setText(itemArrayList.get(posicao).getDoencaRec());
-        piso.setText(itemArrayList.get(posicao).getPisoRec());
-        ala.setText(itemArrayList.get(posicao).getAlaRec());
-        System.out.println(posicao);
-        myDialog.show();
-    }
-
-    public void alteraDados_rec (View view){
-        posicao = listView.getPositionForView(view);
-        TextView txtclose;
-        TextView txtAlterar;
-        EditText nome;
-        EditText doencas;
-        EditText piso;
-        EditText ala;
-        editarRec.setContentView(R.layout.alterarpopup);
-        txtclose = (TextView) editarRec.findViewById(R.id.txtclose);
-        txtAlterar = (TextView) editarRec.findViewById(R.id.txtAlterar);
-        nome  = (EditText) editarRec.findViewById(R.id.alteraNome) ;
-        doencas = (EditText) editarRec.findViewById(R.id.alteraDoencas);
-        piso = (EditText) editarRec.findViewById(R.id.alteraPiso);
-        ala = (EditText) editarRec.findViewById(R.id.alteraAla);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editarRec.dismiss();
-            }
-        });
-        txtAlterar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlterarDadosRec alterarDadosRec = new AlterarDadosRec();
-                alterarDadosRec.execute();
-            }
-        });
-      /* doencas.setText(itemArrayList.get(posicao).getDoencaRec());
-        piso.setText(itemArrayList.get(posicao).getPisoRec());
-        ala.setText(itemArrayList.get(posicao).getAlaRec());
-        nome.setText(itemArrayList.get(posicao).getNomeRec());*/
-        editarRec.show();
-    }
-
-    private class AlterarDadosRec extends AsyncTask<String, String, String>{
-        String msg = "";
-        int id_recluso = itemArrayList.get(posicao).getId_recluse();
-        EditText nome  = (EditText) editarRec.findViewById(R.id.alteraNome) ;
-        EditText doencas = (EditText) editarRec.findViewById(R.id.alteraDoencas);
-        EditText piso = (EditText) editarRec.findViewById(R.id.alteraPiso);
-        EditText ala = (EditText) editarRec.findViewById(R.id.alteraAla);
-        String t_nome = nome.getText().toString().trim();
-        String t_doencas = doencas.getText().toString().trim();
-        String t_piso = piso.getText().toString().trim();
-        String t_ala = ala.getText().toString().trim();
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection  = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
-                if (connection == null){
-                    msg = "Não foi possível realizar connection";
-                }else {
-                    String query = "UPDATE Recluse SET name = '"+t_nome+"', floor = '"+t_piso+"', wing = '"+t_ala+"', disease = '"+t_doencas+"' WHERE id_recluse = '"+id_recluso+"';";
-                    Statement statement = connection.createStatement();
-                    statement.executeUpdate(query);
-                    msg = "Atualizado com sucesso";
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return msg;
-        }
-    }}
-    /*
-    public void verData (View view) {
-
-        posicao = listView.getPositionForView(view);
-        System.out.println(posicao);
-        TextView txtclose;
-        TextView doencas;
-        TextView piso;
-        TextView ala;
         TextView nascimento;
-        ImageView alterardados;
         myDialog.setContentView(R.layout.vermaisdirpopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         doencas = (TextView) myDialog.findViewById(R.id.doencas1);
@@ -459,39 +363,34 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         piso.setText(itemArrayList.get(posicao).getPisoRec());
         ala.setText(itemArrayList.get(posicao).getAlaRec());
         nascimento.setText(itemArrayList.get(posicao).getNascimento());
-        System.out.println(posicao);
-        alterardados = (ImageView) myDialog.findViewById(R.id.alterardados);
-        alterardados.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alteraDados_rec(v);
-            }
-        });
+        id_recluso = itemArrayList.get(posicao).getId_recluse();
+        System.out.println(id_recluso);
         myDialog.show();
     }
 
-    public void alteraDados_rec(View view){
+    public void alteraDados_rec(View view) {
+        // posicao = listView.getPositionForView(view);
         TextView txtclose;
+        ImageView txtAlterar;
+        EditText nome;
         EditText doencas;
         EditText piso;
         EditText ala;
-        EditText nascimento;
-        TextView txtAlterar;
-        txtAlterar = (TextView) myDialog.findViewById(R.id.txtAlterar);
-        myDialog.setContentView(R.layout.alterarpopup);
-        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-        doencas = (EditText) myDialog.findViewById(R.id.alteraDoencas);
-        piso = (EditText) myDialog.findViewById(R.id.alteraPiso);
-        ala = (EditText) myDialog.findViewById(R.id.alteraAla);
-        nascimento = (EditText) myDialog.findViewById(R.id.alteraNascimento);
+        editarRec.setContentView(R.layout.alterarpopup);
+        txtclose = (TextView) editarRec.findViewById(R.id.txtclose);
+        txtAlterar = (ImageView) editarRec.findViewById(R.id.imageView18);
+        nome = (EditText) editarRec.findViewById(R.id.alteraNome);
+        doencas = (EditText) editarRec.findViewById(R.id.alteraDoencas);
+        piso = (EditText) editarRec.findViewById(R.id.alteraPiso);
+        ala = (EditText) editarRec.findViewById(R.id.alteraAla);
         doencas.setText(itemArrayList.get(posicao).getDoencaRec());
         piso.setText(itemArrayList.get(posicao).getPisoRec());
         ala.setText(itemArrayList.get(posicao).getAlaRec());
-        nascimento.setText(itemArrayList.get(posicao).getNascimento());
+        nome.setText(itemArrayList.get(posicao).getNomeRec());
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDialog.dismiss();
+                editarRec.dismiss();
             }
         });
         txtAlterar.setOnClickListener(new View.OnClickListener() {
@@ -501,6 +400,83 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                 alterarDadosRec.execute();
             }
         });
-        myDialog.show();
+
+        editarRec.show();
     }
-*/
+
+    private class AlterarDadosRec extends AsyncTask<String, String, String> {
+        String msg = "";
+        EditText nome = (EditText) editarRec.findViewById(R.id.alteraNome);
+        EditText doencas = (EditText) editarRec.findViewById(R.id.alteraDoencas);
+        EditText piso = (EditText) editarRec.findViewById(R.id.alteraPiso);
+        EditText ala = (EditText) editarRec.findViewById(R.id.alteraAla);
+        String t_nome = nome.getText().toString().trim();
+        String t_doencas = doencas.getText().toString().trim();
+        String t_piso = piso.getText().toString().trim();
+        String t_ala = ala.getText().toString().trim();
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                // System.out.println(id_recluso);
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null) {
+                    msg = "Não foi possível realizar connection";
+                } else {
+                    String query = "UPDATE Recluse SET name = '" + t_nome + "', floor = '" + t_piso + "', wing = '" + t_ala + "', disease = '" + t_doencas + "' WHERE id_recluse = '"+id_recluso+"';";
+                    System.out.println(query);
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(query);
+                    msg = "Atualizado com sucesso";
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
+    }
+
+
+
+    public void eliminarRecluso (View view) {
+        EliminarRecluso eliminarRecluso = new EliminarRecluso();
+        eliminarRecluso.execute();
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        myDialog.dismiss();
+        startActivity(new Intent(this, tabela_reclusos.class));
+        tabela_reclusos.this.finish();
+    }
+    private class EliminarRecluso extends AsyncTask<String, String, String>{
+        String msg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null){
+                    msg = "Connect failed";
+                } else {
+                    System.out.println(posicao);
+                    String query = "UPDATE Recluse SET deleted='1' where id_recluse = '"+ itemArrayList.get(posicao).getId_recluse()+ "'";
+                    Statement preparedStatement = connection.createStatement();
+                    System.out.println(query);
+                    preparedStatement.executeUpdate(query);
+                    System.out.println("1");
+                }
+                connection.close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
+    }
+}
