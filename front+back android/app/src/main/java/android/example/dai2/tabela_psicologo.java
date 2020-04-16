@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class tabela_psicologo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    Dialog myDialog;
+    Dialog myDialog,editarPsi;
     public static  ArrayList<Entidades> entidadesArrayList;
     private SyncDataPsico.MyAppAdapter myAppAdapter;
     private ListView listView;
@@ -52,6 +54,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.tabela_psicologo);
         listView = (ListView) findViewById(R.id.lvE);
         myDialog = new Dialog(this);
+        editarPsi = new Dialog(this);
 
         entidadesArrayList = new ArrayList<Entidades>();
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -482,5 +485,35 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                     return msg;
                 }
             }
+    public void alteraDados_psi(View view) {
+        // posicao = listView.getPositionForView(view);
+        TextView txtclose;
+        ImageView txtAlterar;
+        EditText nome;
+        EditText email;
+        editarPsi.setContentView(R.layout.alterarpsicologo);
+        txtclose = (TextView) editarPsi.findViewById(R.id.txtclose);
+        txtAlterar = (ImageView) editarPsi.findViewById(R.id.imageView18);
+        nome = (EditText) editarPsi.findViewById(R.id.alteraNomePsi);
+        email = (EditText) editarPsi.findViewById(R.id.alteraEmail);
+       // nome.setText(itemArrayList.get(posicao).get());
+       // email.setText(itemArrayList.get(posicao).get());
+
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editarPsi.dismiss();
+            }
+        });
+        /*txtAlterar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tabela_reclusos.AlterarDadosRec alterarDadosRec = new tabela_reclusos.AlterarDadosRec();
+                alterarDadosRec.execute();
+                guardar(v);            }
+        });*/
+
+        editarPsi.show();
+    }
 
 }
