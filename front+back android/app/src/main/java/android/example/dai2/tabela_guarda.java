@@ -138,67 +138,128 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            /*Intent intent = new Intent(Main2Activity.this,Main2Activity.class);
-            startActivity(intent);*/
-            Toast.makeText(tabela_guarda.this,"Teste", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(tabela_guarda.this,inicio_diretor.class);
+            startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(tabela_guarda.this,horario_diretor.class);
-            startActivity(intent);
+
+            startActivity(new Intent(tabela_guarda.this, tabela_horario.class));
+
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(tabela_guarda.this,documentos_diretor.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarel;
+            Button his;
+            myDialog.setContentView(R.layout.relatoriospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarel = (Button) myDialog.findViewById(R.id.listarel);
+            his = (Button) myDialog.findViewById(R.id.his);
+            listarel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_guarda.this, documentos_diretor.class));
+                }
+            });
+            his.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_guarda.this, historico.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_perfil){
             Intent intent = new Intent(tabela_guarda.this,perfil_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_entidades){
-            Intent intent = new Intent(tabela_guarda.this,tabela_guarda.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listagem;
+            Button registo;
+            myDialog.setContentView(R.layout.entidadesinicio);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listagem = (Button) myDialog.findViewById(R.id.listagem);
+            registo = (Button) myDialog.findViewById(R.id.registo);
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            listagem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirEntidades(v);
+                }
+            });
+            registo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_guarda.this, Main3Activity.class));
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_reclusos){
-            Intent intent = new Intent(tabela_guarda.this,tabela_reclusos.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarec;
+            Button reg;
+            myDialog.setContentView(R.layout.reclusospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarec = (Button) myDialog.findViewById(R.id.listarec);
+            reg = (Button) myDialog.findViewById(R.id.reg);
+            listarec.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_guarda.this, tabela_reclusos.class));
+                }
+            });
+            reg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_guarda.this, Registar_Reclusos.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-
-    public void entrare (View v) {
-        startActivity(new Intent(this, Main3Activity.class));
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-    public void ShowPopup(View v){
+    public void abrirEntidades(View v){
         TextView txtclose;
-        Button btnSim;
-        Button btnNao;
-        myDialog.setContentView(R.layout.exitpopup);
+        Button guardas;
+        Button psicologos;
+        myDialog.setContentView(R.layout.entidadespopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-        btnNao = (Button) myDialog.findViewById(R.id.btnNao);
-        btnSim = (Button) myDialog.findViewById(R.id.btnSim);
+        guardas = (Button) myDialog.findViewById(R.id.guardas);
+        psicologos = (Button) myDialog.findViewById(R.id.psicologos);
+        guardas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(tabela_guarda.this, tabela_guarda.class));
+            }
+        });
+        psicologos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(tabela_guarda.this, tabela_psicologo.class));
+            }
+        });
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myDialog.dismiss();
             }
         });
-        btnNao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        btnSim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sair(v);
-                alert("Sessão terminada");
-            }
-        });
-        myDialog.show();
     }
     private void alert(String msg){
         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
