@@ -54,11 +54,89 @@ public class inicio_diretor extends AppCompatActivity
     }
 
     public void entrarr (View v) {
-    startActivity(new Intent(this, documentos_diretor.class));
+        TextView txtclose;
+        Button listarel;
+        Button his;
+        myDialog.setContentView(R.layout.relatoriospopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        listarel = (Button) myDialog.findViewById(R.id.listarel);
+        his = (Button) myDialog.findViewById(R.id.his);
+        listarel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_diretor.this, documentos_diretor.class));
+            }
+        });
+        his.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_diretor.this, historico.class));
+            }
+        });
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
 }
-    public void entrarhor (View v) {startActivity(new Intent(this, horario_diretor.class));}
+
+    public void entrarhor (View v) {
+        TextView txtclose;
+        Button listahor;
+        Button meuhor;
+        myDialog.setContentView(R.layout.horariospopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        listahor = (Button) myDialog.findViewById(R.id.listahor);
+        meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+        listahor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_diretor.this, tabela_horario.class));
+            }
+        });
+        meuhor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_diretor.this, horario_diretor.class));
+            }
+        });
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
+    }
     public void entrar (View v) {
-        startActivity(new Intent(this, tabela_reclusos.class));
+        TextView txtclose;
+        Button listarec;
+        Button reg;
+        myDialog.setContentView(R.layout.reclusospopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        listarec = (Button) myDialog.findViewById(R.id.listarec);
+        reg = (Button) myDialog.findViewById(R.id.reg);
+        listarec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_diretor.this, tabela_reclusos.class));
+            }
+        });
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_diretor.this, Registar_Reclusos.class));
+            }
+        });
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
     }
     public void entrarperfil (View v) {startActivity(new Intent(this, perfil_diretor.class));}
 

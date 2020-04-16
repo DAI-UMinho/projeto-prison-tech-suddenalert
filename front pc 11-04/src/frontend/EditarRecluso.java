@@ -5,9 +5,6 @@
  */
 package frontend;
 
-import backend.*;
-import java.sql.*;
-import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -15,10 +12,8 @@ import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static javax.swing.text.html.HTML.Tag.I;
-
 
 /**
  *
@@ -51,6 +46,7 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         label1 = new java.awt.Label();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         nome_editar = new javax.swing.JTextField();
@@ -90,11 +86,22 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         label1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label1.setFont(new java.awt.Font("Tw Cen MT", 1, 38)); // NOI18N
         label1.setForeground(new java.awt.Color(204, 204, 204));
-        label1.setText("Alterar dados do Recluso");
+        label1.setText("Recluso");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/recl.jpg"))); // NOI18N
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/delete.png"))); // NOI18N
+        jButton2.setText("Eliminar");
+        jButton2.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         BackButton.setBackground(new java.awt.Color(176, 2, 37));
         BackButton.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -309,8 +316,8 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(67, 67, 67)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(266, 266, 266))
@@ -348,10 +355,17 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        EliminarR xEliminarR = new EliminarR();
+        xEliminarR.setLocationRelativeTo(null);
+        xEliminarR.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
-        LerRecluso xLerRecluso = new LerRecluso();
-        xLerRecluso.setLocationRelativeTo(null);
-        xLerRecluso.setVisible(true);
+        ListReclusos xListReclusos = new ListReclusos();
+        xListReclusos.setLocationRelativeTo(null);
+        xListReclusos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 

@@ -202,11 +202,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         ));
         jTable_Display_Reclusos.setSelectionBackground(new java.awt.Color(255, 102, 102));
         jTable_Display_Reclusos.setVerifyInputWhenFocusTarget(false);
-        jTable_Display_Reclusos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable_Display_ReclusosMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(jTable_Display_Reclusos);
 
         jTextField1.setInheritsPopupMenu(true);
@@ -502,12 +497,12 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             .addComponent(doc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(hor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(ent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
             .addComponent(lrecl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(recl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(sidepane9Layout.createSequentialGroup()
                 .addGap(135, 135, 135)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
             .addGroup(sidepane9Layout.createSequentialGroup()
                 .addGroup(sidepane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sidepane9Layout.createSequentialGroup()
@@ -976,12 +971,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         xMenu.setVisible(true);
         this.dispose();      
     }//GEN-LAST:event_BackButtonActionPerformed
-
-    private void jTable_Display_ReclusosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_Display_ReclusosMouseClicked
-
-        
-
-    }//GEN-LAST:event_jTable_Display_ReclusosMouseClicked
 
     /**
      * @param args the command line arguments
