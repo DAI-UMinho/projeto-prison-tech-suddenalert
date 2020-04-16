@@ -19,8 +19,7 @@
     <string name="menu_horarios">Horário</string>
     <string name="menu_doc">Documentos</string>
     <string name="menu_perfil">Perfil</string>
-    <string name="menu_guarda">Guardas</string>
-    <string name="menu_psicologo">Psicólogos</string>
+    <string name="menu_entidades">Entidades</string>
     <string name="menu_recluso">Reclusos</string>
     <string name="home_second">Home Second</string>
 </resources>
