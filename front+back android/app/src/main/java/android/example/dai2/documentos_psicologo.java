@@ -30,9 +30,7 @@ public class documentos_psicologo extends AppCompatActivity implements Navigatio
         myDialog = new Dialog(this);
         setContentView(R.layout.documentos_entidades);
         ListView lista = (ListView) findViewById(R.id.lvdoc);
-        ArrayList<Documentos> documentos = adicionarDocumentos();
-        ArrayAdapter adapter = new ListarDocumentos(this, documentos);
-        lista.setAdapter(adapter);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -105,17 +103,7 @@ public class documentos_psicologo extends AppCompatActivity implements Navigatio
 
     }
 
-    private ArrayList<Documentos> adicionarDocumentos() {
-        ArrayList<Documentos> documentos = new ArrayList<Documentos>();
-        //todos os relatorios
-        Documentos d = new Documentos("Incidente","Joao", "24/10/2019", "Alto", "joao@gmail.com");
-        documentos.add(d);
-        d = new Documentos("Normalidade","Antonio","13/1/2020", "Médio", "antonio@gmail.com");
-        documentos.add(d);
-        d = new Documentos("Incidente","Pedro","23/2/2020", "Baixo", "pedro@gmail.com");
-        documentos.add(d);
-        return documentos;
-    }
+
    /* public void ShowPopup3(View v){
         TextView txtclose;
         TextView pontos;

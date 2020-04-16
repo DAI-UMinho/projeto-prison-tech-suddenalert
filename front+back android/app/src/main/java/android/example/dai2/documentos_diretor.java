@@ -1,12 +1,18 @@
 package android.example.dai2;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,19 +26,27 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class documentos_diretor extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
+    public static ArrayList<Documentos> documentosArrayList;
+    private documentos_diretor.SyncDataDoc.MyAppAdapter myAppAdapter;
+    private ListView listView;
+    private boolean sucess = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myDialog = new Dialog(this);
         setContentView(R.layout.documentos_diretor);
-        ListView lista = (ListView) findViewById(R.id.lvdoc);
-        ArrayList<Documentos> documentos = adicionarDocumentos();
-        ArrayAdapter adapter = new ListarDocumentos(this, documentos);
-        lista.setAdapter(adapter);
+        listView = (ListView) findViewById(R.id.lvdoc);
+        documentosArrayList = new ArrayList<Documentos>();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,6 +61,10 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        SyncDataDoc syncDataDoc = new SyncDataDoc();
+        syncDataDoc.execute();
 
     }
 
@@ -109,15 +127,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
 
     }
 
-    private ArrayList<Documentos> adicionarDocumentos() {
-        ArrayList<Documentos> documentos = new ArrayList<Documentos>();
-        //apenas os mais graves
-        Documentos d = new Documentos("Incidente","Joao", "24/10/2019", "Alto", "joao@gmail.com");
-        documentos.add(d);
-        d = new Documentos("Normalidade","Antonio","13/1/2020", "Médio", "antonio@gmail.com");
-        documentos.add(d);
-        return documentos;
-    }
+
    /* public void ShowPopup3(View v){
         TextView txtclose;
         TextView pontos;
@@ -208,4 +218,140 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
 
         startActivity(new Intent(this, MainActivity.class));
     }
+
+    private class SyncDataDoc extends AsyncTask<String, String, String> {
+        String msg = "Internet/DB_Connection turn un error";
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(documentos_diretor.this, "Synchronising", "ListView Loading wait...", true);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                System.out.println("qq1ui");
+                if (conn == null) {
+                    sucess = false;
+                } else {
+                    String query = "Select  Report.idReport, Report.title, Profile.name, Report.date, Report.gravidade, Profile.email , Report.report from Report inner join Profile on Report.scan = Profile.scan;";
+                    Statement statement = conn.createStatement();
+                    ResultSet resultSet = statement.executeQuery(query);
+                    System.out.println("ali");
+                    if (resultSet != null) {
+                        while (resultSet.next()) {
+                            try {
+                                documentosArrayList.add(new Documentos(resultSet.getInt("idReport"), resultSet.getString("title"), resultSet.getString("name"), resultSet.getString("date"), resultSet.getString("gravidade"), resultSet.getString("email"), resultSet.getString("report")));
+                                System.out.println("1");
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        msg = "Found";
+                        sucess = true;
+                    } else {
+                        msg = "Data not found";
+                        sucess = false;
+                    }
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            Toast.makeText(documentos_diretor.this, msg + "", Toast.LENGTH_LONG).show();
+            if (sucess == false) {
+            } else {
+                try {
+                    myAppAdapter = new documentos_diretor.SyncDataDoc.MyAppAdapter(documentosArrayList, documentos_diretor.this);
+                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                    listView.setAdapter(myAppAdapter);
+                } catch (Exception ex) {
+
+                }
+            }
+        }
+        public class MyAppAdapter extends BaseAdapter {
+            public class ViewHolder {
+                TextView titulo, id, data, email, gravidade;
+            }
+
+            public List<Documentos> reportList;
+
+            public Context context;
+            ArrayList<Documentos> arrayList;
+
+            private  MyAppAdapter(List<Documentos> apps, Context context){
+                this.reportList = apps;
+                this.context = context;
+                arrayList = new ArrayList<Documentos>();
+                arrayList.addAll(reportList);
+            }
+
+            @Override
+            public int getCount() {
+                return reportList.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return position;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View rowView = convertView;
+                documentos_diretor.SyncDataDoc.MyAppAdapter.ViewHolder viewHolder = null;
+                if (rowView == null){
+                    LayoutInflater inflater = getLayoutInflater();
+                    rowView = inflater.inflate(R.layout.linhadoc, parent, false);
+                    viewHolder = new documentos_diretor.SyncDataDoc.MyAppAdapter.ViewHolder();
+                    viewHolder.titulo = (TextView) rowView.findViewById(R.id.nomeRel);
+                    viewHolder.id = (TextView) rowView.findViewById(R.id.nomeEnt);
+                    viewHolder.data = (TextView) rowView.findViewById(R.id.data);
+                    viewHolder.email = (TextView) rowView.findViewById(R.id.email);
+                    viewHolder.gravidade = (TextView) rowView.findViewById(R.id.gravidade);
+                    rowView.setTag(viewHolder);
+                } else {
+                    viewHolder = (documentos_diretor.SyncDataDoc.MyAppAdapter.ViewHolder) convertView.getTag();
+                }
+                viewHolder.titulo.setText(reportList.get(position).getNomeRel());
+                viewHolder.id.setText(reportList.get(position).getNomeEn());
+                viewHolder.data.setText(reportList.get(position).getData());
+                viewHolder.email.setText(reportList.get(position).getemail());
+                viewHolder.gravidade.setText(reportList.get(position).getgravidade());
+                return rowView;
+            }
+        }
+    }
+   /* public void lerRelatorio(View view) {
+        int posicao = listView.getPositionForView(view);
+        TextView txtclose;
+        TextView relatorio;
+        myDialog.setContentView(R.layout.vermaispopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        relatorio = (TextView) myDialog.findViewById(R.id.);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        relatorio.setText(documentosArrayList.get(posicao).getRelatorio());
+        myDialog.show();
+    }*/
 }
