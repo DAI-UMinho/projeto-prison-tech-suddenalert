@@ -63,7 +63,7 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         numero_editar = new javax.swing.JTextField();
         data_nascimento_editar = new javax.swing.JTextField();
         data_entrada_editar = new javax.swing.JTextField();
-        botao_guardar = new javax.swing.JButton();
+        jbutton2 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -273,14 +273,14 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
                 .addGap(36, 36, 36))
         );
 
-        botao_guardar.setBackground(new java.awt.Color(255, 255, 255));
-        botao_guardar.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        botao_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/save.png"))); // NOI18N
-        botao_guardar.setText("Guardar");
-        botao_guardar.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        botao_guardar.addActionListener(new java.awt.event.ActionListener() {
+        jbutton2.setBackground(new java.awt.Color(255, 255, 255));
+        jbutton2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jbutton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/save.png"))); // NOI18N
+        jbutton2.setText("Guardar");
+        jbutton2.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        jbutton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botao_guardarActionPerformed(evt);
+                jbutton2ActionPerformed(evt);
             }
         });
 
@@ -294,14 +294,14 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
                 .addGap(144, 144, 144)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botao_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbutton2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(104, 104, 104)
-                .addComponent(botao_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbutton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -397,7 +397,7 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_doenças_editarActionPerformed
 
-    private void botao_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_guardarActionPerformed
+    private void jbutton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton2ActionPerformed
         String s = numero_editar.getText();
         String no = nome_editar.getText();
         String dn = data_nascimento_editar.getText();
@@ -410,7 +410,7 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         xListReclusos.setLocationRelativeTo(null);
         xListReclusos.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_botao_guardarActionPerformed
+    }//GEN-LAST:event_jbutton2ActionPerformed
 
     private void data_nascimento_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_nascimento_editarActionPerformed
         
@@ -432,10 +432,10 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
     public javax.swing.JTextField ala_editar;
-    private javax.swing.JButton botao_guardar;
     public javax.swing.JTextField data_entrada_editar;
     public javax.swing.JTextField data_nascimento_editar;
     public javax.swing.JTextField doenças_editar;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -448,6 +448,7 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JButton jbutton2;
     private java.awt.Label label1;
     public javax.swing.JTextField nome_editar;
     public javax.swing.JTextField numero_editar;
