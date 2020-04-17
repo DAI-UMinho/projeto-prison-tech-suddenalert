@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class tabela_psicologo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    Dialog myDialog;
+    Dialog myDialog,editarPsi;
     public static  ArrayList<Entidades> entidadesArrayList;
     private SyncDataPsico.MyAppAdapter myAppAdapter;
     private ListView listView;
@@ -52,6 +54,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.tabela_psicologo);
         listView = (ListView) findViewById(R.id.lvE);
         myDialog = new Dialog(this);
+        editarPsi = new Dialog(this);
 
         entidadesArrayList = new ArrayList<Entidades>();
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -133,32 +136,153 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            /*Intent intent = new Intent(Main2Activity.this,Main2Activity.class);
-            startActivity(intent);*/
-            Toast.makeText(tabela_psicologo.this,"Teste", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(tabela_psicologo.this,inicio_diretor.class);
+            startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(tabela_psicologo.this,horario_psicologo.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listahor;
+            Button meuhor;
+            myDialog.setContentView(R.layout.horariospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listahor = (Button) myDialog.findViewById(R.id.listahor);
+            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            listahor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_psicologo.this, tabela_horario.class));
+                }
+            });
+            meuhor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_psicologo.this, horario_diretor.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(tabela_psicologo.this,documentos_psicologo.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarel;
+            Button his;
+            myDialog.setContentView(R.layout.relatoriospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarel = (Button) myDialog.findViewById(R.id.listarel);
+            his = (Button) myDialog.findViewById(R.id.his);
+            listarel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_psicologo.this, documentos_diretor.class));
+                }
+            });
+            his.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_psicologo.this, historico.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_perfil){
             Intent intent = new Intent(tabela_psicologo.this,perfil_diretor.class);
             startActivity(intent);
-        }else if (id == R.id.nav_guardas){
-            Intent intent = new Intent(tabela_psicologo.this,tabela_guarda.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_psicologos){
-            Intent intent = new Intent(tabela_psicologo.this,tabela_psicologo.class);
-            startActivity(intent);
+        }else if (id == R.id.nav_entidades){
+            TextView txtclose;
+            Button listagem;
+            Button registo;
+            myDialog.setContentView(R.layout.entidadesinicio);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listagem = (Button) myDialog.findViewById(R.id.listagem);
+            registo = (Button) myDialog.findViewById(R.id.registo);
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            listagem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirEntidades(v);
+                }
+            });
+            registo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_psicologo.this, Main3Activity.class));
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_reclusos){
-            Intent intent = new Intent(tabela_psicologo.this,tabela_reclusos.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarec;
+            Button reg;
+            myDialog.setContentView(R.layout.reclusospopup);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarec = (Button) myDialog.findViewById(R.id.listarec);
+            reg = (Button) myDialog.findViewById(R.id.reg);
+            listarec.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_psicologo.this, tabela_reclusos.class));
+                }
+            });
+            reg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(tabela_psicologo.this, Registar_Reclusos.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void abrirEntidades(View v){
+        TextView txtclose;
+        Button guardas;
+        Button psicologos;
+        myDialog.setContentView(R.layout.entidadespopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        guardas = (Button) myDialog.findViewById(R.id.guardas);
+        psicologos = (Button) myDialog.findViewById(R.id.psicologos);
+        guardas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(tabela_psicologo.this, tabela_guarda.class));
+            }
+        });
+        psicologos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(tabela_psicologo.this, tabela_psicologo.class));
+            }
+        });
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+    }
+
 
     public void ShowPopup(View v){
         TextView txtclose;
@@ -361,5 +485,35 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                     return msg;
                 }
             }
+    public void alteraDados_psi(View view) {
+        // posicao = listView.getPositionForView(view);
+        TextView txtclose;
+        ImageView txtAlterar;
+        EditText nome;
+        EditText email;
+        editarPsi.setContentView(R.layout.alterarpsicologo);
+        txtclose = (TextView) editarPsi.findViewById(R.id.txtclose);
+        txtAlterar = (ImageView) editarPsi.findViewById(R.id.imageView18);
+        nome = (EditText) editarPsi.findViewById(R.id.alteraNomePsi);
+        email = (EditText) editarPsi.findViewById(R.id.alteraEmail);
+       // nome.setText(itemArrayList.get(posicao).get());
+       // email.setText(itemArrayList.get(posicao).get());
+
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editarPsi.dismiss();
+            }
+        });
+        /*txtAlterar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tabela_reclusos.AlterarDadosRec alterarDadosRec = new tabela_reclusos.AlterarDadosRec();
+                alterarDadosRec.execute();
+                guardar(v);            }
+        });*/
+
+        editarPsi.show();
+    }
 
 }

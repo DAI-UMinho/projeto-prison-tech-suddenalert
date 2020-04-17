@@ -29,9 +29,9 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstancesState);
         setContentView(R.layout.alerta_psicologo);
         ListView lista = (ListView) findViewById(R.id.alertas);
-        ArrayList<AlertSituation> alerts = adicionarAlerts();
+       /* ArrayList<AlertSituation> alerts = adicionarAlerts();
         ArrayAdapter adapter = new AlertAdapter(this, alerts);
-        lista.setAdapter(adapter);
+        lista.setAdapter(adapter);*/
         myDialog = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -101,7 +101,7 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
+/*
     private ArrayList<AlertSituation> adicionarAlerts() {
         ArrayList<AlertSituation> alerts = new ArrayList<AlertSituation>();
         AlertSituation a = new AlertSituation("Médio", "Este recluso encontra-se instável.");
@@ -111,7 +111,7 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
         a = new AlertSituation("Alto", "Este recluso encontra-se deprimido e com atitudes violentas.");
         alerts.add(a);
         return alerts;
-    }
+    }*/
     public void aceitar (View v) {
         startActivity(new Intent(this, android.example.dai2.fazer_documentos.class));
     }

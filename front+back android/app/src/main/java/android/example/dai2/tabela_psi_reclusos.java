@@ -94,7 +94,6 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final int which_item = position;
-
                 new AlertDialog.Builder(tabela_reclusos.this)
                         .setIcon(android.R.drawable.ic_delete)
                         .setTitle("Dados")
@@ -103,7 +102,6 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
                         .setMessage("Piso:" + itemArrayList.get(which_item).pisoRec);
                 return true;
             }
-
         });*/
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -340,8 +338,10 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         TextView piso;
         TextView ala;
         TextView nascimento;
+        ImageView sino;
         myDialog.setContentView(R.layout.vermaispopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        sino = (ImageView) myDialog.findViewById(R.id.sino);
         doencas = (TextView) myDialog.findViewById(R.id.doencas1);
         piso = (TextView) myDialog.findViewById(R.id.piso1);
         ala = (TextView) myDialog.findViewById(R.id.ala1);
@@ -352,6 +352,11 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
                 myDialog.dismiss();
             }
         });
+        sino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iniciar_relatorio(v);
+            }});
         doencas.setText(itemArrayList.get(posicao).getDoencaRec());
         piso.setText(itemArrayList.get(posicao).getPisoRec());
         ala.setText(itemArrayList.get(posicao).getAlaRec());
@@ -360,5 +365,7 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         myDialog.show();
     }
 
-
+    public void iniciar_relatorio (View v) {
+        startActivity(new Intent(this, fazer_documentos.class));
+    }
 }

@@ -24,7 +24,7 @@ public class horario_psicologo extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.horario_entidades);
+        setContentView(R.layout.horario_psicologo);
         myDialog = new Dialog(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);

@@ -15,7 +15,7 @@
         android:layout_marginTop="4dp"
         android:layout_weight="1"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="Documentos"
+        android:text="Relatórios"
         android:textAlignment="center"
         android:textSize="36dp"
         android:textStyle="bold"
