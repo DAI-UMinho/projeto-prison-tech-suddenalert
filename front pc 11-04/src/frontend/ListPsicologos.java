@@ -55,16 +55,25 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         BackButton = new javax.swing.JButton();
+        hor_guarda = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         sidepane9 = new javax.swing.JPanel();
-        jLabel39 = new javax.swing.JLabel();
-        home = new rsbuttom.RSButtonMetro();
         ent = new rsbuttom.RSButtonMetro();
+        lent = new rsbuttom.RSButtonMetro();
         doc = new rsbuttom.RSButtonMetro();
         hor = new rsbuttom.RSButtonMetro();
         recl = new rsbuttom.RSButtonMetro();
+        lrecl = new rsbuttom.RSButtonMetro();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        home = new rsbuttom.RSButtonMetro();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -135,6 +144,16 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             }
         });
 
+        hor_guarda.setBackground(new java.awt.Color(255, 255, 255));
+        hor_guarda.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        hor_guarda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ver_hor.png"))); // NOI18N
+        hor_guarda.setText("Horário");
+        hor_guarda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hor_guardaActionPerformed(evt);
+            }
+        });
+
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/save.png"))); // NOI18N
@@ -169,6 +188,8 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(hor_guarda, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackButton)
                 .addGap(149, 149, 149))
@@ -203,7 +224,8 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(hor_guarda))
                     .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
@@ -238,27 +260,8 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
 
         sidepane9.setBackground(new java.awt.Color(243, 243, 243));
 
-        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/f.png"))); // NOI18N
-
-        home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_home.png"))); // NOI18N
-        home.setText("         Menu Principal");
-        home.setColorTextNormal(new java.awt.Color(153, 153, 153));
-        home.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        home.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        home.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                homeMousePressed(evt);
-            }
-        });
-        home.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                homeActionPerformed(evt);
-            }
-        });
-
         ent.setForeground(new java.awt.Color(153, 153, 153));
-        ent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_ent.png"))); // NOI18N
-        ent.setText("        Entidades");
+        ent.setText("                     Entidade");
         ent.setColorTextNormal(new java.awt.Color(153, 153, 153));
         ent.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ent.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -269,6 +272,21 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         ent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 entActionPerformed(evt);
+            }
+        });
+
+        lent.setForeground(new java.awt.Color(153, 153, 153));
+        lent.setText("                     Entidades");
+        lent.setColorTextNormal(new java.awt.Color(153, 153, 153));
+        lent.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lentMousePressed(evt);
+            }
+        });
+        lent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lentActionPerformed(evt);
             }
         });
 
@@ -291,8 +309,8 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         });
 
         hor.setForeground(new java.awt.Color(153, 153, 153));
-        hor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_horario.png"))); // NOI18N
-        hor.setText("       Horários");
+        hor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_hor.png"))); // NOI18N
+        hor.setText("       Horário");
         hor.setColorTextNormal(new java.awt.Color(153, 153, 153));
         hor.setHideActionText(true);
         hor.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -310,11 +328,10 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         });
 
         recl.setForeground(new java.awt.Color(153, 153, 153));
-        recl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_recluso.png"))); // NOI18N
-        recl.setText("        Reclusos");
+        recl.setText("                     Recluso");
         recl.setColorTextNormal(new java.awt.Color(153, 153, 153));
         recl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        recl.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        recl.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         recl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 reclMousePressed(evt);
@@ -325,6 +342,61 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
                 reclActionPerformed(evt);
             }
         });
+
+        lrecl.setForeground(new java.awt.Color(153, 153, 153));
+        lrecl.setText("                     Reclusos");
+        lrecl.setColorTextNormal(new java.awt.Color(153, 153, 153));
+        lrecl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lrecl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lreclMousePressed(evt);
+            }
+        });
+        lrecl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lreclActionPerformed(evt);
+            }
+        });
+
+        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/f.png"))); // NOI18N
+
+        jLabel40.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel40.setText("Listagem de:");
+
+        jLabel41.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel41.setText("Registar:");
+
+        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel16.setPreferredSize(new java.awt.Dimension(0, 3));
+        jPanel16.setRequestFocusEnabled(false);
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 133, Short.MAX_VALUE)
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1, Short.MAX_VALUE)
+        );
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setPreferredSize(new java.awt.Dimension(0, 3));
+        jPanel5.setRequestFocusEnabled(false);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1, Short.MAX_VALUE)
+        );
 
         jPanel17.setBackground(new java.awt.Color(255, 255, 255));
         jPanel17.setPreferredSize(new java.awt.Dimension(0, 3));
@@ -341,17 +413,57 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
+        jLabel42.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_lista.png"))); // NOI18N
+
+        jLabel43.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_add.png"))); // NOI18N
+
+        home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_home.png"))); // NOI18N
+        home.setText("         Menu Principal");
+        home.setColorTextNormal(new java.awt.Color(153, 153, 153));
+        home.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        home.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                homeMousePressed(evt);
+            }
+        });
+        home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout sidepane9Layout = new javax.swing.GroupLayout(sidepane9);
         sidepane9.setLayout(sidepane9Layout);
         sidepane9Layout.setHorizontalGroup(
             sidepane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(home, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(doc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(hor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(ent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+            .addComponent(lrecl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(recl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(sidepane9Layout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
+            .addGroup(sidepane9Layout.createSequentialGroup()
+                .addGroup(sidepane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(sidepane9Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel40))
+                    .addGroup(sidepane9Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel41)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(home, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         sidepane9Layout.setVerticalGroup(
             sidepane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,16 +471,32 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
                 .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(77, 77, 77)
                 .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(sidepane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel41)
+                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(sidepane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(sidepane9Layout.createSequentialGroup()
+                        .addComponent(recl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(sidepane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel40)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lrecl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(hor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(doc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(recl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -391,11 +519,312 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void entMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMousePressed
+        this.recl.setSelected(false);
+        this.lrecl.setSelected(false);
+        this.ent.setSelected(true);
+        this.lent.setSelected(false);
+        this.doc.setSelected(false);
+        this.hor.setSelected(false);
+        this.home.setSelected(false);
+    }//GEN-LAST:event_entMousePressed
+
+    private void entActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entActionPerformed
+        RegistEnt xRegistEnt = new RegistEnt();
+        xRegistEnt.setLocationRelativeTo(null); 
+        xRegistEnt.setVisible(true);
+        this.dispose();
+        if (!this.ent.isSelected()) {
+            this.home.setColorNormal(new Color(243, 243, 243));
+            this.home.setColorHover(new Color(255, 102, 102));
+            this.home.setColorPressed(new Color(243, 243, 243));
+
+            this.recl.setColorNormal(new Color(243, 243, 243));
+            this.recl.setColorHover(new Color(255, 102, 102));
+            this.recl.setColorPressed(new Color(243, 243, 243));
+
+            this.lrecl.setColorNormal(new Color(243, 243, 243));
+            this.lrecl.setColorHover(new Color(255, 102, 102));
+            this.lrecl.setColorPressed(new Color(243, 243, 243));
+
+            this.ent.setColorNormal(new Color(255, 102, 102));
+            this.ent.setColorHover(new Color(255, 102, 102));
+            this.ent.setColorPressed(new Color(255, 102, 102));
+
+            this.lent.setColorNormal(new Color(243, 243, 243));
+            this.lent.setColorHover(new Color(255, 102, 102));
+            this.lent.setColorPressed(new Color(243, 243, 243));
+
+            this.doc.setColorNormal(new Color(243, 243, 243));
+            this.doc.setColorHover(new Color(255, 102, 102));
+            this.doc.setColorPressed(new Color(243, 243, 243));
+
+            this.hor.setColorNormal(new Color(243, 243, 243));
+            this.hor.setColorHover(new Color(255, 102, 102));
+            this.hor.setColorPressed(new Color(243, 243, 243));
+        } else {
+            this.ent.setColorNormal(new Color(243, 243, 243));
+            this.ent.setColorHover(new Color(255, 102, 102));
+            this.ent.setColorPressed(new Color(243, 243, 243));
+        }
+    }//GEN-LAST:event_entActionPerformed
+
+    private void lentMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lentMousePressed
+        this.recl.setSelected(false);
+        this.lrecl.setSelected(false);
+        this.ent.setSelected(false);
+        this.lent.setSelected(true);
+        this.doc.setSelected(false);
+        this.hor.setSelected(false);
+        this.home.setSelected(false);
+    }//GEN-LAST:event_lentMousePressed
+
+    private void lentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lentActionPerformed
+        ListEnt_popup xListEnt = new ListEnt_popup();
+        xListEnt.setLocationRelativeTo(null);
+        xListEnt.setVisible(true);
+        this.dispose();
+        if (!this.lent.isSelected()) {
+            this.home.setColorNormal(new Color(243, 243, 243));
+            this.home.setColorHover(new Color(255, 102, 102));
+            this.home.setColorPressed(new Color(243, 243, 243));
+
+            this.recl.setColorNormal(new Color(243, 243, 243));
+            this.recl.setColorHover(new Color(255, 102, 102));
+            this.recl.setColorPressed(new Color(243, 243, 243));
+
+            this.lrecl.setColorNormal(new Color(243, 243, 243));
+            this.lrecl.setColorHover(new Color(255, 102, 102));
+            this.lrecl.setColorPressed(new Color(243, 243, 243));
+
+            this.ent.setColorNormal(new Color(243, 243, 243));
+            this.ent.setColorHover(new Color(255, 102, 102));
+            this.ent.setColorPressed(new Color(243, 243, 243));
+
+            this.lent.setColorNormal(new Color(255, 102, 102));
+            this.lent.setColorHover(new Color(255, 102, 102));
+            this.lent.setColorPressed(new Color(255, 102, 102));
+
+            this.doc.setColorNormal(new Color(243, 243, 243));
+            this.doc.setColorHover(new Color(255, 102, 102));
+            this.doc.setColorPressed(new Color(243, 243, 243));
+
+            this.hor.setColorNormal(new Color(243, 243, 243));
+            this.hor.setColorHover(new Color(255, 102, 102));
+            this.hor.setColorPressed(new Color(243, 243, 243));
+        } else {
+            this.lent.setColorNormal(new Color(243, 243, 243));
+            this.lent.setColorHover(new Color(255, 102, 102));
+            this.lent.setColorPressed(new Color(243, 243, 243));
+        }
+    }//GEN-LAST:event_lentActionPerformed
+
+    private void docMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_docMousePressed
+        this.recl.setSelected(false);
+        this.lrecl.setSelected(false);
+        this.ent.setSelected(false);
+        this.lent.setSelected(false);
+        this.doc.setSelected(true);
+        this.hor.setSelected(false);
+        this.home.setSelected(false);
+    }//GEN-LAST:event_docMousePressed
+
+    private void docActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_docActionPerformed
+        Documentos xDoc = new Documentos();
+        xDoc.setLocationRelativeTo(null);
+        xDoc.setVisible(true);
+        this.dispose();
+        if (!this.doc.isSelected()) {
+            this.home.setColorNormal(new Color(243, 243, 243));
+            this.home.setColorHover(new Color(255, 102, 102));
+            this.home.setColorPressed(new Color(243, 243, 243));
+
+            this.recl.setColorNormal(new Color(243, 243, 243));
+            this.recl.setColorHover(new Color(255, 102, 102));
+            this.recl.setColorPressed(new Color(243, 243, 243));
+
+            this.lrecl.setColorNormal(new Color(243, 243, 243));
+            this.lrecl.setColorHover(new Color(255, 102, 102));
+            this.lrecl.setColorPressed(new Color(243, 243, 243));
+
+            this.ent.setColorNormal(new Color(243, 243, 243));
+            this.ent.setColorHover(new Color(255, 102, 102));
+            this.ent.setColorPressed(new Color(243, 243, 243));
+
+            this.lent.setColorNormal(new Color(243, 243, 243));
+            this.lent.setColorHover(new Color(255, 102, 102));
+            this.lent.setColorPressed(new Color(243, 243, 243));
+
+            this.doc.setColorNormal(new Color(255, 102, 102));
+            this.doc.setColorHover(new Color(255, 102, 102));
+            this.doc.setColorPressed(new Color(255, 102, 102));
+
+            this.hor.setColorNormal(new Color(243, 243, 243));
+            this.hor.setColorHover(new Color(255, 102, 102));
+            this.hor.setColorPressed(new Color(243, 243, 243));
+        } else {
+            this.doc.setColorNormal(new Color(243, 243, 243));
+            this.doc.setColorHover(new Color(255, 102, 102));
+            this.doc.setColorPressed(new Color(243, 243, 243));
+        }
+    }//GEN-LAST:event_docActionPerformed
+
+    private void horMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_horMousePressed
+        this.recl.setSelected(false);
+        this.lrecl.setSelected(false);
+        this.ent.setSelected(false);
+        this.lent.setSelected(false);
+        this.doc.setSelected(false);
+        this.hor.setSelected(true);
+        this.home.setSelected(false);
+    }//GEN-LAST:event_horMousePressed
+
+    private void horActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horActionPerformed
+        Horario xHor = new Horario();
+        xHor.setLocationRelativeTo(null);
+        xHor.setVisible(true);
+        this.dispose();
+        if (!this.hor.isSelected()) {
+            this.home.setColorNormal(new Color(243, 243, 243));
+            this.home.setColorHover(new Color(255, 102, 102));
+            this.home.setColorPressed(new Color(243, 243, 243));
+
+            this.recl.setColorNormal(new Color(243, 243, 243));
+            this.recl.setColorHover(new Color(255, 102, 102));
+            this.recl.setColorPressed(new Color(243, 243, 243));
+
+            this.lrecl.setColorNormal(new Color(243, 243, 243));
+            this.lrecl.setColorHover(new Color(255, 102, 102));
+            this.lrecl.setColorPressed(new Color(243, 243, 243));
+
+            this.ent.setColorNormal(new Color(243, 243, 243));
+            this.ent.setColorHover(new Color(255, 102, 102));
+            this.ent.setColorPressed(new Color(243, 243, 243));
+
+            this.lent.setColorNormal(new Color(243, 243, 243));
+            this.lent.setColorHover(new Color(255, 102, 102));
+            this.lent.setColorPressed(new Color(243, 243, 243));
+
+            this.doc.setColorNormal(new Color(243, 243, 243));
+            this.doc.setColorHover(new Color(255, 102, 102));
+            this.doc.setColorPressed(new Color(243, 243, 243));
+
+            this.hor.setColorNormal(new Color(255, 102, 102));
+            this.hor.setColorHover(new Color(255, 102, 102));
+            this.hor.setColorPressed(new Color(255, 102, 102));
+        } else {
+            this.hor.setColorNormal(new Color(243, 243, 243));
+            this.hor.setColorHover(new Color(255, 102, 102));
+            this.hor.setColorPressed(new Color(243, 243, 243));
+        }
+    }//GEN-LAST:event_horActionPerformed
+
+    private void reclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reclMousePressed
+        this.recl.setSelected(true);
+        this.lrecl.setSelected(false);
+        this.ent.setSelected(false);
+        this.lent.setSelected(false);
+        this.doc.setSelected(false);
+        this.hor.setSelected(false);
+        this.home.setSelected(false);
+    }//GEN-LAST:event_reclMousePressed
+
+    private void reclActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reclActionPerformed
+        RegistR xRegistR = new RegistR();
+        xRegistR.setLocationRelativeTo(null);
+        xRegistR.setVisible(true);
+        this.dispose();
+        if (!this.recl.isSelected()) {
+            this.home.setColorNormal(new Color(243, 243, 243));
+            this.home.setColorHover(new Color(255, 102, 102));
+            this.home.setColorPressed(new Color(243, 243, 243));
+
+            this.recl.setColorNormal(new Color(255, 102, 102));
+            this.recl.setColorHover(new Color(255, 102, 102));
+            this.recl.setColorPressed(new Color(255, 102, 102));
+
+            this.lrecl.setColorNormal(new Color(243, 243, 243));
+            this.lrecl.setColorHover(new Color(255, 102, 102));
+            this.lrecl.setColorPressed(new Color(243, 243, 243));
+
+            this.ent.setColorNormal(new Color(243, 243, 243));
+            this.ent.setColorHover(new Color(255, 102, 102));
+            this.ent.setColorPressed(new Color(243, 243, 243));
+
+            this.lent.setColorNormal(new Color(243, 243, 243));
+            this.lent.setColorHover(new Color(255, 102, 102));
+            this.lent.setColorPressed(new Color(243, 243, 243));
+
+            this.doc.setColorNormal(new Color(243, 243, 243));
+            this.doc.setColorHover(new Color(255, 102, 102));
+            this.doc.setColorPressed(new Color(243, 243, 243));
+
+            this.hor.setColorNormal(new Color(243, 243, 243));
+            this.hor.setColorHover(new Color(255, 102, 102));
+            this.hor.setColorPressed(new Color(243, 243, 243));
+
+        } else {
+            this.recl.setColorNormal(new Color(243, 243, 243));
+            this.recl.setColorHover(new Color(255, 102, 102));
+            this.recl.setColorPressed(new Color(243, 243, 243));
+        }
+    }//GEN-LAST:event_reclActionPerformed
+
+    private void lreclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lreclMousePressed
+        this.recl.setSelected(false);
+        this.lrecl.setSelected(true);
+        this.ent.setSelected(false);
+        this.lent.setSelected(false);
+        this.doc.setSelected(false);
+        this.hor.setSelected(false);
+        this.home.setSelected(false);
+    }//GEN-LAST:event_lreclMousePressed
+
+    private void lreclActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lreclActionPerformed
+        ListReclusos xListR = new ListReclusos();
+        xListR.setLocationRelativeTo(null);
+        xListR.setVisible(true);
+        this.dispose();
+        if (!this.lrecl.isSelected()) {
+            this.home.setColorNormal(new Color(243, 243, 243));
+            this.home.setColorHover(new Color(255, 102, 102));
+            this.home.setColorPressed(new Color(243, 243, 243));
+
+            this.recl.setColorNormal(new Color(243, 243, 243));
+            this.recl.setColorHover(new Color(255, 102, 102));
+            this.recl.setColorPressed(new Color(243, 243, 243));
+
+            this.lrecl.setColorNormal(new Color(255, 102, 102));
+            this.lrecl.setColorHover(new Color(255, 102, 102));
+            this.lrecl.setColorPressed(new Color(255, 102, 102));
+
+            this.ent.setColorNormal(new Color(243, 243, 243));
+            this.ent.setColorHover(new Color(255, 102, 102));
+            this.ent.setColorPressed(new Color(243, 243, 243));
+
+            this.lent.setColorNormal(new Color(243, 243, 243));
+            this.lent.setColorHover(new Color(255, 102, 102));
+            this.lent.setColorPressed(new Color(243, 243, 243));
+
+            this.doc.setColorNormal(new Color(243, 243, 243));
+            this.doc.setColorHover(new Color(255, 102, 102));
+            this.doc.setColorPressed(new Color(243, 243, 243));
+
+            this.hor.setColorNormal(new Color(243, 243, 243));
+            this.hor.setColorHover(new Color(255, 102, 102));
+            this.hor.setColorPressed(new Color(243, 243, 243));
+        } else {
+            this.lrecl.setColorNormal(new Color(243, 243, 243));
+            this.lrecl.setColorHover(new Color(255, 102, 102));
+            this.lrecl.setColorPressed(new Color(243, 243, 243));
+        }
+    }//GEN-LAST:event_lreclActionPerformed
+
     private void homeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMousePressed
         this.recl.setSelected(false);
-        //this.lrecl.setSelected(false);
+        this.lrecl.setSelected(false);
         this.ent.setSelected(false);
-        //this.lent.setSelected(false);
+        this.lent.setSelected(false);
         this.doc.setSelected(false);
         this.hor.setSelected(false);
         this.home.setSelected(true);
@@ -415,17 +844,17 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             this.recl.setColorHover(new Color(255, 102, 102));
             this.recl.setColorPressed(new Color(243, 243, 243));
 
-            /*this.lrecl.setColorNormal(new Color(243, 243, 243));
+            this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
-            this.lrecl.setColorPressed(new Color(243, 243, 243));*/
+            this.lrecl.setColorPressed(new Color(243, 243, 243));
 
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
 
-            /*this.lent.setColorNormal(new Color(243, 243, 243));
+            this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
-            this.lent.setColorPressed(new Color(243, 243, 243));*/
+            this.lent.setColorPressed(new Color(243, 243, 243));
 
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
@@ -456,6 +885,13 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
+    private void hor_guardaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hor_guardaActionPerformed
+        Hor xH = new Hor();
+        xH.setLocationRelativeTo(null);
+        xH.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_hor_guardaActionPerformed
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -463,207 +899,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void entMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMousePressed
-        this.recl.setSelected(false);
-        //this.lrecl.setSelected(false);
-        this.ent.setSelected(true);
-        //this.lent.setSelected(false);
-        this.doc.setSelected(false);
-        this.hor.setSelected(false);
-        this.home.setSelected(false);
-    }//GEN-LAST:event_entMousePressed
-
-    private void entActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entActionPerformed
-        Entidades_popup xEntidades_popup = new Entidades_popup();
-        xEntidades_popup.setLocationRelativeTo(null);
-        xEntidades_popup.setVisible(true);
-        this.dispose();
-        if (!this.ent.isSelected()) {
-            this.home.setColorNormal(new Color(243, 243, 243));
-            this.home.setColorHover(new Color(255, 102, 102));
-            this.home.setColorPressed(new Color(243, 243, 243));
-
-            this.recl.setColorNormal(new Color(243, 243, 243));
-            this.recl.setColorHover(new Color(255, 102, 102));
-            this.recl.setColorPressed(new Color(243, 243, 243));
-
-            /*this.lrecl.setColorNormal(new Color(243, 243, 243));
-            this.lrecl.setColorHover(new Color(255, 102, 102));
-            this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
-            this.ent.setColorNormal(new Color(255, 102, 102));
-            this.ent.setColorHover(new Color(255, 102, 102));
-            this.ent.setColorPressed(new Color(255, 102, 102));
-
-            /*this.lent.setColorNormal(new Color(243, 243, 243));
-            this.lent.setColorHover(new Color(255, 102, 102));
-            this.lent.setColorPressed(new Color(243, 243, 243));*/
-
-            this.doc.setColorNormal(new Color(243, 243, 243));
-            this.doc.setColorHover(new Color(255, 102, 102));
-            this.doc.setColorPressed(new Color(243, 243, 243));
-
-            this.hor.setColorNormal(new Color(243, 243, 243));
-            this.hor.setColorHover(new Color(255, 102, 102));
-            this.hor.setColorPressed(new Color(243, 243, 243));
-        } else {
-            this.ent.setColorNormal(new Color(243, 243, 243));
-            this.ent.setColorHover(new Color(255, 102, 102));
-            this.ent.setColorPressed(new Color(243, 243, 243));
-        }
-    }//GEN-LAST:event_entActionPerformed
-
-    private void docMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_docMousePressed
-        this.recl.setSelected(false);
-        //this.lrecl.setSelected(false);
-        this.ent.setSelected(false);
-        //this.lent.setSelected(false);
-        this.doc.setSelected(true);
-        this.hor.setSelected(false);
-        this.home.setSelected(false);
-    }//GEN-LAST:event_docMousePressed
-
-    private void docActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_docActionPerformed
-        Relatorios_popup xRelatorios_popup = new Relatorios_popup();
-        xRelatorios_popup.setLocationRelativeTo(null);
-        xRelatorios_popup.setVisible(true);
-        this.dispose();
-        if (!this.doc.isSelected()) {
-            this.home.setColorNormal(new Color(243, 243, 243));
-            this.home.setColorHover(new Color(255, 102, 102));
-            this.home.setColorPressed(new Color(243, 243, 243));
-
-            this.recl.setColorNormal(new Color(243, 243, 243));
-            this.recl.setColorHover(new Color(255, 102, 102));
-            this.recl.setColorPressed(new Color(243, 243, 243));
-
-            /*this.lrecl.setColorNormal(new Color(243, 243, 243));
-            this.lrecl.setColorHover(new Color(255, 102, 102));
-            this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
-            this.ent.setColorNormal(new Color(243, 243, 243));
-            this.ent.setColorHover(new Color(255, 102, 102));
-            this.ent.setColorPressed(new Color(243, 243, 243));
-
-            /*this.lent.setColorNormal(new Color(243, 243, 243));
-            this.lent.setColorHover(new Color(255, 102, 102));
-            this.lent.setColorPressed(new Color(243, 243, 243));*/
-
-            this.doc.setColorNormal(new Color(255, 102, 102));
-            this.doc.setColorHover(new Color(255, 102, 102));
-            this.doc.setColorPressed(new Color(255, 102, 102));
-
-            this.hor.setColorNormal(new Color(243, 243, 243));
-            this.hor.setColorHover(new Color(255, 102, 102));
-            this.hor.setColorPressed(new Color(243, 243, 243));
-        } else {
-            this.doc.setColorNormal(new Color(243, 243, 243));
-            this.doc.setColorHover(new Color(255, 102, 102));
-            this.doc.setColorPressed(new Color(243, 243, 243));
-        }
-    }//GEN-LAST:event_docActionPerformed
-
-    private void horMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_horMousePressed
-        this.recl.setSelected(false);
-        //this.lrecl.setSelected(false);
-        this.ent.setSelected(false);
-        //this.lent.setSelected(false);
-        this.doc.setSelected(false);
-        this.hor.setSelected(true);
-        this.home.setSelected(false);
-    }//GEN-LAST:event_horMousePressed
-
-    private void horActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horActionPerformed
-        ListHorarios xListHorarios = new ListHorarios();
-        xListHorarios.setLocationRelativeTo(null);
-        xListHorarios.setVisible(true);
-        this.dispose();
-        if (!this.hor.isSelected()) {
-            this.home.setColorNormal(new Color(243, 243, 243));
-            this.home.setColorHover(new Color(255, 102, 102));
-            this.home.setColorPressed(new Color(243, 243, 243));
-
-            this.recl.setColorNormal(new Color(243, 243, 243));
-            this.recl.setColorHover(new Color(255, 102, 102));
-            this.recl.setColorPressed(new Color(243, 243, 243));
-
-            /*this.lrecl.setColorNormal(new Color(243, 243, 243));
-            this.lrecl.setColorHover(new Color(255, 102, 102));
-            this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
-            this.ent.setColorNormal(new Color(243, 243, 243));
-            this.ent.setColorHover(new Color(255, 102, 102));
-            this.ent.setColorPressed(new Color(243, 243, 243));
-
-            /*this.lent.setColorNormal(new Color(243, 243, 243));
-            this.lent.setColorHover(new Color(255, 102, 102));
-            this.lent.setColorPressed(new Color(243, 243, 243));*/
-
-            this.doc.setColorNormal(new Color(243, 243, 243));
-            this.doc.setColorHover(new Color(255, 102, 102));
-            this.doc.setColorPressed(new Color(243, 243, 243));
-
-            this.hor.setColorNormal(new Color(255, 102, 102));
-            this.hor.setColorHover(new Color(255, 102, 102));
-            this.hor.setColorPressed(new Color(255, 102, 102));
-        } else {
-            this.hor.setColorNormal(new Color(243, 243, 243));
-            this.hor.setColorHover(new Color(255, 102, 102));
-            this.hor.setColorPressed(new Color(243, 243, 243));
-        }
-    }//GEN-LAST:event_horActionPerformed
-
-    private void reclMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reclMousePressed
-        this.recl.setSelected(true);
-        //this.lrecl.setSelected(false);
-        this.ent.setSelected(false);
-        //this.lent.setSelected(false);
-        this.doc.setSelected(false);
-        this.hor.setSelected(false);
-        this.home.setSelected(false);
-    }//GEN-LAST:event_reclMousePressed
-
-    private void reclActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reclActionPerformed
-        Reclusos_popup xReclusos_popup = new Reclusos_popup();
-        xReclusos_popup.setLocationRelativeTo(null);
-        xReclusos_popup.setVisible(true);
-        this.dispose();
-        if (!this.recl.isSelected()) {
-            this.home.setColorNormal(new Color(243, 243, 243));
-            this.home.setColorHover(new Color(255, 102, 102));
-            this.home.setColorPressed(new Color(243, 243, 243));
-
-            this.recl.setColorNormal(new Color(255, 102, 102));
-            this.recl.setColorHover(new Color(255, 102, 102));
-            this.recl.setColorPressed(new Color(255, 102, 102));
-
-            /*this.lrecl.setColorNormal(new Color(243, 243, 243));
-            this.lrecl.setColorHover(new Color(255, 102, 102));
-            this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
-            this.ent.setColorNormal(new Color(243, 243, 243));
-            this.ent.setColorHover(new Color(255, 102, 102));
-            this.ent.setColorPressed(new Color(243, 243, 243));
-
-            /*this.lent.setColorNormal(new Color(243, 243, 243));
-            this.lent.setColorHover(new Color(255, 102, 102));
-            this.lent.setColorPressed(new Color(243, 243, 243));*/
-
-            this.doc.setColorNormal(new Color(243, 243, 243));
-            this.doc.setColorHover(new Color(255, 102, 102));
-            this.doc.setColorPressed(new Color(243, 243, 243));
-
-            this.hor.setColorNormal(new Color(243, 243, 243));
-            this.hor.setColorHover(new Color(255, 102, 102));
-            this.hor.setColorPressed(new Color(243, 243, 243));
-
-        } else {
-            this.recl.setColorNormal(new Color(243, 243, 243));
-            this.recl.setColorHover(new Color(255, 102, 102));
-            this.recl.setColorPressed(new Color(243, 243, 243));
-        }
-    }//GEN-LAST:event_reclActionPerformed
 
     /**
      * @param args the command line arguments
@@ -676,6 +911,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro ent;
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
+    private javax.swing.JButton hor_guarda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -683,14 +919,22 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private java.awt.Label label1;
+    private rsbuttom.RSButtonMetro lent;
+    private rsbuttom.RSButtonMetro lrecl;
     private rsbuttom.RSButtonMetro recl;
     private javax.swing.JPanel sidepane9;
     // End of variables declaration//GEN-END:variables
