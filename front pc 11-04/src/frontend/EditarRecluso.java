@@ -28,8 +28,6 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
     public EditarRecluso() {
         initComponents();
         setIcon();
-        numero_editar.setEditable(false);
-        data_nascimento_editar.setEditable(false);
     }
 
     /**
@@ -49,9 +47,10 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         jButton2 = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        nome_editar = new javax.swing.JTextField();
-        piso_editar = new javax.swing.JTextField();
-        ala_editar = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -59,11 +58,10 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        doenças_editar = new javax.swing.JTextField();
-        numero_editar = new javax.swing.JTextField();
-        data_nascimento_editar = new javax.swing.JTextField();
-        data_entrada_editar = new javax.swing.JTextField();
-        jbutton2 = new javax.swing.JButton();
+        jTextField8 = new javax.swing.JTextField();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jButton3 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -113,36 +111,48 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
             }
         });
 
-        nome_editar.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        nome_editar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextField2.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                nome_editarMouseClicked(evt);
+                jTextField2MouseClicked(evt);
             }
         });
-        nome_editar.addActionListener(new java.awt.event.ActionListener() {
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nome_editarActionPerformed(evt);
+                jTextField2ActionPerformed(evt);
             }
         });
 
-        piso_editar.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        piso_editar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        piso_editar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextField3.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                piso_editarMouseClicked(evt);
+                jTextField3MouseClicked(evt);
             }
         });
-        piso_editar.addActionListener(new java.awt.event.ActionListener() {
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                piso_editarActionPerformed(evt);
+                jTextField3ActionPerformed(evt);
             }
         });
 
-        ala_editar.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        ala_editar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ala_editar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextField4.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ala_editarMouseClicked(evt);
+                jTextField4MouseClicked(evt);
+            }
+        });
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+
+        jTextField5.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField5MouseClicked(evt);
             }
         });
 
@@ -167,34 +177,39 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel9.setText("Doenças:");
 
-        doenças_editar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        doenças_editar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        doenças_editar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextField8.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                doenças_editarMouseClicked(evt);
+                jTextField8MouseClicked(evt);
             }
         });
-        doenças_editar.addActionListener(new java.awt.event.ActionListener() {
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doenças_editarActionPerformed(evt);
-            }
-        });
-
-        numero_editar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                numero_editarActionPerformed(evt);
+                jTextField8ActionPerformed(evt);
             }
         });
 
-        data_nascimento_editar.addActionListener(new java.awt.event.ActionListener() {
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextField1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jFormattedTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jFormattedTextField1MouseClicked(evt);
+            }
+        });
+        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                data_nascimento_editarActionPerformed(evt);
+                jFormattedTextField1ActionPerformed(evt);
             }
         });
 
-        data_entrada_editar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                data_entrada_editarActionPerformed(evt);
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jFormattedTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextField2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jFormattedTextField2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jFormattedTextField2MouseClicked(evt);
             }
         });
 
@@ -209,36 +224,34 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 80, Short.MAX_VALUE)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(nome_editar, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                                    .addComponent(numero_editar)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(ala_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(piso_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(data_nascimento_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                                    .addComponent(jFormattedTextField2))
+                                .addGap(46, 46, 46))
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(data_entrada_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField3)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap(25, Short.MAX_VALUE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(doenças_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36))
         );
         jPanel4Layout.setVerticalGroup(
@@ -247,40 +260,40 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nome_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(numero_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(40, 40, 40)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(ala_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(piso_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(data_nascimento_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(data_entrada_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(doenças_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addGap(36, 36, 36))
         );
 
-        jbutton2.setBackground(new java.awt.Color(255, 255, 255));
-        jbutton2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jbutton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/save.png"))); // NOI18N
-        jbutton2.setText("Guardar");
-        jbutton2.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        jbutton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/save.png"))); // NOI18N
+        jButton3.setText("Guardar");
+        jButton3.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbutton2ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -294,14 +307,17 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
                 .addGap(144, 144, 144)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbutton2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addComponent(jbutton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -338,7 +354,7 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -369,60 +385,57 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
-    private void nome_editarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nome_editarMouseClicked
+    private void jTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseClicked
+        jTextField2.setDocument(new TeclasPermitNum());
+    }//GEN-LAST:event_jTextField2MouseClicked
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField3MouseClicked
        
-    }//GEN-LAST:event_nome_editarMouseClicked
+    }//GEN-LAST:event_jTextField3MouseClicked
 
-    private void nome_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nome_editarActionPerformed
-                                        
-    }//GEN-LAST:event_nome_editarActionPerformed
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
 
-    private void piso_editarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_piso_editarMouseClicked
-       piso_editar.setDocument(new TeclasPermitNum());
-    }//GEN-LAST:event_piso_editarMouseClicked
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void piso_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_piso_editarActionPerformed
+    private void jTextField4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField4MouseClicked
+       jTextField4.setDocument(new TeclasPermitNum());
+    }//GEN-LAST:event_jTextField4MouseClicked
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_piso_editarActionPerformed
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void ala_editarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ala_editarMouseClicked
-        ala_editar.setDocument(new TeclasPermitLetra());
-    }//GEN-LAST:event_ala_editarMouseClicked
+    private void jTextField5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField5MouseClicked
+        jTextField5.setDocument(new TeclasPermitLetra());
+    }//GEN-LAST:event_jTextField5MouseClicked
 
-    private void doenças_editarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doenças_editarMouseClicked
+    private void jTextField8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField8MouseClicked
         
-    }//GEN-LAST:event_doenças_editarMouseClicked
+    }//GEN-LAST:event_jTextField8MouseClicked
 
-    private void doenças_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doenças_editarActionPerformed
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_doenças_editarActionPerformed
+    }//GEN-LAST:event_jTextField8ActionPerformed
 
-    private void jbutton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton2ActionPerformed
-        String s = numero_editar.getText();
-        String no = nome_editar.getText();
-        String dn = data_nascimento_editar.getText();
-        String de = data_entrada_editar.getText();
-        String a = ala_editar.getText();
-        String p = piso_editar.getText();
-        String d = doenças_editar.getText();
-        ListReclusos xListReclusos = new ListReclusos();
-        xListReclusos.GuardarRecluso(s, no, dn, de, a, p, d );
-        xListReclusos.setLocationRelativeTo(null);
-        xListReclusos.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jbutton2ActionPerformed
-
-    private void data_nascimento_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_nascimento_editarActionPerformed
+    private void jFormattedTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFormattedTextField1MouseClicked
         
-    }//GEN-LAST:event_data_nascimento_editarActionPerformed
+    }//GEN-LAST:event_jFormattedTextField1MouseClicked
 
-    private void data_entrada_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_entrada_editarActionPerformed
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_data_entrada_editarActionPerformed
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
-    private void numero_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numero_editarActionPerformed
+    private void jFormattedTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFormattedTextField2MouseClicked
         
-    }//GEN-LAST:event_numero_editarActionPerformed
+    }//GEN-LAST:event_jFormattedTextField2MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -431,11 +444,10 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
-    public javax.swing.JTextField ala_editar;
-    public javax.swing.JTextField data_entrada_editar;
-    public javax.swing.JTextField data_nascimento_editar;
-    public javax.swing.JTextField doenças_editar;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -448,11 +460,12 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JButton jbutton2;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField8;
     private java.awt.Label label1;
-    public javax.swing.JTextField nome_editar;
-    public javax.swing.JTextField numero_editar;
-    public javax.swing.JTextField piso_editar;
     // End of variables declaration//GEN-END:variables
 
     private void setIcon() {

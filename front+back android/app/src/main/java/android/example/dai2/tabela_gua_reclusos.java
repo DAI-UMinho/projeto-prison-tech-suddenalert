@@ -95,7 +95,6 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final int which_item = position;
-
                 new AlertDialog.Builder(tabela_reclusos.this)
                         .setIcon(android.R.drawable.ic_delete)
                         .setTitle("Dados")
@@ -104,7 +103,6 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
                         .setMessage("Piso:" + itemArrayList.get(which_item).pisoRec);
                 return true;
             }
-
         });*/
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -288,8 +286,10 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
         TextView piso;
         TextView ala;
         TextView nascimento;
+        ImageView sino;
         myDialog.setContentView(R.layout.vermaispopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        sino = (ImageView) myDialog.findViewById(R.id.sino);
         doencas = (TextView) myDialog.findViewById(R.id.doencas1);
         piso = (TextView) myDialog.findViewById(R.id.piso1);
         ala = (TextView) myDialog.findViewById(R.id.ala1);
@@ -300,6 +300,11 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
                 myDialog.dismiss();
             }
         });
+        sino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    iniciar_situacao(v);
+            }});
         doencas.setText(itemArrayList.get(posicao).getDoencaRec());
         piso.setText(itemArrayList.get(posicao).getPisoRec());
         ala.setText(itemArrayList.get(posicao).getAlaRec());
@@ -344,7 +349,7 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
             Intent intent = new Intent(tabela_gua_reclusos.this,horario_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(tabela_gua_reclusos.this,tabela_meus_alertas.class);
+            Intent intent = new Intent(tabela_gua_reclusos.this,documentos_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_perfil){
             Intent intent = new Intent(tabela_gua_reclusos.this,perfil_guarda.class);
@@ -396,9 +401,13 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
     public void entrarr (View v) {
         startActivity(new Intent(this, Registar_Reclusos.class));
     }
+    public void iniciar_situacao (View v) {
+        startActivity(new Intent(this, alerta_guarda.class));
+    }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
 }

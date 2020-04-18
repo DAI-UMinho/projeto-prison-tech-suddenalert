@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="117dp"
-        android:orientation="vertical">
+        android:layout_width="412dp"
+        android:layout_height="56dp"
+        android:layout_gravity="right"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="-2dp">
+
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="267dp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/nomeRel"
+                android:id="@+id/nomeRelatorio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nome do relatório"
@@ -29,7 +36,7 @@
                 app:layout_constraintVertical_bias="0.785" />
 
             <TextView
-                android:id="@+id/data"
+                android:id="@+id/dataRelatorio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
@@ -41,101 +48,25 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.785" />
-
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="right"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="2dp"
-            tools:layout_editor_absoluteY="-2dp">
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="53dp"
+            android:layout_height="35dp"
+            android:onClick="mostrarRelatorio"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            app:srcCompat="@mipmap/ic_ver_foreground" />
 
-            <LinearLayout
-                android:layout_width="239dp"
-                android:layout_height="76dp"
-                android:layout_gravity="right"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="-2dp">
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="49dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@mipmap/impre_foreground" />
 
-                <TextView
-                    android:id="@+id/nomeEnt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:text="Nome do psicólogo"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.785" />
-
-                <TextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:text="Email do psicólogo"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.785" />
-
-                <TextView
-                    android:id="@+id/gravidade"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:text="Gravidade"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.785" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="69dp"
-                        android:layout_height="34dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@mipmap/ic_ver_foreground" />
-
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="35dp"
-                        android:layout_height="37dp"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@mipmap/impre_foreground" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

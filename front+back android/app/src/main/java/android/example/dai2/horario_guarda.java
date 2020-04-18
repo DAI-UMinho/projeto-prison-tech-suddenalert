@@ -24,7 +24,7 @@ public class horario_guarda extends AppCompatActivity implements NavigationView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.horario_entidades);
+        setContentView(R.layout.horario_guarda);
         myDialog = new Dialog(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -82,7 +82,7 @@ public class horario_guarda extends AppCompatActivity implements NavigationView.
             Intent intent = new Intent(horario_guarda.this, horario_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(horario_guarda.this, tabela_meus_alertas.class);
+            Intent intent = new Intent(horario_guarda.this, documentos_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_perfil){
             Intent intent = new Intent(horario_guarda.this, perfil_guarda.class);

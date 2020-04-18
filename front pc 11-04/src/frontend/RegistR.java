@@ -5,16 +5,12 @@
  */
 package frontend;
 
-import backend.*;
-import java.sql.*;
-import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import java.util.concurrent.TimeUnit;
@@ -25,10 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import static javax.swing.text.html.HTML.Tag.I;
-import java.text.SimpleDateFormat;  
-import java.util.Date;  
-import javax.swing.JFileChooser;
- 
+
 /**
  *
  * @author Catarina
@@ -36,7 +29,6 @@ import javax.swing.JFileChooser;
 public class RegistR extends javax.swing.JFrame implements Serializable {
 
     private DefaultTableModel modeloTabela;
-    String filename = null;
 
     /**
      * Creates new form Reclusos
@@ -54,31 +46,6 @@ public class RegistR extends javax.swing.JFrame implements Serializable {
  
         
     }
-    
-    public void RegistarRecluso(String numero_recluso, String name, String birthday, String date_entry, String wing, String floor, String disease, String photo){
-try{
-            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-            String user = "suddenalertuser";
-            String pass = "Suddenalert.0";
-            Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "Insert into Recluse(numero_recluso, name, birthday, date_entry, wing, floor, disease, photo)values(?,?,?,?,?,?,?,?)";          
-            PreparedStatement pst = con.prepareStatement(query);
-            pst.setString(1, numero_recluso);
-            pst.setString(2, name);
-            pst.setString(3, birthday);
-            pst.setString(4, date_entry);
-            pst.setString(5, wing);
-            pst.setString(6, floor);
-            pst.setString(7, disease);
-            pst.setString(8, photo);
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Recluso registado com Sucesso");
-    }                                        
-     catch(Exception e) {
-           JOptionPane.showMessageDialog(null, e); 
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -94,13 +61,13 @@ try{
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
-        botao_photo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        registar_numero = new javax.swing.JTextField();
-        registar_nome = new javax.swing.JTextField();
-        registar_piso = new javax.swing.JTextField();
-        registar_ala = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -108,9 +75,9 @@ try{
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        registar_doenças = new javax.swing.JTextField();
-        registar_data_nascimento = new javax.swing.JFormattedTextField();
-        registar_data_entrada = new javax.swing.JFormattedTextField();
+        jTextField8 = new javax.swing.JTextField();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
         label1 = new java.awt.Label();
         jLabel2 = new javax.swing.JLabel();
         sidepane4 = new javax.swing.JPanel();
@@ -171,63 +138,58 @@ try{
             }
         });
 
-        botao_photo.setBackground(new java.awt.Color(241, 241, 241));
-        botao_photo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/fotoR.png"))); // NOI18N
-        botao_photo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botao_photoActionPerformed(evt);
-            }
-        });
+        jButton1.setBackground(new java.awt.Color(241, 241, 241));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/fotoR.png"))); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel8.setText("Upload da fotografia");
 
-        registar_numero.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        registar_numero.setText("Insira aqui o número");
-        registar_numero.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextField2.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField2.setText("Insira aqui o número");
+        jTextField2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registar_numeroMouseClicked(evt);
+                jTextField2MouseClicked(evt);
             }
         });
-        registar_numero.addActionListener(new java.awt.event.ActionListener() {
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registar_numeroActionPerformed(evt);
+                jTextField2ActionPerformed(evt);
             }
         });
 
-        registar_nome.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        registar_nome.setText("Insira aqui o nome");
-        registar_nome.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextField3.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField3.setText("Insira aqui o nome");
+        jTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registar_nomeMouseClicked(evt);
+                jTextField3MouseClicked(evt);
             }
         });
-        registar_nome.addActionListener(new java.awt.event.ActionListener() {
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registar_nomeActionPerformed(evt);
+                jTextField3ActionPerformed(evt);
             }
         });
 
-        registar_piso.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        registar_piso.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        registar_piso.setText("Insira aqui o piso");
-        registar_piso.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextField4.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField4.setText("Insira aqui o piso");
+        jTextField4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registar_pisoMouseClicked(evt);
+                jTextField4MouseClicked(evt);
             }
         });
-        registar_piso.addActionListener(new java.awt.event.ActionListener() {
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registar_pisoActionPerformed(evt);
+                jTextField4ActionPerformed(evt);
             }
         });
 
-        registar_ala.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        registar_ala.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        registar_ala.setText("Insira aqui a ala");
-        registar_ala.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextField5.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField5.setText("Insira aqui a ala");
+        jTextField5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registar_alaMouseClicked(evt);
+                jTextField5MouseClicked(evt);
             }
         });
 
@@ -252,47 +214,42 @@ try{
         jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel9.setText("Doenças:");
 
-        registar_doenças.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        registar_doenças.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        registar_doenças.setText("Doenças");
-        registar_doenças.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextField8.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField8.setText("Doenças");
+        jTextField8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registar_doençasMouseClicked(evt);
+                jTextField8MouseClicked(evt);
             }
         });
-        registar_doenças.addActionListener(new java.awt.event.ActionListener() {
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registar_doençasActionPerformed(evt);
+                jTextField8ActionPerformed(evt);
             }
         });
 
-        registar_data_nascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y/MM/dd"))));
-        registar_data_nascimento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        registar_data_nascimento.setText("Ano/Mês/Dia");
-        registar_data_nascimento.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        registar_data_nascimento.addMouseListener(new java.awt.event.MouseAdapter() {
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextField1.setText("d/m/y");
+        jFormattedTextField1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jFormattedTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registar_data_nascimentoMouseClicked(evt);
+                jFormattedTextField1MouseClicked(evt);
             }
         });
-        registar_data_nascimento.addActionListener(new java.awt.event.ActionListener() {
+        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registar_data_nascimentoActionPerformed(evt);
+                jFormattedTextField1ActionPerformed(evt);
             }
         });
 
-        registar_data_entrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y/MM/dd"))));
-        registar_data_entrada.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        registar_data_entrada.setText("Ano/Mês/Dia");
-        registar_data_entrada.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        registar_data_entrada.addMouseListener(new java.awt.event.MouseAdapter() {
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jFormattedTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextField2.setText("d/m/y");
+        jFormattedTextField2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jFormattedTextField2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registar_data_entradaMouseClicked(evt);
-            }
-        });
-        registar_data_entrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registar_data_entradaActionPerformed(evt);
+                jFormattedTextField2MouseClicked(evt);
             }
         });
 
@@ -311,30 +268,30 @@ try{
                                     .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(registar_data_nascimento, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                                    .addComponent(registar_data_entrada))
+                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                                    .addComponent(jFormattedTextField2))
                                 .addGap(46, 46, 46))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(registar_ala, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(registar_piso, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(registar_nome)
-                                    .addComponent(registar_numero, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)))))
+                                    .addComponent(jTextField3)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap(25, Short.MAX_VALUE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(registar_doenças, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36))
         );
         jPanel4Layout.setVerticalGroup(
@@ -343,28 +300,28 @@ try{
                 .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(registar_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(registar_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(registar_ala, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(registar_piso, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(registar_data_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(registar_data_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(registar_doenças, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addGap(36, 36, 36))
         );
@@ -385,14 +342,14 @@ try{
                             .addComponent(BackButton))
                         .addGap(134, 134, 134))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(botao_photo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(112, 112, 112))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
-                .addComponent(botao_photo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -596,12 +553,12 @@ try{
             .addComponent(doc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(hor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(ent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
             .addComponent(lrecl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(recl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(sidepane4Layout.createSequentialGroup()
                 .addGap(135, 135, 135)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
             .addGroup(sidepane4Layout.createSequentialGroup()
                 .addGroup(sidepane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sidepane4Layout.createSequentialGroup()
@@ -709,33 +666,33 @@ try{
     }//GEN-LAST:event_BackButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(registar_nome.getText().equals("")){
-            registar_nome.requestFocus();
+        if(jTextField3.getText().equals("")){
+            jTextField3.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Nome é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_numero.getText().equals("")){
-            registar_numero.requestFocus();
+        if(jTextField2.getText().equals("")){
+            jTextField2.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Número é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_ala.getText().equals("")){
-            registar_ala.requestFocus();
+        if(jTextField5.getText().equals("")){
+            jTextField5.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Ala é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_piso.getText().equals("")){
-            registar_piso.requestFocus();
+        if(jTextField4.getText().equals("")){
+            jTextField4.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Piso é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_data_nascimento.getText().equals("")){
-            registar_data_nascimento.requestFocus();
+        if(jFormattedTextField1.getText().equals("")){
+            jFormattedTextField1.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Data de Nascimento é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_data_entrada.getText().equals("")){
-            registar_data_entrada.requestFocus();
+        if(jFormattedTextField2.getText().equals("")){
+            jFormattedTextField2.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Data de Entrega é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -752,13 +709,13 @@ try{
                         xProgress.jp_progress.UpdateProgress(num);
                         xProgress.jp_progress.repaint();
                         Thread.sleep(7);
-                        registar_nome.setText("");
-                        registar_numero.setText("");
-                        registar_ala.setText("");
-                        registar_piso.setText("");
-                        registar_data_nascimento.setText("");
-                        registar_data_entrada.setText("");
-                        registar_doenças.setText("Doenças");
+                        jTextField3.setText("");
+                        jTextField2.setText("");
+                        jTextField5.setText("");
+                        jTextField4.setText("");
+                        jFormattedTextField1.setText("");
+                        jFormattedTextField2.setText("");
+                        jTextField8.setText("Doenças");
                     } catch (InterruptedException ex) {
                         Logger.getLogger(RegistR.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -768,34 +725,20 @@ try{
         }catch(Exception err){
             JOptionPane.showMessageDialog(null,"Ocorreu um erro","Aviso",JOptionPane.ERROR_MESSAGE);
         }
-        String s = registar_numero.getText();
-        String no = registar_nome.getText();
-        String dn = registar_data_nascimento.getText();
-        String de = registar_data_entrada.getText();
-        String a = registar_ala.getText();
-        String p = registar_piso.getText();
-        String d = registar_doenças.getText();
-        String photo = filename;
-        
-        RegistarRecluso(s, no, dn, de, a, p, d, photo);
-        Menu xMenu = new Menu();
-        xMenu.setLocationRelativeTo(null);
-        xMenu.setVisible(true);
-        this.dispose();
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void registar_numeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registar_numeroActionPerformed
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         
-    }//GEN-LAST:event_registar_numeroActionPerformed
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void registar_pisoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registar_pisoActionPerformed
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_registar_pisoActionPerformed
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void registar_doençasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registar_doençasActionPerformed
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_registar_doençasActionPerformed
+    }//GEN-LAST:event_jTextField8ActionPerformed
 
     private void entMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMousePressed
         this.recl.setSelected(false);
@@ -1148,56 +1091,45 @@ try{
         }
     }//GEN-LAST:event_homeActionPerformed
 
-    private void registar_data_nascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registar_data_nascimentoActionPerformed
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_registar_data_nascimentoActionPerformed
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
-    private void registar_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registar_nomeActionPerformed
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         
-    }//GEN-LAST:event_registar_nomeActionPerformed
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void registar_nomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_nomeMouseClicked
-        registar_nome.setText("");
+    private void jTextField3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField3MouseClicked
+        jTextField3.setText("");
         //jTextField3.setDocument(new TeclasPermitNome());
-    }//GEN-LAST:event_registar_nomeMouseClicked
+    }//GEN-LAST:event_jTextField3MouseClicked
 
-    private void registar_numeroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_numeroMouseClicked
-        registar_numero.setText("");
-        registar_numero.setDocument(new TeclasPermitNum());
-    }//GEN-LAST:event_registar_numeroMouseClicked
+    private void jTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseClicked
+        jTextField2.setText("");
+        jTextField2.setDocument(new TeclasPermitNum());
+    }//GEN-LAST:event_jTextField2MouseClicked
 
-    private void registar_alaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_alaMouseClicked
-        registar_ala.setText("");
-        registar_ala.setDocument(new TeclasPermitLetra());
-    }//GEN-LAST:event_registar_alaMouseClicked
+    private void jTextField5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField5MouseClicked
+        jTextField5.setText("");
+        jTextField5.setDocument(new TeclasPermitLetra());
+    }//GEN-LAST:event_jTextField5MouseClicked
 
-    private void registar_pisoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_pisoMouseClicked
-        registar_piso.setText("");
-        registar_piso.setDocument(new TeclasPermitNum());
-    }//GEN-LAST:event_registar_pisoMouseClicked
+    private void jTextField4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField4MouseClicked
+        jTextField4.setText("");
+        jTextField4.setDocument(new TeclasPermitNum());
+    }//GEN-LAST:event_jTextField4MouseClicked
 
-    private void registar_data_nascimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_data_nascimentoMouseClicked
-        registar_data_nascimento.setText("");
-    }//GEN-LAST:event_registar_data_nascimentoMouseClicked
+    private void jFormattedTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFormattedTextField1MouseClicked
+        jFormattedTextField1.setText("");
+    }//GEN-LAST:event_jFormattedTextField1MouseClicked
 
-    private void registar_data_entradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_data_entradaMouseClicked
-        registar_data_entrada.setText("");
-    }//GEN-LAST:event_registar_data_entradaMouseClicked
+    private void jFormattedTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFormattedTextField2MouseClicked
+        jFormattedTextField2.setText("");
+    }//GEN-LAST:event_jFormattedTextField2MouseClicked
 
-    private void registar_doençasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_doençasMouseClicked
-        registar_doenças.setText("");
-    }//GEN-LAST:event_registar_doençasMouseClicked
-
-    private void registar_data_entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registar_data_entradaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_registar_data_entradaActionPerformed
-
-    private void botao_photoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_photoActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File f = chooser.getSelectedFile();
-        filename = f.getAbsolutePath();
-    }//GEN-LAST:event_botao_photoActionPerformed
+    private void jTextField8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField8MouseClicked
+        jTextField8.setText("");
+    }//GEN-LAST:event_jTextField8MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1205,12 +1137,14 @@ try{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
-    private javax.swing.JButton botao_photo;
     private rsbuttom.RSButtonMetro doc;
     private rsbuttom.RSButtonMetro ent;
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel24;
@@ -1232,17 +1166,15 @@ try{
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField8;
     private java.awt.Label label1;
     private rsbuttom.RSButtonMetro lent;
     private rsbuttom.RSButtonMetro lrecl;
     private rsbuttom.RSButtonMetro recl;
-    private javax.swing.JTextField registar_ala;
-    private javax.swing.JFormattedTextField registar_data_entrada;
-    private javax.swing.JFormattedTextField registar_data_nascimento;
-    private javax.swing.JTextField registar_doenças;
-    private javax.swing.JTextField registar_nome;
-    private javax.swing.JTextField registar_numero;
-    private javax.swing.JTextField registar_piso;
     private javax.swing.JPanel sidepane4;
     // End of variables declaration//GEN-END:variables
 
