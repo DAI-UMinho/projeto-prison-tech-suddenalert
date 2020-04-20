@@ -56,7 +56,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         ala = (EditText) findViewById(R.id.alaRecluso);
         doencas = (EditText) findViewById(R.id.doencaRecluso);
         entrada = (EditText) findViewById(R.id.entradaRecluso);
-        numeroRec = (EditText) findViewById(R.id.);
+        numeroRec = (EditText) findViewById(R.id.numeroRecluso);
 
 
         imagem = (ImageView)findViewById(R.id.imageView2);
