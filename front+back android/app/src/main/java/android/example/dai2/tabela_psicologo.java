@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -41,12 +43,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class tabela_psicologo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    Dialog myDialog,editarPsi;
+    Dialog myDialog,eliminarPsi;
     public static  ArrayList<Entidades> entidadesArrayList;
     private SyncDataPsico.MyAppAdapter myAppAdapter;
     private ListView listView;
     private boolean sucess = false;
     private int posicao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,9 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.tabela_psicologo);
         listView = (ListView) findViewById(R.id.lvE);
         myDialog = new Dialog(this);
-        editarPsi = new Dialog(this);
+        eliminarPsi = new Dialog(this);
+
+
 
         entidadesArrayList = new ArrayList<Entidades>();
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -82,33 +87,29 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
         final SyncDataPsico syncDataPsico = new SyncDataPsico();
         syncDataPsico.execute();
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        /*mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_hor, R.id.nav_doc, R.id.nav_perfil)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);*/
-        // myDialog2 = new Dialog(this);
+       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedFromList = (String) (listView.getItemAtPosition(position).toString());
+                System.out.println(selectedFromList);
+
+
+                int selectedItemPosition = listView.getItemAtPosition(position).hashCode();
+
+                System.out.println(selectedItemPosition);
+
+            }
+        });*/
 
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main2, menu);
         return true;
     }
-    /*
-        @Override
-        public boolean onSupportNavigateUp() {
-            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                    || super.onSupportNavigateUp();
-        }*/
+
 
 
 
@@ -139,32 +140,9 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
             Intent intent = new Intent(tabela_psicologo.this,inicio_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            TextView txtclose;
-            Button listahor;
-            Button meuhor;
-            myDialog.setContentView(R.layout.horariospopup);
-            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-            listahor = (Button) myDialog.findViewById(R.id.listahor);
-            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
-            listahor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+
                     startActivity(new Intent(tabela_psicologo.this, tabela_horario.class));
-                }
-            });
-            meuhor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(tabela_psicologo.this, horario_diretor.class));
-                }
-            });
-            txtclose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    myDialog.dismiss();
-                }
-            });
-            myDialog.show();
+
         }else if (id == R.id.nav_doc) {
             TextView txtclose;
             Button listarel;
@@ -396,7 +374,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
 
         public class MyAppAdapter extends BaseAdapter {
             public class ViewHolder {
-                TextView nome, email, pontos;
+                TextView nome, email;
             }
 
             public List<Entidades> entidadesList;
@@ -446,10 +424,10 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
             }
         }
     }
-            public void eliminarPsicologo(View view){
+            public void eliminarPsi(View view){
                 posicao = listView.getPositionForView(view);
-                EliminarPsicologo eliminarGuarda  =new EliminarPsicologo();
-                eliminarGuarda.execute();
+                EliminarPsicologo eliminarPsi =new EliminarPsicologo();
+                eliminarPsi.execute();
                 try {
                     Thread.sleep(1000);
                 } catch (Exception e){
@@ -485,35 +463,26 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                     return msg;
                 }
             }
-    public void alteraDados_psi(View view) {
-        // posicao = listView.getPositionForView(view);
+    public void EliminarPsicologo(View view){
         TextView txtclose;
-        ImageView txtAlterar;
-        EditText nome;
-        EditText email;
-        editarPsi.setContentView(R.layout.alterarpsicologo);
-        txtclose = (TextView) editarPsi.findViewById(R.id.txtclose);
-        txtAlterar = (ImageView) editarPsi.findViewById(R.id.imageView18);
-        nome = (EditText) editarPsi.findViewById(R.id.alteraNomePsi);
-        email = (EditText) editarPsi.findViewById(R.id.alteraEmail);
-       // nome.setText(itemArrayList.get(posicao).get());
-       // email.setText(itemArrayList.get(posicao).get());
-
+        ImageView eliminar;
+        EditText motivo;
+        eliminarPsi.setContentView(R.layout.eliminar_p);
+        txtclose = (TextView) eliminarPsi.findViewById(R.id.txtclose);
+        motivo = (EditText) eliminarPsi.findViewById(R.id.motivo);
+        eliminar = (ImageView) eliminarPsi.findViewById(R.id.imageView20);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                editarPsi.dismiss();
+            public void onClick(View view) {
+                eliminarPsi.dismiss();
             }
         });
-        /*txtAlterar.setOnClickListener(new View.OnClickListener() {
+        eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                tabela_reclusos.AlterarDadosRec alterarDadosRec = new tabela_reclusos.AlterarDadosRec();
-                alterarDadosRec.execute();
-                guardar(v);            }
-        });*/
-
-        editarPsi.show();
+            public void onClick(View view) {
+                eliminarPsi(view);
+            }
+        });
+        eliminarPsi.show();
     }
-
 }

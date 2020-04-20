@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class tabela_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    Dialog myDialog, editarGua;
+    Dialog myDialog, eliminaGua;
     public static  ArrayList<Entidades> entidadesArrayList;
     private SyncDataGuardas.MyAppAdapter myAppAdapter;
     private ListView listView;
@@ -55,7 +55,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabela_guarda);
         myDialog = new Dialog(this);
-        editarGua = new Dialog(this);
+        eliminaGua = new Dialog(this);
 
         listView = (ListView) findViewById(R.id.lvE);
         entidadesArrayList = new ArrayList<Entidades>();
@@ -382,10 +382,10 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
             }
         }
     }
-    public void eliminarGuarda(View view){
+    public void eliminarGua(View view){
          posicao = listView.getPositionForView(view);
-        EliminarGuarda eliminarGuarda  =new EliminarGuarda();
-        eliminarGuarda.execute();
+        EliminarGuarda eliminarGua  =new EliminarGuarda();
+        eliminarGua.execute();
         try {
             Thread.sleep(1000);
         } catch (Exception e){
@@ -421,34 +421,29 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
             return msg;
         }
     }
-    public void alteraDados_gua(View view) {
-        // posicao = listView.getPositionForView(view);
+    public void eliminarGuarda(View view){
         TextView txtclose;
-        ImageView txtAlterar;
-        EditText nome;
-        EditText email;
-        editarGua.setContentView(R.layout.alterarguarda);
-        txtclose = (TextView) editarGua.findViewById(R.id.txtclose);
-        txtAlterar = (ImageView) editarGua.findViewById(R.id.imageView18);
-        nome = (EditText) editarGua.findViewById(R.id.alteraNomeG);
-        email = (EditText) editarGua.findViewById(R.id.alteraEmailG);
-        // nome.setText(itemArrayList.get(posicao).get());
-        // email.setText(itemArrayList.get(posicao).get());
-
+        EditText motivo;
+        ImageView eliminar;
+        eliminaGua.setContentView(R.layout.eliminar_g);
+        txtclose = (TextView) eliminaGua.findViewById(R.id.txtclose);
+        motivo = (EditText) eliminaGua.findViewById(R.id.motivo);
+        eliminar = (ImageView) eliminaGua.findViewById(R.id.imageView20);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                editarGua.dismiss();
+            public void onClick(View view) {
+                eliminaGua.dismiss();
             }
         });
-        /*txtAlterar.setOnClickListener(new View.OnClickListener() {
+        eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                tabela_reclusos.AlterarDadosRec alterarDadosRec = new tabela_reclusos.AlterarDadosRec();
-                alterarDadosRec.execute();
-                guardar(v);            }
-        });*/
+            public void onClick(View view) {
+                eliminarGua(view);
+            }
+        });
 
-        editarGua.show();
+        //falta guardar o motivo
+        eliminaGua.show();
     }
+
 }

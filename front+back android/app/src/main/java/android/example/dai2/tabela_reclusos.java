@@ -49,7 +49,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     private SyncData.MyAppAdapter myAppAdapter;
     private ListView listView;
     private boolean sucess = false;
-    Dialog myDialog, editarRec, progress;
+    Dialog myDialog, editarRec, progress, elimina;
     Button verDados;
     int posicao, id_recluso;
     ProgressBar progressBar;
@@ -65,6 +65,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         myDialog = new Dialog(this);
         editarRec = new Dialog(this);
         progress = new Dialog(this);
+        elimina = new Dialog(this);
 
 
         listView = (ListView) findViewById(R.id.lvRdir);
@@ -149,7 +150,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(tabela_reclusos.this, "Synchronising", "ListView Loading wait...", true);
+             progress = ProgressDialog.show(tabela_reclusos.this, "Lista de reclusos", "A carregar...", true);
         }
 
         @Override
@@ -187,6 +188,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
             }
             return msg;
         }
+
 
         @Override
         protected void onPostExecute(String s) {
@@ -357,32 +359,9 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
             Intent intent = new Intent(tabela_reclusos.this,inicio_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            TextView txtclose;
-            Button listahor;
-            Button meuhor;
-            myDialog.setContentView(R.layout.horariospopup);
-            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-            listahor = (Button) myDialog.findViewById(R.id.listahor);
-            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
-            listahor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+
                     startActivity(new Intent(tabela_reclusos.this, tabela_horario.class));
-                }
-            });
-            meuhor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(tabela_reclusos.this, horario_diretor.class));
-                }
-            });
-            txtclose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    myDialog.dismiss();
-                }
-            });
-            myDialog.show();
+
         }else if (id == R.id.nav_doc) {
             TextView txtclose;
             Button listarel;
@@ -620,9 +599,28 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         }
     }
 
+public void eliminarRecluso (View view){
+    TextView txtclose;
+    ImageView eliminar;
+    elimina.setContentView(R.layout.eliminar_r);
+    txtclose = (TextView) elimina.findViewById(R.id.txtclose);
+    eliminar = (ImageView) elimina.findViewById(R.id.imageView21);
+    txtclose.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            elimina.dismiss();
+        }
+    });
+    eliminar.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            eliminaRecluso(view);
+        }
+    });
+    elimina.show();
+}
 
-
-    public void eliminarRecluso (View view) {
+    public void eliminaRecluso (View view) {
         EliminarRecluso eliminarRecluso = new EliminarRecluso();
         eliminarRecluso.execute();
         try {
