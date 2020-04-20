@@ -73,7 +73,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="143dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginRight="7dp"
@@ -89,14 +89,6 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/horarios_foreground" />
-
-            <ImageView
-                android:id="@+id/alteraDados_gua"
-                android:layout_width="55dp"
-                android:layout_marginTop="6dp"
-                android:onClick="alteraDados_gua"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_alterar_foreground" />
 
             <ImageView
                 android:id="@+id/eliminarGuarda"
