@@ -3,12 +3,15 @@ package android.example.dai2;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,14 +27,15 @@ import java.util.ArrayList;
 
 public class tabela_alert extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstancesState) {
         super.onCreate(savedInstancesState);
         setContentView(R.layout.alerta_psicologo);
         ListView lista = (ListView) findViewById(R.id.alertas);
-       /* ArrayList<AlertSituation> alerts = adicionarAlerts();
+        ArrayList<AlertSituation> alerts = adicionarAlerts();
         ArrayAdapter adapter = new AlertAdapter(this, alerts);
-        lista.setAdapter(adapter);*/
+        lista.setAdapter(adapter);
         myDialog = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -101,7 +105,7 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-/*
+
     private ArrayList<AlertSituation> adicionarAlerts() {
         ArrayList<AlertSituation> alerts = new ArrayList<AlertSituation>();
         AlertSituation a = new AlertSituation("Médio", "Este recluso encontra-se instável.");
@@ -111,10 +115,60 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
         a = new AlertSituation("Alto", "Este recluso encontra-se deprimido e com atitudes violentas.");
         alerts.add(a);
         return alerts;
-    }*/
-    public void aceitar (View v) {
-        startActivity(new Intent(this, android.example.dai2.fazer_documentos.class));
     }
+    public void eliminar(View v){
+        //elimna a situacao de alerta
+        TextView txtclose;
+        myDialog.setContentView(R.layout.eliminarpopup);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                finish();
+                alert("Sucesso!!");
+            }
+        }, 7000);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
+    }
+    public void aceitar (View v) {
+        TextView txtclose;
+        Button elabora;
+        Button nao_elabora;
+        myDialog.setContentView(R.layout.aceitar_situcaopopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        elabora = (Button) myDialog.findViewById(R.id.elabora);
+        nao_elabora = (Button) myDialog.findViewById(R.id.nao_elabora);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        elabora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                elabora(v);
+            }
+        });
+        nao_elabora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
+        }
+
+        public void elabora(View v){
+        startActivity(new Intent(this, fazer_documentos.class));
+        }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
