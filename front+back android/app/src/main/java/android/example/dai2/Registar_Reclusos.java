@@ -40,7 +40,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
     private  final int GALERIA_IMAGENS = 1;
     private Button galeria;
     private final int PERMISSAO_REQUEST = 2;
-    EditText nome, nascimento, piso, ala, doencas, entrada;
+    EditText nome, nascimento, piso, ala, doencas, entrada, numeroRec;
     Dialog myDialog;
 
 
@@ -55,6 +55,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         ala = (EditText) findViewById(R.id.alaRecluso);
         doencas = (EditText) findViewById(R.id.doencaRecluso);
         entrada = (EditText) findViewById(R.id.entradaRecluso);
+        numeroRec = (EditText) findViewById(R.id.);
 
 
         imagem = (ImageView)findViewById(R.id.imageView2);
@@ -125,7 +126,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
 
     public void btnAdicionarRecluso(View view){
         Send obj = new Send();
-        obj.execute("");
+        obj.execute();
     }
 
     private class Send extends AsyncTask<String,String,String> {
@@ -136,6 +137,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         String alaa = ala.getText().toString();
         String doenca = doencas.getText().toString();
         String entrad = entrada.getText().toString();
+        String numero = numeroRec.getText().toString();
 
 
 
@@ -148,7 +150,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
                     msg = "Connection goes wrong";
                 } else {
                      //String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `date_left`) VALUES ('"+name+"', '"+entrad+"', '"+nasciment+"')";
-                    String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`) VALUES ('"+name+"', '"+entrad+"', '"+nasciment+"', '"+pisoo+"', '"+alaa+"', '"+doenca+"');";
+                    String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`, `numero_recluso`) VALUES ('"+name+"', '"+entrad+"', '"+nasciment+"', '"+pisoo+"', '"+alaa+"', '"+doenca+"', '"+numero+"');";
                     Statement stmt = conn.createStatement();
                     stmt.executeUpdate(query);
                     msg = "Inserting Successfull!!!!";

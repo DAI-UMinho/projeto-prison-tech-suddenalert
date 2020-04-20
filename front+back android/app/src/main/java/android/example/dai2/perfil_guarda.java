@@ -39,14 +39,14 @@ public class perfil_guarda extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.perfil_guarda);
 
-        setContentView(R.layout.activity_perfil);
         myDialog = new Dialog(this);
-        localidade = (TextView) findViewById(R.id.localidaPerfil);
-        tipo = (TextView) findViewById(R.id.tipoPerfil);
-        nome = (TextView) findViewById(R.id.nomePerfil);
-        nascimento = (TextView) findViewById(R.id.nascimentoPerfil);
-        pontos = (TextView) findViewById(R.id.pontosPerfil);
+        localidade = (TextView) findViewById(R.id.textView14);
+        tipo = (TextView) findViewById(R.id.textView12);
+        nome = (TextView) findViewById(R.id.textView13);
+        nascimento = (TextView) findViewById(R.id.datanascimento);
+        pontos = (TextView) findViewById(R.id.textView9);
 
 
         CarregaDados carregaDados = new CarregaDados();
@@ -55,9 +55,9 @@ public class perfil_guarda extends AppCompatActivity implements NavigationView.O
 
 
 
-       Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);

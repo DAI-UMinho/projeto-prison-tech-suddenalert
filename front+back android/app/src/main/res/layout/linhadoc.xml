@@ -54,9 +54,9 @@
             android:id="@+id/imageView3"
             android:layout_width="53dp"
             android:layout_height="35dp"
-            android:onClick="mostrarRelatorio"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:onClick="verRelatorio"
             app:srcCompat="@mipmap/ic_ver_foreground" />
 
         <ImageView

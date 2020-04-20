@@ -2,6 +2,7 @@ package android.example.dai2;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,11 +20,21 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class inicio_guarda extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
+public class inicio_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private AppBarConfiguration mAppBarConfiguration;
     Dialog myDialog;
+    private int pontos;
+    TextView ponts;
+    private boolean success;
+    private String scan = MainActivity.scanValor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +43,10 @@ public class inicio_guarda extends AppCompatActivity
         myDialog = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ponts = (TextView) findViewById(R.id.textView41);
+
+        CarregaPontos carregaPontos = new CarregaPontos();
+        carregaPontos.execute();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -146,6 +161,36 @@ public class inicio_guarda extends AppCompatActivity
     public void sair (View v) {
 
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    private class CarregaPontos extends AsyncTask<String, String, String> {
+        String msg = "";
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null) {
+                    success = false;
+                } else {
+                    String query = "SELECT points FROM Profile WHERE scan like '" + scan + "'";
+                    Statement statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery(query);
+                    while (resultSet.next()) {
+                        pontos = resultSet.getInt("points");
+                    }
+                }
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            ponts.setText(String.valueOf(pontos));
+        }
     }
 
 
