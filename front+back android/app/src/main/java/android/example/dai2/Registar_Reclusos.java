@@ -42,6 +42,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
     private final int PERMISSAO_REQUEST = 2;
     EditText nome, nascimento, piso, ala, doencas, entrada, numeroRec;
     Dialog myDialog;
+    private boolean sucess;
 
 
 
@@ -127,6 +128,17 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
     public void btnAdicionarRecluso(View view){
         Send obj = new Send();
         obj.execute();
+        try {
+            Thread.sleep(1000);
+        }
+        catch (Exception e){
+            System.out.print("erro");
+        }
+        if (sucess == true){
+            Toast.makeText(getApplicationContext(), "Criado com Sucesso!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Erro ao Criar Rescluso", Toast.LENGTH_LONG).show();
+        }
     }
 
     private class Send extends AsyncTask<String,String,String> {
@@ -148,19 +160,20 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
                 Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
                 if (conn == null){
                     msg = "Connection goes wrong";
+                    sucess = false;
                 } else {
                      //String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `date_left`) VALUES ('"+name+"', '"+entrad+"', '"+nasciment+"')";
                     String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`, `numero_recluso`) VALUES ('"+name+"', '"+entrad+"', '"+nasciment+"', '"+pisoo+"', '"+alaa+"', '"+doenca+"', '"+numero+"');";
                     Statement stmt = conn.createStatement();
                     stmt.executeUpdate(query);
                     msg = "Inserting Successfull!!!!";
-                    System.out.println("ENTROU");
-
+                    sucess = true;
                 }
                 conn.close();
             } catch (Exception e){
                 msg = "Connection goes wrong";
                 e.printStackTrace();
+                sucess = false;
             }
             return msg;
         }
