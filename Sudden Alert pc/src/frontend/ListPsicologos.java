@@ -5,6 +5,9 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -12,7 +15,9 @@ import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
 
 /**
@@ -28,11 +33,45 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     public ListPsicologos() {
         initComponents();
         setIcon();
-        jTable1.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
-        jTable1.getTableHeader().setOpaque(false);
-        jTable1.getTableHeader().setBackground(new Color(176,2,37));
-        jTable1.getTableHeader().setForeground(new Color(255,255,255));
+        jTable_Display_Psicologos.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
+        jTable_Display_Psicologos.getTableHeader().setOpaque(false);
+        jTable_Display_Psicologos.getTableHeader().setBackground(new Color(176,2,37));
+        jTable_Display_Psicologos.getTableHeader().setForeground(new Color(255,255,255));
+        show_Psicologo();
     }
+    
+         public ArrayList<Entidade> psicologoList(){
+        ArrayList<Entidade> psicologosList = new ArrayList<>();
+         try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1="SELECT * FROM Profile where deleted='0' and id_type='2'";
+            Statement st= con.createStatement();
+            ResultSet rs= st.executeQuery(query1);
+            Entidade psicologo;
+            while(rs.next()){
+                psicologo = new Entidade(rs.getInt("scan"),rs.getInt("id_type"), rs.getString("name"), rs.getInt("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+                psicologosList.add(psicologo);
+            }
+         }
+         catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+         return psicologosList;
+    }
+       public void show_Psicologo() {
+           ArrayList<Entidade> list = psicologoList();
+           DefaultTableModel model = (DefaultTableModel)jTable_Display_Psicologos.getModel();
+           Object[] row = new Object[3];
+            for(int i=0;i<list.size();i++){
+            row[0]=list.get(i).getnome();
+            row[1]=list.get(i).getEmail();
+            model.addRow(row);
+        }
+       }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,7 +88,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable_Display_Psicologos = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -93,17 +132,17 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_Display_Psicologos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Ana Costa", "ana_costa7364@gmail.com"}
+
             },
             new String [] {
                 "Nome", "Email"
             }
         ));
-        jTable1.setSelectionBackground(new java.awt.Color(255, 102, 102));
-        jTable1.setVerifyInputWhenFocusTarget(false);
-        jScrollPane2.setViewportView(jTable1);
+        jTable_Display_Psicologos.setSelectionBackground(new java.awt.Color(255, 102, 102));
+        jTable_Display_Psicologos.setVerifyInputWhenFocusTarget(false);
+        jScrollPane2.setViewportView(jTable_Display_Psicologos);
 
         jTextField1.setInheritsPopupMenu(true);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -688,7 +727,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable_Display_Psicologos;
     private javax.swing.JTextField jTextField1;
     private java.awt.Label label1;
     private rsbuttom.RSButtonMetro recl;
