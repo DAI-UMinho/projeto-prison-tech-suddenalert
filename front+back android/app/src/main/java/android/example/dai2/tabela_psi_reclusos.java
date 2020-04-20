@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +47,10 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
     private tabela_psi_reclusos.SyncData.MyAppAdapter myAppAdapter;
     private ListView listView;
     private boolean sucess = false;
-    Dialog myDialog;
+    Dialog myDialog, editarRec, progress;
     Button verDados;
-    int posicao;
+    int posicao, id_recluso;
+    ProgressBar progressBar;
 
 
     @Override
@@ -57,6 +62,8 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         //   lista.setAdapter(adapter);
         verDados = (Button) findViewById(R.id.button4);
         myDialog = new Dialog(this);
+        editarRec = new Dialog(this);
+        progress = new Dialog(this);
 
         listView = (ListView) findViewById(R.id.lvR);
         itemArrayList = new ArrayList<ClassListReclusos>();
@@ -330,7 +337,6 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
     }
 
     public void verData(View view) {
-
         posicao = listView.getPositionForView(view);
         System.out.println(posicao);
         TextView txtclose;
@@ -338,10 +344,8 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         TextView piso;
         TextView ala;
         TextView nascimento;
-        ImageView sino;
         myDialog.setContentView(R.layout.vermaispopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-        sino = (ImageView) myDialog.findViewById(R.id.sino);
         doencas = (TextView) myDialog.findViewById(R.id.doencas1);
         piso = (TextView) myDialog.findViewById(R.id.piso1);
         ala = (TextView) myDialog.findViewById(R.id.ala1);
@@ -352,20 +356,109 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
                 myDialog.dismiss();
             }
         });
-        sino.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iniciar_relatorio(v);
-            }});
         doencas.setText(itemArrayList.get(posicao).getDoencaRec());
         piso.setText(itemArrayList.get(posicao).getPisoRec());
         ala.setText(itemArrayList.get(posicao).getAlaRec());
         nascimento.setText(itemArrayList.get(posicao).getNascimento());
-        System.out.println(posicao);
+        id_recluso = itemArrayList.get(posicao).getId_recluse();
+        System.out.println(id_recluso);
         myDialog.show();
     }
 
     public void iniciar_relatorio (View v) {
         startActivity(new Intent(this, fazer_documentos.class));
+    }
+    public void alterarRec(View view) {
+        // posicao = listView.getPositionForView(view);
+        TextView txtclose;
+        ImageView txtAlterar;
+        EditText nome;
+        EditText doencas;
+        EditText piso;
+        EditText ala;
+        editarRec.setContentView(R.layout.alterarpopup);
+        txtclose = (TextView) editarRec.findViewById(R.id.txtclose);
+        txtAlterar = (ImageView) editarRec.findViewById(R.id.imageView18);
+        nome = (EditText) editarRec.findViewById(R.id.alteraNome);
+        doencas = (EditText) editarRec.findViewById(R.id.alteraDoencas);
+        piso = (EditText) editarRec.findViewById(R.id.alteraPiso);
+        ala = (EditText) editarRec.findViewById(R.id.alteraAla);
+        doencas.setText(itemArrayList.get(posicao).getDoencaRec());
+        piso.setText(itemArrayList.get(posicao).getPisoRec());
+        ala.setText(itemArrayList.get(posicao).getAlaRec());
+        nome.setText(itemArrayList.get(posicao).getNomeRec());
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editarRec.dismiss();
+            }
+        });
+        txtAlterar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tabela_psi_reclusos.AlterarDadosRec alterarDadosRec = new tabela_psi_reclusos.AlterarDadosRec();
+                alterarDadosRec.execute();
+                guardar(v);            }
+        });
+
+        editarRec.show();
+    }
+    public void guardar(View v){
+        TextView txtclose;
+        progress.setContentView(R.layout.guardarpopup);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                finish();
+                alert("Sucesso!!");
+            }
+        }, 4000);
+        txtclose = (TextView) progress.findViewById(R.id.txtclose);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progress.dismiss();
+            }
+        });
+        progress.show();
+    }
+
+    private class AlterarDadosRec extends AsyncTask<String, String, String> {
+        String msg = "";
+        EditText nome = (EditText) editarRec.findViewById(R.id.alteraNome);
+        EditText doencas = (EditText) editarRec.findViewById(R.id.alteraDoencas);
+        EditText piso = (EditText) editarRec.findViewById(R.id.alteraPiso);
+        EditText ala = (EditText) editarRec.findViewById(R.id.alteraAla);
+        String t_nome = nome.getText().toString().trim();
+        String t_doencas = doencas.getText().toString().trim();
+        String t_piso = piso.getText().toString().trim();
+        String t_ala = ala.getText().toString().trim();
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                // System.out.println(id_recluso);
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null) {
+                    msg = "Não foi possível realizar connection";
+                } else {
+                    String query = "UPDATE Recluse SET name = '" + t_nome + "', floor = '" + t_piso + "', wing = '" + t_ala + "', disease = '" + t_doencas + "' WHERE id_recluse = '"+id_recluso+"';";
+                    System.out.println(query);
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(query);
+                    msg = "Atualizado com sucesso";
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
+    }
+    private void alert(String msg){
+        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
     }
 }
