@@ -39,25 +39,23 @@ public class perfil_guarda extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myDialog = new Dialog(this);
+
         setContentView(R.layout.activity_perfil);
+        myDialog = new Dialog(this);
         localidade = (TextView) findViewById(R.id.localidaPerfil);
         tipo = (TextView) findViewById(R.id.tipoPerfil);
         nome = (TextView) findViewById(R.id.nomePerfil);
         nascimento = (TextView) findViewById(R.id.nascimentoPerfil);
         pontos = (TextView) findViewById(R.id.pontosPerfil);
 
+
         CarregaDados carregaDados = new CarregaDados();
         carregaDados.execute();
 
-        System.out.println(typeUser);
 
-        /*localidade.setText(localizacao);
-        tipo.setText(typeUser);
-        nome.setText(name);
-        nascimento.setText(nascimento1);
-       // pontos.setText(points);*/
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
+
+       Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 

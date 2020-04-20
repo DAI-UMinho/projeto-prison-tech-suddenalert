@@ -23,19 +23,19 @@ public class ListarDocumentos extends ArrayAdapter<Documentos> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.linhadoc, parent, false);
-        TextView nomeRe = (TextView) rowView.findViewById(R.id.nomeRel);
+        TextView nomeRe = (TextView) rowView.findViewById(R.id.nomeRelatorio);
         TextView data = (TextView) rowView.findViewById(R.id.data);
-        TextView nomeEnt = (TextView) rowView.findViewById(R.id.nomeEnt);
+      //  TextView nomeEnt = (TextView) rowView.findViewById(R.id.nomeEnt);
         TextView email = (TextView) rowView.findViewById(R.id.email);
-        TextView gravidade = (TextView) rowView.findViewById(R.id.gravidade);
+     //   TextView gravidade = (TextView) rowView.findViewById(R.id.gravidade);
 
 
 
         nomeRe.setText(elementos.get(position).getNomeRel());
-        nomeEnt.setText(elementos.get(position).getNomeEn());
+   //     nomeEnt.setText(elementos.get(position).getNomeEn());
         data.setText(elementos.get(position).getData());
-        email.setText(elementos.get(position).getemail());
-        gravidade.setText(elementos.get(position).getgravidade());
+        //email.setText(elementos.get(position).getemail());
+      //  gravidade.setText(elementos.get(position).getgravidade());
         return rowView;
     }
 }

@@ -151,7 +151,7 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday FROM Recluse";
+                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday FROM Recluse WHERE deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {

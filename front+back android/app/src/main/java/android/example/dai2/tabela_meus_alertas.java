@@ -1,12 +1,18 @@
 package android.example.dai2;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,19 +26,29 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class tabela_meus_alertas extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
+    public static ArrayList<meus_alertas> alertasArrayList;
+    private SyncDataMeusAlertas.MyAppAdapter myAppAdapter;
+    private ListView listView;
+    private boolean sucess = false;
+    String scan;
 
     @Override
     protected void onCreate(Bundle savedInstancesState) {
         super.onCreate(savedInstancesState);
         setContentView(R.layout.meus_alertas);
-        ListView lista = (ListView) findViewById(R.id.meu_alerta);
-        ArrayList<meus_alertas> alertas = adicionarmeusalertas();
-        ArrayAdapter adapter = new lista_meus_alertas(this, alertas);
-        lista.setAdapter(adapter);
+        listView = (ListView) findViewById(R.id.meu_alerta);
+        scan = MainActivity.scanValor;
+        alertasArrayList = new ArrayList<meus_alertas>();
         myDialog = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,6 +63,9 @@ public class tabela_meus_alertas extends AppCompatActivity implements Navigation
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        SyncDataMeusAlertas sincroniza = new SyncDataMeusAlertas();
+        sincroniza.execute();
 
     }
 
@@ -147,17 +166,7 @@ public class tabela_meus_alertas extends AppCompatActivity implements Navigation
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    private ArrayList<meus_alertas> adicionarmeusalertas() {
-        //apenas os alertas do guarda
-        ArrayList<meus_alertas> alertas = new ArrayList<meus_alertas>();
-        meus_alertas m = new meus_alertas("Médio", "Este recluso encontra-se instável.");
-        alertas.add(m);
-        m = new meus_alertas("Médio", "Este recluso encontra-se deprimido.");
-        alertas.add(m);
-        m = new meus_alertas("Alto", "Este recluso encontra-se deprimido e com atitudes violentas.");
-        alertas.add(m);
-        return alertas;
-    }
+
 
     public void relatorios (View v) {
         startActivity(new Intent(this, android.example.dai2.documentos_guarda.class));
@@ -166,5 +175,124 @@ public class tabela_meus_alertas extends AppCompatActivity implements Navigation
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+    private class SyncDataMeusAlertas extends AsyncTask<String, String, String> {
+        String msg = "Internet/DB_Connection turn un error";
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(tabela_meus_alertas.this, "Synchronising", "ListView Loading wait...", true);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                System.out.println("qq1ui");
+                if (conn == null) {
+                    sucess = false;
+                } else {
+                    String query = "Select Profile.name, Report.gravidade, Report.report from Report inner join Profile on Report.scan = Profile.scan where Report.scan = '"+scan+"';";
+                    Statement statement = conn.createStatement();
+                    ResultSet resultSet = statement.executeQuery(query);
+                    System.out.println("ali");
+                    if (resultSet != null) {
+                        while (resultSet.next()) {
+                            try {
+                                alertasArrayList.add(new meus_alertas(resultSet.getString("name"), resultSet.getString("gravidade"), resultSet.getString("report")));
+                                System.out.println("1");
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        msg = "Found";
+                        sucess = true;
+                    } else {
+                        msg = "Data not found";
+                        sucess = false;
+                    }
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            Toast.makeText(tabela_meus_alertas.this, msg + "", Toast.LENGTH_LONG).show();
+            if (sucess == false) {
+            } else {
+                try {
+                    myAppAdapter = new tabela_meus_alertas.SyncDataMeusAlertas.MyAppAdapter(alertasArrayList, tabela_meus_alertas.this);
+                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                    listView.setAdapter(myAppAdapter);
+                } catch (Exception ex) {
+
+                }
+            }
+        }
+
+        public class MyAppAdapter extends BaseAdapter {
+            public class ViewHolder {
+                TextView titulo, id, report;
+            }
+
+            public List<meus_alertas> reportList;
+
+            public Context context;
+            ArrayList<meus_alertas> arrayList;
+
+            private MyAppAdapter(ArrayList<meus_alertas> apps, Context context) {
+                this.reportList = apps;
+                this.context = context;
+                arrayList = new ArrayList<meus_alertas>();
+                arrayList.addAll(reportList);
+            }
+
+            @Override
+            public int getCount() {
+                return reportList.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return position;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View rowView = convertView;
+                ViewHolder viewHolder = null;
+                if (rowView == null) {
+                    LayoutInflater inflater = getLayoutInflater();
+                    rowView = inflater.inflate(R.layout.lista_meus_alertas, parent, false);
+                    viewHolder = new ViewHolder();
+                    viewHolder.titulo = (TextView) rowView.findViewById(R.id.severity);
+                     viewHolder.id = (TextView) rowView.findViewById(R.id.nomeRecluso);
+                   viewHolder.report = (TextView) rowView.findViewById(R.id.descricao);
+                    rowView.setTag(viewHolder);
+                } else {
+                    viewHolder = (ViewHolder) convertView.getTag();
+                }
+                viewHolder.titulo.setText(reportList.get(position).getSeverity());
+                  viewHolder.id.setText(reportList.get(position).getNomeRec());
+                viewHolder.report.setText(reportList.get(position).getDescricao());
+                // viewHolder.email.setText(reportList.get(position).getemail());
+                // viewHolder.gravidade.setText(reportList.get(position).getgravidade());
+                return rowView;
+
+            }
+        }
     }
 }
