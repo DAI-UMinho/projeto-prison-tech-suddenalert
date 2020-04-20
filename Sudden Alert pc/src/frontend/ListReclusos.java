@@ -53,7 +53,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             ResultSet rs= st.executeQuery(query1);
             Recluso recluso;
             while(rs.next()){
-                recluso = new Recluso(rs.getInt("numero_recluso"), rs.getString("name"), rs.getString("birthday"), rs.getString("date_entry"), rs.getString("wing"), rs.getString("floor"), rs.getString("disease"));
+                recluso = new Recluso(rs.getInt("numero_recluso"), rs.getString("name"), rs.getString("birthday"), rs.getString("date_entry"), rs.getString("wing"), rs.getString("floor"), rs.getString("disease"), rs.getString("motivo_remoção"));
                 reclusosList.add(recluso);
             }
          }
@@ -119,6 +119,23 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             model.setRowCount(0);
             show_recluso();
             JOptionPane.showMessageDialog(null,"Recluso editado com Sucesso");
+    }                                        
+     catch(Exception e) {
+           JOptionPane.showMessageDialog(null, e); 
+        }
+      }
+      
+            public void GuardarMotivo(String motivo_remoção, String numero_recluso){
+           try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query = "UPDATE Recluse SET motivo_remoção=? where numero_recluso="+numero_recluso;          
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, motivo_remoção);
+            pst.executeUpdate();
     }                                        
      catch(Exception e) {
            JOptionPane.showMessageDialog(null, e); 

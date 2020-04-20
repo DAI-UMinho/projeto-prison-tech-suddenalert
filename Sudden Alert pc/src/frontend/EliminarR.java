@@ -5,14 +5,21 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
+
 
 /**
  *
@@ -20,7 +27,7 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class EliminarR extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
-    
+    public String b;
     /**
      * Creates new form Reclusos
      */
@@ -32,6 +39,7 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
         Image img2 = img1.getScaledInstance(jButton1.getWidth(), jButton1.getWidth(), Image.SCALE_SMOOTH);
         ImageIcon i = new ImageIcon(img2);
         jButton1.setIcon(i);*/
+        nome_recluso.setEditable(false);
     }
 
     /**
@@ -52,9 +60,9 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
         Button_guarda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        motivo_remoção = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        nome_recluso = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -111,10 +119,10 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel3.setText("Deseja mesmo eliminar este recluso? ");
 
-        jTextField1.setText("Insira aqui o motivo");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        motivo_remoção.setText("Insira aqui o motivo");
+        motivo_remoção.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                motivo_remoçãoActionPerformed(evt);
             }
         });
 
@@ -122,7 +130,11 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel4.setText("Motivo: ");
 
-        jLabel5.setText("Nome");
+        nome_recluso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nome_reclusoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -134,12 +146,12 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
                         .addGap(95, 95, 95)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(motivo_remoção, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nome_recluso, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -157,13 +169,13 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nome_recluso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(motivo_remoção, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(Button_guarda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Button_psic, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
@@ -193,7 +205,7 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
                     .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,12 +232,23 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_Button_psicActionPerformed
 
     private void Button_guardaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_guardaActionPerformed
-       
+        LerRecluso xLerRecluso = new LerRecluso();
+        String x = motivo_remoção.getText();
+        ListReclusos xListReclusos = new ListReclusos();
+        xListReclusos.GuardarMotivo(x, b );
+        xListReclusos.EliminarRowTabela(b);
+        xListReclusos.setLocationRelativeTo(null);
+        xListReclusos.setVisible(true);
+        this.dispose();       
     }//GEN-LAST:event_Button_guardaActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void motivo_remoçãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_motivo_remoçãoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_motivo_remoçãoActionPerformed
+
+    private void nome_reclusoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nome_reclusoActionPerformed
+        
+    }//GEN-LAST:event_nome_reclusoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,12 +262,12 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField1;
     private java.awt.Label label1;
+    private javax.swing.JTextField motivo_remoção;
+    public javax.swing.JTextField nome_recluso;
     // End of variables declaration//GEN-END:variables
 
     private void setIcon() {

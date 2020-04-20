@@ -11,9 +11,9 @@ package backend;
  */
 public class Recluso {
     private int id, numero_recluso;
-    private String nome, data_nascimento,  data_entrada, ala, piso, doenças;
+    private String nome, data_nascimento,  data_entrada, ala, piso, doenças, motivo;
     
-    public Recluso (int numero_recluso, String nome, String data_nascimento, String data_entrada, String ala, String piso, String doenças)
+    public Recluso (int numero_recluso, String nome, String data_nascimento, String data_entrada, String ala, String piso, String doenças, String motivo)
     {
 
         this.numero_recluso=numero_recluso;
@@ -23,6 +23,7 @@ public class Recluso {
         this.ala=ala;
         this.piso=piso;
         this.doenças=doenças;
+        this.motivo=motivo;
     }   
     
     public int getnumero_recluso() {
@@ -51,5 +52,9 @@ public class Recluso {
     
     public String getdoenças() {
         return doenças;
+    }
+    
+        public String getMotivo() {
+        return motivo;
     }
 }

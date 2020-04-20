@@ -26,7 +26,6 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class LerRecluso extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
-    
     /**
      * Creates new form Reclusos
      */
@@ -40,7 +39,9 @@ public class LerRecluso extends javax.swing.JFrame implements Serializable {
         piso.setEditable(false);
         doenças.setEditable(false);
         data_entrada.setEditable(false);
+
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -361,15 +362,13 @@ public class LerRecluso extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_botao_editar_dadosActionPerformed
 
     private void botao_removerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_removerActionPerformed
-        /*EliminarR xEliminarR = new EliminarR();
+
+        EliminarR xEliminarR = new EliminarR();
+        String no = nome.getText();
+        xEliminarR.b = numero.getText();
+        xEliminarR.nome_recluso.setText(no);
         xEliminarR.setLocationRelativeTo(null);
         xEliminarR.setVisible(true);
-        this.dispose();*/
-        String s = numero.getText();
-        ListReclusos xListReclusos = new ListReclusos();
-        xListReclusos.EliminarRowTabela(s);
-        xListReclusos.setLocationRelativeTo(null);
-        xListReclusos.setVisible(true);
         this.dispose();
         
     }//GEN-LAST:event_botao_removerActionPerformed
