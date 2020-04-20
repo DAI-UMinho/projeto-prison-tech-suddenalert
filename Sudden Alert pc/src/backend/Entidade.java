@@ -11,13 +11,14 @@ package backend;
  */
 public class Entidade {
     private int scan, id_type, location, points, deleted;
-    private String dataNascimento, email;
+    private String nome, dataNascimento, email;
     
-    public Entidade (int scan, int id_type, int location, int points, int deleted, String dataNascimento, String email)
+    public Entidade (int scan, int id_type, String nome, int location, int points,String dataNascimento, String email)
     {
 
         this.scan = scan;
         this.id_type = id_type;
+        this.nome = nome;
         this.location = location;
         this.points = points;
         this.deleted = deleted;
@@ -33,6 +34,11 @@ public class Entidade {
     public int getId_type() {
         return id_type;
     }
+    
+        public String getnome() {
+        return nome;
+    }
+
 
     public int getLocation() {
         return location;
@@ -40,10 +46,6 @@ public class Entidade {
 
     public int getPoints() {
         return points;
-    }
-
-    public int getDeleted() {
-        return deleted;
     }
 
     public String getDataNascimento() {
