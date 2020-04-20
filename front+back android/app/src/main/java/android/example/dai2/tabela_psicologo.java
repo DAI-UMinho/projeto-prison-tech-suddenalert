@@ -485,4 +485,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
         });
         eliminarPsi.show();
     }
+    public void verhorarioP(View v){
+        startActivity(new Intent(this, ver_horario.class));
+    }
 }

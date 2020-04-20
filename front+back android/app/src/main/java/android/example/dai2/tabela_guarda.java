@@ -445,5 +445,8 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         //falta guardar o motivo
         eliminaGua.show();
     }
+    public void alterarH(View v){
+        startActivity(new Intent(this, horario_diretor.class));
+    }
 
 }
