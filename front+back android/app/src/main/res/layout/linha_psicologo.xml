@@ -61,13 +61,6 @@
                 android:src="@drawable/horarios_foreground" />
 
             <ImageView
-                android:id="@+id/alteraDados_psi"
-                android:onClick="alteraDados_psi"
-                android:layout_width="55dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_alterar_foreground" />
-
-            <ImageView
                 android:id="@+id/EliminarPsicologo"
                 android:layout_width="54dp"
                 android:layout_height="match_parent"
