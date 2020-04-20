@@ -287,7 +287,7 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
         TextView ala;
         TextView nascimento;
         ImageView sino;
-        myDialog.setContentView(R.layout.vermaispopup);
+        myDialog.setContentView(R.layout.vermais_gpopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         sino = (ImageView) myDialog.findViewById(R.id.sino);
         doencas = (TextView) myDialog.findViewById(R.id.doencas1);

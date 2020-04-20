@@ -5,17 +5,20 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.Serializable;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
 
 /**
@@ -44,6 +47,30 @@ setSize(larg,alt);
         ImageIcon i = new ImageIcon(img2);
         jButton1.setIcon(i);*/
     }
+    public void RegistarEntidade(String scan, String id_type, String name,String points, String birthday, String email, String location){
+try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query = "Insert into Profile(scan, id_type, name, points,location, birthday, email )values(?,?,?,?,?,?,?)";          
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, scan);
+            pst.setString(2, id_type);
+            pst.setString(3, name);
+            pst.setString(4, points);
+            pst.setString(5, location);
+            pst.setString(6, birthday);
+            pst.setString(7, email);
+            pst.executeUpdate();
+            //JOptionPane.showMessageDialog(null,"Recluso registado com Sucesso");
+    }                                        
+     catch(Exception e) {
+           JOptionPane.showMessageDialog(null, e); 
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -163,8 +190,9 @@ setSize(larg,alt);
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel4.setText("Nome:");
 
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y/MM/dd"))));
         jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedTextField1.setText("d/m/y");
+        jFormattedTextField1.setText("Ano/mês/dia");
         jFormattedTextField1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jFormattedTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -480,7 +508,7 @@ setSize(larg,alt);
     }//GEN-LAST:event_BackButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(jTextField3.getText().equals("")){
+         if(jTextField3.getText().equals("")){
             jTextField3.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Nome é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
@@ -515,6 +543,20 @@ setSize(larg,alt);
         }catch(Exception err){
             JOptionPane.showMessageDialog(null,"Ocorreu um erro","Aviso",JOptionPane.ERROR_MESSAGE);
         }
+        String name = jTextField3.getText();
+        String birthday = jFormattedTextField1.getText();
+        String scan = "1";
+        String idtype= "2";
+        
+        String location = "23.000000,-23,000000";
+        String points = "0";
+       
+        String email ="teste@hotmail.com";
+        RegistarEntidade(scan,idtype,name,points,birthday,email, location);
+        
+          
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void homeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMousePressed

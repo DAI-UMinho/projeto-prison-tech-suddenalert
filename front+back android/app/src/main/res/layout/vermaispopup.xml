@@ -164,36 +164,24 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageView17"
+        android:id="@+id/alterarRec"
         android:layout_width="32dp"
         android:layout_height="43dp"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="210dp"
         android:onClick="alterarRec"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ala2"
         app:srcCompat="@drawable/ic_alterar_foreground" />
 
     <TextView
-        android:id="@+id/alterarRec"
+        android:id="@+id/alterar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
         android:text="Alterar dados"
-        app:layout_constraintStart_toEndOf="@+id/imageView17"
+        app:layout_constraintStart_toEndOf="@+id/alterarRec"
         app:layout_constraintTop_toBottomOf="@+id/ala2" />
-
-    <ImageView
-        android:id="@+id/sino"
-        android:layout_width="43dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="13dp"
-        android:onClick="situacao_alerta"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_alert" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

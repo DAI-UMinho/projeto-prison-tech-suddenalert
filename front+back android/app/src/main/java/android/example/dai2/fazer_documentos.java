@@ -34,13 +34,12 @@ public class fazer_documentos extends AppCompatActivity {
         identificacao = (EditText) findViewById(R.id.identificacao);
         relatorioo = (EditText) findViewById(R.id.relatorio);
         tituloRel = (EditText) findViewById(R.id.tituloRel);
-        regRelat = (Button) findViewById(R.id.button7);
-        regRelat.setOnClickListener(new View.OnClickListener() {
+/*        regRelat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 register();
             }
-        });
+        });*/
     }
     public void register(){
         intialize();
