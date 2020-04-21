@@ -43,7 +43,7 @@ public class inicio_guarda extends AppCompatActivity implements NavigationView.O
         myDialog = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ponts = (TextView) findViewById(R.id.textView41);
+        ponts = (TextView) findViewById(R.id.pontosG);
 
         CarregaPontos carregaPontos = new CarregaPontos();
         carregaPontos.execute();

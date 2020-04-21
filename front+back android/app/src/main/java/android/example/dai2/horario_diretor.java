@@ -109,9 +109,6 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
                 }
             });
             myDialog.show();
-        }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(horario_diretor.this,perfil_diretor.class);
-            startActivity(intent);
         }else if (id == R.id.nav_entidades){
             TextView txtclose;
             Button listagem;

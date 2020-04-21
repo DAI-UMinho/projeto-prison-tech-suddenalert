@@ -378,9 +378,6 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
                 }
             });
             myDialog.show();
-        }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(Main3Activity.this,perfil_diretor.class);
-            startActivity(intent);
         }else if (id == R.id.nav_entidades){
             TextView txtclose;
             Button listagem;
