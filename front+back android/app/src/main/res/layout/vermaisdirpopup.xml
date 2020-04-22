@@ -3,12 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
-    android:layout_height="200dp"
+    android:layout_height="270dp"
     android:layout_gravity="center"
     android:background="@color/cinza_background"
     android:orientation="vertical"
     android:padding="5dp">
 
+
+    <TextView
+        android:id="@+id/ala3"
+        android:layout_width="171dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="56dp"
+        android:gravity="center"
+        android:text="Data de entrada:"
+        android:textAllCaps="true"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/piso" />
+
+    <TextView
+        android:id="@+id/entrada"
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:text="Data entrada"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/piso1" />
 
     <TextView
         android:id="@+id/doencas"
@@ -169,42 +194,42 @@
         android:layout_width="28dp"
         android:layout_height="36dp"
         android:layout_marginStart="212dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="68dp"
+        android:onClick="alteraDados_rec"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ala2"
-        app:srcCompat="@drawable/ic_alterar_foreground"
-        android:onClick="alteraDados_rec"/>
-
-    <TextView
-        android:id="@+id/alterarRec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="22dp"
-        android:text="Alterar dados"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ala2" />
-
-    <TextView
-        android:id="@+id/alterarRec2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="80dp"
-        android:text="Eliminar"
-        app:layout_constraintEnd_toStartOf="@+id/alterardados"
-        app:layout_constraintTop_toBottomOf="@+id/ala2" />
+        app:srcCompat="@drawable/ic_alterar_foreground" />
 
     <ImageView
         android:id="@+id/imageView18"
         android:layout_width="32dp"
         android:layout_height="35dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="68dp"
         android:layout_marginEnd="4dp"
         android:onClick="eliminarRecluso"
         app:layout_constraintEnd_toStartOf="@+id/alterarRec2"
         app:layout_constraintTop_toBottomOf="@+id/nascimento1"
         app:srcCompat="@drawable/ic_delete_foreground" />
+
+    <TextView
+        android:id="@+id/alterarRec2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="84dp"
+        android:text="Eliminar"
+        app:layout_constraintEnd_toStartOf="@+id/alterardados"
+        app:layout_constraintTop_toBottomOf="@+id/ala2" />
+
+    <TextView
+        android:id="@+id/alterarRec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="20dp"
+        android:text="Alterar dados"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ala2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,10 +17,6 @@
             android:icon="@drawable/documentos_foreground"
             android:title="@string/menu_doc" />
         <item
-            android:id="@+id/nav_perfil"
-            android:icon="@drawable/perfil_foreground"
-            android:title="@string/menu_perfil" />
-        <item
             android:id="@+id/nav_entidades"
             android:icon="@mipmap/ic_entidades2_foreground"
             android:title="@string/menu_entidades" />
