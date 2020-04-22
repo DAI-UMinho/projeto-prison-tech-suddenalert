@@ -1,6 +1,7 @@
 package android.example.dai2;
 
 public class Historicos {
+    private int id_hist;
     private String nomePessoa;
     private String data;
     private String acao;
@@ -8,12 +9,21 @@ public class Historicos {
     private String motivo;
 
 
-    public Historicos(String nomePessoa, String data, String acao, String tipo, String motivo) {
+    public Historicos(int id_hist, String nomePessoa, String data, String acao, String tipo, String motivo) {
+        this.id_hist = id_hist;
         this.nomePessoa = nomePessoa;
         this.data = data;
         this.acao = acao;
         this.tipo = tipo;
         this.motivo = motivo;
+    }
+
+    public int getId_hist() {
+        return id_hist;
+    }
+
+    public void setId_hist(int id_hist) {
+        this.id_hist = id_hist;
     }
 
     public String getNomePessoa() {

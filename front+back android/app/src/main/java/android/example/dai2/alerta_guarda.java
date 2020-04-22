@@ -76,15 +76,16 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
             criarRelatorio.execute();
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             }
             catch (Exception e){
                 System.out.print("erro");
             }
 
             if (sucess == true) {
-                Toast.makeText(this, "Relatório criado com sucesso!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
+                Toast.makeText(this, "Situação criada com sucesso!", Toast.LENGTH_SHORT).show();
+                numeroR.setText("");
+                startActivity(new Intent(this, android.example.dai2.inicio_guarda.class));
 
             } else {
                 Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
@@ -94,15 +95,15 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
     public  boolean validate(){
         boolean valid = true;
         if (numeroRec.isEmpty()){
-            numeroR.setError("Introduz a identificação");
+            numeroR.setError("Introduz a identificação do Recluso");
             valid = false;
         }
         if (gravidadeA.isEmpty()){
-            gravidade.setError("Introduza um relatorio");
+            gravidade.setError("Introduza a gravidade");
             valid = false;
         }
         if (descricaoA.isEmpty()){
-            descricao.setError("Introduz um titulo");
+            descricao.setError("Introduz uma descrição");
             valid = false;
         }
         return valid;
@@ -235,11 +236,15 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
                     }
                     if (valor == 1 ) {
                         String query2 = "SELECT id_recluse FROM Recluse WHERE numero_recluso like '"+numeroRec+"';";
+                        System.out.println(query2);
                         Statement statement2 = connection.createStatement();
                         ResultSet resultSet = statement2.executeQuery(query2);
-                        id_recluso = resultSet.getInt("id_recluse");
+                        while (resultSet.next()){
+                            id_recluso = resultSet.getInt("id_recluse");
+                        }
                        String query = "INSERT INTO AlertSituation (`description`, `scan`, `id_recluse`, `severity`) VALUES ('" + descricaoA + "', '" + scan + "', '" + id_recluso + "', '"+ gravidadeA +"');";
-                        Statement statement = connection.createStatement();
+                       System.out.println(query);
+                       Statement statement = connection.createStatement();
                         statement.executeUpdate(query);
                         msg = "Inserido com sucesso";
                         sucess = true;

@@ -9,10 +9,11 @@ public class ClassListReclusos {
     public String doencaRec;
     public String nascimento;
     public int numero_rec;
+    public String entradaR;
 
 
 
-    public ClassListReclusos(int id_recluse, String nomeRec, String doencaRec, String alaRec, String pisoRec, String img, String nascimento, int numero_rec){
+    public ClassListReclusos(int id_recluse, String nomeRec, String doencaRec, String alaRec, String pisoRec, String img, String nascimento, int numero_rec, String entradaR){
         this.id_recluse = id_recluse;
         this.nomeRec = nomeRec;
         this.doencaRec = doencaRec;
@@ -21,6 +22,15 @@ public class ClassListReclusos {
         this.img = img;
         this.nascimento = nascimento;
         this.numero_rec = numero_rec;
+        this.entradaR = entradaR;
+    }
+
+    public String getEntradaR() {
+        return entradaR;
+    }
+
+    public void setEntradaR(String entradaR) {
+        this.entradaR = entradaR;
     }
 
     public int getNumero_rec() {

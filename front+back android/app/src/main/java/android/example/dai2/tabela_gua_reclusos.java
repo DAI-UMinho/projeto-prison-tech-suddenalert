@@ -153,13 +153,13 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday, numero_recluso FROM Recluse WHERE deleted like 0";
+                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday, numero_recluso, date_entry FROM Recluse WHERE deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                itemArrayList.add(new ClassListReclusos(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getString("photo"), rs.getString("birthday"), rs.getInt("numero_recluso")));
+                                itemArrayList.add(new ClassListReclusos(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getString("photo"), rs.getString("birthday"), rs.getInt("numero_recluso"), rs.getString("date_entry")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -285,12 +285,14 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
         TextView ala;
         TextView nascimento;
         ImageView sino;
+        TextView entrada;
         myDialog.setContentView(R.layout.vermais_gpopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         sino = (ImageView) myDialog.findViewById(R.id.sino);
         doencas = (TextView) myDialog.findViewById(R.id.doencas1);
         piso = (TextView) myDialog.findViewById(R.id.piso1);
         ala = (TextView) myDialog.findViewById(R.id.ala1);
+        entrada = (TextView) myDialog.findViewById(R.id.entrada);
         nascimento = (TextView) myDialog.findViewById(R.id.nascimento1);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -307,6 +309,7 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
         piso.setText(itemArrayList.get(posicao).getPisoRec());
         ala.setText(itemArrayList.get(posicao).getAlaRec());
         nascimento.setText(itemArrayList.get(posicao).getNascimento());
+        entrada.setText(itemArrayList.get(posicao).getEntradaR());
         System.out.println(posicao);
         myDialog.show();
     }

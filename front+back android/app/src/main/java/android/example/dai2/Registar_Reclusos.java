@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -42,7 +43,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
     private Button galeria;
     private final int PERMISSAO_REQUEST = 2;
     EditText nome, nascimento, piso, ala, doencas, entrada, numeroRec;
-    private String nomeR, nascimentoR, pisoR, alaR, doencaR, entradaR, numeroR;
+    private String nomeR,nascimentoR, pisoR, alaR, doencaR, entradaR, numeroR;
     Dialog myDialog;
     private boolean sucess;
     Button regRecluso;
@@ -138,10 +139,10 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
             nome.setError("Introduz a Nome");
             valid = false;
         }
-        if (nascimentoR.isEmpty()){
+        /*if (nascimentoR.isEmpty()){
             nascimento.setError("Introduz data de nascimento");
             valid = false;
-        }
+        }*/
         if (pisoR.isEmpty()){
             piso.setError("Introduz Piso");
             valid = false;

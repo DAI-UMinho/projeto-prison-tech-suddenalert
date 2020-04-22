@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,7 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
     public static ArrayList<Historicos> historicosArrayList;
     private SyncData.MyAppAdapter myAppAdapter;
     private boolean sucess = false;
+    int posicao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,13 +89,13 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "Select Profile.name, Historico.acao, Historico.data, Historico.motivo, Historico.tipo from Historico inner join Profile  on Historico.scan = Profile.scan ;";
+                    String query = "Select Profile.name, Historico.acao, Historico.data, Historico.motivo, Historico.tipo, Historico.idHistorico from Historico inner join Profile  on Historico.scan = Profile.scan WHERE Historico.deleted = '0';";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                historicosArrayList.add(new Historicos(rs.getString("name"), rs.getString("data"), rs.getString("acao"), rs.getString("tipo"), rs.getString("motivo")));
+                                historicosArrayList.add(new Historicos(rs.getInt("idHistorico"), rs.getString("name"), rs.getString("data"), rs.getString("acao"), rs.getString("tipo"), rs.getString("motivo")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -105,13 +108,13 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
                     }
 
                 }
-                     String query1 = "Select Recluse.name, Historico.acao, Historico.data, Historico.motivo, Historico.tipo from Historico inner join Recluse  on Historico.id_recluse = Recluse.numero_recluso ;";
+                     String query1 = "Select Recluse.name, Historico.acao, Historico.data, Historico.motivo, Historico.tipo, Historico.idHistorico from Historico inner join Recluse  on Historico.id_recluse = Recluse.numero_recluso WHERE Historico.deleted = '0';";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query1);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                historicosArrayList.add(new Historicos(rs.getString("name"), rs.getString("data"), rs.getString("acao"), rs.getString("tipo"), rs.getString("motivo")));
+                                historicosArrayList.add(new Historicos(rs.getInt("idHistorico"), rs.getString("name"), rs.getString("data"), rs.getString("acao"), rs.getString("tipo"), rs.getString("motivo")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -220,6 +223,43 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
             }
         }
     }
+
+    public void eliminarHistorico(View view) {
+        posicao = listView.getPositionForView(view);
+        EliminarGuarda eliminarGuarda = new EliminarGuarda();
+        eliminarGuarda.execute();
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        startActivity(new Intent(this, historico.class));
+        historico.this.finish();
+    }
+        private class EliminarGuarda extends AsyncTask<String, String, String>{
+            String msg;
+            @Override
+            protected String doInBackground(String... strings) {
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                    if (connection == null){
+                        msg = "Connect failed";
+                    } else {
+                        String query = "UPDATE Histotico SET deleted='1' where idHistorico = '"+ historicosArrayList.get(posicao).getId_hist()+ "'";
+                        Statement preparedStatement = connection.createStatement();
+                        preparedStatement.executeUpdate(query);
+                    }
+                    connection.close();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return msg;
+            }
+        }
 
 
     @Override
