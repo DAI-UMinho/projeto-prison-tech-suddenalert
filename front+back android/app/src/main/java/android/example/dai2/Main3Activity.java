@@ -43,9 +43,9 @@ import java.sql.Statement;
 public class Main3Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
     RadioGroup rg;
     RadioButton rb;
-    EditText nome, nascimento;
+    EditText nome, nascimento, scan;
     TextView localização;
-    private String nomeE, nascimentoE, localizaçãoE, tipoE;
+    private String nomeE, nascimentoE, localizaçãoE, tipoE, scanE;
     Dialog myDialog;
     private Button registar, btnGetLocation;
     ProgressBar progressBar;
@@ -65,6 +65,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         localização = (TextView) findViewById(R.id.txLocation);
         rb = (RadioButton) findViewById(R.id.radioButton2);
         btnGetLocation = findViewById(R.id.btnGetLocation);
+        scan = (EditText) findViewById(R.id.scanEnt);
       //  data.addTextChangedListener(Mask.insert("##/##/####", data));
       /*  data.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -186,6 +187,10 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             localização.setError("tem de ativar Localização");
             valid = false;
         }
+        if (scanE.isEmpty()){
+            scan.setError("Tem de preencher scan");
+            valid = false;
+        }
         return valid;
     }
 
@@ -201,7 +206,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         } else {
             tipoE = "2";
         }
-
+        scanE = scan.getText().toString().trim();
     }
 
     public void ShowPopup3(View v){
@@ -508,15 +513,26 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
                     msg = "Connection goes wrong";
                     sucess = false;
                 } else {
-                        String query = "INSERT INTO `Profile` (`id_type`, `name`, `location`, `birthday`, `scan`) VALUES ('" + tipoE + "', '" + nomeE + "', '" + localizaçãoE + "', '" + nascimentoE + "', '69411');";
+                    String query1 = "SELECT COUNT(1) FROM Profile WHERE scan like '"+scanE+"';";
+                    Statement statement1 = conn.createStatement();
+                    ResultSet resultSet = statement1.executeQuery(query1);
+                    while (resultSet.next()){
+                        valor = resultSet.getInt("COUNT(1)");
+                    }
+                    if(valor == 0) {
+                        String query = "INSERT INTO `Profile` (`id_type`, `name`, `location`, `birthday`, `scan`) VALUES ('" + tipoE + "', '" + nomeE + "', '" + localizaçãoE + "', '" + nascimentoE + "', '"+scanE+"');";
                         Statement stmt = conn.createStatement();
                         System.out.println(query);
                         stmt.executeUpdate(query);
-                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Inserção Entidade', '', '69411', '"+tipo+"');";
-                    Statement statement = conn.createStatement();
-                    statement.executeUpdate(query2);
+                        String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Inserção Entidade', '', '"+scanE+"', '" + tipo + "');";
+                        Statement statement = conn.createStatement();
+                        statement.executeUpdate(query2);
                         msg = "Inserting Successfull!!!!";
                         sucess = true;
+                    } else {
+                        sucess = false;
+                        msg = "Scan já utilizado por outra Entidade";
+                    }
                 }
                 conn.close();
             } catch (Exception e){

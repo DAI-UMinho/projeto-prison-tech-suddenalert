@@ -280,9 +280,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         protected String doInBackground(String... strings) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                System.out.println("1");
                 Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
-                System.out.println("2");
                 if (conn == null) {
                     sucess = false;
                 } else {
@@ -292,7 +290,6 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                System.out.println("3");
                                 entidadesArrayList.add(new Entidades(rs.getString("name"), rs.getString("email"), rs.getString("scan"), rs.getString("points")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
@@ -404,7 +401,6 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                 if (connection == null){
                     msg = "Connect failed";
                 } else {
-                    System.out.println(posicao);
                     String query = "UPDATE Profile SET deleted='1' where scan = '"+ entidadesArrayList.get(posicao).getScan()+ "'";
                     Statement preparedStatement = connection.createStatement();
                     preparedStatement.executeUpdate(query);

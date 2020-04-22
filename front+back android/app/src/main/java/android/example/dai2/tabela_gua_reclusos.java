@@ -47,6 +47,8 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
     Dialog myDialog;
     Button verDados;
     int posicao;
+    public static String numeorRec;
+    public static int id_recluso;
 
 
     @Override
@@ -398,6 +400,9 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
         startActivity(new Intent(this, Registar_Reclusos.class));
     }
     public void iniciar_situacao (View v) {
+        numeorRec = String.valueOf(itemArrayList.get(posicao).getNumero_rec());
+        id_recluso = itemArrayList.get(posicao).getId_recluse();
+        System.out.println(numeorRec);
         startActivity(new Intent(this, alerta_guarda.class));
     }
 

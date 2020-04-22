@@ -320,9 +320,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
         protected String doInBackground(String... strings) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                System.out.println("1");
                 Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
-                System.out.println("2");
                 if (conn == null) {
                     sucess = false;
                 } else {
@@ -332,7 +330,6 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                System.out.println("3");
                                 entidadesArrayList.add(new Entidades(rs.getString("name"), rs.getString("email"), rs.getString("scan"), rs.getString("points")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
@@ -424,7 +421,6 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
         }
     }
             public void eliminarPsi(View view){
-                //posicao = listView.getPositionForView(view);
                 motivoE = motivo.getText().toString().trim();
                 EliminarPsicologo eliminarPsi =new EliminarPsicologo();
                 eliminarPsi.execute();
