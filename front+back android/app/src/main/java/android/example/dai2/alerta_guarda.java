@@ -2,11 +2,13 @@ package android.example.dai2;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +20,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class alerta_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
+   private  EditText numeroR, gravidade, descricao;
+   private  String numeroRec, gravidadeA, descricaoA;
+   private int id_recluso;
+           //= tabela_gua_reclusos.id_recluso;
+    Button criarSitução;
+    private boolean sucess;
+
 
     @Override
     protected void onCreate(Bundle savedInstancesState) {
@@ -29,7 +43,10 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
         myDialog = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        numeroR = (EditText) findViewById(R.id.textView12);
+        gravidade = (EditText) findViewById(R.id.textView16);
+        descricao = (EditText) findViewById(R.id.textView14);
+        criarSitução = (Button) findViewById(R.id.btnadicionar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -41,9 +58,60 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        numeroR.setText(tabela_gua_reclusos.numeorRec);
+        criarSitução.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register();
+            }
+        });
 
     }
+    public void register(){
+        intialize();
+        if (!validate()){
+            Toast.makeText(this, "Campos em falta!", Toast.LENGTH_SHORT).show();
+        } else {
+            CriarAlerta criarRelatorio = new CriarAlerta();
+            criarRelatorio.execute();
 
+            try {
+                Thread.sleep(500);
+            }
+            catch (Exception e){
+                System.out.print("erro");
+            }
+
+            if (sucess == true) {
+                Toast.makeText(this, "Relatório criado com sucesso!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
+
+            } else {
+                Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    public  boolean validate(){
+        boolean valid = true;
+        if (numeroRec.isEmpty()){
+            numeroR.setError("Introduz a identificação");
+            valid = false;
+        }
+        if (gravidadeA.isEmpty()){
+            gravidade.setError("Introduza um relatorio");
+            valid = false;
+        }
+        if (descricaoA.isEmpty()){
+            descricao.setError("Introduz um titulo");
+            valid = false;
+        }
+        return valid;
+    }
+    public void intialize(){
+        numeroRec = numeroR.getText().toString().trim();
+        gravidadeA = gravidade.getText().toString().trim();
+        descricaoA = descricao.getText().toString().trim();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,5 +207,59 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+    private class CriarAlerta extends AsyncTask<String, String, String> {
+        String msg = "";
+        String scan = MainActivity.scanValor;
+        //String identificacao1 = identificacao.getText().toString();
+        // String relatorio = relatorioo.getText().toString();
+        int valor = 0;
+
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null){
+                    sucess = false;
+                    msg = "Não foi possível realizar connection";
+                } else {
+                    System.out.println(numeroRec);
+                    String query1 = "SELECT COUNT(1) FROM Recluse WHERE numero_recluso like '" + numeroRec + "' and deleted like 0;";
+                    Statement statement1 = connection.createStatement();
+                    ResultSet resultSet1 = statement1.executeQuery(query1);
+                    while (resultSet1.next()) {
+                        valor = resultSet1.getInt("COUNT(1)");
+                    }
+                    if (valor == 1 ) {
+                        String query2 = "SELECT id_recluse FROM Recluse WHERE numero_recluso like '"+numeroRec+"';";
+                        Statement statement2 = connection.createStatement();
+                        ResultSet resultSet = statement2.executeQuery(query2);
+                        id_recluso = resultSet.getInt("id_recluse");
+                       String query = "INSERT INTO AlertSituation (`description`, `scan`, `id_recluse`, `severity`) VALUES ('" + descricaoA + "', '" + scan + "', '" + id_recluso + "', '"+ gravidadeA +"');";
+                        Statement statement = connection.createStatement();
+                        statement.executeUpdate(query);
+                        msg = "Inserido com sucesso";
+                        sucess = true;
+                        // prenchido = true;
+                        System.out.println(sucess);
+                        //  System.out.println(prenchido);
+
+                    } else {
+                        sucess = false;
+                        msg = "Identificação de Recluso inválida!";
+                    }
+
+                }
+
+                connection.close();
+            } catch (Exception e){
+                msg = "Connection correu mal";
+                sucess = false;
+            }
+            return msg;
+        }
     }
 }

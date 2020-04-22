@@ -29,7 +29,7 @@
         android:layout_width="315dp"
         android:layout_height="51dp"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Gravidade"
@@ -41,7 +41,7 @@
         android:layout_width="315dp"
         android:layout_height="51dp"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Nome do Recluso"
@@ -61,19 +61,31 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
+        android:id="@+id/numeroRecl"
+        android:layout_width="315dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="156dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Número do Recluso"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <EditText
         android:id="@+id/relatorio"
-        android:layout_width="317dp"
-        android:layout_height="191dp"
+        android:layout_width="313dp"
+        android:layout_height="154dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Relatório"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.574"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.774" />
+        app:layout_constraintVertical_bias="0.825" />
 
     <Button
         android:id="@+id/submeter"

@@ -73,14 +73,16 @@
         android:layout_width="312dp"
         android:layout_height="49dp"
         android:ems="10"
+        android:hint="Nome"
         android:inputType="textPersonName"
-        android:text="Nome"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.322" />
+        app:layout_constraintVertical_bias="0.293" />
 
     <RadioGroup
         android:id="@+id/rgroup"
@@ -113,12 +115,25 @@
         android:layout_width="310dp"
         android:layout_height="47dp"
         android:ems="10"
+        android:hint="Data de nascimento"
         android:inputType="date"
-        android:text="Data de nascimento"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.431" />
+        app:layout_constraintVertical_bias="0.385" />
+
+    <EditText
+        android:id="@+id/scanEnt"
+        android:layout_width="301dp"
+        android:layout_height="37dp"
+        android:ems="10"
+        android:hint="Scan"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.465" />
 </androidx.constraintlayout.widget.ConstraintLayout>

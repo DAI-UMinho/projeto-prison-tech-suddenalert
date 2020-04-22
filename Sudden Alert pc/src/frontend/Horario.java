@@ -93,8 +93,8 @@ public class Horario extends javax.swing.JFrame implements Serializable {
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/save.png"))); // NOI18N
-        jButton2.setText("Guardar");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/alterar (2).png"))); // NOI18N
+        jButton2.setText("Atualizar");
         jButton2.setMargin(new java.awt.Insets(2, 5, 2, 5));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,15 +123,22 @@ public class Horario extends javax.swing.JFrame implements Serializable {
                 {null, null, null, null}
             },
             new String [] {
-                "0h-6h", "6h-12h", "12h-16h", "16h-24h"
+                "0h-6h", "6h-12h", "12h-18h", "18h-24h"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jTable_h.setFocusable(false);
@@ -229,7 +236,7 @@ public class Horario extends javax.swing.JFrame implements Serializable {
                 .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(143, 143, 143)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackButton)
                 .addGap(65, 65, 65))
@@ -303,7 +310,10 @@ public class Horario extends javax.swing.JFrame implements Serializable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        EditarHorario xEditarHorario = new EditarHorario();
+        xEditarHorario.setLocationRelativeTo(null);
+        xEditarHorario.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed

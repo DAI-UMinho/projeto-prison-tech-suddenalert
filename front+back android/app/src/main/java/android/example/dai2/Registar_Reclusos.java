@@ -32,6 +32,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 
@@ -41,8 +42,10 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
     private Button galeria;
     private final int PERMISSAO_REQUEST = 2;
     EditText nome, nascimento, piso, ala, doencas, entrada, numeroRec;
+    private String nomeR, nascimentoR, pisoR, alaR, doencaR, entradaR, numeroR;
     Dialog myDialog;
     private boolean sucess;
+    Button regRecluso;
 
 
 
@@ -57,7 +60,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         doencas = (EditText) findViewById(R.id.doencaRecluso);
         entrada = (EditText) findViewById(R.id.entradaRecluso);
         numeroRec = (EditText) findViewById(R.id.numeroRecluso);
-
+        regRecluso = (Button) findViewById(R.id.button2);
 
         imagem = (ImageView)findViewById(R.id.imageView2);
         Button galeria = (Button)findViewById(R.id.button3);
@@ -95,6 +98,81 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        regRecluso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register();
+            }
+        });
+
+    }
+
+    public void register(){
+        intialize();
+        if (!validate()){
+            Toast.makeText(this, "Campos em falta", Toast.LENGTH_LONG).show();
+        } else {
+            Send send = new Send();
+            send.execute();
+
+            try {
+                Thread.sleep(1000);
+            }
+            catch (Exception e){
+                System.out.print("erro");
+            }
+
+            if (sucess == true) {
+                Toast.makeText(this, "Recluso criado com sucesso!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, android.example.dai2.inicio_diretor.class));
+
+            } else {
+                Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public boolean validate(){
+        boolean valid = true;
+        if (nomeR.isEmpty()){
+            nome.setError("Introduz a Nome");
+            valid = false;
+        }
+        if (nascimentoR.isEmpty()){
+            nascimento.setError("Introduz data de nascimento");
+            valid = false;
+        }
+        if (pisoR.isEmpty()){
+            piso.setError("Introduz Piso");
+            valid = false;
+        }
+        if (alaR.isEmpty()){
+            ala.setError("Introduz Ala");
+            valid = false;
+        }
+        if (numeroR.isEmpty()){
+            numeroRec.setError("Introduz Nº Recluso");
+            valid = false;
+        }
+        if (doencaR.isEmpty()){
+            doencas.setError("Introduz as Doenças");
+            valid = false;
+        }
+        if (entradaR.isEmpty()){
+            entrada.setError("Introduz data de entrada");
+            valid = false;
+        }
+        return valid;
+    }
+
+    public void intialize(){
+        nomeR = nome.getText().toString().trim();
+        alaR = ala.getText().toString().trim();
+        pisoR = piso.getText().toString().trim();
+        numeroR = numeroRec.getText().toString().trim();
+        nascimentoR = nascimento.getText().toString().trim();
+        entradaR = entrada.getText().toString().trim();
+        doencaR = doencas.getText().toString().trim();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -125,31 +203,10 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         }
     }
 
-    public void btnAdicionarRecluso(View view){
-        Send obj = new Send();
-        obj.execute();
-        try {
-            Thread.sleep(1000);
-        }
-        catch (Exception e){
-            System.out.print("erro");
-        }
-        if (sucess == true){
-            Toast.makeText(getApplicationContext(), "Criado com Sucesso!", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Erro ao Criar Rescluso", Toast.LENGTH_LONG).show();
-        }
-    }
 
     private class Send extends AsyncTask<String,String,String> {
         String msg = "";
-        String name = nome.getText().toString();
-        String nasciment = nascimento.getText().toString();
-        String pisoo = piso.getText().toString();
-        String alaa = ala.getText().toString();
-        String doenca = doencas.getText().toString();
-        String entrad = entrada.getText().toString();
-        String numero = numeroRec.getText().toString();
+        int valor = 0;
 
 
 
@@ -162,12 +219,29 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
                     msg = "Connection goes wrong";
                     sucess = false;
                 } else {
-                     //String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `date_left`) VALUES ('"+name+"', '"+entrad+"', '"+nasciment+"')";
-                    String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`, `numero_recluso`) VALUES ('"+name+"', '"+entrad+"', '"+nasciment+"', '"+pisoo+"', '"+alaa+"', '"+doenca+"', '"+numero+"');";
-                    Statement stmt = conn.createStatement();
-                    stmt.executeUpdate(query);
-                    msg = "Inserting Successfull!!!!";
-                    sucess = true;
+                    String query1 = "SELECT COUNT(1) FROM Recluse WHERE numero_recluso like '" + numeroR + "';";
+                    Statement statement1 = conn.createStatement();
+                    ResultSet resultSet1 = statement1.executeQuery(query1);
+                    while (resultSet1.next()) {
+                        valor = resultSet1.getInt("COUNT(1)");
+
+                        System.out.println(valor);
+
+                    }
+                    if (valor == 0 ) {
+                        String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`, `numero_recluso`) VALUES ('" + nomeR + "', '" + entradaR + "', '" + nascimentoR + "', '" + pisoR + "', '" + alaR + "', '" + doencaR + "', '" + numeroR + "');";
+                        Statement stmt = conn.createStatement();
+                        stmt.executeUpdate(query);
+                        String query2 = "INSERT INTO Historico (`acao`, `motivo`, `id_recluse`, `tipo`) VALUES ('Inserção', '', '"+numeroR+"', 'Recluso');";
+                        Statement statement = conn.createStatement();
+                        statement.executeUpdate(query2);
+                        msg = "Inserting Successfull!!!!";
+                        sucess = true;
+                    } else {
+                        sucess = false;
+                        msg = "Identificação de Recluso inválida!";
+                        //numeroRec.setError("Numero já utilizado");
+                    }
                 }
                 conn.close();
             } catch (Exception e){

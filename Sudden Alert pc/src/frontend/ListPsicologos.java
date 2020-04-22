@@ -94,7 +94,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         BackButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         sidepane9 = new javax.swing.JPanel();
         jLabel39 = new javax.swing.JLabel();
@@ -134,12 +133,20 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
 
         jTable_Display_Psicologos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"Ana Costa", "ana_costa7364@gmail.com"}
             },
             new String [] {
                 "Nome", "Email"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable_Display_Psicologos.setSelectionBackground(new java.awt.Color(255, 102, 102));
         jTable_Display_Psicologos.setVerifyInputWhenFocusTarget(false);
         jScrollPane2.setViewportView(jTable_Display_Psicologos);
@@ -174,16 +181,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/save.png"))); // NOI18N
-        jButton2.setText("Guardar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/delete.png"))); // NOI18N
@@ -206,8 +203,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackButton)
                 .addGap(149, 149, 149))
@@ -240,9 +235,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
@@ -495,10 +488,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -716,7 +705,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

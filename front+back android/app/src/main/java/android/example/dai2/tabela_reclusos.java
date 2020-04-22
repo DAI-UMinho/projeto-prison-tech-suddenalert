@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class tabela_reclusos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static ArrayList<ClassListReclusos> itemArrayList;
@@ -53,6 +56,8 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     Button verDados;
     int posicao, id_recluso;
     ProgressBar progressBar;
+    EditText motivo;
+    String motivoE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,13 +166,13 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday FROM Recluse WHERE deleted like 0";
+                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday, numero_recluso FROM Recluse WHERE deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                itemArrayList.add(new ClassListReclusos(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getString("photo"), rs.getString("birthday")));
+                                itemArrayList.add(new ClassListReclusos(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getString("photo"), rs.getString("birthday"), rs.getInt("numero_recluso")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -207,8 +212,9 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         }
 
         public class MyAppAdapter extends BaseAdapter {
+
             public class ViewHolder {
-                TextView nome, pisoo, alaa, doencaa, nascimento;
+                TextView nome, numeroRec;
                 ImageView imageView;
 
             }
@@ -257,10 +263,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                     rowView = inflater.inflate(R.layout.linha, parent, false);
                     viewHolder = new ViewHolder();
                     viewHolder.nome = (TextView) rowView.findViewById(R.id.nome);
-                   /* viewHolder.doencaa = (TextView) rowView.findViewById(R.id.doencas1);
-                    viewHolder.alaa = (TextView) rowView.findViewById(R.id.ala1);
-                    viewHolder.pisoo = (TextView) rowView.findViewById(R.id.piso1);
-                    viewHolder.nascimento = (TextView) rowView.findViewById(R.id.nascimento1);*/
+                    viewHolder.numeroRec = (TextView) rowView.findViewById(R.id.numero);
                     viewHolder.imageView = (ImageView) rowView.findViewById(R.id.imagem);
                     rowView.setTag(viewHolder);
 
@@ -269,16 +272,29 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
                 viewHolder.nome.setText(recluseList.get(position).getNomeRec() + "");
-                /*viewHolder.doencaa.setText(recluseList.get(position).getDoencaRec() + "");
-                viewHolder.alaa.setText(recluseList.get(position).getAlaRec() + "");
-                viewHolder.pisoo.setText(recluseList.get(position).getPisoRec() + "");
-                viewHolder.nascimento.setText(recluseList.get(position).getNascimento()+ "");*/
+                viewHolder.numeroRec.setText(recluseList.get(position).getNumero_rec() + "");
                 Picasso.get().load(recluseList.get(position).getImg()).into(viewHolder.imageView);
 
 
                 return rowView;
 
 
+            }
+            public void filter(String charText) {
+                charText = charText.toLowerCase(Locale.getDefault());
+                recluseList.clear();
+                if(charText.length()==0){
+                    recluseList.addAll(arrayList);
+                }
+                else{
+                    for (ClassListReclusos nome : arrayList){
+                        if(nome.getNomeRec().toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            recluseList.add(nome);
+                        }
+                    }
+                }
+                notifyDataSetChanged();
             }
         }
 
@@ -328,7 +344,27 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
+        getMenuInflater().inflate(R.menu.search, menu);
+        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView)myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)){
+                    myAppAdapter.filter("");
+                    listView.clearTextFilter();
+                }
+                else{
+                    myAppAdapter.filter(newText);
+                }
+                return false;
+            }
+        });
         return true;
     }
 
@@ -389,9 +425,6 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                 }
             });
             myDialog.show();
-        }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(tabela_reclusos.this,perfil_diretor.class);
-            startActivity(intent);
         }else if (id == R.id.nav_entidades){
             TextView txtclose;
             Button listagem;
@@ -588,6 +621,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                     System.out.println(query);
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query);
+
                     msg = "Atualizado com sucesso";
                 }
             } catch (ClassNotFoundException e) {
@@ -600,11 +634,13 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     }
 
 public void eliminarRecluso (View view){
-    TextView txtclose;
+    TextView txtclose, numeroRec;
     ImageView eliminar;
     elimina.setContentView(R.layout.eliminar_r);
     txtclose = (TextView) elimina.findViewById(R.id.txtclose);
     eliminar = (ImageView) elimina.findViewById(R.id.imageView21);
+    numeroRec = (TextView) elimina.findViewById(R.id.numeroEliminarRec);
+    motivo = (EditText) elimina.findViewById(R.id.motivo);
     txtclose.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -617,10 +653,14 @@ public void eliminarRecluso (View view){
             eliminaRecluso(view);
         }
     });
+   // String numero = itemArrayList.get(posicao).getNumero_rec().;
+   // System.out.println();
+    numeroRec.setText(String.valueOf(itemArrayList.get(posicao).getNumero_rec()));
     elimina.show();
 }
 
     public void eliminaRecluso (View view) {
+        motivoE = motivo.getText().toString().trim();
         EliminarRecluso eliminarRecluso = new EliminarRecluso();
         eliminarRecluso.execute();
         try {
@@ -645,9 +685,10 @@ public void eliminarRecluso (View view){
                     System.out.println(posicao);
                     String query = "UPDATE Recluse SET deleted='1' where id_recluse = '"+ itemArrayList.get(posicao).getId_recluse()+ "'";
                     Statement preparedStatement = connection.createStatement();
-                    System.out.println(query);
                     preparedStatement.executeUpdate(query);
-                    System.out.println("1");
+                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `id_recluse`, `tipo`) VALUES ('Remoção', '"+motivoE+"', '"+itemArrayList.get(posicao).getNumero_rec()+"', 'Recluso');";
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(query2);
                 }
                 connection.close();
             } catch (ClassNotFoundException e) {

@@ -1,13 +1,23 @@
 package android.example.dai2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -23,26 +33,41 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.integration.android.IntentResult;
+import com.google.zxing.integration.android.IntentIntegrator;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-public class Main3Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Main3Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
     RadioGroup rg;
     RadioButton rb;
-    EditText nome;
-    EditText data;
+    EditText nome, nascimento, scan;
+    TextView localização;
+    private String nomeE, nascimentoE, localizaçãoE, tipoE, scanE;
     Dialog myDialog;
-    Button registar;
+    private Button registar, btnGetLocation;
     ProgressBar progressBar;
+    private boolean sucess;
+    private final int GPS_REQUEST = 200;
+    private LocationManager locationManager;
+    String tipo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registar_ent);
         myDialog = new Dialog(this);
         rg= (RadioGroup) findViewById(R.id.rgroup);
-        final EditText data = (EditText) findViewById(R.id.data);
-        final EditText nome = (EditText) findViewById(R.id.editText);
-        Button registar = (Button) findViewById(R.id.button10);
-        data.addTextChangedListener(Mask.insert("##/##/####", data));
-        data.setOnTouchListener(new View.OnTouchListener() {
+        nome = (EditText) findViewById(R.id.editText);
+        nascimento = (EditText) findViewById(R.id.data);
+        registar = (Button) findViewById(R.id.button10);
+        localização = (TextView) findViewById(R.id.txLocation);
+        rb = (RadioButton) findViewById(R.id.radioButton2);
+        btnGetLocation = findViewById(R.id.btnGetLocation);
+        scan = (EditText) findViewById(R.id.scanEnt);
+      //  data.addTextChangedListener(Mask.insert("##/##/####", data));
+      /*  data.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -61,8 +86,8 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
                 }
                 return false;
             }
-        });
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        });*/
+        /*Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -73,8 +98,117 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);*/
+        btnGetLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(Main3Activity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION}, GPS_REQUEST);
+                } else {
+                    getLocation();
+                }
+            }
+        });
+
+        registar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register();
+            }
+        });
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case GPS_REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLocation();
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+    private void getLocation() {
+        try {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void register(){
+        intialize();
+        if (!validate()){
+            Toast.makeText(this, "Campos em falta", Toast.LENGTH_LONG).show();
+        } else {
+            Send send = new Send();
+            send.execute();
+
+            try {
+                Thread.sleep(1000);
+            }
+            catch (Exception e){
+                System.out.print("erro");
+            }
+
+            if (sucess == true) {
+                Toast.makeText(this, "Entidade criada com sucesso!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, android.example.dai2.inicio_diretor.class));
+
+            } else {
+                Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    public boolean validate(){
+        boolean valid = true;
+        if (nomeE.isEmpty()){
+            nome.setError("Introduz um Nome");
+            valid = false;
+        }
+        if (nascimentoE.isEmpty()){
+            nascimento.setError("Introduz uma data de Nascimento");
+            valid = false;
+        }
+        if (tipoE.isEmpty()){
+            rb.setError("Tem de escolher o Tipo de Entidade");
+            valid = false;
+        }
+        if (localizaçãoE.isEmpty()){
+            localização.setError("tem de ativar Localização");
+            valid = false;
+        }
+        if (scanE.isEmpty()){
+            scan.setError("Tem de preencher scan");
+            valid = false;
+        }
+        return valid;
+    }
+
+    public void intialize(){
+        nomeE = nome.getText().toString().trim();
+        nascimentoE = nascimento.getText().toString().trim();
+        int radiobuttonid = rg.getCheckedRadioButtonId();
+        RadioButton rb = (RadioButton) findViewById(radiobuttonid);
+         tipo = rb.getText().toString().trim();
+        System.out.println(tipo);
+        if (tipo.equals("Guarda")){
+            tipoE = "1";
+        } else {
+            tipoE = "2";
+        }
+        scanE = scan.getText().toString().trim();
+    }
+
     public void ShowPopup3(View v){
         TextView txtclose;
         myDialog.setContentView(R.layout.registopopup);
@@ -250,9 +384,6 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
                 }
             });
             myDialog.show();
-        }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(Main3Activity.this,perfil_diretor.class);
-            startActivity(intent);
         }else if (id == R.id.nav_entidades){
             TextView txtclose;
             Button listagem;
@@ -344,5 +475,74 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
     public void sair (View v) {
 
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        localizaçãoE =""+location.getLatitude()+","+location.getLongitude()+"";
+        localização.setText("Lat: " + location.getLatitude() + "\nLng: " + location.getLongitude());
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    private class Send extends AsyncTask<String,String,String> {
+        String msg = "";
+        int valor = 0;
+
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (conn == null){
+                    msg = "Connection goes wrong";
+                    sucess = false;
+                } else {
+                    String query1 = "SELECT COUNT(1) FROM Profile WHERE scan like '"+scanE+"';";
+                    Statement statement1 = conn.createStatement();
+                    ResultSet resultSet = statement1.executeQuery(query1);
+                    while (resultSet.next()){
+                        valor = resultSet.getInt("COUNT(1)");
+                    }
+                    if(valor == 0) {
+                        String query = "INSERT INTO `Profile` (`id_type`, `name`, `location`, `birthday`, `scan`) VALUES ('" + tipoE + "', '" + nomeE + "', '" + localizaçãoE + "', '" + nascimentoE + "', '"+scanE+"');";
+                        Statement stmt = conn.createStatement();
+                        System.out.println(query);
+                        stmt.executeUpdate(query);
+                        String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Inserção Entidade', '', '"+scanE+"', '" + tipo + "');";
+                        Statement statement = conn.createStatement();
+                        statement.executeUpdate(query2);
+                        msg = "Inserting Successfull!!!!";
+                        sucess = true;
+                    } else {
+                        sucess = false;
+                        msg = "Scan já utilizado por outra Entidade";
+                    }
+                }
+                conn.close();
+            } catch (Exception e){
+                msg = "Connection goes wrong";
+                e.printStackTrace();
+                sucess = false;
+            }
+            return msg;
+        }
+
+
     }
 }

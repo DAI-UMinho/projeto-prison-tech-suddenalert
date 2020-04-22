@@ -47,6 +47,8 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
     Dialog myDialog;
     Button verDados;
     int posicao;
+    public static String numeorRec;
+    public static int id_recluso;
 
 
     @Override
@@ -151,13 +153,13 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday FROM Recluse WHERE deleted like 0";
+                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday, numero_recluso FROM Recluse WHERE deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                itemArrayList.add(new ClassListReclusos(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getString("photo"), rs.getString("birthday")));
+                                itemArrayList.add(new ClassListReclusos(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getString("photo"), rs.getString("birthday"), rs.getInt("numero_recluso")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -197,7 +199,7 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
 
         public class MyAppAdapter extends BaseAdapter {
             public class ViewHolder {
-                TextView nome, pisoo, alaa, doencaa;
+                TextView nome, numeroRec;
                 ImageView imageView;
 
             }
@@ -246,9 +248,7 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
                     rowView = inflater.inflate(R.layout.linha, parent, false);
                     viewHolder = new ViewHolder();
                     viewHolder.nome = (TextView) rowView.findViewById(R.id.nome);
-                   /* viewHolder.doencaa = (TextView) rowView.findViewById(R.id.doencas1);
-                    viewHolder.alaa = (TextView) rowView.findViewById(R.id.ala1);
-                    viewHolder.pisoo = (TextView) rowView.findViewById(R.id.piso1);*/
+                    viewHolder.numeroRec = (TextView) rowView.findViewById(R.id.numero);
                     viewHolder.imageView = (ImageView) rowView.findViewById(R.id.imagem);
                     rowView.setTag(viewHolder);
 
@@ -258,9 +258,7 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
                 viewHolder.nome.setText(recluseList.get(position).getNomeRec() + "");
-                /*viewHolder.doencaa.setText(recluseList.get(position).getDoencaRec() + "");
-                viewHolder.alaa.setText(recluseList.get(position).getAlaRec() + "");
-                viewHolder.pisoo.setText(recluseList.get(position).getPisoRec() + "");*/
+                viewHolder.numeroRec.setText(recluseList.get(position).getNumero_rec() + "");
                 Picasso.get().load(recluseList.get(position).getImg()).into(viewHolder.imageView);
 
 
@@ -402,6 +400,9 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
         startActivity(new Intent(this, Registar_Reclusos.class));
     }
     public void iniciar_situacao (View v) {
+        numeorRec = String.valueOf(itemArrayList.get(posicao).getNumero_rec());
+        id_recluso = itemArrayList.get(posicao).getId_recluse();
+        System.out.println(numeorRec);
         startActivity(new Intent(this, alerta_guarda.class));
     }
 

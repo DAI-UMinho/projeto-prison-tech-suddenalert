@@ -48,6 +48,8 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
     private ListView listView;
     private boolean sucess = false;
     int posicao;
+    private String motivoE;
+    private EditText motivo;
 
 
     @Override
@@ -171,9 +173,6 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                 }
             });
             myDialog.show();
-        }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(tabela_guarda.this,perfil_diretor.class);
-            startActivity(intent);
         }else if (id == R.id.nav_entidades){
             TextView txtclose;
             Button listagem;
@@ -281,9 +280,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         protected String doInBackground(String... strings) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                System.out.println("1");
                 Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
-                System.out.println("2");
                 if (conn == null) {
                     sucess = false;
                 } else {
@@ -293,7 +290,6 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                System.out.println("3");
                                 entidadesArrayList.add(new Entidades(rs.getString("name"), rs.getString("email"), rs.getString("scan"), rs.getString("points")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
@@ -383,7 +379,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         }
     }
     public void eliminarGua(View view){
-         posicao = listView.getPositionForView(view);
+        motivoE = motivo.getText().toString().trim();
         EliminarGuarda eliminarGua  =new EliminarGuarda();
         eliminarGua.execute();
         try {
@@ -405,12 +401,12 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                 if (connection == null){
                     msg = "Connect failed";
                 } else {
-                    System.out.println(posicao);
                     String query = "UPDATE Profile SET deleted='1' where scan = '"+ entidadesArrayList.get(posicao).getScan()+ "'";
                     Statement preparedStatement = connection.createStatement();
-                    System.out.println("qiui");
                     preparedStatement.executeUpdate(query);
-                    System.out.println("1");
+                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', '"+motivoE+"', '"+entidadesArrayList.get(posicao).getScan()+"', 'Guarda');";
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(query2);
                 }
                 connection.close();
             } catch (ClassNotFoundException e) {
@@ -422,11 +418,12 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         }
     }
     public void eliminarGuarda(View view){
-        TextView txtclose;
-        EditText motivo;
+        posicao = listView.getPositionForView(view);
+        TextView txtclose, nomeGuarda;
         ImageView eliminar;
         eliminaGua.setContentView(R.layout.eliminar_g);
         txtclose = (TextView) eliminaGua.findViewById(R.id.txtclose);
+        nomeGuarda = (TextView) eliminaGua.findViewById(R.id.nomeG);
         motivo = (EditText) eliminaGua.findViewById(R.id.motivo);
         eliminar = (ImageView) eliminaGua.findViewById(R.id.imageView20);
         txtclose.setOnClickListener(new View.OnClickListener() {
@@ -441,9 +438,11 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                 eliminarGua(view);
             }
         });
-
-        //falta guardar o motivo
+        nomeGuarda.setText(entidadesArrayList.get(posicao).getNome());
         eliminaGua.show();
+    }
+    public void alterarH(View v){
+        startActivity(new Intent(this, horario_diretor.class));
     }
 
 }

@@ -24,10 +24,12 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.horario_diretor);
+        setContentView(R.layout.horario_d);
         myDialog = new Dialog(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -38,6 +40,8 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
 
@@ -75,32 +79,9 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
             Intent intent = new Intent(horario_diretor.this,inicio_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            TextView txtclose;
-            Button listahor;
-            Button meuhor;
-            myDialog.setContentView(R.layout.horariospopup);
-            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-            listahor = (Button) myDialog.findViewById(R.id.listahor);
-            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
-            listahor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(horario_diretor.this, tabela_horario.class));
-                }
-            });
-            meuhor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(horario_diretor.this, horario_diretor.class));
-                }
-            });
-            txtclose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    myDialog.dismiss();
-                }
-            });
-            myDialog.show();
+
+            startActivity(new Intent(horario_diretor.this, tabela_horario.class));
+
         }else if (id == R.id.nav_doc) {
             TextView txtclose;
             Button listarel;
@@ -128,9 +109,6 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
                 }
             });
             myDialog.show();
-        }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(horario_diretor.this,perfil_diretor.class);
-            startActivity(intent);
         }else if (id == R.id.nav_entidades){
             TextView txtclose;
             Button listagem;
