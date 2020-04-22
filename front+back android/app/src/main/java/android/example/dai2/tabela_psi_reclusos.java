@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class tabela_psi_reclusos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static ArrayList<ClassListReclusos> itemArrayList;
@@ -147,7 +150,7 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(tabela_psi_reclusos.this, "Synchronising", "ListView Loading wait...", true);
+            progress = ProgressDialog.show(tabela_psi_reclusos.this, "Lista de reclusos", "A carregar...", true);
         }
 
         @Override
@@ -272,6 +275,22 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
 
 
             }
+            public void filter(String charText) {
+                charText = charText.toLowerCase(Locale.getDefault());
+                recluseList.clear();
+                if(charText.length()==0){
+                    recluseList.addAll(arrayList);
+                }
+                else{
+                    for (ClassListReclusos nome : arrayList){
+                        if(nome.getNomeRec().toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            recluseList.add(nome);
+                        }
+                    }
+                }
+                notifyDataSetChanged();
+            }
         }
 
     }
@@ -282,8 +301,27 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
-        return true;
+        getMenuInflater().inflate(R.menu.search, menu);
+        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView)myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)){
+                    myAppAdapter.filter("");
+                    listView.clearTextFilter();
+                }
+                else{
+                    myAppAdapter.filter(newText);
+                }
+                return false;
+            }
+        });        return true;
     }
 
     @Override
