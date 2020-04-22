@@ -79,7 +79,7 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(historico.this, "Lista de reclusos", "A carregar...", true);
+            progress = ProgressDialog.show(historico.this, "Histórico", "A carregar...", true);
         }
         @Override
         protected String doInBackground(String... strings) {
@@ -224,42 +224,6 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
-    public void eliminarHistorico(View view) {
-        posicao = listView.getPositionForView(view);
-        EliminarGuarda eliminarGuarda = new EliminarGuarda();
-        eliminarGuarda.execute();
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e){
-            System.out.println(e);
-        }
-
-        startActivity(new Intent(this, historico.class));
-        historico.this.finish();
-    }
-        private class EliminarGuarda extends AsyncTask<String, String, String>{
-            String msg;
-            @Override
-            protected String doInBackground(String... strings) {
-                try {
-                    Class.forName("com.mysql.jdbc.Driver");
-                    Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
-                    if (connection == null){
-                        msg = "Connect failed";
-                    } else {
-                        String query = "UPDATE Histotico SET deleted='1' where idHistorico = '"+ historicosArrayList.get(posicao).getId_hist()+ "'";
-                        Statement preparedStatement = connection.createStatement();
-                        preparedStatement.executeUpdate(query);
-                    }
-                    connection.close();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                return msg;
-            }
-        }
 
 
     @Override
@@ -478,6 +442,42 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
     }
     private void alert(String msg){
         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+    }
+    public void eliminarHistorico(View view) {
+        posicao = listView.getPositionForView(view);
+        EliminarHistorico eliminarHistorico = new EliminarHistorico();
+        eliminarHistorico.execute();
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        startActivity(new Intent(this, historico.class));
+        historico.this.finish();
+    }
+    private class EliminarHistorico extends AsyncTask<String, String, String>{
+        String msg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null){
+                    msg = "Connect failed";
+                } else {
+                    String query = "UPDATE Historico SET deleted='1' where idHistorico = '"+ historicosArrayList.get(posicao).getId_hist()+ "'";
+                    Statement preparedStatement = connection.createStatement();
+                    preparedStatement.executeUpdate(query);
+                }
+                connection.close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
     }
 
 }

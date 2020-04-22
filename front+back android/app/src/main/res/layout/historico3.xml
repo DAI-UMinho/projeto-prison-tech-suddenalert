@@ -42,33 +42,10 @@
     <ListView
         android:id="@+id/lvhis"
         android:layout_width="match_parent"
-        android:layout_height="499dp">
+        android:layout_height="541dp">
 
     </ListView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/imageView22"
-            android:layout_width="60dp"
-            android:layout_height="52dp"
-            android:layout_marginLeft="250dp"
-            app:srcCompat="@drawable/ic_delete_foreground" />
-
-        <EditText
-            android:id="@+id/dom12"
-            android:layout_width="88dp"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:gravity="center"
-            android:padding="3dip"
-            android:text="Eliminar"
-            android:textColor="#000000" />
-    </LinearLayout>
 
 </LinearLayout>
 
