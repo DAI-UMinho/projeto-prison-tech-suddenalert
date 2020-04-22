@@ -116,7 +116,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
             send.execute();
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             }
             catch (Exception e){
                 System.out.print("erro");
@@ -232,12 +232,15 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
                         String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`, `numero_recluso`) VALUES ('" + nomeR + "', '" + entradaR + "', '" + nascimentoR + "', '" + pisoR + "', '" + alaR + "', '" + doencaR + "', '" + numeroR + "');";
                         Statement stmt = conn.createStatement();
                         stmt.executeUpdate(query);
+                        String query2 = "INSERT INTO Historico (`acao`, `motivo`, `id_recluse`, `tipo`) VALUES ('Inserção', '', '"+numeroR+"', 'Recluso');";
+                        Statement statement = conn.createStatement();
+                        statement.executeUpdate(query2);
                         msg = "Inserting Successfull!!!!";
                         sucess = true;
                     } else {
                         sucess = false;
                         msg = "Identificação de Recluso inválida!";
-                        numeroRec.setError("Numero já utilizado");
+                        //numeroRec.setError("Numero já utilizado");
                     }
                 }
                 conn.close();

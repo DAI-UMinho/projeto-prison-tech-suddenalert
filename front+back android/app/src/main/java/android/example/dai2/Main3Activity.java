@@ -52,6 +52,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
     private boolean sucess;
     private final int GPS_REQUEST = 200;
     private LocationManager locationManager;
+    String tipo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,7 +158,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             }
 
             if (sucess == true) {
-                Toast.makeText(this, "Recluso criado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Entidade criada com sucesso!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, android.example.dai2.inicio_diretor.class));
 
             } else {
@@ -193,7 +194,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         nascimentoE = nascimento.getText().toString().trim();
         int radiobuttonid = rg.getCheckedRadioButtonId();
         RadioButton rb = (RadioButton) findViewById(radiobuttonid);
-        String tipo = rb.getText().toString().trim();
+         tipo = rb.getText().toString().trim();
         System.out.println(tipo);
         if (tipo.equals("Guarda")){
             tipoE = "1";
@@ -510,10 +511,13 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
                     msg = "Connection goes wrong";
                     sucess = false;
                 } else {
-                        String query = "INSERT INTO `Profile` (`id_type`, `name`, `location`, `birthday`, `scan`) VALUES ('" + tipoE + "', '" + nomeE + "', '" + localizaçãoE + "', '" + nascimentoE + "', '69');";
+                        String query = "INSERT INTO `Profile` (`id_type`, `name`, `location`, `birthday`, `scan`) VALUES ('" + tipoE + "', '" + nomeE + "', '" + localizaçãoE + "', '" + nascimentoE + "', '69411');";
                         Statement stmt = conn.createStatement();
                         System.out.println(query);
                         stmt.executeUpdate(query);
+                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Inserção Entidade', '', '69411', '"+tipo+"');";
+                    Statement statement = conn.createStatement();
+                    statement.executeUpdate(query2);
                         msg = "Inserting Successfull!!!!";
                         sucess = true;
                 }

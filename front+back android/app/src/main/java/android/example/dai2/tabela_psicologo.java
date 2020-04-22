@@ -49,6 +49,8 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
     private ListView listView;
     private boolean sucess = false;
     private int posicao;
+    private String motivoE;
+    EditText motivo;
 
 
     @Override
@@ -425,7 +427,8 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
         }
     }
             public void eliminarPsi(View view){
-                posicao = listView.getPositionForView(view);
+                //posicao = listView.getPositionForView(view);
+                motivoE = motivo.getText().toString().trim();
                 EliminarPsicologo eliminarPsi =new EliminarPsicologo();
                 eliminarPsi.execute();
                 try {
@@ -450,9 +453,10 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                             System.out.println(posicao);
                             String query = "UPDATE Profile SET deleted='1' where scan = '"+ entidadesArrayList.get(posicao).getScan()+ "'";
                             Statement preparedStatement = connection.createStatement();
-                            System.out.println("qiui");
                             preparedStatement.executeUpdate(query);
-                            System.out.println("1");
+                            String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', '"+motivoE+"', '"+entidadesArrayList.get(posicao).getScan()+"', 'Psicólogo');";
+                            Statement statement = connection.createStatement();
+                            statement.executeUpdate(query2);
                         }
                         connection.close();
                     } catch (ClassNotFoundException e) {
@@ -464,11 +468,12 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                 }
             }
     public void EliminarPsicologo(View view){
-        TextView txtclose;
+        posicao = listView.getPositionForView(view);
+        TextView txtclose, numeroRec;
         ImageView eliminar;
-        EditText motivo;
         eliminarPsi.setContentView(R.layout.eliminar_p);
         txtclose = (TextView) eliminarPsi.findViewById(R.id.txtclose);
+        numeroRec = (TextView) eliminarPsi.findViewById(R.id.nomeP);
         motivo = (EditText) eliminarPsi.findViewById(R.id.motivo);
         eliminar = (ImageView) eliminarPsi.findViewById(R.id.imageView20);
         txtclose.setOnClickListener(new View.OnClickListener() {
@@ -483,6 +488,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                 eliminarPsi(view);
             }
         });
+        numeroRec.setText(String.valueOf(entidadesArrayList.get(posicao).getNome()));
         eliminarPsi.show();
     }
     public void verhorarioP(View v){

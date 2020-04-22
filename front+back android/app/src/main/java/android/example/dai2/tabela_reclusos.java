@@ -53,6 +53,8 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     Button verDados;
     int posicao, id_recluso;
     ProgressBar progressBar;
+    EditText motivo;
+    String motivoE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -582,6 +584,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                     System.out.println(query);
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query);
+
                     msg = "Atualizado com sucesso";
                 }
             } catch (ClassNotFoundException e) {
@@ -594,11 +597,13 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     }
 
 public void eliminarRecluso (View view){
-    TextView txtclose;
+    TextView txtclose, numeroRec;
     ImageView eliminar;
     elimina.setContentView(R.layout.eliminar_r);
     txtclose = (TextView) elimina.findViewById(R.id.txtclose);
     eliminar = (ImageView) elimina.findViewById(R.id.imageView21);
+    numeroRec = (TextView) elimina.findViewById(R.id.numeroEliminarRec);
+    motivo = (EditText) elimina.findViewById(R.id.motivo);
     txtclose.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -611,10 +616,14 @@ public void eliminarRecluso (View view){
             eliminaRecluso(view);
         }
     });
+   // String numero = itemArrayList.get(posicao).getNumero_rec().;
+   // System.out.println();
+    numeroRec.setText(String.valueOf(itemArrayList.get(posicao).getNumero_rec()));
     elimina.show();
 }
 
     public void eliminaRecluso (View view) {
+        motivoE = motivo.getText().toString().trim();
         EliminarRecluso eliminarRecluso = new EliminarRecluso();
         eliminarRecluso.execute();
         try {
@@ -639,9 +648,10 @@ public void eliminarRecluso (View view){
                     System.out.println(posicao);
                     String query = "UPDATE Recluse SET deleted='1' where id_recluse = '"+ itemArrayList.get(posicao).getId_recluse()+ "'";
                     Statement preparedStatement = connection.createStatement();
-                    System.out.println(query);
                     preparedStatement.executeUpdate(query);
-                    System.out.println("1");
+                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `id_recluse`, `tipo`) VALUES ('Remoção', '"+motivoE+"', '"+itemArrayList.get(posicao).getNumero_rec()+"', 'Recluso');";
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(query2);
                 }
                 connection.close();
             } catch (ClassNotFoundException e) {

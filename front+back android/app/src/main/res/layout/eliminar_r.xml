@@ -103,7 +103,7 @@
         app:srcCompat="@drawable/ic_delete_foreground" />
 
     <TextView
-        android:id="@+id/numeroR"
+        android:id="@+id/numeroEliminarRec"
         android:layout_width="166dp"
         android:layout_height="28dp"
         android:layout_marginTop="14dp"
