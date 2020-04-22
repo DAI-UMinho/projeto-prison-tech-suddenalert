@@ -65,15 +65,12 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
        public void show_recluso() {
            ArrayList<Recluso> list = reclusoList();
            DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
-           Object[] row = new Object[7];
+           Object[] row = new Object[4];
             for(int i=0;i<list.size();i++){
             row[0]=list.get(i).getnumero_recluso();
             row[1]=list.get(i).getnome();
-            row[2]=list.get(i).getdata_nascimento();
-            row[3]=list.get(i).getdata_entrada();
-            row[4]=list.get(i).getala();
-            row[5]=list.get(i).getpiso();
-            row[6]=list.get(i).getdoenças();
+            row[2]=list.get(i).getala();
+            row[3]=list.get(i).getpiso();
             model.addRow(row);
         }
        }
@@ -163,7 +160,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
         sidepane9 = new javax.swing.JPanel();
         jLabel39 = new javax.swing.JLabel();
@@ -206,11 +202,11 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
 
             },
             new String [] {
-                "Número", "Nome", "Data de Nascimento", "Data de Entrada", "Ala", "Piso", "Doenças"
+                "Número", "Nome", "Ala", "Piso"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -219,6 +215,11 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         });
         jTable_Display_Reclusos.setSelectionBackground(new java.awt.Color(255, 102, 102));
         jTable_Display_Reclusos.setVerifyInputWhenFocusTarget(false);
+        jTable_Display_Reclusos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_Display_ReclusosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable_Display_Reclusos);
 
         jTextField1.setInheritsPopupMenu(true);
@@ -241,16 +242,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/eye.png"))); // NOI18N
-        jButton2.setText("Ver mais");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         BackButton.setBackground(new java.awt.Color(176, 2, 37));
         BackButton.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         BackButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -266,9 +257,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(122, 872, Short.MAX_VALUE)
                 .addComponent(BackButton)
                 .addGap(147, 147, 147))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -299,10 +288,8 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -543,38 +530,8 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int row_selecionada = jTable_Display_Reclusos.getSelectedRow();
-        if (row_selecionada >= 0) {
-        TableModel model = jTable_Display_Reclusos.getModel();
-        
-        String numero = model.getValueAt(row_selecionada, 0).toString();
-        String nome = model.getValueAt(row_selecionada, 1).toString();
-        String data_nascimento = model.getValueAt(row_selecionada, 2).toString();
-        String data_entrada = model.getValueAt(row_selecionada, 3).toString();
-        String ala = model.getValueAt(row_selecionada, 4).toString();
-        String piso = model.getValueAt(row_selecionada, 5).toString();
-        String doenças = model.getValueAt(row_selecionada, 6).toString();
-        
-        LerRecluso xEditar = new LerRecluso();
-        xEditar.nome.setText(nome);
-        xEditar.numero.setText(numero);
-        xEditar.data_nascimento.setText(data_nascimento);
-        xEditar.data_entrada.setText(data_entrada);
-        xEditar.ala.setText(ala);
-        xEditar.piso.setText(piso);        
-        xEditar.doenças.setText(doenças);
-
-        xEditar.setLocationRelativeTo(null);
-        xEditar.setVisible(true);
-        this.dispose();  
-    }//GEN-LAST:event_jButton2ActionPerformed
     
-        else{
-            JOptionPane.showMessageDialog(null, "Selecione uma linha");
-        }
-    }
+   
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         Menu xMenu = new Menu();
         xMenu.setLocationRelativeTo(null);
@@ -783,6 +740,39 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         }
     }//GEN-LAST:event_reclActionPerformed
 
+    private void jTable_Display_ReclusosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_Display_ReclusosMouseClicked
+ int row_selecionada = jTable_Display_Reclusos.getSelectedRow();
+        if (row_selecionada >= 0) {
+        ArrayList<Recluso> lista = reclusoList();        
+        Recluso R = lista.get(row_selecionada);
+        int numero_recluso = R.getnumero_recluso();
+        String numero = String.valueOf(numero_recluso);
+        String nome = R.getnome();
+        String ala = R.getala();
+        String piso = R.getpiso();
+        String data_nascimento = R.getdata_nascimento();
+        String data_entrada = R.getdata_entrada();
+        String doenças = R.getdoenças();
+        
+        LerRecluso xEditar = new LerRecluso();
+        xEditar.nome.setText(nome);
+        xEditar.numero.setText(numero);
+        xEditar.data_nascimento.setText(data_nascimento);
+        xEditar.data_entrada.setText(data_entrada);
+        xEditar.ala.setText(ala);
+        xEditar.piso.setText(piso);        
+        xEditar.doenças.setText(doenças);
+
+        xEditar.setLocationRelativeTo(null);
+        xEditar.setVisible(true);
+        this.dispose();  
+    }                                        
+    
+        else{
+            JOptionPane.showMessageDialog(null, "Selecione uma linha");
+        }        
+    }//GEN-LAST:event_jTable_Display_ReclusosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -794,7 +784,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro ent;
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
