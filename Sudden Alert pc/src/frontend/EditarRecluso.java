@@ -10,8 +10,11 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.Serializable;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static javax.swing.text.html.HTML.Tag.I;
 
@@ -395,6 +398,28 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_doenças_editarActionPerformed
 
     private void jbutton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton2ActionPerformed
+        try{
+        ProgressBar xProgress = new ProgressBar();
+        xProgress.setLocationRelativeTo(null);
+        xProgress.setVisible(true);
+        
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int num = 1; num<=100; num++) {
+                    try {
+                        xProgress.jp_progress.UpdateProgress(num);
+                        xProgress.jp_progress.repaint();
+                        Thread.sleep(7);
+                    } catch (InterruptedException ex) {
+                        java.util.logging.Logger.getLogger(RegistEnt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }).start();
+        }catch(Exception err){
+            JOptionPane.showMessageDialog(null,"Ocorreu um erro","Aviso",JOptionPane.ERROR_MESSAGE);
+        }
         String s = numero_editar.getText();
         String no = nome_editar.getText();
         String dn = data_nascimento_editar.getText();
