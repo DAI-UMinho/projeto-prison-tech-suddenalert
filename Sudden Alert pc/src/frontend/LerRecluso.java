@@ -39,9 +39,8 @@ public class LerRecluso extends javax.swing.JFrame implements Serializable {
         piso.setEditable(false);
         doenças.setEditable(false);
         data_entrada.setEditable(false);
-
     }
-    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -352,6 +351,7 @@ public class LerRecluso extends javax.swing.JFrame implements Serializable {
         xEditarRecluso.ala_editar.setText(a);
         xEditarRecluso.piso_editar.setText(p);        
         xEditarRecluso.doenças_editar.setText(d);
+        
 
         xEditarRecluso.setLocationRelativeTo(null);
         xEditarRecluso.setVisible(true);
