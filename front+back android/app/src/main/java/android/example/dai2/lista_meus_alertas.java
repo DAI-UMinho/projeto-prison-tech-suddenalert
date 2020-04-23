@@ -27,8 +27,8 @@ public class lista_meus_alertas extends ArrayAdapter<meus_alertas> {
         View rowView = inflater.inflate(R.layout.lista_meus_alertas, parent, false);
 
         //TextView nomeRecluso = (TextView) rowView.findViewById(R.id.nomeRecluso);
-        TextView severity = (TextView) rowView.findViewById(R.id.severity);
-        TextView descricao = (TextView) rowView.findViewById(R.id.descricao);
+        TextView severity = (TextView) rowView.findViewById(R.id.severityS);
+        TextView descricao = (TextView) rowView.findViewById(R.id.descricaoS);
         //ImageView imagem = (ImageView) rowView.findViewById(R.id.imagem);
 
         //nomeRecluso.setText(reclusos.get(position).getNome());

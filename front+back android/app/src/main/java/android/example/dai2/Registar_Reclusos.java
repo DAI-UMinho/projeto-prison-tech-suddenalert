@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -60,7 +59,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         ala = (EditText) findViewById(R.id.alaRecluso);
         doencas = (EditText) findViewById(R.id.doencaRecluso);
         entrada = (EditText) findViewById(R.id.entradaRecluso);
-        numeroRec = (EditText) findViewById(R.id.numeroRecluso);
+        numeroRec = (EditText) findViewById(R.id.numeroReclusoS);
         regRecluso = (Button) findViewById(R.id.button2);
 
         imagem = (ImageView)findViewById(R.id.imageView2);

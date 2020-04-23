@@ -49,11 +49,10 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/nomeRecluso"
+                    android:id="@+id/nomeReclusoS"
                     android:layout_width="87dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
-                    android:text="João"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -72,12 +71,11 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/numeroRecluso"
+                    android:id="@+id/numeroReclusoS"
                     android:layout_width="151dp"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="23" />
+                    android:layout_marginTop="2dp"
+                    android:gravity="center" />
 
             </LinearLayout>
 
@@ -89,10 +87,9 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/severity"
+                android:id="@+id/severityS"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="Nível de gravidade"
                 android:textAlignment="center" />
 
             <TextView
@@ -102,10 +99,9 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/descricao"
+                android:id="@+id/descricaoS"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:text="Descrição"
                 android:textAlignment="center" />
         </LinearLayout>
 

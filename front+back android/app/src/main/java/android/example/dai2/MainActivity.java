@@ -310,10 +310,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 //startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
 
           //  if (estatuto == '3') {
-        startActivity(new Intent(this, inicio_diretor.class));
+        //startActivity(new Intent(this, inicio_diretor.class));
     //};
             //if (estatuto == '2') {
-         //startActivity(new Intent(this, inicio_psicologo.class));
+         startActivity(new Intent(this, inicio_psicologo.class));
         // };
                 // if (estatuto == '1') {
        // startActivity(new Intent(this, inicio_guarda.class));

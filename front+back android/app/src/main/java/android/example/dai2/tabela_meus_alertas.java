@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -278,9 +277,9 @@ public class tabela_meus_alertas extends AppCompatActivity implements Navigation
                     LayoutInflater inflater = getLayoutInflater();
                     rowView = inflater.inflate(R.layout.lista_meus_alertas, parent, false);
                     viewHolder = new ViewHolder();
-                    viewHolder.titulo = (TextView) rowView.findViewById(R.id.severity);
+                    viewHolder.titulo = (TextView) rowView.findViewById(R.id.severityS);
                      viewHolder.id = (TextView) rowView.findViewById(R.id.nomeRecluso);
-                   viewHolder.report = (TextView) rowView.findViewById(R.id.descricao);
+                   viewHolder.report = (TextView) rowView.findViewById(R.id.descricaoS);
                     rowView.setTag(viewHolder);
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();

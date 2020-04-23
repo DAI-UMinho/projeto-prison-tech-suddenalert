@@ -1,15 +1,19 @@
 package android.example.dai2;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,19 +27,28 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class tabela_alert extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    Dialog myDialog;
+    Dialog myDialog, eliminarAlert;
     ProgressBar progressBar;
+    private ListView listView;
+    public static ArrayList<AlertSituation> alertSituationArrayList;
+    private SyncData.MyAppAdapter myAppAdapter;
+    private boolean success;
+    public static String nomeRecluso;
+    public static int numeroRecluso, posicao, id_alert;
     @Override
     protected void onCreate(Bundle savedInstancesState) {
         super.onCreate(savedInstancesState);
         setContentView(R.layout.alerta_psicologo);
-        ListView lista = (ListView) findViewById(R.id.alertas);
-        ArrayList<AlertSituation> alerts = adicionarAlerts();
-        ArrayAdapter adapter = new AlertAdapter(this, alerts);
-        lista.setAdapter(adapter);
+        listView = (ListView) findViewById(R.id.alertas);
+        alertSituationArrayList = new ArrayList<AlertSituation>();
         myDialog = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,6 +64,120 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        SyncData syncData = new SyncData();
+        syncData.execute();
+
+    }
+
+    private class SyncData extends AsyncTask<String, String, String>{
+        String msg = "Internet/DB_Connection turn un error";
+        ProgressDialog progress;
+
+        @Override
+        protected void onPreExecute() {
+            progress = ProgressDialog.show(tabela_alert.this, "Lista de reclusos", "A carregar...", true);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (conn == null){
+                    success = false;
+                } else {
+                    String query = "SELECT AlertSituation.id_alertsituation, Recluse.name, Recluse.numero_recluso, AlertSituation.severity, AlertSituation.description FROM AlertSituation INNER JOIN Recluse ON AlertSituation.id_recluse = Recluse.id_recluse WHERE relatorio like 0;";
+                    Statement statement = conn.createStatement();
+                    ResultSet rs = statement.executeQuery(query);
+                    if (rs != null) {
+                        while (rs.next()) {
+                            try {
+                                alertSituationArrayList.add(new AlertSituation(rs.getInt("id_alertsituation"), rs.getString("name"), rs.getInt("numero_recluso"), rs.getString("severity"), rs.getString("description")));
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        msg = "Found";
+                        success = true;
+                    } else {
+                        msg = "No Data Found";
+                        success = false;
+                    }
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            return msg;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            progress.dismiss();
+            Toast.makeText(tabela_alert.this, msg + "", Toast.LENGTH_LONG).show();
+            if (success == false) {
+            } else {
+                try {
+                    myAppAdapter = new MyAppAdapter(alertSituationArrayList, tabela_alert.this);
+                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                    listView.setAdapter(myAppAdapter);
+                } catch (Exception ex) {
+
+                }
+            }
+        }
+
+        public class MyAppAdapter extends BaseAdapter{
+            public class ViewHolder{
+                TextView nome, numero, gravidade, descricao;
+            }
+
+            public List<AlertSituation> alertSituations;
+            public Context context;
+            ArrayList<AlertSituation> arrayList;
+
+            public MyAppAdapter(List<AlertSituation> alertSituations, Context context) {
+                this.alertSituations = alertSituations;
+                this.context = context;
+                arrayList = new ArrayList<AlertSituation>();
+                arrayList.addAll(alertSituations);
+            }
+
+            @Override
+            public int getCount() {
+                return alertSituations.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return position;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View rowView = convertView;
+                ViewHolder viewHolder = null;
+                if (rowView == null){
+                    LayoutInflater inflater = getLayoutInflater();
+                    rowView = inflater.inflate(R.layout.lista_situacoes, parent, false);
+                    viewHolder = new ViewHolder();
+                    viewHolder.nome = (TextView) rowView.findViewById(R.id.nomeReclusoS);
+                    viewHolder.numero = (TextView) rowView.findViewById(R.id.numeroReclusoS);
+                    viewHolder.gravidade= (TextView) rowView.findViewById(R.id.severityS);
+                    viewHolder.descricao = (TextView) rowView.findViewById(R.id.descricaoS);
+                } else {
+                    viewHolder = (ViewHolder) convertView.getTag();
+                }
+                viewHolder.nome.setText(alertSituations.get(position).getNome());
+                viewHolder.numero.setText(String.valueOf(alertSituations.get(position).getNumero()));
+                viewHolder.gravidade.setText(alertSituations.get(position).getSeverity());
+                viewHolder.descricao.setText(alertSituations.get(position).getDescricao());
+                return rowView;
+            }
+        }
     }
 
 
@@ -106,16 +233,6 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private ArrayList<AlertSituation> adicionarAlerts() {
-        ArrayList<AlertSituation> alerts = new ArrayList<AlertSituation>();
-        AlertSituation a = new AlertSituation("Médio", "Este recluso encontra-se instável.");
-        alerts.add(a);
-        a = new AlertSituation("Médio", "Este recluso encontra-se deprimido.");
-        alerts.add(a);
-        a = new AlertSituation("Alto", "Este recluso encontra-se deprimido e com atitudes violentas.");
-        alerts.add(a);
-        return alerts;
-    }
     public void eliminar(View v){
         //elimna a situacao de alerta
         TextView txtclose;
@@ -138,6 +255,10 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
         myDialog.show();
     }
     public void aceitar (View v) {
+        posicao = listView.getPositionForView(v);
+        nomeRecluso = alertSituationArrayList.get(posicao).getNome();
+        numeroRecluso = alertSituationArrayList.get(posicao).getNumero();
+        id_alert = alertSituationArrayList.get(posicao).getId_alert();
         TextView txtclose;
         Button elabora;
         Button nao_elabora;

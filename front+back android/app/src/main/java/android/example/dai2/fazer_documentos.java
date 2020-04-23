@@ -20,10 +20,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class fazer_documentos extends AppCompatActivity {
-    private EditText identificacao, relatorioo, tituloRel;
-    private String t_identific, t_relatorio, t_titulo;
+    private EditText identificacao, nome, gravidade, relatorioo, tituloRel;
+    private String t_identific,t_nome, t_gravidade, t_relatorio, t_titulo;
     private boolean sucess = false, prenchido = true;
     Button regRelat;
+    private int id_alerta = tabela_alert.id_alert;
 
 
 
@@ -31,15 +32,21 @@ public class fazer_documentos extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fazer_documento);
-        identificacao = (EditText) findViewById(R.id.identificacao);
+       // t_identific = tabela_alert.numeroRecluso
+        identificacao = (EditText) findViewById(R.id.numeroRecl);
         relatorioo = (EditText) findViewById(R.id.relatorio);
         tituloRel = (EditText) findViewById(R.id.tituloRel);
-/*        regRelat.setOnClickListener(new View.OnClickListener() {
+        nome = (EditText) findViewById(R.id.identificacao);
+        gravidade = (EditText) findViewById(R.id.gravidaderelatorio);
+        regRelat = (Button) findViewById(R.id.submeter);
+        regRelat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 register();
             }
-        });*/
+        });
+        nome.setText(tabela_alert.nomeRecluso);
+        identificacao.setText(String.valueOf(tabela_alert.numeroRecluso));
     }
     public void register(){
         intialize();
@@ -50,7 +57,7 @@ public class fazer_documentos extends AppCompatActivity {
             criarRelatorio.execute();
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             }
             catch (Exception e){
                 System.out.print("erro");
@@ -68,8 +75,8 @@ public class fazer_documentos extends AppCompatActivity {
 
     public  boolean validate(){
         boolean valid = true;
-        if (t_identific.isEmpty()){
-            identificacao.setError("Introduz a identificação");
+        if (t_gravidade.isEmpty()){
+            gravidade.setError("Introduz a identificação");
             valid = false;
         }
         if (t_relatorio.isEmpty()){
@@ -83,7 +90,7 @@ public class fazer_documentos extends AppCompatActivity {
         return valid;
     }
     public void intialize(){
-        t_identific = identificacao.getText().toString().trim();
+        t_gravidade = gravidade.getText().toString().trim();
         t_relatorio = relatorioo.getText().toString().trim();
         t_titulo = tituloRel.getText().toString().trim();
     }
@@ -105,35 +112,25 @@ public class fazer_documentos extends AppCompatActivity {
                     sucess = false;
                     msg = "Não foi possível realizar connection";
                 } else {
-                    //if (prenchido == true) {
-                    String query1 = "SELECT COUNT(1) FROM Recluse WHERE id_recluse like '" + t_identific + "';";
+                    String query1 = "SELECT id_recluse FROM Recluse WHERE numero_recluso like '" + tabela_alert.numeroRecluso + "';";
                     Statement statement1 = connection.createStatement();
                     ResultSet resultSet1 = statement1.executeQuery(query1);
                     while (resultSet1.next()) {
-                        valor = resultSet1.getInt("COUNT(1)");
+                        valor = resultSet1.getInt("id_recluse");
 
                         System.out.println(valor);
 
                     }
-                    if (valor == 1 ) {
-                        String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`, `title`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + t_identific + "', '"+t_titulo +"');";
-                        Statement statement = connection.createStatement();
-                        statement.executeUpdate(query);
-                        msg = "Inserido com sucesso";
-                        sucess = true;
-                        // prenchido = true;
-                        System.out.println(sucess);
-                        //  System.out.println(prenchido);
+                    String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`, `title`, `gravidade`, `id_alertsituation`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + valor + "', '" + t_titulo + "', '" + t_gravidade + "', '" + id_alerta + "');";
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(query);
 
-                    } else {
-                        sucess = false;
-                        msg = "Identificação de Recluso inválida!";
-                    }
-                    //   }
+                    String query2 = "UPDATE AlertSituation SET relatorio ='1' WHERE id_alertsituation='" + id_alerta + "'";
+                    Statement statement2 = connection.createStatement();
+                    statement2.executeUpdate(query2);
+                    msg = "Inserido com sucesso";
+                    sucess = true;
 
-                    //  System.out.println(valor);
-
-                    //   }
                 }
 
                 connection.close();
