@@ -52,8 +52,10 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
     private boolean sucess = false;
     Dialog myDialog, editarRec, progress;
     Button verDados;
-    int posicao, id_recluso;
+    int posicao;
     ProgressBar progressBar;
+    public static String numeorRec;
+    public static int id_recluso;
 
 
     @Override
@@ -375,10 +377,12 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         TextView doencas;
         TextView piso;
         TextView ala;
+        ImageView sino;
         TextView nascimento;
         TextView entrada;
         myDialog.setContentView(R.layout.vermaispopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        sino = (ImageView) myDialog.findViewById(R.id.sino);
         doencas = (TextView) myDialog.findViewById(R.id.doencas1);
         piso = (TextView) myDialog.findViewById(R.id.piso1);
         ala = (TextView) myDialog.findViewById(R.id.ala1);
@@ -390,6 +394,11 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
                 myDialog.dismiss();
             }
         });
+        sino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iniciar_situacao(v);
+            }});
         doencas.setText(itemArrayList.get(posicao).getDoencaRec());
         piso.setText(itemArrayList.get(posicao).getPisoRec());
         ala.setText(itemArrayList.get(posicao).getAlaRec());
@@ -398,6 +407,12 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         id_recluso = itemArrayList.get(posicao).getId_recluse();
         System.out.println(id_recluso);
         myDialog.show();
+    }
+    public void iniciar_situacao (View v) {
+        numeorRec = String.valueOf(itemArrayList.get(posicao).getNumero_rec());
+        id_recluso = itemArrayList.get(posicao).getId_recluse();
+        System.out.println(numeorRec);
+        startActivity(new Intent(this, alerta_guarda.class));
     }
 
     public void iniciar_relatorio (View v) {
