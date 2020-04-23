@@ -11,6 +11,7 @@ import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.*;
@@ -20,11 +21,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class fazer_documentos extends AppCompatActivity {
-    private EditText identificacao, nome, gravidade, relatorioo, tituloRel;
+    private EditText  gravidade, relatorioo, tituloRel;
     private String t_identific,t_nome, t_gravidade, t_relatorio, t_titulo;
     private boolean sucess = false, prenchido = true;
     Button regRelat;
     private int id_alerta = tabela_alert.id_alert;
+    private TextView identificacao, nome;
 
 
 
@@ -33,10 +35,10 @@ public class fazer_documentos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fazer_documento);
        // t_identific = tabela_alert.numeroRecluso
-        identificacao = (EditText) findViewById(R.id.numeroRecl);
+        identificacao = (TextView) findViewById(R.id.numeroRecl);
         relatorioo = (EditText) findViewById(R.id.relatorio);
         tituloRel = (EditText) findViewById(R.id.tituloRel);
-        nome = (EditText) findViewById(R.id.identificacao);
+        nome = (TextView) findViewById(R.id.identificacao);
         gravidade = (EditText) findViewById(R.id.gravidaderelatorio);
         regRelat = (Button) findViewById(R.id.submeter);
         regRelat.setOnClickListener(new View.OnClickListener() {

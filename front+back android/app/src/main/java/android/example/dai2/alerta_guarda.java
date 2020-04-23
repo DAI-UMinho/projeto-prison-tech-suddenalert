@@ -27,12 +27,13 @@ import java.sql.Statement;
 
 public class alerta_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
-   private  EditText numeroR, gravidade, descricao;
+   private  EditText  gravidade, descricao;
    private  String numeroRec, gravidadeA, descricaoA;
    private int id_recluso;
            //= tabela_gua_reclusos.id_recluso;
     Button criarSitução;
     private boolean sucess;
+    private TextView numeroR;
 
 
     @Override
@@ -43,7 +44,7 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
         myDialog = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        numeroR = (EditText) findViewById(R.id.textView12);
+        numeroR = (TextView) findViewById(R.id.textView12);
         gravidade = (EditText) findViewById(R.id.textView16);
         descricao = (EditText) findViewById(R.id.textView14);
         criarSitução = (Button) findViewById(R.id.btnadicionar);
@@ -58,7 +59,13 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        numeroR.setText(tabela_gua_reclusos.numeorRec);
+        if (tabela_psi_reclusos.numeorRec.equals("")) {
+            numeroR.setText(tabela_gua_reclusos.numeorRec);
+        }
+        if (tabela_gua_reclusos.numeorRec.equals("")){
+            numeroR.setText(tabela_psi_reclusos.numeorRec);
+        }
+
         criarSitução.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

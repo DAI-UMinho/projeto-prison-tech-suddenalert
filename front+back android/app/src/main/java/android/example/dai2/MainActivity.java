@@ -223,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         String name = rs.getString("name");
                         coordenadas = rs.getString("location");
                         estatuto = rs.getInt("id_type");
+                        System.out.println(estatuto);
                         //name = rs.getString("name");
                         String[] points = coordenadas.split("\\s*[,]\\s*");
                         latitudePris = points[0];
@@ -306,26 +307,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 */
     public void entrar(View v) {
-        // if (sucess == true && isSucess==true) {
-                //startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
+         if (sucess == true && isSucess==true) {
+ System.out.println("aqui");
+            if (estatuto == 3) {
+                startActivity(new Intent(this, inicio_diretor.class));
+             }
+             if (estatuto == 2) { System.out.println("aquibem");
+                startActivity(new Intent(this, inicio_psicologo.class));
 
-          //  if (estatuto == '3') {
-        //startActivity(new Intent(this, inicio_diretor.class));
-    //};
-            //if (estatuto == '2') {
-         startActivity(new Intent(this, inicio_psicologo.class));
-        // };
-                // if (estatuto == '1') {
-       // startActivity(new Intent(this, inicio_guarda.class));
-        // };
+             }
+             if (estatuto == 1) {
+                 startActivity(new Intent(this, inicio_guarda.class));
+             }
 
-        /*  } else {
-            if (sucess==false) {
-                Toast.makeText(getApplicationContext(), "Erro na Procura de Utilizador!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getApplicationContext(), "Erro na Localização de Utilizador!", Toast.LENGTH_SHORT).show();
-            }
-        }*/
+             System.out.println("aquimal");
+                 if (sucess==false) {
+                    Toast.makeText(getApplicationContext(), "Erro na Procura de Utilizador!", Toast.LENGTH_SHORT).show();
+                } else {
+                     Toast.makeText(getApplicationContext(), "Erro na Localização de Utilizador!", Toast.LENGTH_SHORT).show();
+                }
+         }
     }
 }
 

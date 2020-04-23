@@ -50,7 +50,7 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
     Dialog myDialog;
     Button verDados;
     int posicao;
-    public static String numeorRec;
+    public static String numeorRec = "";
     public static int id_recluso;
 
 
