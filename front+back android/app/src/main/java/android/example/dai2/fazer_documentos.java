@@ -67,7 +67,7 @@ public class fazer_documentos extends AppCompatActivity {
 
             if (sucess == true) {
                 Toast.makeText(this, "Relatório criado com sucesso!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, android.example.dai2.Main2Activity.class));
+                startActivity(new Intent(this, android.example.dai2.inicio_psicologo.class));
 
             } else {
                 Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();

@@ -27,13 +27,13 @@ import java.sql.Statement;
 
 public class alerta_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
-   private  EditText  gravidade, descricao;
+   private  EditText  gravidade, descricao, numeroR;
    private  String numeroRec, gravidadeA, descricaoA;
    private int id_recluso;
            //= tabela_gua_reclusos.id_recluso;
     Button criarSitução;
     private boolean sucess;
-    private TextView numeroR;
+
 
 
     @Override
@@ -44,7 +44,7 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
         myDialog = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        numeroR = (TextView) findViewById(R.id.textView12);
+        numeroR = (EditText) findViewById(R.id.textView12);
         gravidade = (EditText) findViewById(R.id.textView16);
         descricao = (EditText) findViewById(R.id.textView14);
         criarSitução = (Button) findViewById(R.id.btnadicionar);
