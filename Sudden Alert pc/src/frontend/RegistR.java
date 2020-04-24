@@ -662,10 +662,10 @@ try{
         String photo = filename;
         
         RegistarRecluso(s, no, dn, de, a, p, d, imagem);
-        ListReclusos xListReclusos = new ListReclusos();
+        /*ListReclusos xListReclusos = new ListReclusos();
         xListReclusos.setLocationRelativeTo(null);
         xListReclusos.setVisible(true);
-        this.dispose();
+        this.dispose();*/
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
