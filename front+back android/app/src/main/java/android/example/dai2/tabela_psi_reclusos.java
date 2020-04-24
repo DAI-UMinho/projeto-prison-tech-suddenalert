@@ -54,7 +54,7 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
     Button verDados;
     int posicao;
     ProgressBar progressBar;
-    public static String numeorRec;
+    public static String numeorRec = "";
     public static int id_recluso;
 
 

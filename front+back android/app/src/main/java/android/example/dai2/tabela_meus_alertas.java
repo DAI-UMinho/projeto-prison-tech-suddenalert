@@ -193,14 +193,14 @@ public class tabela_meus_alertas extends AppCompatActivity implements Navigation
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "Select Profile.name, Report.gravidade, Report.report from Report inner join Profile on Report.scan = Profile.scan where Report.scan = '"+scan+"';";
+                    String query = "Select Recluse.name, AlertSituation.severity, AlertSituation.description from AlertSituation inner join Recluse on AlertSituation.id_recluse = Recluse.id_recluse where AlertSituation.scan = '"+scan+"';";
                     Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery(query);
                     System.out.println("ali");
                     if (resultSet != null) {
                         while (resultSet.next()) {
                             try {
-                                alertasArrayList.add(new meus_alertas(resultSet.getString("name"), resultSet.getString("gravidade"), resultSet.getString("report")));
+                                alertasArrayList.add(new meus_alertas(resultSet.getString("name"), resultSet.getString("description"), resultSet.getString("description")));
                                 System.out.println("1");
                             } catch (Exception ex) {
                                 ex.printStackTrace();

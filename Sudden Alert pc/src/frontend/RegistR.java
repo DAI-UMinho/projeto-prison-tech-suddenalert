@@ -14,7 +14,11 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import java.util.concurrent.TimeUnit;
@@ -37,6 +41,7 @@ public class RegistR extends javax.swing.JFrame implements Serializable {
 
     private DefaultTableModel modeloTabela;
     String filename = null;
+    byte[] imagem = null;
 
     /**
      * Creates new form Reclusos
@@ -55,14 +60,14 @@ public class RegistR extends javax.swing.JFrame implements Serializable {
         
     }
     
-    public void RegistarRecluso(String numero_recluso, String name, String birthday, String date_entry, String wing, String floor, String disease, String photo){
+    public void RegistarRecluso(String numero_recluso, String name, String birthday, String date_entry, String wing, String floor, String disease, byte[] imagem){
 try{
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "Insert into Recluse(numero_recluso, name, birthday, date_entry, wing, floor, disease, photo)values(?,?,?,?,?,?,?,?)";          
+            String query = "Insert into Recluse(numero_recluso, name, birthday, date_entry, wing, floor, disease,imagem)values(?,?,?,?,?,?,?,?)";          
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, numero_recluso);
             pst.setString(2, name);
@@ -71,7 +76,8 @@ try{
             pst.setString(5, wing);
             pst.setString(6, floor);
             pst.setString(7, disease);
-            pst.setString(8, photo);
+            pst.setBytes(8, imagem);
+           
             pst.executeUpdate();
             //JOptionPane.showMessageDialog(null,"Recluso registado com Sucesso");
     }                                        
@@ -655,7 +661,7 @@ try{
         String d = registar_doenças.getText();
         String photo = filename;
         
-        RegistarRecluso(s, no, dn, de, a, p, d, photo);
+        RegistarRecluso(s, no, dn, de, a, p, d, imagem);
         ListReclusos xListReclusos = new ListReclusos();
         xListReclusos.setLocationRelativeTo(null);
         xListReclusos.setVisible(true);
@@ -773,7 +779,28 @@ try{
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();
-        filename = f.getAbsolutePath();
+        filename = f.getAbsolutePath(); 
+        ImageIcon imagems = new ImageIcon(filename);
+        Image im = imagems.getImage();
+        Image myImg = im.getScaledInstance(botao_photo.getWidth(),botao_photo.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon newImage = new ImageIcon(myImg);
+        botao_photo.setIcon(newImage);
+        
+        try {
+            File image = new File (filename);
+            FileInputStream fis = new FileInputStream (image);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            for (int readNum; (readNum = fis.read(buf))!= -1;){
+                bos.write(buf, 0,readNum);
+            }
+            imagem = bos.toByteArray();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RegistR.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RegistR.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botao_photoActionPerformed
 
     private void entMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMousePressed

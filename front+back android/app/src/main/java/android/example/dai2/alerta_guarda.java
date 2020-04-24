@@ -27,12 +27,13 @@ import java.sql.Statement;
 
 public class alerta_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
-   private  EditText numeroR, gravidade, descricao;
+   private  EditText  gravidade, descricao, numeroR;
    private  String numeroRec, gravidadeA, descricaoA;
    private int id_recluso;
            //= tabela_gua_reclusos.id_recluso;
     Button criarSitução;
     private boolean sucess;
+
 
 
     @Override
@@ -58,7 +59,13 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        numeroR.setText(tabela_gua_reclusos.numeorRec);
+        if (tabela_psi_reclusos.numeorRec.equals("")) {
+            numeroR.setText(tabela_gua_reclusos.numeorRec);
+        }
+        if (tabela_gua_reclusos.numeorRec.equals("")){
+            numeroR.setText(tabela_psi_reclusos.numeorRec);
+        }
+
         criarSitução.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -30,6 +30,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
                 if (conn == null){
                     success = false;
                 } else {
-                    String query = "SELECT AlertSituation.id_alertsituation, Recluse.name, Recluse.numero_recluso, AlertSituation.severity, AlertSituation.description FROM AlertSituation INNER JOIN Recluse ON AlertSituation.id_recluse = Recluse.id_recluse WHERE relatorio like 0;";
+                    String query = "SELECT AlertSituation.id_alertsituation, Recluse.name, Recluse.numero_recluso, AlertSituation.severity, AlertSituation.description FROM AlertSituation INNER JOIN Recluse ON AlertSituation.id_recluse = Recluse.id_recluse WHERE AlertSituation.relatorio like 0 AND AlertSituation.deleted like 0;";
                     Statement statement = conn.createStatement();
                     ResultSet rs = statement.executeQuery(query);
                     if (rs != null) {
@@ -168,6 +169,7 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
                     viewHolder.numero = (TextView) rowView.findViewById(R.id.numeroReclusoS);
                     viewHolder.gravidade= (TextView) rowView.findViewById(R.id.severityS);
                     viewHolder.descricao = (TextView) rowView.findViewById(R.id.descricaoS);
+                    rowView.setTag(viewHolder);
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
@@ -175,6 +177,8 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
                 viewHolder.numero.setText(String.valueOf(alertSituations.get(position).getNumero()));
                 viewHolder.gravidade.setText(alertSituations.get(position).getSeverity());
                 viewHolder.descricao.setText(alertSituations.get(position).getDescricao());
+
+
                 return rowView;
             }
         }
@@ -236,12 +240,15 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
     public void eliminar(View v){
         //elimna a situacao de alerta
         TextView txtclose;
+        posicao = listView.getPositionForView(v);
         myDialog.setContentView(R.layout.eliminarpopup);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 finish();
+                EliminarAlerta eliminarRecluso = new EliminarAlerta();
+                eliminarRecluso.execute();
                 alert("Sucesso!!");
             }
         }, 7000);
@@ -331,6 +338,31 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
     public void sair (View v) {
 
         startActivity(new Intent(this, MainActivity.class));
+    }
+    private class EliminarAlerta extends AsyncTask<String, String, String>{
+        String msg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null){
+                    msg = "Connect failed";
+                } else {
+                    System.out.println(posicao);
+                    String query = "UPDATE AlertSituation SET deleted='1' where id_alertsituation = '"+ alertSituationArrayList.get(posicao).getId_alert()+ "'";
+                    Statement preparedStatement = connection.createStatement();
+                    preparedStatement.executeUpdate(query);
+
+                }
+                connection.close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
     }
 
 }
