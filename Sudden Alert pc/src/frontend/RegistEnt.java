@@ -5,18 +5,33 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.text.Normalizer.Form;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import static javax.swing.text.html.HTML.Tag.I;
+import java.text.SimpleDateFormat;  
+import java.util.Date;  
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -25,6 +40,7 @@ import static javax.swing.text.html.HTML.Tag.I;
 public class RegistEnt extends javax.swing.JFrame implements Serializable {
 
     private DefaultTableModel modeloTabela;
+    int valor = 0;
 
     /**
      * Creates new form Reclusos
@@ -45,7 +61,74 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         ImageIcon i = new ImageIcon(img2);
         jButton1.setIcon(i);*/
     }
+    
+    public void RegistarEntidade(String scan, int id_type, String nome, String location, int points, String dataNascimento, String email){
+try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            if (con==null) {
+                JOptionPane.showMessageDialog(null,"Ocorreu um erro com a conexão","Aviso",JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+              String query1 = "SELECT COUNT(1) FROM Profile WHERE scan like'"+scan+"'"; 
+              Statement statement1 = con.createStatement();
+              ResultSet resultSet = statement1.executeQuery(query1);
+              while (resultSet.next()) {
+                  valor = resultSet.getInt("COUNT(1)");
+              }
+            if (valor==0) {
+            String query = "Insert into Profile(scan, id_type, name, location, points, birthday, email)values(?,?,?,?,?,?,?)";          
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, scan);
+            pst.setInt(2, id_type);
+            pst.setString(3, nome);
+            pst.setString(4, location);
+            pst.setInt(5, points);
+            pst.setString(6, dataNascimento);
+            pst.setString(7, email);
+            pst.executeUpdate();
+            try {
+            ProgressBar xProgress = new ProgressBar();
+            xProgress.setLocationRelativeTo(null);
+            xProgress.setVisible(true);
 
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int num = 1; num <= 100; num++) {
+                        try {
+                            xProgress.jp_progress.UpdateProgress(num);
+                            xProgress.jp_progress.repaint();
+                            Thread.sleep(7);
+                            scan1.setText("");
+                            nome1.setText("");
+                            data_nascimento.setText("");
+                            email1.setText("");
+                            buttonGroup1.clearSelection();
+                            latitude.setText("");
+                            longitude.setText("");
+                        } catch (InterruptedException ex) {
+                            java.util.logging.Logger.getLogger(RegistEnt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }).start();
+        } catch (Exception err) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
+            } 
+            else {
+                JOptionPane.showMessageDialog(null,"Scan já usado por outra Entidade","Aviso",JOptionPane.ERROR_MESSAGE);
+            }
+            }
+}
+     catch(Exception e) {
+           JOptionPane.showMessageDialog(null, e); 
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,15 +144,15 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        nome = new javax.swing.JTextField();
+        nome1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        Psicólogo = new javax.swing.JRadioButton();
+        Guarda = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         data_nascimento = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
-        email = new javax.swing.JTextField();
+        email1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -77,6 +160,8 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         latitude = new javax.swing.JTextField();
         longitude = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        scan1 = new javax.swing.JTextField();
         BackButton1 = new javax.swing.JButton();
         label1 = new java.awt.Label();
         jLabel2 = new javax.swing.JLabel();
@@ -122,16 +207,16 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         jPanel4.setBackground(new java.awt.Color(241, 241, 241));
         jPanel4.setForeground(new java.awt.Color(212, 13, 19));
 
-        nome.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        nome.setText("Insira aqui o nome");
-        nome.addMouseListener(new java.awt.event.MouseAdapter() {
+        nome1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        nome1.setText("Insira aqui o nome");
+        nome1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                nomeMouseClicked(evt);
+                nome1MouseClicked(evt);
             }
         });
-        nome.addActionListener(new java.awt.event.ActionListener() {
+        nome1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeActionPerformed(evt);
+                nome1ActionPerformed(evt);
             }
         });
 
@@ -141,22 +226,22 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel1.setText("Tipo:");
 
-        jRadioButton1.setBackground(new java.awt.Color(241, 241, 241));
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(153, 0, 0));
-        jRadioButton1.setText("Psicólogo");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        Psicólogo.setBackground(new java.awt.Color(241, 241, 241));
+        buttonGroup1.add(Psicólogo);
+        Psicólogo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        Psicólogo.setForeground(new java.awt.Color(153, 0, 0));
+        Psicólogo.setText("Psicólogo");
+        Psicólogo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                PsicólogoActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setBackground(new java.awt.Color(241, 241, 241));
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jRadioButton2.setForeground(new java.awt.Color(153, 0, 0));
-        jRadioButton2.setText("Guarda");
+        Guarda.setBackground(new java.awt.Color(241, 241, 241));
+        buttonGroup1.add(Guarda);
+        Guarda.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        Guarda.setForeground(new java.awt.Color(153, 0, 0));
+        Guarda.setText("Guarda");
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel4.setText("Nome:");
@@ -175,16 +260,16 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel6.setText("Email:");
 
-        email.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        email.setText("Insira aqui o email");
-        email.addMouseListener(new java.awt.event.MouseAdapter() {
+        email1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        email1.setText("Insira aqui o email");
+        email1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                emailMouseClicked(evt);
+                email1MouseClicked(evt);
             }
         });
-        email.addActionListener(new java.awt.event.ActionListener() {
+        email1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailActionPerformed(evt);
+                email1ActionPerformed(evt);
             }
         });
 
@@ -256,43 +341,69 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_localizacao.png"))); // NOI18N
 
+        jLabel3.setText("Scan");
+
+        scan1.setText("Insira aqui o valor do Scan");
+        scan1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                scan1MouseClicked(evt);
+            }
+        });
+        scan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scan1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(data_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jRadioButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(37, 37, 37))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scan1))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(0, 1, Short.MAX_VALUE)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nome1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(data_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Psicólogo)
+                            .addComponent(Guarda, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(37, 37, 37))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nome1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -301,17 +412,28 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addComponent(jRadioButton2)
-                .addGap(39, 39, 39)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(75, 75, 75)
+                                .addComponent(Psicólogo)
+                                .addGap(18, 18, 18)
+                                .addComponent(Guarda))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(scan1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)))
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
@@ -332,7 +454,7 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(187, Short.MAX_VALUE)
+                .addContainerGap(222, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(163, 163, 163)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -541,8 +663,8 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (nome.getText().equals("")) {
-            nome.requestFocus();
+        if (nome1.getText().equals("")) {
+            nome1.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Nome é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -551,8 +673,8 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
             JOptionPane.showMessageDialog(null, "O campo Data de Nascimento é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (email.getText().equals("")) {
-            email.requestFocus();
+        if (email1.getText().equals("")) {
+            email1.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Email é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -566,34 +688,24 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
             JOptionPane.showMessageDialog(null, "O campo Longitude é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
-        try {
-            ProgressBar xProgress = new ProgressBar();
-            xProgress.setLocationRelativeTo(null);
-            xProgress.setVisible(true);
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int num = 1; num <= 100; num++) {
-                        try {
-                            xProgress.jp_progress.UpdateProgress(num);
-                            xProgress.jp_progress.repaint();
-                            Thread.sleep(7);
-                            nome.setText("");
-                            data_nascimento.setText("");
-                            email.setText("");
-                            latitude.setText("");
-                            longitude.setText("");
-                        } catch (InterruptedException ex) {
-                            java.util.logging.Logger.getLogger(RegistEnt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-            }).start();
-        } catch (Exception err) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
+        
+        String s = scan1.getText();
+        String no = nome1.getText();
+        String dn = data_nascimento.getText();
+        int id_type = 0;
+        if (Psicólogo.isSelected()){
+        id_type = 2;
+    }
+        if(Guarda.isSelected()) {
+            id_type = 1;
         }
+        String la = latitude.getText();
+        String lo = longitude.getText();
+        String location = la+","+lo;
+        String e = email1.getText();
+        int p = 0;
+        
+        RegistarEntidade(s, id_type, no, location, p, dn, e);
         /*ListEnt_popup xListEnt_popup = new ListEnt_popup();
         xListEnt_popup.setLocationRelativeTo(null);
         xListEnt_popup.setVisible(true);*/
@@ -648,22 +760,22 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         }
     }//GEN-LAST:event_homeActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void PsicólogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PsicólogoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_PsicólogoActionPerformed
 
-    private void nomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nomeMouseClicked
-        nome.setText("");
+    private void nome1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nome1MouseClicked
+        nome1.setText("");
         //jTextField3.setDocument(new TeclasPermitNome());
-    }//GEN-LAST:event_nomeMouseClicked
+    }//GEN-LAST:event_nome1MouseClicked
 
     private void data_nascimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_nascimentoMouseClicked
         data_nascimento.setText("");
     }//GEN-LAST:event_data_nascimentoMouseClicked
 
-    private void nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionPerformed
+    private void nome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nome1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nomeActionPerformed
+    }//GEN-LAST:event_nome1ActionPerformed
 
     private void entMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMousePressed
         this.recl.setSelected(false);
@@ -865,13 +977,13 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         this.dispose();
     }//GEN-LAST:event_BackButton1ActionPerformed
 
-    private void emailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_emailMouseClicked
-        email.setText("");
-    }//GEN-LAST:event_emailMouseClicked
+    private void email1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_email1MouseClicked
+        email1.setText("");
+    }//GEN-LAST:event_email1MouseClicked
 
-    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+    private void email1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_email1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_emailActionPerformed
+    }//GEN-LAST:event_email1ActionPerformed
 
     private void latitudeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_latitudeMouseClicked
         latitude.setText("");
@@ -891,27 +1003,36 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_longitudeActionPerformed
 
+    private void scan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scan1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scan1ActionPerformed
+
+    private void scan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scan1MouseClicked
+       longitude.setText("");
+    }//GEN-LAST:event_scan1MouseClicked
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton1;
+    private javax.swing.JRadioButton Guarda;
+    private javax.swing.JRadioButton Psicólogo;
     private javax.swing.ButtonGroup buttonGroup1;
-    public javax.swing.JTextField data;
     private javax.swing.JFormattedTextField data_nascimento;
     private rsbuttom.RSButtonMetro doc;
-    private javax.swing.JTextField email;
+    private javax.swing.JTextField email1;
     private rsbuttom.RSButtonMetro ent;
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -922,15 +1043,13 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private java.awt.Label label1;
     private javax.swing.JTextField latitude;
     private javax.swing.JTextField longitude;
-    private javax.swing.JTextField nome;
+    private javax.swing.JTextField nome1;
     private rsbuttom.RSButtonMetro recl;
+    private javax.swing.JTextField scan1;
     private javax.swing.JPanel sidepane4;
     // End of variables declaration//GEN-END:variables
 

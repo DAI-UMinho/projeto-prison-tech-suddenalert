@@ -89,7 +89,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             model.setRowCount(0);
             show_recluso();
             JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
-    }                                        
+    }                                       
      catch(Exception e) {
            JOptionPane.showMessageDialog(null, e); 
         }

@@ -27,6 +27,13 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class ListGuardas extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
+    private int i;
+    private String guarda;
+    
+    public String getGuarda() {
+        return guarda;
+    }
+    
     
     /**
      * Creates new form Reclusos
@@ -54,7 +61,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             ResultSet rs= st.executeQuery(query1);
             Entidade guarda;
             while(rs.next()){
-                guarda = new Entidade(rs.getString("scan"),rs.getString("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+                guarda = new Entidade(rs.getString("scan"),rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
                 guardasList.add(guarda);
             }
          }
@@ -74,6 +81,26 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             model.addRow(row);
         }
        }
+       
+        public void EliminarG(String guarda1) {
+            try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query = "UPDATE Profile SET deleted='1' WHERE email ="+guarda1;          
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.executeUpdate();
+            DefaultTableModel model = (DefaultTableModel)jTable_Display_Guardas.getModel();
+            model.setRowCount(0);
+            show_Guarda();
+            JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
+    }                                        
+     catch(Exception e) {
+           JOptionPane.showMessageDialog(null, e); 
+        }
+        }
        
     /**
      * This method is called from within the constructor to initialize the form.
@@ -492,7 +519,23 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        i = jTable_Display_Guardas.getSelectedRow();
+        if (i >= 0) {
+        ArrayList<Entidade> lista = guardaList();        
+        Entidade E = lista.get(i);
+        String nome = E.getNome();
+        guarda = E.getEmail();
+        
+        EliminarGuarda s = new EliminarGuarda();
+        s.jLabel5.setText(nome);
+        s.setLocationRelativeTo(null);
+        s.setVisible(true);
+        this.dispose();  
+    }                                        
+    
+        else{
+            JOptionPane.showMessageDialog(null, "Selecione uma linha");
+        }        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed

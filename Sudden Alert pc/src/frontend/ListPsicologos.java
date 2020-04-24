@@ -26,7 +26,9 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
-    
+    private int i;
+    private String psicologo;
+ 
     /**
      * Creates new form Reclusos
      */
@@ -53,7 +55,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             ResultSet rs= st.executeQuery(query1);
             Entidade psicologo;
             while(rs.next()){
-                psicologo = new Entidade(rs.getString("scan"),rs.getString("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+                psicologo = new Entidade(rs.getString("scan"),rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
                 psicologosList.add(psicologo);
             }
          }
@@ -70,6 +72,26 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             row[0]=list.get(i).getNome();
             row[1]=list.get(i).getEmail();
             model.addRow(row);
+        }
+       }
+             
+       public void EliminarPsicologo() {
+            try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query = "UPDATE Profile SET deleted='1' where scan="+psicologo;          
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.executeUpdate();
+            DefaultTableModel model = (DefaultTableModel)jTable_Display_Psicologos.getModel();
+            model.setRowCount(0);
+            show_Psicologo();
+            JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
+    }                                       
+     catch(Exception e) {
+           JOptionPane.showMessageDialog(null, e); 
         }
        }
 
@@ -489,7 +511,24 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_BackButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        i = jTable_Display_Psicologos.getSelectedRow();
+        if (i >= 0) {
+        ArrayList<Entidade> lista = psicologoList();        
+        Entidade E = lista.get(i);
+        String nome = E.getNome();
+        psicologo = E.getEmail();
+        
+        EliminarPsic s = new EliminarPsic();
+        s.jLabel5.setText(nome);
+        s.setLocationRelativeTo(null);
+        s.setVisible(true);
+        this.dispose();  
+    }                                        
+    
+        else{
+            JOptionPane.showMessageDialog(null, "Selecione uma linha");
+        }        
+                                           
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void entMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMousePressed

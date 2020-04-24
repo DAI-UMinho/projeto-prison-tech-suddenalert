@@ -5,13 +5,19 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
 
 /**
@@ -192,14 +198,19 @@ public class EliminarGuarda extends javax.swing.JFrame implements Serializable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_psicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_psicActionPerformed
-        ListReclusos xListR = new ListReclusos();
-        xListR.setLocationRelativeTo(null);
-        xListR.setVisible(true);
+        ListGuardas xListG = new ListGuardas();
+        xListG.setLocationRelativeTo(null);
+        xListG.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_Button_psicActionPerformed
 
     private void Button_guardaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_guardaActionPerformed
-       
+        ListGuardas xListG = new ListGuardas();
+        String x = xListG.getGuarda();
+        xListG.EliminarG(x);
+        xListG.setLocationRelativeTo(null);
+        xListG.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_Button_guardaActionPerformed
 
     /**
@@ -213,7 +224,7 @@ public class EliminarGuarda extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
