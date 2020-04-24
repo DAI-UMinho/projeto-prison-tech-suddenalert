@@ -27,16 +27,8 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class ListGuardas extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
-    /**
-     *
-     */
-    String guarda;
-    public String getGuarda() {
-        return guarda;
-    }
-    /**
-     * Creates new form Reclusos
-     */
+    private int i;
+
     public ListGuardas() {
         initComponents();
         setIcon();
@@ -528,6 +520,8 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         Entidade E = lista.get(i);
         String nome = E.getNome();
         String email = E.getEmail();
+        
+        
         EliminarGuarda s = new EliminarGuarda();
         s.jLabel5.setText(nome);
         s.email.setText(email);

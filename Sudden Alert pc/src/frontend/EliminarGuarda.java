@@ -229,6 +229,7 @@ public class EliminarGuarda extends javax.swing.JFrame implements Serializable {
         xListG.setLocationRelativeTo(null);
         xListG.setVisible(true);
         this.dispose();
+        
     }//GEN-LAST:event_Button_guardaActionPerformed
 
     /**

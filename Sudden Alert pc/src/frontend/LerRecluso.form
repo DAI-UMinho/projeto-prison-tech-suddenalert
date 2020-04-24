@@ -123,6 +123,9 @@
               <Image iconType="3" name="/frontend/imagens/recl.jpg"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel5">
           <Properties>
