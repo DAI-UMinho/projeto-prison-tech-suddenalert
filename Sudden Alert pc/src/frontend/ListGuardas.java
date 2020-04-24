@@ -27,14 +27,13 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class ListGuardas extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
-    private int i;
-    private String guarda;
-    
+    /**
+     *
+     */
+    String guarda;
     public String getGuarda() {
         return guarda;
     }
-    
-    
     /**
      * Creates new form Reclusos
      */
@@ -82,20 +81,19 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         }
        }
        
-        public void EliminarG(String guarda1) {
+        public void EliminarG(String x) {
             try{
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "UPDATE Profile SET deleted='1' WHERE email ="+guarda1;          
+            String query = "UPDATE Profile SET deleted='1' where email ='"+x+"'";          
             PreparedStatement pst = con.prepareStatement(query);
             pst.executeUpdate();
             DefaultTableModel model = (DefaultTableModel)jTable_Display_Guardas.getModel();
             model.setRowCount(0);
             show_Guarda();
-            JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
     }                                        
      catch(Exception e) {
            JOptionPane.showMessageDialog(null, e); 
@@ -179,6 +177,11 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         });
         jTable_Display_Guardas.setSelectionBackground(new java.awt.Color(255, 102, 102));
         jTable_Display_Guardas.setVerifyInputWhenFocusTarget(false);
+        jTable_Display_Guardas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_Display_GuardasMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable_Display_Guardas);
 
         jTextField1.setInheritsPopupMenu(true);
@@ -519,15 +522,15 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        i = jTable_Display_Guardas.getSelectedRow();
+        int i = jTable_Display_Guardas.getSelectedRow();
         if (i >= 0) {
         ArrayList<Entidade> lista = guardaList();        
         Entidade E = lista.get(i);
         String nome = E.getNome();
-        guarda = E.getEmail();
-        
+        String email = E.getEmail();
         EliminarGuarda s = new EliminarGuarda();
         s.jLabel5.setText(nome);
+        s.email.setText(email);
         s.setLocationRelativeTo(null);
         s.setVisible(true);
         this.dispose();  
@@ -745,6 +748,10 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             this.recl.setColorPressed(new Color(243, 243, 243));
         }
     }//GEN-LAST:event_reclActionPerformed
+
+    private void jTable_Display_GuardasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_Display_GuardasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable_Display_GuardasMouseClicked
 
     /**
      * @param args the command line arguments

@@ -27,8 +27,6 @@ import static javax.swing.text.html.HTML.Tag.I;
 public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
     private int i;
-    private String psicologo;
- 
     /**
      * Creates new form Reclusos
      */
@@ -75,14 +73,14 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         }
        }
              
-       public void EliminarPsicologo() {
+       public void EliminarPsicologo(String x) {
             try{
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "UPDATE Profile SET deleted='1' where scan="+psicologo;          
+            String query = "UPDATE Profile SET deleted='1' where email='"+x+"'";          
             PreparedStatement pst = con.prepareStatement(query);
             pst.executeUpdate();
             DefaultTableModel model = (DefaultTableModel)jTable_Display_Psicologos.getModel();
@@ -155,14 +153,14 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
 
         jTable_Display_Psicologos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Ana Costa", "ana_costa7364@gmail.com"}
+
             },
             new String [] {
-                "Nome", "Email"
+                "Nome", "Email", "Points"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -516,10 +514,11 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         ArrayList<Entidade> lista = psicologoList();        
         Entidade E = lista.get(i);
         String nome = E.getNome();
-        psicologo = E.getEmail();
+        String email = E.getEmail();
         
         EliminarPsic s = new EliminarPsic();
         s.jLabel5.setText(nome);
+        s.email.setText(email);
         s.setLocationRelativeTo(null);
         s.setVisible(true);
         this.dispose();  
