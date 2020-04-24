@@ -207,10 +207,12 @@ public class EliminarGuarda extends javax.swing.JFrame implements Serializable {
     private void Button_guardaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_guardaActionPerformed
         ListGuardas xListG = new ListGuardas();
         String x = xListG.getGuarda();
+        
         xListG.EliminarG(x);
         xListG.setLocationRelativeTo(null);
         xListG.setVisible(true);
         this.dispose();
+        
     }//GEN-LAST:event_Button_guardaActionPerformed
 
     /**

@@ -762,6 +762,27 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         xEditar.ala.setText(ala);
         xEditar.piso.setText(piso);        
         xEditar.doenças.setText(doenças);
+          try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1="SELECT imagem FROM Recluse where numero_recluso="+numero;
+            Statement st= con.createStatement();
+            ResultSet rs= st.executeQuery(query1);
+            if (rs.next()){
+            byte[] img = rs.getBytes("imagem");
+            ImageIcon image = new ImageIcon(img);
+            Image im = image.getImage();
+            Image myImg = im.getScaledInstance(xEditar.jLabel2.getWidth(),xEditar.jLabel2.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon newImage = new ImageIcon(myImg);
+            xEditar.jLabel2.setIcon(newImage);
+         }
+         }
+         catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
 
         xEditar.setLocationRelativeTo(null);
         xEditar.setVisible(true);

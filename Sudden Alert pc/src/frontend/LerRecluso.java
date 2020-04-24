@@ -410,7 +410,7 @@ public class LerRecluso extends javax.swing.JFrame implements Serializable {
     public javax.swing.JTextField doenças;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

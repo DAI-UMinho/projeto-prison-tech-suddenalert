@@ -29,10 +29,16 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
     private int i;
     private String guarda;
-    
+
     public String getGuarda() {
         return guarda;
     }
+
+  
+    
+    
+    
+    
     
     
     /**
@@ -82,7 +88,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         }
        }
        
-        public void EliminarG(String guarda1) {
+       public void EliminarG(String guarda1) {
             try{
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -179,6 +185,11 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         });
         jTable_Display_Guardas.setSelectionBackground(new java.awt.Color(255, 102, 102));
         jTable_Display_Guardas.setVerifyInputWhenFocusTarget(false);
+        jTable_Display_Guardas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_Display_GuardasMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable_Display_Guardas);
 
         jTextField1.setInheritsPopupMenu(true);
@@ -525,6 +536,8 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         Entidade E = lista.get(i);
         String nome = E.getNome();
         guarda = E.getEmail();
+        System.out.println(guarda);
+        
         
         EliminarGuarda s = new EliminarGuarda();
         s.jLabel5.setText(nome);
@@ -745,6 +758,10 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             this.recl.setColorPressed(new Color(243, 243, 243));
         }
     }//GEN-LAST:event_reclActionPerformed
+
+    private void jTable_Display_GuardasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_Display_GuardasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable_Display_GuardasMouseClicked
 
     /**
      * @param args the command line arguments
