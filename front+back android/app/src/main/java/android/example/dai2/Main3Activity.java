@@ -43,9 +43,9 @@ import java.sql.Statement;
 public class Main3Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
     RadioGroup rg;
     RadioButton rb;
-    EditText nome, nascimento, scan;
+    EditText nome, nascimento, scan, email;
     TextView localização;
-    private String nomeE, nascimentoE, localizaçãoE, tipoE, scanE;
+    private String nomeE, nascimentoE, localizaçãoE, tipoE, scanE, emailE;
     Dialog myDialog;
     private Button registar, btnGetLocation;
     ProgressBar progressBar;
@@ -59,6 +59,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.registar_ent);
         myDialog = new Dialog(this);
         rg= (RadioGroup) findViewById(R.id.rgroup);
+        email= (EditText) findViewById(R.id.email2);
         nome = (EditText) findViewById(R.id.editText);
         nascimento = (EditText) findViewById(R.id.data);
         registar = (Button) findViewById(R.id.button10);
@@ -179,6 +180,10 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             nascimento.setError("Introduz uma data de Nascimento");
             valid = false;
         }
+        if (emailE.isEmpty()){
+            email.setError("Introduz um Nome");
+            valid = false;
+        }
         if (tipoE.isEmpty()){
             rb.setError("Tem de escolher o Tipo de Entidade");
             valid = false;
@@ -197,6 +202,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
     public void intialize(){
         nomeE = nome.getText().toString().trim();
         nascimentoE = nascimento.getText().toString().trim();
+        emailE = email.getText().toString().trim();
         int radiobuttonid = rg.getCheckedRadioButtonId();
         RadioButton rb = (RadioButton) findViewById(radiobuttonid);
          tipo = rb.getText().toString().trim();
@@ -520,7 +526,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
                         valor = resultSet.getInt("COUNT(1)");
                     }
                     if(valor == 0) {
-                        String query = "INSERT INTO `Profile` (`id_type`, `name`, `location`, `birthday`, `scan`) VALUES ('" + tipoE + "', '" + nomeE + "', '" + localizaçãoE + "', '" + nascimentoE + "', '"+scanE+"');";
+                        String query = "INSERT INTO `Profile` (`id_type`, `name`, `location`, `birthday`, `scan`, `email`) VALUES ('" + tipoE + "', '" + nomeE + "', '" + localizaçãoE + "', '" + nascimentoE + "', '"+scanE+"','" +emailE+"');";
                         Statement stmt = conn.createStatement();
                         System.out.println(query);
                         stmt.executeUpdate(query);
