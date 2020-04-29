@@ -10,6 +10,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -156,13 +158,13 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT id_recluse, name, disease, wing, floor, photo, birthday, numero_recluso, date_entry FROM Recluse WHERE deleted like 0";
+                    String query = "SELECT id_recluse, name, disease, wing, floor, imagem, birthday, numero_recluso, date_entry FROM Recluse WHERE deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                itemArrayList.add(new ClassListReclusos(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getString("photo"), rs.getString("birthday"), rs.getInt("numero_recluso"), rs.getString("date_entry")));
+                                itemArrayList.add(new ClassListReclusos(rs.getInt("id_recluse"), rs.getString("name"), rs.getString("disease"), rs.getString("wing"), rs.getString("floor"), rs.getBytes("imagem"), rs.getString("birthday"), rs.getInt("numero_recluso"), rs.getString("date_entry")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -262,13 +264,10 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
                 }
                 viewHolder.nome.setText(recluseList.get(position).getNomeRec() + "");
                 viewHolder.numeroRec.setText(recluseList.get(position).getNumero_rec() + "");
-                Picasso.get().load(recluseList.get(position).getImg()).into(viewHolder.imageView);
-
-
+                byte[] img = recluseList.get(position).getImg();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                viewHolder.imageView.setImageBitmap(bitmap);
                 return rowView;
-
-
-
             }
             public void filter(String charText) {
                 charText = charText.toLowerCase(Locale.getDefault());

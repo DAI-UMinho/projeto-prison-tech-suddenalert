@@ -2,7 +2,7 @@ package android.example.dai2;
 
 public class ClassListReclusos {
     public int id_recluse;
-    public String img;
+    public byte[] img;
     public String nomeRec;
     public String alaRec;
     public String pisoRec;
@@ -13,7 +13,7 @@ public class ClassListReclusos {
 
 
 
-    public ClassListReclusos(int id_recluse, String nomeRec, String doencaRec, String alaRec, String pisoRec, String img, String nascimento, int numero_rec, String entradaR){
+    public ClassListReclusos(int id_recluse, String nomeRec, String doencaRec, String alaRec, String pisoRec, byte[] img, String nascimento, int numero_rec, String entradaR){
         this.id_recluse = id_recluse;
         this.nomeRec = nomeRec;
         this.doencaRec = doencaRec;
@@ -45,10 +45,13 @@ public class ClassListReclusos {
         return id_recluse;
     }
 
-    public String getImg() {
+    public byte[] getImg() {
         return img;
     }
 
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
 
     public String getNomeRec() {
         return nomeRec;

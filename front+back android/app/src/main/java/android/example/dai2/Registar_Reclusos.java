@@ -1,5 +1,6 @@
 package android.example.dai2;
 
+import androidx.annotation.ContentView;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,15 +11,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Icon;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +36,11 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -46,6 +57,8 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
     Dialog myDialog;
     private boolean sucess;
     Button regRecluso;
+    byte[] imagemRec = null;
+    ContentValues cv;
 
 
 
@@ -138,10 +151,10 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
             nome.setError("Introduz a Nome");
             valid = false;
         }
-        /*if (nascimentoR.isEmpty()){
+        if (nascimentoR.isEmpty()){
             nascimento.setError("Introduz data de nascimento");
             valid = false;
-        }*/
+        }
         if (pisoR.isEmpty()){
             piso.setError("Introduz Piso");
             valid = false;
@@ -173,6 +186,9 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         nascimentoR = nascimento.getText().toString().trim();
         entradaR = entrada.getText().toString().trim();
         doencaR = doencas.getText().toString().trim();
+
+
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -187,6 +203,22 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
             c.close();
             Bitmap imagemGaleria = (BitmapFactory.decodeFile(picturePath));
             imagem.setImageBitmap(imagemGaleria);
+
+            /*try {
+                File image = new File(picturePath);
+                FileInputStream fis = new FileInputStream(image);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                byte[] buf = new byte[1024];
+                for (int readNum; (readNum = fis.read(buf))!= -1;){
+                    bos.write(buf, 0,readNum);
+                }
+                imagemRec = bos.toByteArray();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
         }
     }
     @Override
@@ -229,7 +261,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
 
                     }
                     if (valor == 0 ) {
-                        String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`, `numero_recluso`) VALUES ('" + nomeR + "', '" + entradaR + "', '" + nascimentoR + "', '" + pisoR + "', '" + alaR + "', '" + doencaR + "', '" + numeroR + "');";
+                        String query = "INSERT INTO `Recluse` (`name`, `date_entry`, `birthday`, `floor`, `wing`, `disease`, `numero_recluso`, `imagem`) VALUES ('" + nomeR + "', '" + entradaR + "', '" + nascimentoR + "', '" + pisoR + "', '" + alaR + "', '" + doencaR + "', '" + numeroR + "', '"+cv+"');";
                         Statement stmt = conn.createStatement();
                         stmt.executeUpdate(query);
                         String query2 = "INSERT INTO Historico (`acao`, `motivo`, `id_recluse`, `tipo`) VALUES ('Inserção', '', '"+numeroR+"', 'Recluso');";
