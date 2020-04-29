@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +29,14 @@ import java.sql.Statement;
 
 public class alerta_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
-   private  EditText  gravidade, descricao, numeroR;
+   private  EditText  descricao, numeroR;
    private  String numeroRec, gravidadeA, descricaoA;
    private int id_recluso;
            //= tabela_gua_reclusos.id_recluso;
     Button criarSitução;
     private boolean sucess;
+    RadioGroup gravidade;
+    RadioButton rb;
 
 
 
@@ -45,7 +49,7 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         numeroR = (EditText) findViewById(R.id.textView12);
-        gravidade = (EditText) findViewById(R.id.textView16);
+        gravidade= (RadioGroup) findViewById(R.id.rgroup);
         descricao = (EditText) findViewById(R.id.textView14);
         criarSitução = (Button) findViewById(R.id.btnadicionar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -105,10 +109,10 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
             numeroR.setError("Introduz a identificação do Recluso");
             valid = false;
         }
-        if (gravidadeA.isEmpty()){
+      /*  if (gravidadeA.isEmpty()){
             gravidade.setError("Introduza a gravidade");
             valid = false;
-        }
+        }*/
         if (descricaoA.isEmpty()){
             descricao.setError("Introduz uma descrição");
             valid = false;
@@ -117,7 +121,7 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
     }
     public void intialize(){
         numeroRec = numeroR.getText().toString().trim();
-        gravidadeA = gravidade.getText().toString().trim();
+       // gravidadeA = gravidade.getText().toString().trim();
         descricaoA = descricao.getText().toString().trim();
     }
 
@@ -273,5 +277,10 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
             }
             return msg;
         }
+    }
+    public void rbclick(View v){
+        int radiobuttonid = gravidade.getCheckedRadioButtonId();
+        RadioButton rb = (RadioButton) findViewById(radiobuttonid);
+        Toast.makeText(getBaseContext(), rb.getText(), Toast.LENGTH_SHORT).show();
     }
 }
