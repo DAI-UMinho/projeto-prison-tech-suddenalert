@@ -611,6 +611,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
 
     private class AlterarDadosRec extends AsyncTask<String, String, String> {
         String msg = "";
+        int numero = itemArrayList.get(posicao).getNumero_rec();
         EditText nome = (EditText) editarRec.findViewById(R.id.alteraNome);
         EditText doencas = (EditText) editarRec.findViewById(R.id.alteraDoencas);
         EditText piso = (EditText) editarRec.findViewById(R.id.alteraPiso);
@@ -623,7 +624,6 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         @Override
         protected String doInBackground(String... strings) {
             try {
-                // System.out.println(id_recluso);
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
                 if (connection == null) {
@@ -633,7 +633,9 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                     System.out.println(query);
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query);
-
+                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `id_recluse`, `tipo`) VALUES ('Alteração feita pelo Diretor', '', '"+numero+"', 'Recluso');";
+                    Statement statement1 = connection.createStatement();
+                    statement1.executeUpdate(query2);
                     msg = "Atualizado com sucesso";
                 }
             } catch (ClassNotFoundException e) {

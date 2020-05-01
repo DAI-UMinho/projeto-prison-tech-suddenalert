@@ -45,6 +45,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class Registar_Reclusos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +63,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
     Button regRecluso;
     byte[] imagemRec = null;
     ContentValues cv;
+    private Date nascimentoRec, entredaRec;
 
 
 
@@ -114,13 +119,17 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         regRecluso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register();
+                try {
+                    register();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
     }
 
-    public void register(){
+    public void register() throws ParseException {
         intialize();
         if (!validate()){
             Toast.makeText(this, "Campos em falta", Toast.LENGTH_LONG).show();
@@ -145,7 +154,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         }
     }
 
-    public boolean validate(){
+    public boolean validate() throws ParseException {
         boolean valid = true;
         if (nomeR.isEmpty()){
             nome.setError("Introduz a Nome");
@@ -153,6 +162,15 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         }
         if (nascimentoR.isEmpty()){
             nascimento.setError("Introduz data de nascimento");
+            valid = false;
+        }
+        SimpleDateFormat dates = new SimpleDateFormat("yyyy-MM-dd");
+        nascimentoRec = dates.parse(nascimentoR);
+        int ano = nascimentoRec.getYear()+1900;
+        int mes = nascimentoRec.getMonth();
+        int dia = nascimentoRec.getDay();
+        if (getAge(ano, mes, dia)<18){
+            nascimento.setError("Recluso ainda menor!");
             valid = false;
         }
         if (pisoR.isEmpty()){
@@ -176,6 +194,28 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
             valid = false;
         }
         return valid;
+    }
+    private int getAge(int year, int month, int day){
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
+            age--;
+        }
+        else
+        {
+            if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
+                age--;
+            }
+        }
+
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+        return ageInt;
     }
 
     public void intialize(){

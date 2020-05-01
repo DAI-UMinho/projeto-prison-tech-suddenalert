@@ -20,6 +20,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -39,6 +40,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Main3Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
     RadioGroup rg;
@@ -49,10 +55,12 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
     Dialog myDialog;
     private Button registar, btnGetLocation;
     ProgressBar progressBar;
-    private boolean sucess;
+    private boolean sucess, maior;
     private final int GPS_REQUEST = 200;
     private LocationManager locationManager;
     String tipo;
+    Date nascimentoEnt, dataHoje;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +127,11 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         registar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register();
+                try {
+                    register();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -144,7 +156,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         }
     }
 
-    public void register(){
+    public void register() throws ParseException {
         intialize();
         if (!validate()){
             Toast.makeText(this, "Campos em falta", Toast.LENGTH_LONG).show();
@@ -170,7 +182,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
     }
 
 
-    public boolean validate(){
+    public boolean validate() throws ParseException {
         boolean valid = true;
         if (nomeE.isEmpty()){
             nome.setError("Introduz um Nome");
@@ -196,7 +208,45 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             scan.setError("Tem de preencher scan");
             valid = false;
         }
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailE).matches()) {
+            email.setError("Email inválido");
+            valid = false;
+        }
+        SimpleDateFormat dates = new SimpleDateFormat("yyyy-MM-dd");
+        nascimentoEnt = dates.parse(nascimentoE);
+        int ano = nascimentoEnt.getYear()+1900;
+        int mes = nascimentoEnt.getMonth();
+        int dia = nascimentoEnt.getDay();
+        System.out.println(ano);
+        if (getAge(ano, mes, dia)<18){
+            nascimento.setError("Entidade ainda é menor");
+            valid = false;
+        }
+
         return valid;
+       //6564;
+    }
+    private int getAge(int year, int month, int day){
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
+            age--;
+        }
+        else
+        {
+            if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
+                age--;
+            }
+        }
+
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+        return ageInt;
     }
 
     public void intialize(){
