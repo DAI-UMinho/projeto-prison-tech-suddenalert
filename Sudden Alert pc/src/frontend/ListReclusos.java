@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -26,12 +27,24 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class ListReclusos extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     
     /**
      * Creates new form Reclusos
      */
     public ListReclusos() {
         initComponents();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         setIcon();
         jTable_Display_Reclusos.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
         jTable_Display_Reclusos.getTableHeader().setOpaque(false);
@@ -138,7 +151,38 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
            JOptionPane.showMessageDialog(null, e); 
         }
       }
-       
+    private void pesquisar() {
+        String sql = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and name like ?";
+        String sqlid = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and numero_recluso like ?";
+        try {
+            if (jTextField1.getText().matches("^[0-9]+$")) {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlid);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+
+            } else {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sql);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -222,18 +266,32 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         });
         jScrollPane2.setViewportView(jTable_Display_Reclusos);
 
+        jTextField1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField1.setText("Pesquisar...");
         jTextField1.setInheritsPopupMenu(true);
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
             }
         });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
         jLabel3.setText("jLabel3");
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jLabel1.setText("Filtrar Lista Por:");
 
+        jComboBox1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Nº do recluso", "Ala", "Piso" }));
         jComboBox1.setInheritsPopupMenu(true);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -266,11 +324,11 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel1)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(189, 189, 189))
+                        .addGap(183, 183, 183))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(115, 115, 115))))
@@ -792,6 +850,14 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
         }        
     }//GEN-LAST:event_jTable_Display_ReclusosMouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        pesquisar();
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1MouseClicked
 
     /**
      * @param args the command line arguments
