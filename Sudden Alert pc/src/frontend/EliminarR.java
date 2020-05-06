@@ -236,7 +236,7 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
         String x = motivo_remoção.getText();
         ListReclusos xListReclusos = new ListReclusos();
         xListReclusos.GuardarMotivo(x, b );
-        xListReclusos.EliminarRowTabela(b);
+        xListReclusos.EliminarRowTabela(b,x);
         xListReclusos.setLocationRelativeTo(null);
         xListReclusos.setVisible(true);
         this.dispose();       

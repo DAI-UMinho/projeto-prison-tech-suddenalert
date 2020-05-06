@@ -75,7 +75,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         }
        }
        
-       public void EliminarRowTabela(String i) {
+       public void EliminarRowTabela(String i, String x) {
            try{
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -89,6 +89,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             model.setRowCount(0);
             show_recluso();
             JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
+            String query1 = "Insert into Historico (acao, motivo, id_recluse, tipo) values ('Remoção', '"+x+"', '"+i+"', 'Recluso')";          
+            PreparedStatement psta = con.prepareStatement(query1);
+            psta.executeUpdate();
     }                                       
      catch(Exception e) {
            JOptionPane.showMessageDialog(null, e); 
@@ -115,7 +118,10 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
             model.setRowCount(0);
             show_recluso();
-            JOptionPane.showMessageDialog(null,"Recluso editado com Sucesso");
+            String query1 = "Insert into Historico (acao, motivo, id_recluse, tipo) values ('Edição', '', '"+numero_recluso+"', 'Recluso')";          
+            PreparedStatement psta = con.prepareStatement(query1);
+            psta.executeUpdate();
+            
     }                                        
      catch(Exception e) {
            JOptionPane.showMessageDialog(null, e); 
