@@ -19,79 +19,124 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
-
+import net.proteanit.sql.DbUtils;
 
 /**
  *
  * @author Catarina
  */
 public class ListGuardas extends javax.swing.JFrame implements Serializable {
+
     private DefaultTableModel modeloTabela;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     private int i;
 
     public ListGuardas() {
         initComponents();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         setIcon();
-        jTable_Display_Guardas.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
+        jTable_Display_Guardas.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD, 12));
         jTable_Display_Guardas.getTableHeader().setOpaque(false);
-        jTable_Display_Guardas.getTableHeader().setBackground(new Color(176,2,37));
-        jTable_Display_Guardas.getTableHeader().setForeground(new Color(255,255,255));
+        jTable_Display_Guardas.getTableHeader().setBackground(new Color(176, 2, 37));
+        jTable_Display_Guardas.getTableHeader().setForeground(new Color(255, 255, 255));
         show_Guarda();
     }
 
-     public ArrayList<Entidade> guardaList(){
+    public ArrayList<Entidade> guardaList() {
         ArrayList<Entidade> guardasList = new ArrayList<>();
-         try{
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query1="SELECT * FROM Profile where deleted='0' and id_type='1'";
-            Statement st= con.createStatement();
-            ResultSet rs= st.executeQuery(query1);
+            String query1 = "SELECT * FROM Profile where deleted='0' and id_type='1'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query1);
             Entidade guarda;
-            while(rs.next()){
-                guarda = new Entidade(rs.getString("scan"),rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+            while (rs.next()) {
+                guarda = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
                 guardasList.add(guarda);
             }
-         }
-         catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-         return guardasList;
+        return guardasList;
     }
-       public void show_Guarda() {
-           ArrayList<Entidade> list = guardaList();
-           DefaultTableModel model = (DefaultTableModel)jTable_Display_Guardas.getModel();
-           Object[] row = new Object[3];
-            for(int i=0;i<list.size();i++){
-            row[0]=list.get(i).getNome();
-            row[1]=list.get(i).getEmail();
-            row[2]=list.get(i).getPoints();
+
+    public void show_Guarda() {
+        ArrayList<Entidade> list = guardaList();
+        DefaultTableModel model = (DefaultTableModel) jTable_Display_Guardas.getModel();
+        Object[] row = new Object[3];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getNome();
+            row[1] = list.get(i).getEmail();
+            row[2] = list.get(i).getPoints();
             model.addRow(row);
         }
-       }
-       
-        public void EliminarG(String x) {
-            try{
+    }
+
+    public void EliminarG(String x) {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "UPDATE Profile SET deleted='1' where email ='"+x+"'";          
+            String query = "UPDATE Profile SET deleted='1' where email ='" + x + "'";
             PreparedStatement pst = con.prepareStatement(query);
             pst.executeUpdate();
-            DefaultTableModel model = (DefaultTableModel)jTable_Display_Guardas.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTable_Display_Guardas.getModel();
             model.setRowCount(0);
             show_Guarda();
-    }                                        
-     catch(Exception e) {
-           JOptionPane.showMessageDialog(null, e); 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
+    }
+
+    private void pesquisar() {
+        String sql = "select name as Nome, email as Email, points as Pontos from Profile where deleted='0' and id_type='1' and name like ?";
+        String sqlp = "select name as Nome, email as Email, points as Pontos from Profile where deleted='0' and id_type='1' and points like ?";
+        try {
+            if (jTextField1.getText().matches("^[0-9]+$")) {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlp);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_Display_Guardas.setModel(DbUtils.resultSetToTableModel(rs));
+
+            } else {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sql);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_Display_Guardas.setModel(DbUtils.resultSetToTableModel(rs));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
-       
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -176,17 +221,31 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         });
         jScrollPane2.setViewportView(jTable_Display_Guardas);
 
+        jTextField1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField1.setText("Pesquisar...");
         jTextField1.setInheritsPopupMenu(true);
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jLabel1.setText("Filtrar Lista Por:");
 
+        jComboBox1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Email", "Pontos" }));
         jComboBox1.setInheritsPopupMenu(true);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -239,11 +298,11 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel1)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(189, 189, 189))
+                        .addGap(175, 175, 175))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -255,7 +314,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -291,7 +350,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -482,7 +541,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -490,7 +548,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -516,23 +573,20 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int i = jTable_Display_Guardas.getSelectedRow();
         if (i >= 0) {
-        ArrayList<Entidade> lista = guardaList();        
-        Entidade E = lista.get(i);
-        String nome = E.getNome();
-        String email = E.getEmail();
-        
-        
-        EliminarGuarda s = new EliminarGuarda();
-        s.jLabel5.setText(nome);
-        s.email.setText(email);
-        s.setLocationRelativeTo(null);
-        s.setVisible(true);
-        this.dispose();  
-    }                                        
-    
-        else{
+            ArrayList<Entidade> lista = guardaList();
+            Entidade E = lista.get(i);
+            String nome = E.getNome();
+            String email = E.getEmail();
+
+            EliminarGuarda s = new EliminarGuarda();
+            s.jLabel5.setText(nome);
+            s.email.setText(email);
+            s.setLocationRelativeTo(null);
+            s.setVisible(true);
+            this.dispose();
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
-        }        
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
@@ -569,7 +623,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(255, 102, 102));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(255, 102, 102));
@@ -577,7 +630,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -619,7 +671,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -627,7 +678,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(255, 102, 102));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(255, 102, 102));
@@ -669,7 +719,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -677,7 +726,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -719,7 +767,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -727,7 +774,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -747,10 +793,17 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable_Display_GuardasMouseClicked
 
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1MouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        pesquisar();
+    }//GEN-LAST:event_jTextField1KeyReleased
+
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
