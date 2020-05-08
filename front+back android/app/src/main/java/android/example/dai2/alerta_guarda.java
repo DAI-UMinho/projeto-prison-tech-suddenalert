@@ -109,10 +109,14 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
             numeroR.setError("Introduz a identificação do Recluso");
             valid = false;
         }
-      /*  if (gravidadeA.isEmpty()){
-            gravidade.setError("Introduza a gravidade");
+        if (gravidade.getCheckedRadioButtonId() == -1){
+            Toast.makeText(this, "Falta selecionar a gravidade", Toast.LENGTH_SHORT).show();
             valid = false;
-        }*/
+        } else {
+            int radiobuttonid = gravidade.getCheckedRadioButtonId();
+            RadioButton rb = (RadioButton) findViewById(radiobuttonid);
+            gravidadeA = rb.getText().toString().trim();
+        }
         if (descricaoA.isEmpty()){
             descricao.setError("Introduz uma descrição");
             valid = false;
@@ -121,7 +125,6 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
     }
     public void intialize(){
         numeroRec = numeroR.getText().toString().trim();
-       // gravidadeA = gravidade.getText().toString().trim();
         descricaoA = descricao.getText().toString().trim();
     }
 
@@ -254,14 +257,13 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
                             id_recluso = resultSet.getInt("id_recluse");
                         }
                        String query = "INSERT INTO AlertSituation (`description`, `scan`, `id_recluse`, `severity`) VALUES ('" + descricaoA + "', '" + scan + "', '" + id_recluso + "', '"+ gravidadeA +"');";
-                       System.out.println(query);
                        Statement statement = connection.createStatement();
                         statement.executeUpdate(query);
+                        String query4 = "UPDATE Profile SET points=points+10 where scan = '"+scan+"'";
+                        Statement statement3 = connection.createStatement();
+                        statement3.executeUpdate(query4);
                         msg = "Inserido com sucesso";
                         sucess = true;
-                        // prenchido = true;
-                        System.out.println(sucess);
-                        //  System.out.println(prenchido);
 
                     } else {
                         sucess = false;
