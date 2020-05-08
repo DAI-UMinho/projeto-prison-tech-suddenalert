@@ -5,15 +5,32 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.Normalizer.Form;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
+import net.proteanit.sql.DbUtils;
+import java.util.Date;
+
 
 /**
  *
@@ -25,14 +42,72 @@ public class Historico extends javax.swing.JFrame implements Serializable {
     /**
      * Creates new form Reclusos
      */
-    public Historico() {
+    public Historico(){
         initComponents();
         setIcon();
         jTable_h.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
         jTable_h.getTableHeader().setOpaque(false);
         jTable_h.getTableHeader().setBackground(new Color(176,2,37));
         jTable_h.getTableHeader().setForeground(new Color(255,255,255));
+        show_historico();
     }
+    
+     public ArrayList<HistoricoBack> historicoList() {
+        ArrayList<HistoricoBack> historicosList = new ArrayList<>();
+        ArrayList<HistoricoBack> historicosLista = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1 = "SELECT Profile.name, Historico.acao, Historico.data, Historico.motivo, Historico.tipo from Historico inner join Profile  on Historico.scan = Profile.scan WHERE Historico.deleted = '0';";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query1);
+            HistoricoBack historico;
+            while (rs.next()) {
+                historico = new HistoricoBack (rs.getString("name"), rs.getString("motivo"), rs.getString("acao"), rs.getString("data"), rs.getString("tipo"));
+                historicosList.add(historico);
+            }
+            String query2 = "SELECT Recluse.name, Historico.acao, Historico.data, Historico.motivo, Historico.tipo from Historico inner join Recluse  on Historico.id_recluse = Recluse.numero_recluso WHERE Historico.deleted = '0';";
+            Statement sta = con.createStatement();
+            ResultSet rsa = sta.executeQuery(query2);
+            HistoricoBack historico1;
+            while (rsa.next()) {
+                historico1 = new HistoricoBack (rsa.getString("name"), rsa.getString("motivo"), rsa.getString("acao"), rsa.getString("data"), rsa.getString("tipo"));
+                historicosLista.add(historico1); }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        historicosList.addAll(historicosLista);
+        Collections.sort(historicosList, new Comparator<HistoricoBack>() {
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @Override
+        public int compare(HistoricoBack o1, HistoricoBack o2) {
+            try {
+                return f.parse(o1.getDate()).compareTo(f.parse(o2.getDate()));
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
+            }
+        }
+    });
+        return historicosList;
+    }   
+    public void show_historico() {
+        ArrayList<HistoricoBack> list = historicoList();
+        DefaultTableModel model = (DefaultTableModel) jTable_h.getModel();
+        Object[] row = new Object[5];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getDate();
+            row[1] = list.get(i).getAcao();
+            row[2] = list.get(i).getNome();
+            row[3] = list.get(i).getTipo();
+            row[4] = list.get(i).getMotivo();
+            model.addRow(row);
+        }
+    }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -132,7 +207,7 @@ public class Historico extends javax.swing.JFrame implements Serializable {
 
         jTable_h.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"20/01/2019", "Remoção", "André Silva", "Recluso", null}
+
             },
             new String [] {
                 "Data", "Ação", "Nome ", "Tipo", "Motivo"
@@ -141,9 +216,16 @@ public class Historico extends javax.swing.JFrame implements Serializable {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jTable_h.setFocusable(false);

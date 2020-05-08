@@ -90,6 +90,15 @@ try{
             pst.setString(6, dataNascimento);
             pst.setString(7, email);
             pst.executeUpdate();
+            if (id_type==1){
+            String query2 = "Insert into Historico (acao, motivo, scan, tipo) values ('Inserção', '', '"+scan+"', 'Guarda')";          
+            PreparedStatement psta = con.prepareStatement(query2);
+            psta.executeUpdate(); }
+            else {
+            String query3 = "Insert into Historico (acao, motivo, scan, tipo) values ('Inserção', '', '"+scan+"', 'Psicólogo')";          
+            PreparedStatement psta = con.prepareStatement(query3);
+            psta.executeUpdate();
+            }
             try {
             ProgressBar xProgress = new ProgressBar();
             xProgress.setLocationRelativeTo(null);
