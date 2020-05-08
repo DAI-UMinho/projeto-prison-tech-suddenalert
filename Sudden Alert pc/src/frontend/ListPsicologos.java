@@ -26,11 +26,13 @@ import net.proteanit.sql.DbUtils;
  * @author Catarina
  */
 public class ListPsicologos extends javax.swing.JFrame implements Serializable {
+
     private DefaultTableModel modeloTabela;
     Connection con = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
     private int i;
+
     /**
      * Creates new form Reclusos
      */
@@ -46,59 +48,62 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             JOptionPane.showMessageDialog(null, e);
         }
         setIcon();
-        jTable_Display_Psicologos.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
+        jTable_Display_Psicologos.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD, 12));
         jTable_Display_Psicologos.getTableHeader().setOpaque(false);
-        jTable_Display_Psicologos.getTableHeader().setBackground(new Color(176,2,37));
-        jTable_Display_Psicologos.getTableHeader().setForeground(new Color(255,255,255));
+        jTable_Display_Psicologos.getTableHeader().setBackground(new Color(176, 2, 37));
+        jTable_Display_Psicologos.getTableHeader().setForeground(new Color(255, 255, 255));
         show_Psicologo();
     }
-    
-         public ArrayList<Entidade> psicologoList(){
+
+    public ArrayList<Entidade> psicologoList() {
         ArrayList<Entidade> psicologosList = new ArrayList<>();
-         try{
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query1="SELECT * FROM Profile where deleted='0' and id_type='2'";
-            Statement st= con.createStatement();
-            ResultSet rs= st.executeQuery(query1);
+            String query1 = "SELECT * FROM Profile where deleted='0' and id_type='2'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query1);
             Entidade psicologo;
-            while(rs.next()){
-                psicologo = new Entidade(rs.getString("scan"),rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+            while (rs.next()) {
+                psicologo = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
                 psicologosList.add(psicologo);
             }
-         }
-         catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-         return psicologosList;
+        return psicologosList;
     }
-       public void show_Psicologo() {
-           ArrayList<Entidade> list = psicologoList();
-           DefaultTableModel model = (DefaultTableModel)jTable_Display_Psicologos.getModel();
-           Object[] row = new Object[2];
-            for(int i=0;i<list.size();i++){
-            row[0]=list.get(i).getNome();
-            row[1]=list.get(i).getEmail();
+
+    public void show_Psicologo() {
+        ArrayList<Entidade> list = psicologoList();
+        DefaultTableModel model = (DefaultTableModel) jTable_Display_Psicologos.getModel();
+        Object[] row = new Object[2];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getNome();
+            row[1] = list.get(i).getEmail();
             model.addRow(row);
         }
-       }
-             
-       public void EliminarPsicologo(String x) {
-            try{
+    }
+
+    public void EliminarPsicologo(String x) {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "UPDATE Profile SET deleted='1' where email='"+x+"'";          
+            String query = "UPDATE Profile SET deleted='1' where email='" + x + "'";
             PreparedStatement pst = con.prepareStatement(query);
             pst.executeUpdate();
-            DefaultTableModel model = (DefaultTableModel)jTable_Display_Psicologos.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTable_Display_Psicologos.getModel();
             model.setRowCount(0);
             show_Psicologo();
+            JOptionPane.showMessageDialog(null, "Eliminado com Sucesso");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
             JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
             String query1 = "Insert into Historico (acao, motivo, id_recluse, tipo) values ('Remoção', '', '', 'Psicólogo')";          
             PreparedStatement psta = con.prepareStatement(query1);
@@ -107,9 +112,9 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
      catch(Exception e) {
            JOptionPane.showMessageDialog(null, e); 
         }
-       }
-       
-       private void pesquisar() {
+    }
+
+    private void pesquisar() {
         String sql = "select name as Nome, email as Email from Profile where deleted='0' and id_type='2' and name like ?";
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -205,7 +210,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         jTable_Display_Psicologos.setVerifyInputWhenFocusTarget(false);
         jScrollPane2.setViewportView(jTable_Display_Psicologos);
 
-        jTextField1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jTextField1.setText("Pesquisar...");
         jTextField1.setInheritsPopupMenu(true);
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -227,10 +232,10 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
         jLabel3.setText("jLabel3");
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel1.setText("Filtrar Lista Por:");
 
-        jComboBox1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Email" }));
         jComboBox1.setInheritsPopupMenu(true);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -327,7 +332,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel2)))
@@ -518,7 +523,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -526,7 +530,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -559,23 +562,21 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         i = jTable_Display_Psicologos.getSelectedRow();
         if (i >= 0) {
-        ArrayList<Entidade> lista = psicologoList();        
-        Entidade E = lista.get(i);
-        String nome = E.getNome();
-        String email = E.getEmail();
-        
-        EliminarPsic s = new EliminarPsic();
-        s.jLabel5.setText(nome);
-        s.email.setText(email);
-        s.setLocationRelativeTo(null);
-        s.setVisible(true);
-        this.dispose();  
-    }                                        
-    
-        else{
+            ArrayList<Entidade> lista = psicologoList();
+            Entidade E = lista.get(i);
+            String nome = E.getNome();
+            String email = E.getEmail();
+
+            EliminarPsic s = new EliminarPsic();
+            s.jLabel5.setText(nome);
+            s.email.setText(email);
+            s.setLocationRelativeTo(null);
+            s.setVisible(true);
+            this.dispose();
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
-        }        
-                                           
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void entMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMousePressed
@@ -605,7 +606,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(255, 102, 102));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(255, 102, 102));
@@ -613,7 +613,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -655,7 +654,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -663,7 +661,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(255, 102, 102));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(255, 102, 102));
@@ -705,7 +702,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -713,7 +709,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -755,7 +750,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -763,7 +757,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -790,7 +783,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;

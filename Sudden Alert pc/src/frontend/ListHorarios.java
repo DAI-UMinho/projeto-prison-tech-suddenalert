@@ -5,6 +5,8 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -12,28 +14,62 @@ import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
  * @author Catarina
  */
 public class ListHorarios extends javax.swing.JFrame implements Serializable {
+
     private DefaultTableModel modeloTabela;
-    
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
     /**
      * Creates new form Reclusos
      */
     public ListHorarios() {
         initComponents();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            java.sql.Connection con = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         setIcon();
-        jTable_hor.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
+        jTable_hor.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD, 12));
         jTable_hor.getTableHeader().setOpaque(false);
-        jTable_hor.getTableHeader().setBackground(new Color(176,2,37));
-        jTable_hor.getTableHeader().setForeground(new Color(255,255,255));
+        jTable_hor.getTableHeader().setBackground(new Color(176, 2, 37));
+        jTable_hor.getTableHeader().setForeground(new Color(255, 255, 255));
         jTable_hor.setRowHeight(24);
     }
+
+    /*private void pesquisar() {
+        String sql = "select name as Nome, email as Email from Profile where deleted='0' and id_type='2' and id_type='1' and name like ?";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            java.sql.Connection con = DriverManager.getConnection(url, user, pass);
+
+            pst = con.prepareStatement(sql);
+            pst.setString(1, jTextField1.getText() + "%");
+            rs = pst.executeQuery();
+            jTable_hor.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,18 +149,32 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         jTable_hor.setVerifyInputWhenFocusTarget(false);
         jScrollPane2.setViewportView(jTable_hor);
 
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jTextField1.setText("Pesquisar...");
         jTextField1.setInheritsPopupMenu(true);
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
             }
         });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
         jLabel3.setText("jLabel3");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel1.setText("Filtrar Lista Por:");
 
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Email" }));
         jComboBox1.setInheritsPopupMenu(true);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -171,10 +221,10 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
-                        .addComponent(jLabel1)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(189, 189, 189))
+                        .addGap(183, 183, 183))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(115, 115, 115))))
@@ -398,7 +448,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -406,7 +455,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -458,7 +506,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(255, 102, 102));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(255, 102, 102));
@@ -466,7 +513,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -508,7 +554,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -516,7 +561,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(255, 102, 102));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(255, 102, 102));
@@ -558,7 +602,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -566,7 +609,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -608,7 +650,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -616,7 +657,6 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -654,10 +694,17 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         this.dispose();
     }//GEN-LAST:event_hor_guardaActionPerformed
 
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        //pesquisar();
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+         jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1MouseClicked
+
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;

@@ -102,6 +102,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             DefaultTableModel model = (DefaultTableModel) jTable_Display_Reclusos.getModel();
             model.setRowCount(0);
             show_recluso();
+            JOptionPane.showMessageDialog(null, "Eliminado com Sucesso","",JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
             JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
             String query1 = "Insert into Historico (acao, motivo, id_recluse, tipo) values ('Remoção', '"+x+"', '"+i+"', 'Recluso')";          
             PreparedStatement psta = con.prepareStatement(query1);
@@ -273,7 +276,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         });
         jScrollPane2.setViewportView(jTable_Display_Reclusos);
 
-        jTextField1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jTextField1.setText("Pesquisar...");
         jTextField1.setInheritsPopupMenu(true);
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -295,10 +298,10 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
         jLabel3.setText("jLabel3");
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel1.setText("Filtrar Lista Por:");
 
-        jComboBox1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Nº do recluso", "Ala", "Piso" }));
         jComboBox1.setInheritsPopupMenu(true);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
