@@ -77,8 +77,10 @@ try{
             pst.setString(6, floor);
             pst.setString(7, disease);
             pst.setBytes(8, imagem);
-           
             pst.executeUpdate();
+            String query1 = "Insert into Historico (acao, motivo, id_recluse, tipo) values ('Inserção', '', '"+numero_recluso+"', 'Recluso')";          
+            PreparedStatement psta = con.prepareStatement(query1);
+            psta.executeUpdate();
             //JOptionPane.showMessageDialog(null,"Recluso registado com Sucesso");
     }                                        
      catch(Exception e) {
