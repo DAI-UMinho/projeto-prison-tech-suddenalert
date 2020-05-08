@@ -60,7 +60,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     private SyncData.MyAppAdapter myAppAdapter;
     private ListView listView;
     private boolean sucess = false;
-    Dialog myDialog, editarRec, progress, elimina;
+    Dialog myDialog, editarRec, progress, elimina, erro;
     Button verDados, sort;
     int posicao, id_recluso;
     ProgressBar progressBar;
@@ -79,6 +79,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         editarRec = new Dialog(this);
         progress = new Dialog(this);
         elimina = new Dialog(this);
+        erro = new Dialog(this);
 
 
         listView = (ListView) findViewById(R.id.lvRdir);
@@ -297,6 +298,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                try{ Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                  viewHolder.imageView.setImageBitmap(bitmap);}
                catch (Exception e){
+                   Erro();
                    alert("Recluso sem imagem");
                }
               //  Picasso.get().load(recluseList.get(position).getImg()).into(viewHolder.imageView);
@@ -336,6 +338,18 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
 
     public void entrarRegRec(View v) {
         startActivity(new Intent(this, android.example.dai2.Registar_Reclusos.class));
+    }
+    public void Erro(){
+        erro.setContentView(R.layout.erro_falta_imagem);
+        TextView txtclose;
+        txtclose = (TextView) erro.findViewById(R.id.txtclose);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                erro.dismiss();
+            }
+        });
+        erro.show();
     }
     public void ShowPopup(View v){
         TextView txtclose;
