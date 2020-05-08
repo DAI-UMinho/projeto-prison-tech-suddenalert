@@ -99,7 +99,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             DefaultTableModel model = (DefaultTableModel) jTable_Display_Guardas.getModel();
             model.setRowCount(0);
             show_Guarda();
-            String query1 = "Insert into Historico (acao, motivo, id_recluse, tipo) values ('Remoção', '', '', 'Guarda')";          
+            String query1 = "Insert into Historico (acao, motivo, scan, tipo) values ('Remoção', '', '', 'Guarda')";          
             PreparedStatement psta = con.prepareStatement(query1);
             psta.executeUpdate();
     }                                        
