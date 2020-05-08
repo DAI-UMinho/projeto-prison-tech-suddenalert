@@ -1,10 +1,8 @@
 package android.example.dai2;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -14,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,7 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 
 
 import java.io.PrintWriter;
@@ -48,6 +44,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,8 +54,8 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     private SyncData.MyAppAdapter myAppAdapter;
     private ListView listView;
     private boolean sucess = false;
-    Dialog myDialog, editarRec, progress, elimina;
-    Button verDados;
+    Dialog myDialog, editarRec, progress, elimina, erro;
+    Button verDados, sort;
     int posicao, id_recluso;
     ProgressBar progressBar;
     EditText motivo;
@@ -75,6 +73,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         editarRec = new Dialog(this);
         progress = new Dialog(this);
         elimina = new Dialog(this);
+        erro = new Dialog(this);
 
 
         listView = (ListView) findViewById(R.id.lvRdir);
@@ -135,7 +134,17 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        Button buttonSort= findViewById(R.id.button11);
+        //buttonSort.setOnClickListener(new View.OnClickListener() {
+            //@Override
+           // public void onClick(View v) {
+         //       sortArrayList();
+       //     }
+     //   });
     }
+
+
+
 
 
 
@@ -280,8 +289,11 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                 viewHolder.nome.setText(recluseList.get(position).getNomeRec() + "");
                 viewHolder.numeroRec.setText(recluseList.get(position).getNumero_rec() + "");
                 byte[] img = recluseList.get(position).getImg();
-                Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
-                 viewHolder.imageView.setImageBitmap(bitmap);
+               try{ Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                 viewHolder.imageView.setImageBitmap(bitmap);}
+               catch (Exception e){
+
+               }
               //  Picasso.get().load(recluseList.get(position).getImg()).into(viewHolder.imageView);
 
 
@@ -305,6 +317,14 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                 }
                 notifyDataSetChanged();
             }
+            private void sortArrayList(){
+                Collections.sort(itemArrayList, new Comparator<ClassListReclusos>() {
+                    @Override
+                    public int compare(ClassListReclusos o1, ClassListReclusos o2) {
+                        return o1.getNomeRec().compareTo(o2.getNomeRec());                    }
+                });
+                myAppAdapter.notifyDataSetChanged();
+            }
         }
 
     }
@@ -312,6 +332,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     public void entrarRegRec(View v) {
         startActivity(new Intent(this, android.example.dai2.Registar_Reclusos.class));
     }
+
     public void ShowPopup(View v){
         TextView txtclose;
         Button btnSim;
@@ -355,6 +376,14 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.search, menu);
         MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        MenuItem sort = menu.findItem(R.id.filter);
+        sort.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList();
+                return false;
+            }
+        });
         SearchView searchView = (SearchView)myActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -376,6 +405,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
         });
         return true;
     }
+
 
     @Override
     public void onBackPressed() {

@@ -104,6 +104,13 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             JOptionPane.showMessageDialog(null, "Eliminado com Sucesso");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
+            String query1 = "Insert into Historico (acao, motivo, id_recluse, tipo) values ('Remoção', '', '', 'Psicólogo')";          
+            PreparedStatement psta = con.prepareStatement(query1);
+            psta.executeUpdate();
+    }                                       
+     catch(Exception e) {
+           JOptionPane.showMessageDialog(null, e); 
         }
     }
 
