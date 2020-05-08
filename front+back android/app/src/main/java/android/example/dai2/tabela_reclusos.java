@@ -1,10 +1,8 @@
 package android.example.dai2;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -14,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,7 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 
 
 import java.io.PrintWriter;
@@ -48,8 +44,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -298,8 +292,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                try{ Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                  viewHolder.imageView.setImageBitmap(bitmap);}
                catch (Exception e){
-                   Erro();
-                   alert("Recluso sem imagem");
+
                }
               //  Picasso.get().load(recluseList.get(position).getImg()).into(viewHolder.imageView);
 
@@ -339,18 +332,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     public void entrarRegRec(View v) {
         startActivity(new Intent(this, android.example.dai2.Registar_Reclusos.class));
     }
-    public void Erro(){
-        erro.setContentView(R.layout.erro_falta_imagem);
-        TextView txtclose;
-        txtclose = (TextView) erro.findViewById(R.id.txtclose);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                erro.dismiss();
-            }
-        });
-        erro.show();
-    }
+
     public void ShowPopup(View v){
         TextView txtclose;
         Button btnSim;

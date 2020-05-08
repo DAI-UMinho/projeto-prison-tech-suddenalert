@@ -58,7 +58,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
     private final int PERMISSAO_REQUEST = 2;
     EditText nome, nascimento, piso, ala, doencas, entrada, numeroRec;
     private String nomeR,nascimentoR, pisoR, alaR, doencaR, entradaR, numeroR;
-    Dialog myDialog;
+    Dialog myDialog,erro;
     private boolean sucess;
     Button regRecluso;
     byte[] imagemRec = null;
@@ -103,6 +103,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
             }
         });
         myDialog = new Dialog(this);
+        erro = new Dialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -149,7 +150,8 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
                 startActivity(new Intent(this, android.example.dai2.inicio_diretor.class));
 
             } else {
-                Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
+                Erro();
+                //Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -325,6 +327,18 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
         }
 
 
+    }
+    public void Erro(){
+        erro.setContentView(R.layout.erro_add_recluso);
+        TextView txtclose;
+        txtclose = (TextView) erro.findViewById(R.id.txtclose);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                erro.dismiss();
+            }
+        });
+        erro.show();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
