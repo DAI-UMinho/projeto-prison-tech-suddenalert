@@ -11,6 +11,8 @@ import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +23,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class fazer_documentos extends AppCompatActivity {
-    private EditText  gravidade, relatorioo, tituloRel;
-    private String t_identific,t_nome, t_gravidade, t_relatorio, t_titulo;
-    private boolean sucess = false, prenchido = true;
+    private EditText   relatorioo, tituloRel;
+    private String t_gravidade, t_relatorio, t_titulo;
+    private boolean sucess = false;
     Button regRelat;
     private int id_alerta = tabela_alert.id_alert;
     private TextView identificacao, nome;
+    private RadioGroup gravidade;
 
 
 
@@ -34,12 +37,11 @@ public class fazer_documentos extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fazer_documento);
-       // t_identific = tabela_alert.numeroRecluso
         identificacao = (TextView) findViewById(R.id.numeroRecl);
         relatorioo = (EditText) findViewById(R.id.relatorio);
         tituloRel = (EditText) findViewById(R.id.tituloRel);
         nome = (TextView) findViewById(R.id.identificacao);
-        gravidade = (EditText) findViewById(R.id.gravidaderelatorio);
+        gravidade= (RadioGroup) findViewById(R.id.rgroup);
         regRelat = (Button) findViewById(R.id.submeter);
         regRelat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +79,13 @@ public class fazer_documentos extends AppCompatActivity {
 
     public  boolean validate(){
         boolean valid = true;
-        if (t_gravidade.isEmpty()){
-            gravidade.setError("Introduz a identificação");
+        if (gravidade.getCheckedRadioButtonId() == -1){
+            Toast.makeText(this, "Falta selecionar a gravidade", Toast.LENGTH_SHORT).show();
             valid = false;
+        } else {
+            int radiobuttonid = gravidade.getCheckedRadioButtonId();
+            RadioButton rb = (RadioButton) findViewById(radiobuttonid);
+            t_gravidade = rb.getText().toString().trim();
         }
         if (t_relatorio.isEmpty()){
             relatorioo.setError("Introduza um relatorio");
@@ -92,15 +98,12 @@ public class fazer_documentos extends AppCompatActivity {
         return valid;
     }
     public void intialize(){
-        t_gravidade = gravidade.getText().toString().trim();
         t_relatorio = relatorioo.getText().toString().trim();
         t_titulo = tituloRel.getText().toString().trim();
     }
     private class CriarRelatorio extends AsyncTask<String, String, String>{
         String msg = "";
         String scan = MainActivity.scanValor;
-        //String identificacao1 = identificacao.getText().toString();
-        // String relatorio = relatorioo.getText().toString();
         int valor = 0;
 
 
@@ -119,9 +122,6 @@ public class fazer_documentos extends AppCompatActivity {
                     ResultSet resultSet1 = statement1.executeQuery(query1);
                     while (resultSet1.next()) {
                         valor = resultSet1.getInt("id_recluse");
-
-                        System.out.println(valor);
-
                     }
                     String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`, `title`, `gravidade`, `id_alertsituation`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + valor + "', '" + t_titulo + "', '" + t_gravidade + "', '" + id_alerta + "');";
                     Statement statement = connection.createStatement();

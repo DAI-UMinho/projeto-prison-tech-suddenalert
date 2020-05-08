@@ -19,73 +19,87 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
  * @author Catarina
  */
 public class ListReclusos extends javax.swing.JFrame implements Serializable {
+
     private DefaultTableModel modeloTabela;
-    
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
     /**
      * Creates new form Reclusos
      */
     public ListReclusos() {
         initComponents();
-        setIcon();
-        jTable_Display_Reclusos.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
-        jTable_Display_Reclusos.getTableHeader().setOpaque(false);
-        jTable_Display_Reclusos.getTableHeader().setBackground(new Color(176,2,37));
-        jTable_Display_Reclusos.getTableHeader().setForeground(new Color(255,255,255));
-        show_recluso();
-    }
-    
-     public ArrayList<Recluso> reclusoList(){
-        ArrayList<Recluso> reclusosList = new ArrayList<>();
-         try{
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query1="SELECT * FROM Recluse where deleted='0'";
-            Statement st= con.createStatement();
-            ResultSet rs= st.executeQuery(query1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        setIcon();
+        jTable_Display_Reclusos.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD, 12));
+        jTable_Display_Reclusos.getTableHeader().setOpaque(false);
+        jTable_Display_Reclusos.getTableHeader().setBackground(new Color(176, 2, 37));
+        jTable_Display_Reclusos.getTableHeader().setForeground(new Color(255, 255, 255));
+        show_recluso();
+    }
+
+    public ArrayList<Recluso> reclusoList() {
+        ArrayList<Recluso> reclusosList = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1 = "SELECT * FROM Recluse where deleted='0'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query1);
             Recluso recluso;
-            while(rs.next()){
+            while (rs.next()) {
                 recluso = new Recluso(rs.getInt("numero_recluso"), rs.getString("name"), rs.getString("birthday"), rs.getString("date_entry"), rs.getString("wing"), rs.getString("floor"), rs.getString("disease"), rs.getString("motivo_remoção"));
                 reclusosList.add(recluso);
             }
-         }
-         catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-         return reclusosList;
+        return reclusosList;
     }
-       public void show_recluso() {
-           ArrayList<Recluso> list = reclusoList();
-           DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
-           Object[] row = new Object[4];
-            for(int i=0;i<list.size();i++){
-            row[0]=list.get(i).getnumero_recluso();
-            row[1]=list.get(i).getnome();
-            row[2]=list.get(i).getala();
-            row[3]=list.get(i).getpiso();
+
+    public void show_recluso() {
+        ArrayList<Recluso> list = reclusoList();
+        DefaultTableModel model = (DefaultTableModel) jTable_Display_Reclusos.getModel();
+        Object[] row = new Object[4];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getnumero_recluso();
+            row[1] = list.get(i).getnome();
+            row[2] = list.get(i).getala();
+            row[3] = list.get(i).getpiso();
             model.addRow(row);
         }
-       }
-       
-       public void EliminarRowTabela(String i, String x) {
-           try{
+    }
+
+    public void EliminarRowTabela(String i, String x) {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "UPDATE Recluse SET deleted='1' where numero_recluso="+i;          
+            String query = "UPDATE Recluse SET deleted='1' where numero_recluso=" + i;
             PreparedStatement pst = con.prepareStatement(query);
             pst.executeUpdate();
-            DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTable_Display_Reclusos.getModel();
             model.setRowCount(0);
             show_recluso();
             JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
@@ -96,16 +110,16 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
      catch(Exception e) {
            JOptionPane.showMessageDialog(null, e); 
         }
-    }   
-       
-      public void GuardarRecluso(String numero_recluso, String name, String birthday, String date_entry, String wing, String floor, String disease){
-           try{
+    }
+
+    public void GuardarRecluso(String numero_recluso, String name, String birthday, String date_entry, String wing, String floor, String disease) {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "UPDATE Recluse SET numero_recluso=?, name=?, birthday=?, date_entry=?, wing=?, floor=?, disease=? where numero_recluso="+numero_recluso;          
+            String query = "UPDATE Recluse SET numero_recluso=?, name=?, birthday=?, date_entry=?, wing=?, floor=?, disease=? where numero_recluso=" + numero_recluso;
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, numero_recluso);
             pst.setString(2, name);
@@ -115,7 +129,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             pst.setString(6, floor);
             pst.setString(7, disease);
             pst.executeUpdate();
-            DefaultTableModel model = (DefaultTableModel)jTable_Display_Reclusos.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTable_Display_Reclusos.getModel();
             model.setRowCount(0);
             show_recluso();
             String query1 = "Insert into Historico (acao, motivo, id_recluse, tipo) values ('Edição', '', '"+numero_recluso+"', 'Recluso')";          
@@ -126,25 +140,56 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
      catch(Exception e) {
            JOptionPane.showMessageDialog(null, e); 
         }
-      }
-      
-            public void GuardarMotivo(String motivo_remoção, String numero_recluso){
-           try{
+    }
+
+    public void GuardarMotivo(String motivo_remoção, String numero_recluso) {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "UPDATE Recluse SET motivo_remoção=? where numero_recluso="+numero_recluso;          
+            String query = "UPDATE Recluse SET motivo_remoção=? where numero_recluso=" + numero_recluso;
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, motivo_remoção);
             pst.executeUpdate();
-    }                                        
-     catch(Exception e) {
-           JOptionPane.showMessageDialog(null, e); 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
-      }
-       
+    }
+
+    private void pesquisar() {
+        String sql = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and name like ?";
+        String sqlid = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and numero_recluso like ?";
+        try {
+            if (jTextField1.getText().matches("^[0-9]+$")) {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlid);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+
+            } else {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sql);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -228,18 +273,32 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         });
         jScrollPane2.setViewportView(jTable_Display_Reclusos);
 
+        jTextField1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jTextField1.setText("Pesquisar...");
         jTextField1.setInheritsPopupMenu(true);
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
             }
         });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
         jLabel3.setText("jLabel3");
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jLabel1.setText("Filtrar Lista Por:");
 
+        jComboBox1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Nº do recluso", "Ala", "Piso" }));
         jComboBox1.setInheritsPopupMenu(true);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -272,11 +331,11 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel1)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(189, 189, 189))
+                        .addGap(183, 183, 183))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(115, 115, 115))))
@@ -505,7 +564,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -513,7 +571,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -535,13 +592,13 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-    
-   
+
+
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         Menu xMenu = new Menu();
         xMenu.setLocationRelativeTo(null);
         xMenu.setVisible(true);
-        this.dispose();      
+        this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
     private void entMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMousePressed
@@ -571,7 +628,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(255, 102, 102));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(255, 102, 102));
@@ -579,7 +635,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -621,7 +676,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -629,7 +683,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(255, 102, 102));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(255, 102, 102));
@@ -671,7 +724,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -679,7 +731,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -721,7 +772,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lrecl.setColorNormal(new Color(243, 243, 243));
             this.lrecl.setColorHover(new Color(255, 102, 102));
             this.lrecl.setColorPressed(new Color(243, 243, 243));*/
-
             this.ent.setColorNormal(new Color(243, 243, 243));
             this.ent.setColorHover(new Color(255, 102, 102));
             this.ent.setColorPressed(new Color(243, 243, 243));
@@ -729,7 +779,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
             /*this.lent.setColorNormal(new Color(243, 243, 243));
             this.lent.setColorHover(new Color(255, 102, 102));
             this.lent.setColorPressed(new Color(243, 243, 243));*/
-
             this.doc.setColorNormal(new Color(243, 243, 243));
             this.doc.setColorHover(new Color(255, 102, 102));
             this.doc.setColorPressed(new Color(243, 243, 243));
@@ -748,61 +797,65 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     private void jTable_Display_ReclusosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_Display_ReclusosMouseClicked
         int row_selecionada = jTable_Display_Reclusos.getSelectedRow();
         if (row_selecionada >= 0) {
-        ArrayList<Recluso> lista = reclusoList();        
-        Recluso R = lista.get(row_selecionada);
-        int numero_recluso = R.getnumero_recluso();
-        String numero = String.valueOf(numero_recluso);
-        String nome = R.getnome();
-        String ala = R.getala();
-        String piso = R.getpiso();
-        String data_nascimento = R.getdata_nascimento();
-        String data_entrada = R.getdata_entrada();
-        String doenças = R.getdoenças();
-        
-        LerRecluso xEditar = new LerRecluso();
-        xEditar.nome.setText(nome);
-        xEditar.numero.setText(numero);
-        xEditar.data_nascimento.setText(data_nascimento);
-        xEditar.data_entrada.setText(data_entrada);
-        xEditar.ala.setText(ala);
-        xEditar.piso.setText(piso);        
-        xEditar.doenças.setText(doenças);
-          try{
-            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-            String user = "suddenalertuser";
-            String pass = "Suddenalert.0";
-            Connection con = DriverManager.getConnection(url, user, pass);
-            String query1="SELECT imagem FROM Recluse where numero_recluso="+numero;
-            Statement st= con.createStatement();
-            ResultSet rs= st.executeQuery(query1);
-            if (rs.next()){
-            byte[] img = rs.getBytes("imagem");
-            ImageIcon image = new ImageIcon(img);
-            Image im = image.getImage();
-            Image myImg = im.getScaledInstance(xEditar.jLabel2.getWidth(),xEditar.jLabel2.getHeight(), Image.SCALE_SMOOTH);
-            ImageIcon newImage = new ImageIcon(myImg);
-            xEditar.jLabel2.setIcon(newImage);
-         }
-         }
-         catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
+            ArrayList<Recluso> lista = reclusoList();
+            Recluso R = lista.get(row_selecionada);
+            int numero_recluso = R.getnumero_recluso();
+            String numero = String.valueOf(numero_recluso);
+            String nome = R.getnome();
+            String ala = R.getala();
+            String piso = R.getpiso();
+            String data_nascimento = R.getdata_nascimento();
+            String data_entrada = R.getdata_entrada();
+            String doenças = R.getdoenças();
 
-        xEditar.setLocationRelativeTo(null);
-        xEditar.setVisible(true);
-        this.dispose();  
-    }                                        
-    
-        else{
+            LerRecluso xEditar = new LerRecluso();
+            xEditar.nome.setText(nome);
+            xEditar.numero.setText(numero);
+            xEditar.data_nascimento.setText(data_nascimento);
+            xEditar.data_entrada.setText(data_entrada);
+            xEditar.ala.setText(ala);
+            xEditar.piso.setText(piso);
+            xEditar.doenças.setText(doenças);
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+                String query1 = "SELECT imagem FROM Recluse where numero_recluso=" + numero;
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(query1);
+                if (rs.next()) {
+                    byte[] img = rs.getBytes("imagem");
+                    ImageIcon image = new ImageIcon(img);
+                    Image im = image.getImage();
+                    Image myImg = im.getScaledInstance(xEditar.jLabel2.getWidth(), xEditar.jLabel2.getHeight(), Image.SCALE_SMOOTH);
+                    ImageIcon newImage = new ImageIcon(myImg);
+                    xEditar.jLabel2.setIcon(newImage);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+
+            xEditar.setLocationRelativeTo(null);
+            xEditar.setVisible(true);
+            this.dispose();
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
-        }        
+        }
     }//GEN-LAST:event_jTable_Display_ReclusosMouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        pesquisar();
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1MouseClicked
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;

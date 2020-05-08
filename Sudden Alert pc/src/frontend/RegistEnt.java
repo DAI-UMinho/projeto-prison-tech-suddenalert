@@ -341,8 +341,10 @@ try{
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_localizacao.png"))); // NOI18N
 
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel3.setText("Scan");
 
+        scan1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         scan1.setText("Insira aqui o valor do Scan");
         scan1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -375,11 +377,11 @@ try{
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scan1))
+                        .addComponent(scan1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(0, 1, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -686,6 +688,11 @@ try{
         if (longitude.getText().equals("")) {
             longitude.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Longitude é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (scan1.getText().equals("")) {
+            scan1.requestFocus();
+            JOptionPane.showMessageDialog(null, "O campo Scan é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -1008,7 +1015,7 @@ try{
     }//GEN-LAST:event_scan1ActionPerformed
 
     private void scan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scan1MouseClicked
-       longitude.setText("");
+       scan1.setText("");
     }//GEN-LAST:event_scan1MouseClicked
 
     /**

@@ -1,7 +1,9 @@
 package android.example.dai2;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +20,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class horario_psicologo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
+private String inicio, fim, almoco, folga;
+private int tipoHor;
+private TextView s1, s2, s3, t1, t2, t3, q1, q2, q3, qi1, qi2, qi3, sx1, sx2, sx3, sa1, sa2, sa3, d1, d2, d3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +40,30 @@ public class horario_psicologo extends AppCompatActivity implements NavigationVi
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        s1 = (TextView) findViewById(R.id.seg0);
+        s2 = (TextView) findViewById(R.id.seg6);
+        s3 = (TextView) findViewById(R.id.seg12);
+        t1 = (TextView) findViewById(R.id.ter0);
+        t2 = (TextView) findViewById(R.id.ter6);
+        t3 = (TextView) findViewById(R.id.ter12);
+        q1 = (TextView) findViewById(R.id.qua0);
+        q2 = (TextView) findViewById(R.id.qua6);
+        q3 = (TextView) findViewById(R.id.qua12);
+        qi1 = (TextView) findViewById(R.id.qui0);
+        qi2 = (TextView) findViewById(R.id.qui6);
+        qi3 = (TextView) findViewById(R.id.qui12);
+        sx1 = (TextView) findViewById(R.id.sex0);
+        sx2 = (TextView) findViewById(R.id.sex6);
+        sx3 = (TextView) findViewById(R.id.sex12);
+        sa1 = (TextView) findViewById(R.id.sab0);
+        sa2 = (TextView) findViewById(R.id.sab6);
+        sa3 = (TextView) findViewById(R.id.sab12);
+        d1 = (TextView) findViewById(R.id.dom0);
+        d2 = (TextView) findViewById(R.id.dom6);
+        d3 = (TextView) findViewById(R.id.dom12);
+
+
+
 /*
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +95,218 @@ public class horario_psicologo extends AppCompatActivity implements NavigationVi
         NavigationUI.setupWithNavController(navigationView, navController);*/
         // myDialog2 = new Dialog(this);
 
+        Horario horario = new Horario();
+        horario.execute();
+
+    }
+    private class Horario extends AsyncTask<String, String, String>{
+        String msg = "Horário não encontrado";
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(horario_psicologo.this, "Sincronizar", "Há procura do horário", true);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (folga.equals("Segunda")){
+                s1.setText("Folga");
+                s2.setText("Folga");
+                s3.setText("Folga");
+                t1.setText(inicio);
+                q1.setText(inicio);
+                qi1.setText(inicio);
+                sx1.setText(inicio);
+                sa1.setText(inicio);
+                d1.setText(inicio);
+                t2.setText(fim);
+                q2.setText(fim);
+                qi2.setText(fim);
+                sx2.setText(fim);
+                sa2.setText(fim);
+                d2.setText(fim);
+                t3.setText(almoco);
+                q3.setText(almoco);
+                qi3.setText(almoco);
+                sx3.setText(almoco);
+                sa3.setText(almoco);
+                d3.setText(almoco);
+            }
+            if (folga.equals("Terça")){
+                t1.setText("Folga");
+                t2.setText("Folga");
+                t3.setText("Folga");
+                s1.setText(inicio);
+                q1.setText(inicio);
+                qi1.setText(inicio);
+                sx1.setText(inicio);
+                sa1.setText(inicio);
+                d1.setText(inicio);
+                s2.setText(fim);
+                q2.setText(fim);
+                qi2.setText(fim);
+                sx2.setText(fim);
+                sa2.setText(fim);
+                d2.setText(fim);
+                s3.setText(almoco);
+                q3.setText(almoco);
+                qi3.setText(almoco);
+                sx3.setText(almoco);
+                sa3.setText(almoco);
+                d3.setText(almoco);
+
+            }
+            if (folga.equals("Quarta")){
+                q1.setText("Folga");
+                q2.setText("Folga");
+                q3.setText("Folga");
+                t1.setText(inicio);
+                s1.setText(inicio);
+                qi1.setText(inicio);
+                sx1.setText(inicio);
+                sa1.setText(inicio);
+                d1.setText(inicio);
+                t2.setText(fim);
+                s2.setText(fim);
+                qi2.setText(fim);
+                sx2.setText(fim);
+                sa2.setText(fim);
+                d2.setText(fim);
+                t3.setText(almoco);
+                s3.setText(almoco);
+                qi3.setText(almoco);
+                sx3.setText(almoco);
+                sa3.setText(almoco);
+                d3.setText(almoco);
+            }
+            if (folga.equals("Quinta")){
+                qi1.setText("Folga");
+                qi2.setText("Folga");
+                qi3.setText("Folga");
+                t1.setText(inicio);
+                s1.setText(inicio);
+                q1.setText(inicio);
+                sx1.setText(inicio);
+                sa1.setText(inicio);
+                d1.setText(inicio);
+                t2.setText(fim);
+                s2.setText(fim);
+                q2.setText(fim);
+                sx2.setText(fim);
+                sa2.setText(fim);
+                d2.setText(fim);
+                t3.setText(almoco);
+                s3.setText(almoco);
+                q3.setText(almoco);
+                sx3.setText(almoco);
+                sa3.setText(almoco);
+                d3.setText(almoco);
+            }
+            if (folga.equals("Sexta")){
+                sx1.setText("Folga");
+                sx2.setText("Folga");
+                sx3.setText("Folga");
+                t1.setText(inicio);
+                s1.setText(inicio);
+                q1.setText(inicio);
+                qi1.setText(inicio);
+                sa1.setText(inicio);
+                d1.setText(inicio);
+                t2.setText(fim);
+                s2.setText(fim);
+                q2.setText(fim);
+                qi2.setText(fim);
+                sa2.setText(fim);
+                d2.setText(fim);
+                t3.setText(almoco);
+                s3.setText(almoco);
+                q3.setText(almoco);
+                qi3.setText(almoco);
+                sa3.setText(almoco);
+                d3.setText(almoco);
+
+            }
+            if (folga.equals("Sabado")){
+                sa1.setText("Folga");
+                sa2.setText("Folga");
+                sa3.setText("Folga");
+                t1.setText(inicio);
+                s1.setText(inicio);
+                q1.setText(inicio);
+                qi1.setText(inicio);
+                sx1.setText(inicio);
+                d1.setText(inicio);
+                t2.setText(fim);
+                s2.setText(fim);
+                q2.setText(fim);
+                qi2.setText(fim);
+                sx2.setText(fim);
+                d2.setText(fim);
+                t3.setText(almoco);
+                s3.setText(almoco);
+                q3.setText(almoco);
+                qi3.setText(almoco);
+                sx3.setText(almoco);
+                d3.setText(almoco);
+
+            }
+            if (folga.equals("Domingo")){
+                d1.setText("Folga");
+                d2.setText("Folga");
+                d3.setText("Folga");
+                t1.setText(inicio);
+                s1.setText(inicio);
+                q1.setText(inicio);
+                qi1.setText(inicio);
+                sa1.setText(inicio);
+                sx1.setText(inicio);
+                t2.setText(fim);
+                s2.setText(fim);
+                q2.setText(fim);
+                qi2.setText(fim);
+                sa2.setText(fim);
+                sx2.setText(fim);
+                t3.setText(almoco);
+                s3.setText(almoco);
+                q3.setText(almoco);
+                qi3.setText(almoco);
+                sa3.setText(almoco);
+                sx3.setText(almoco);
+            }
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null){
+
+                }else {
+                    String query = "SELECT idSchedule FROM Profile WHERE scan like '"+MainActivity.scanValor+"'";
+                    Statement statement = connection.createStatement();
+                    ResultSet rs = statement.executeQuery(query);
+                    while (rs.next()) {
+                        tipoHor = rs.getInt("idSchedule");
+                    }
+                    String query1 = "Select Entrada, Saida, Almoco, Folga from Schedule where idSchedule like '"+tipoHor+"'";
+                    ResultSet resultSet = statement.executeQuery(query1);
+                    while (resultSet.next()){
+                        inicio = resultSet.getString("Entrada");
+                        fim = resultSet.getString("Saida");
+                        almoco = resultSet.getString("Almoco");
+                        folga = resultSet.getString("Folga");
+                    }
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
     }
 
 
