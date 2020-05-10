@@ -162,10 +162,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         String sqlid = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and numero_recluso like ?";
         String sqlwing = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and wing like ?";
         String sqlfloor = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and floor like ?";
-        String itemText = (String)jComboP.getSelectedItem( );
+        String itemText = (String) jComboP.getSelectedItem();
         if ("Nome".equals(itemText)) {
-        try {
-            if (jTextField1.getText().matches("^[0-9]+$")) {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
                 String user = "suddenalertuser";
@@ -176,27 +175,13 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 pst.setString(1, jTextField1.getText() + "%");
                 rs = pst.executeQuery();
                 jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
-
-            } else {
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-                String user = "suddenalertuser";
-                String pass = "Suddenalert.0";
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                pst = con.prepareStatement(sql);
-                pst.setString(1, jTextField1.getText() + "%");
-                rs = pst.executeQuery();
-                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
         }
-    }
-     
-         if ("Nº do recluso".equals(itemText)) {
-        try {
-            if (jTextField1.getText().matches("^[0-9]+$")) {
+
+        if ("Nº do recluso".equals(itemText)) {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
                 String user = "suddenalertuser";
@@ -207,27 +192,13 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 pst.setString(1, jTextField1.getText() + "%");
                 rs = pst.executeQuery();
                 jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
-
-            } else {
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-                String user = "suddenalertuser";
-                String pass = "Suddenalert.0";
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                pst = con.prepareStatement(sqlid);
-                pst.setString(1, jTextField1.getText() + "%");
-                rs = pst.executeQuery();
-                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
         }
-    }
-    
-     if ("Ala".equals(itemText)) {
-        try {
-            if (jTextField1.getText().matches("^[0-9]+$")) {
+
+        if ("Ala".equals(itemText)) {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
                 String user = "suddenalertuser";
@@ -238,26 +209,12 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 pst.setString(1, jTextField1.getText() + "%");
                 rs = pst.executeQuery();
                 jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
-
-            } else {
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-                String user = "suddenalertuser";
-                String pass = "Suddenalert.0";
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                pst = con.prepareStatement(sqlwing);
-                pst.setString(1, jTextField1.getText() + "%");
-                rs = pst.executeQuery();
-                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
         }
-    }
-             if ("Piso".equals(itemText)) {
-        try {
-            if (jTextField1.getText().matches("^[0-9]+$")) {
+        if ("Piso".equals(itemText)) {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
                 String user = "suddenalertuser";
@@ -268,24 +225,10 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 pst.setString(1, jTextField1.getText() + "%");
                 rs = pst.executeQuery();
                 jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
-
-            } else {
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-                String user = "suddenalertuser";
-                String pass = "Suddenalert.0";
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                pst = con.prepareStatement(sqlfloor);
-                pst.setString(1, jTextField1.getText() + "%");
-                rs = pst.executeQuery();
-                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
         }
-    }
-    
     }
 
 
@@ -362,6 +305,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 return canEdit [columnIndex];
             }
         });
+        jTable_Display_Reclusos.setRowHeight(20);
         jTable_Display_Reclusos.setSelectionBackground(new java.awt.Color(255, 102, 102));
         jTable_Display_Reclusos.setVerifyInputWhenFocusTarget(false);
         jTable_Display_Reclusos.addMouseListener(new java.awt.event.MouseAdapter() {
