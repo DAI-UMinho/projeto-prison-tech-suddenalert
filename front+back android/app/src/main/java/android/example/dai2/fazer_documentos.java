@@ -143,4 +143,9 @@ public class fazer_documentos extends AppCompatActivity {
             return msg;
         }
     }
+    public void rbclick(View v){
+        int radiobuttonid = gravidade.getCheckedRadioButtonId();
+        RadioButton rb = (RadioButton) findViewById(radiobuttonid);
+        Toast.makeText(getBaseContext(), rb.getText(), Toast.LENGTH_SHORT).show();
+    }
 }

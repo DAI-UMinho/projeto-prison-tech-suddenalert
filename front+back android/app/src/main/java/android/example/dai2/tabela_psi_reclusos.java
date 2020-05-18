@@ -272,8 +272,12 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
                 viewHolder.nome.setText(recluseList.get(position).getNomeRec() + "");
                 viewHolder.bumeroRec.setText(recluseList.get(position).getNumero_rec() + "");
                 byte[] img = recluseList.get(position).getImg();
-                Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
-                viewHolder.imageView.setImageBitmap(bitmap);
+                try {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                    viewHolder.imageView.setImageBitmap(bitmap);
+                } catch (Exception e){
+
+                }
                 return rowView;
 
 

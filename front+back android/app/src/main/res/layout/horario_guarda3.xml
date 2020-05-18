@@ -65,7 +65,7 @@
                         android:background="#FFFFFF"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:text="0h-6h"
+                        android:text="Entrada"
                         android:textColor="#000000" />
 
 
@@ -75,7 +75,7 @@
                         android:background="#e5e5e5"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:text="6h-12h"
+                        android:text="Saída"
                         android:textColor="#000000" />
 
 
@@ -85,7 +85,7 @@
                         android:background="#f6f6f6"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:text="12h-18h"
+                        android:text="Almoço"
                         android:textColor="#000000" />
 
 

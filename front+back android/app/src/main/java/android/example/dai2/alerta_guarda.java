@@ -37,6 +37,7 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
     private boolean sucess;
     RadioGroup gravidade;
     RadioButton rb;
+    private int estatuto = MainActivity.estatuto;
 
 
 
@@ -87,7 +88,7 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
             criarRelatorio.execute();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             }
             catch (Exception e){
                 System.out.print("erro");
@@ -96,7 +97,12 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
             if (sucess == true) {
                 Toast.makeText(this, "Situação criada com sucesso!", Toast.LENGTH_SHORT).show();
                 numeroR.setText("");
-                startActivity(new Intent(this, android.example.dai2.inicio_guarda.class));
+                if (estatuto == 1) {
+                    startActivity(new Intent(this, android.example.dai2.inicio_guarda.class));
+                }
+                if (estatuto == 2){
+                    startActivity(new Intent(this, android.example.dai2.inicio_psicologo.class));
+                }
 
             } else {
                 Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
