@@ -15,6 +15,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,8 @@ import java.util.List;
 public class adicionar_horario extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
     EditText email;
+    RadioGroup rg;
+    RadioButton rb;
 
 
     @Override
@@ -48,6 +52,8 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         email= (EditText) findViewById(R.id.emailHor);
+        rg = (RadioGroup) findViewById(R.id.folga);
+        rb = (RadioButton) findViewById(R.id.segunda);
 /*
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -308,10 +314,16 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
     }
 
 
+
     public void entrare(View v) {
         startActivity(new Intent(this, Main3Activity.class));
     }
 
+    public void rbclick(View v){
+        int radiobuttonid = rg.getCheckedRadioButtonId();
+        RadioButton rb = (RadioButton) findViewById(radiobuttonid);
+        Toast.makeText(getBaseContext(), rb.getText(), Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
