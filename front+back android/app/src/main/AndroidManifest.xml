@@ -60,6 +60,10 @@
             android:label="@string/title_inicio_guarda"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".adicionar_horario"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".perfil_guarda"
             android:label="@string/title_inicio_guarda"
             android:theme="@style/AppTheme.NoActionBar" />
