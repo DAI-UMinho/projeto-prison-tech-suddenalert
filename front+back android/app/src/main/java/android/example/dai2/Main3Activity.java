@@ -96,7 +96,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
                 return false;
             }
         });*/
-        /*Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -107,7 +107,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);*/
+        navigationView.setNavigationItemSelectedListener(this);
         btnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,9 +173,15 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
 
             if (sucess == true) {
                 Toast.makeText(this, "Entidade criada com sucesso!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, android.example.dai2.inicio_diretor.class));
+                if(tipo.equals("Guarda")){
 
-            } else {
+                    startActivity(new Intent(this, android.example.dai2.tabela_guarda.class));
+
+                }
+                else {                startActivity(new Intent(this, android.example.dai2.tabela_psicologo.class));
+                }
+            }
+               else {
                 Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
             }
         }
