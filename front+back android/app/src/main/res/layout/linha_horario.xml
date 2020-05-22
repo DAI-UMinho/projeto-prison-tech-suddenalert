@@ -14,10 +14,9 @@
         tools:layout_editor_absoluteY="-2dp">
 
         <LinearLayout
-            android:layout_width="219dp"
+            android:layout_width="333dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/nomeHor"
@@ -31,6 +30,19 @@
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/numHor"
+                android:layout_width="112dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:text="Número"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -43,13 +55,17 @@
             tools:layout_editor_absoluteY="-2dp">
 
 
-            <ImageView
-                android:id="@+id/horario"
-                android:layout_width="60dp"
-                android:layout_height="39dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/horarios_foreground" />
+            <Button
+                android:id="@+id/button"
+                android:layout_width="99dp"
+                android:layout_height="62dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:onClick="verHorario"
+                android:text="Ver mais"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
     </LinearLayout>
