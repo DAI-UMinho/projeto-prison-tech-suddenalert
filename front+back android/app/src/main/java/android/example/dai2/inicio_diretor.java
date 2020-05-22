@@ -86,10 +86,12 @@ public class inicio_diretor extends AppCompatActivity
         TextView txtclose;
         Button listahor;
         Button meuhor;
+        Button addhor;
         myDialog.setContentView(R.layout.horariospopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         listahor = (Button) myDialog.findViewById(R.id.listahor);
         meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+        addhor = (Button) myDialog.findViewById(R.id.addhor);
         listahor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +102,12 @@ public class inicio_diretor extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(inicio_diretor.this, horario_diretor.class));
+            }
+        });
+        addhor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_diretor.this, adicionar_horario.class));
             }
         });
         txtclose.setOnClickListener(new View.OnClickListener() {

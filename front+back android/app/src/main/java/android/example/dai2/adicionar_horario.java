@@ -31,27 +31,18 @@ import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class tabela_horario extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class adicionar_horario extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
-    public static ArrayList<Entidades> entidadesArrayList;
-    private SyncDataPsico.MyAppAdapter myAppAdapter;
-    private ListView listView;
-    private boolean sucess = false;
-    private int posicao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tabela_horario);
-        listView = (ListView) findViewById(R.id.lvHor);
-        myDialog = new Dialog(this);
-
-        entidadesArrayList = new ArrayList<Entidades>();
+        setContentView(R.layout.adicionar_horario);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 /*
@@ -74,8 +65,7 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        final SyncDataPsico syncDataPsico = new SyncDataPsico();
-        syncDataPsico.execute();
+
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -130,7 +120,7 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Intent intent = new Intent(tabela_horario.this,inicio_diretor.class);
+            Intent intent = new Intent(adicionar_horario.this,inicio_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
@@ -143,13 +133,13 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(tabela_horario.this, tabela_horario.class));
+                    startActivity(new Intent(adicionar_horario.this, tabela_horario.class));
                 }
             });
             meuhor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(tabela_horario.this, horario_diretor.class));
+                    startActivity(new Intent(adicionar_horario.this, horario_diretor.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -170,13 +160,13 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
             listarel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(tabela_horario.this, documentos_diretor.class));
+                    startActivity(new Intent(adicionar_horario.this, documentos_diretor.class));
                 }
             });
             his.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(tabela_horario.this, historico.class));
+                    startActivity(new Intent(adicionar_horario.this, historico.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -209,7 +199,7 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
             registo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(tabela_horario.this, Main3Activity.class));
+                    startActivity(new Intent(adicionar_horario.this, Main3Activity.class));
                 }
             });
             myDialog.show();
@@ -224,13 +214,13 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
             listarec.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(tabela_horario.this, tabela_reclusos.class));
+                    startActivity(new Intent(adicionar_horario.this, tabela_reclusos.class));
                 }
             });
             reg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(tabela_horario.this, Registar_Reclusos.class));
+                    startActivity(new Intent(adicionar_horario.this, Registar_Reclusos.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -257,13 +247,13 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
         guardas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(tabela_horario.this, tabela_guarda.class));
+                startActivity(new Intent(adicionar_horario.this, tabela_guarda.class));
             }
         });
         psicologos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(tabela_horario.this, tabela_psicologo.class));
+                startActivity(new Intent(adicionar_horario.this, tabela_psicologo.class));
             }
         });
         txtclose.setOnClickListener(new View.OnClickListener() {
@@ -324,127 +314,5 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
 
     }
 
-    private class SyncDataPsico extends AsyncTask<String, String, String> {
-        ProgressDialog progress;
-        String msg = "Internet/DB_Connection turn un error";
 
-        @Override
-        protected void onPreExecute() {
-            progress = ProgressDialog.show(tabela_horario.this, "Synchronising", "ListView Loading wait...", true);
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                System.out.println("1");
-                Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
-                System.out.println("2");
-                if (conn == null) {
-                    sucess = false;
-                } else {
-                    String query = "SELECT name, email, points, scan, idschedule FROM Profile WHERE id_type like 2 AND deleted like 0";
-                    Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
-                    if (rs != null) {
-                        while (rs.next()) {
-                            try {
-                                System.out.println("3");
-                                entidadesArrayList.add(new Entidades(rs.getString("name"), rs.getString("email"), rs.getString("scan"), rs.getString("points")));
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                        msg = "Found";
-                        sucess = true;
-                    } else {
-                        msg = "No Data Found";
-                        sucess = false;
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Writer writer = new StringWriter();
-                e.printStackTrace(new PrintWriter(writer));
-                msg = writer.toString();
-                sucess = false;
-            }
-            return msg;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            progress.dismiss();
-            Toast.makeText(tabela_horario.this, msg + "", Toast.LENGTH_LONG).show();
-            if (sucess == false) {
-            } else {
-                try {
-                    myAppAdapter = new MyAppAdapter(entidadesArrayList, tabela_horario.this);
-                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-                    listView.setAdapter(myAppAdapter);
-                } catch (Exception ex) {
-
-                }
-            }
-        }
-
-        public class MyAppAdapter extends BaseAdapter {
-            public class ViewHolder {
-                TextView nomeHor;
-                TextView numHor;
-            }
-
-            public List<Entidades> entidadesList;
-            public Context context;
-            ArrayList<Entidades> arrayList;
-
-            public MyAppAdapter(List<Entidades> entidadesList, Context context) {
-                this.entidadesList = entidadesList;
-                this.context = context;
-                arrayList = new ArrayList<Entidades>();
-                arrayList.addAll(entidadesList);
-            }
-
-            @Override
-            public int getCount() {
-                return entidadesList.size();
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return position;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View rowView = convertView;
-                ViewHolder viewHolder = null;
-                if (rowView == null) {
-                    LayoutInflater inflater = getLayoutInflater();
-                    rowView = inflater.inflate(R.layout.linha_horario, parent, false);
-                    viewHolder = new ViewHolder();
-                    viewHolder.nomeHor = (TextView) rowView.findViewById(R.id.nomeHor);
-                    viewHolder.numHor = (TextView) rowView.findViewById(R.id.numHor);
-                    //viewHolder.email = (TextView) rowView.findViewById(R.id.email);
-                    rowView.setTag(viewHolder);
-                } else {
-                    viewHolder = (ViewHolder) convertView.getTag();
-                }
-                viewHolder.nomeHor.setText(entidadesList.get(position).getNome());
-   // ----------------> ir buscar o numero do horario  viewHolder.numHor.setText(entidadesList.get(position).);
-                //  viewHolder.email.setText(entidadesList.get(position).getEmail());
-
-                return rowView;
-            }
-        }
-    }
-    //verHorario de cada entidade
-    public void verHorario(View v){
-        startActivity(new Intent(this, ver_horario.class));
-    }
 }
