@@ -343,7 +343,7 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT name, email, points, scan FROM Profile WHERE id_type like 2 AND deleted like 0";
+                    String query = "SELECT name, email, points, scan, idschedule FROM Profile WHERE id_type like 2 AND deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
@@ -391,6 +391,7 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
         public class MyAppAdapter extends BaseAdapter {
             public class ViewHolder {
                 TextView nomeHor;
+                TextView numHor;
             }
 
             public List<Entidades> entidadesList;
@@ -428,16 +429,22 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
                     rowView = inflater.inflate(R.layout.linha_horario, parent, false);
                     viewHolder = new ViewHolder();
                     viewHolder.nomeHor = (TextView) rowView.findViewById(R.id.nomeHor);
+                    viewHolder.numHor = (TextView) rowView.findViewById(R.id.numHor);
                     //viewHolder.email = (TextView) rowView.findViewById(R.id.email);
                     rowView.setTag(viewHolder);
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
                 viewHolder.nomeHor.setText(entidadesList.get(position).getNome());
+   // ----------------> ir buscar o numero do horario  viewHolder.numHor.setText(entidadesList.get(position).);
                 //  viewHolder.email.setText(entidadesList.get(position).getEmail());
 
                 return rowView;
             }
         }
+    }
+    //verHorario de cada entidade
+    public void verHorario(View v){
+        startActivity(new Intent(this, ver_horario.class));
     }
 }
