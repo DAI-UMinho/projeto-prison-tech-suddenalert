@@ -226,12 +226,30 @@
                 <Component class="javax.swing.JTable" name="jTable_h">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="7">
-                        <Column editable="false" title="0h-6h" type="java.lang.String"/>
-                        <Column editable="false" title="6h-12h" type="java.lang.String"/>
-                        <Column editable="false" title="12h-18h" type="java.lang.String"/>
-                        <Column editable="false" title="18h-24h" type="java.lang.String"/>
+                      <Table columnCount="3" rowCount="7">
+                        <Column editable="false" title="Entrada" type="java.lang.String"/>
+                        <Column editable="false" title="Sa&#xed;da" type="java.lang.String"/>
+                        <Column editable="false" title="Almo&#xe7;o" type="java.lang.String"/>
                       </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="intercellSpacing" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
