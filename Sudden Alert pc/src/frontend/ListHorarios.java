@@ -13,6 +13,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +31,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
     Connection con = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+    
 
     /**
      * Creates new form Reclusos
@@ -51,25 +53,41 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         jTable_hor.getTableHeader().setBackground(new Color(176, 2, 37));
         jTable_hor.getTableHeader().setForeground(new Color(255, 255, 255));
         jTable_hor.setRowHeight(24);
+        
+        show_Guarda();
     }
-
-    /*private void pesquisar() {
-        String sql = "select name as Nome, email as Email from Profile where deleted='0' and id_type='2' and id_type='1' and name like ?";
+        public ArrayList<Entidade> guardaList() {
+        ArrayList<Entidade> guardasList = new ArrayList<>();
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
-            java.sql.Connection con = DriverManager.getConnection(url, user, pass);
-
-            pst = con.prepareStatement(sql);
-            pst.setString(1, jTextField1.getText() + "%");
-            rs = pst.executeQuery();
-            jTable_hor.setModel(DbUtils.resultSetToTableModel(rs));
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1 = "SELECT * FROM Profile where deleted='0' and id_type='1'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query1);
+            Entidade guarda;
+            while (rs.next()) {
+                guarda = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+                guardasList.add(guarda);
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-    }*/
+        return guardasList;
+    }
+    public void show_Guarda() {
+        ArrayList<Entidade> list = guardaList();
+        DefaultTableModel model = (DefaultTableModel) jTable_hor.getModel();
+        Object[] row = new Object[2];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getNome();
+            row[1] = list.get(i).getEmail();
+            
+            model.addRow(row);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
