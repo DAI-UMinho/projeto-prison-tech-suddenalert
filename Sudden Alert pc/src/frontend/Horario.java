@@ -5,6 +5,9 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -12,8 +15,11 @@ import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -21,19 +27,261 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class Horario extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
-    
+    private int tipoHor;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    String inicio, folga, almoco, fim;
     /**
      * Creates new form Reclusos
      */
     public Horario() {
         initComponents();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         setIcon();
         jTable_h.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,15));
         jTable_h.getTableHeader().setOpaque(false);
         jTable_h.getTableHeader().setBackground(new Color(176,2,37));
         jTable_h.getTableHeader().setForeground(new Color(255,255,255));
         jTable_h.setRowHeight(61);
+        show_Horario();
     }
+     public void show_Horario(){
+             
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1 = "SELECT idSchedule FROM Profile WHERE  scan='10'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query1);
+            Entidade psicologo;
+            while (rs.next()) {
+                tipoHor = rs.getInt("idSchedule");
+                System.out.println(tipoHor);
+                
+            }
+            String query2 = "Select Entrada, Saida, Almoco, Folga from Schedule where idSchedule like '"+tipoHor+"'";
+            Statement st2 = con.createStatement();
+            ResultSet rs2 = st.executeQuery(query2);
+            while (rs2.next()) {
+               inicio = rs2.getString("Entrada");
+               fim = rs2.getString("Saida");
+               almoco = rs2.getString("Almoco");
+               folga = rs2.getString("Folga");
+              }
+            if(folga.equals("Segunda")){
+            jTable_h.getModel().setValueAt("Folga", 0, 0);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            
+            }
+            else if (folga.equals("Terça")){
+            jTable_h.getModel().setValueAt("Folga", 1, 0);
+            
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Quarta")){
+            jTable_h.getModel().setValueAt("Folga", 2, 0);
+            
+            jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Quinta")){
+            jTable_h.getModel().setValueAt("Folga", 3, 0);
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Sexta")){
+            jTable_h.getModel().setValueAt("Folga", 4, 0);
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Sabado")){
+            jTable_h.getModel().setValueAt("Folga", 5, 0);
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Domingo")){
+            jTable_h.getModel().setValueAt("Folga", 6, 0);
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            }
+            
+               
+           
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+    }
+    
+
+
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,23 +362,23 @@ public class Horario extends javax.swing.JFrame implements Serializable {
 
         jTable_h.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "0h-6h", "6h-12h", "12h-18h", "18h-24h"
+                "Entrada", "Saída", "Almoço"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
