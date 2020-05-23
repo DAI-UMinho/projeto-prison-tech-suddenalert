@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +34,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class documentos_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
@@ -69,8 +74,43 @@ public class documentos_guarda extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
+        getMenuInflater().inflate(R.menu.search, menu);
+        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        MenuItem sort = menu.findItem(R.id.filter);
+        MenuItem numero = menu.findItem(R.id.numero);
+        sort.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList();
+                return false;
+            }
+        });
+        numero.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList2();
+                return false;
+            }
+        });
+        SearchView searchView = (SearchView)myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)){
+                    myAppAdapter.filter("");
+                    listView.clearTextFilter();
+                }
+                else{
+                    myAppAdapter.filter(newText);
+                }
+                return false;
+            }
+        });
         return true;
     }
 
@@ -326,6 +366,44 @@ public class documentos_guarda extends AppCompatActivity implements NavigationVi
                 // viewHolder.gravidade.setText(reportList.get(position).getgravidade());
                 return rowView;
 
+            }
+            public void filter(String charText) {
+                charText = charText.toLowerCase(Locale.getDefault());
+                reportList.clear();
+                if(charText.length()==0){
+                    reportList.addAll(arrayList);
+                }
+                else{
+                    for (Documentos nome : arrayList ){
+                        if(nome.getNomeRel().toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            reportList.add(nome);
+                        }
+                    }
+                    for (Documentos data : arrayList ){
+                        if(data.getData().toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            reportList.add(data);
+                        }
+                    }
+                }
+                notifyDataSetChanged();
+            }
+            private void sortArrayList(){
+                Collections.sort(documentosArrayList, new Comparator<Documentos>() {
+                    @Override
+                    public int compare(Documentos o1, Documentos o2) {
+                        return o1.getNomeRel().compareTo(o2.getNomeRel());                    }
+                });
+                myAppAdapter.notifyDataSetChanged();
+            }
+            private void sortArrayList2(){
+                Collections.sort(documentosArrayList, new Comparator<Documentos>() {
+                    @Override
+                    public int compare(Documentos o1, Documentos o2) {
+                        return o1.getData().compareTo(o2.getData());                    }
+                });
+                myAppAdapter.notifyDataSetChanged();
             }
         }
     }
