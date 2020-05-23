@@ -421,7 +421,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
         }
     }
             public void eliminarPsi(View view){
-                motivoE = motivo.getText().toString().trim();
+              //  motivoE = motivo.getText().toString().trim();
                 EliminarPsicologo eliminarPsi =new EliminarPsicologo();
                 eliminarPsi.execute();
                 try {
@@ -447,7 +447,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
                             String query = "UPDATE Profile SET deleted='1' where scan = '"+ entidadesArrayList.get(posicao).getScan()+ "'";
                             Statement preparedStatement = connection.createStatement();
                             preparedStatement.executeUpdate(query);
-                            String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', '"+motivoE+"', '"+entidadesArrayList.get(posicao).getScan()+"', 'Psicólogo');";
+                            String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', '', '"+entidadesArrayList.get(posicao).getScan()+"', 'Psicólogo');";
                             Statement statement = connection.createStatement();
                             statement.executeUpdate(query2);
                         }

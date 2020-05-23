@@ -43,7 +43,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:text="Email"
+                android:text="Scan"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -55,8 +55,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="Insira aqui o Scan"
                 android:inputType="textPersonName"
-                android:text="Insira aqui o email"
                 android:textAlignment="center"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -92,8 +92,8 @@
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Insira aqui a hora"
+                    android:inputType="time"
+                    android:text=":"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -123,8 +123,8 @@
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Insira aqui a hora"
+                    android:inputType="time"
+                    android:text=":"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -148,14 +148,14 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/emailHor2"
+                    android:id="@+id/almocoHor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Insira aqui a hora"
+                    android:inputType="time"
+                    android:text=":"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -164,7 +164,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="235dp"
             android:orientation="vertical">
 
             <TextView
@@ -178,9 +178,9 @@
 
             <RadioGroup
                 android:id="@+id/folga"
-                android:layout_width="158dp"
-                android:layout_gravity="center"
-                android:layout_height="240dp">
+                android:layout_width="193dp"
+                android:layout_height="183dp"
+                android:layout_gravity="center">
 
                 <RadioButton
                     android:id="@+id/segunda"

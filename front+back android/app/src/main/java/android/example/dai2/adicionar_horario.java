@@ -1,20 +1,16 @@
 package android.example.dai2;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -28,21 +24,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
-public class adicionar_horario extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Adicionar_horario extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
-    EditText email;
+    EditText scan, entrada, saida, almoco;
     RadioGroup rg;
     RadioButton rb;
+    String Entrda, Saida, Almoco, Folga, Scan, tipo;
+    private boolean sucess;
+    private ImageView adicionar;
 
 
     @Override
@@ -51,9 +47,13 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.adicionar_horario);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        email= (EditText) findViewById(R.id.emailHor);
+        scan = (EditText) findViewById(R.id.emailHor);
+        entrada = (EditText) findViewById(R.id.horaentrada);
+        saida = (EditText) findViewById(R.id.horasaida);
+        almoco = (EditText) findViewById(R.id.almocoHor);
         rg = (RadioGroup) findViewById(R.id.folga);
         rb = (RadioButton) findViewById(R.id.segunda);
+        adicionar = (ImageView) findViewById(R.id.imageView17);
 /*
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,16 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        adicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    register();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
         // Passing each menu ID as a set of Ids because each
@@ -86,6 +95,144 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);*/
         // myDialog2 = new Dialog(this);
+
+    }
+
+
+    public boolean validate() throws ParseException {
+        boolean valid = true;
+        if (Scan.isEmpty()){
+            scan.setError("Introduz um Nome");
+            valid = false;
+        }
+        if (Entrda.isEmpty() | Entrda.equals(":")){
+            entrada.setError("Introduz uma hora Entrada");
+            valid = false;
+        }
+        if (Saida.isEmpty() | Saida.equals(":")){
+            saida.setError("Introduz uma hora de Saida");
+            valid = false;
+        }
+        if (Almoco.isEmpty() | Almoco.equals(":")){
+            rb.setError("Introduz uma hora de Almoço");
+            valid = false;
+        }
+        int radiobuttonid = rg.getCheckedRadioButtonId();
+        System.out.println(radiobuttonid);
+        if (radiobuttonid == -1){
+            rb.setError("Selecione o dia de Folga");
+            valid = false;
+        } else {
+            RadioButton rb = (RadioButton) findViewById(radiobuttonid);
+            tipo = rb.getText().toString().trim();
+            System.out.println(tipo);
+            if (tipo.equals("Segunda-feira")) {
+                Folga = "Segunda";
+            }
+            if (tipo.equals("Terça-feira")) {
+                Folga = "Terça";
+            }
+            if (tipo.equals("Quarta-feira")) {
+                Folga = "Quarta";
+            }
+            if (tipo.equals("Quinta-feira")) {
+                Folga = "Quinta";
+            }
+            if (tipo.equals("Sexta-feira")) {
+                Folga = "Sexta";
+            }
+            if (tipo.equals("Sábado")) {
+                Folga = "Sabado";
+            }
+            if (tipo.equals("Domingo")) {
+                Folga = "Domingo";
+            }
+        }
+        return valid;
+    }
+
+    public void register() throws ParseException {
+        intialize();
+        if (!validate()) {
+            Toast.makeText(this, "Campos em falta", Toast.LENGTH_LONG).show();
+        } else {
+            AdicionarHor adicionarHor = new AdicionarHor();
+            adicionarHor.execute();
+            try {
+                Thread.sleep(2000);
+            } catch (Exception e) {
+                System.out.print("erro");
+            }
+
+            if (sucess == true) {
+                Toast.makeText(this, "Horário criado com sucesso!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, android.example.dai2.inicio_diretor.class));
+
+            } else {
+                Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void intialize() {
+        Entrda = entrada.getText().toString().trim();
+        Saida = saida.getText().toString().trim();
+        Scan = scan.getText().toString().trim();
+        Almoco = almoco.getText().toString().trim();
+
+    }
+    private class AdicionarHor extends AsyncTask<String,String,String> {
+        String msg = "";
+        int valor = 0, idHor = 0;
+
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (conn == null){
+                    msg = "Connection goes wrong";
+                    sucess = false;
+                } else {
+                    String query1 = "select count(1) from Schedule where Entrada like '"+Entrda+"'and  Saida like '"+Saida+"' and Almoco like '"+Almoco+"'and Folga like '"+Folga+"';";
+                    Statement statement1 = conn.createStatement();
+                    ResultSet resultSet = statement1.executeQuery(query1);
+                    while (resultSet.next()){
+                        valor = resultSet.getInt("COUNT(1)");
+                    }
+                    if(valor == 0) {
+                        String query = "insert into Schedule (`Entrada`, `Saida`, `Almoco`, `Folga`) Values ('" + Entrda + "', '" + Saida + "', '" + Almoco + "', '" + Folga + "');";
+                        Statement stmt = conn.createStatement();
+                        System.out.println(query);
+                        stmt.executeUpdate(query);
+                    }
+                        String query2 = "select idSchedule from Schedule where Entrada like '"+Entrda+"'and  Saida like '"+Saida+"' and Almoco like '"+Almoco+"'and Folga like '"+Folga+"';";
+                        System.out.println(query2);
+                        Statement statement = conn.createStatement();
+                        ResultSet resultSet1 = statement.executeQuery(query2);
+                        System.out.println(resultSet1);
+                        while (resultSet1.next()){
+                            idHor = resultSet1.getInt("idSchedule");
+                        }
+                        String query3 = "update suddenalert.Profile set idSchedule='"+idHor+"' where scan  like '"+Scan+"'";
+                        Statement statement2 = conn.createStatement();
+                        statement2.executeUpdate(query3);
+                        msg = "Inserting Successfull!!!!";
+                        System.out.println("aqui");
+                        sucess = true;
+
+                }
+                conn.close();
+            } catch (Exception e){
+                msg = "Connection goes wrong";
+                e.printStackTrace();
+                sucess = false;
+            }
+            return msg;
+        }
+
 
     }
 
@@ -129,7 +276,7 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Intent intent = new Intent(adicionar_horario.this,inicio_diretor.class);
+            Intent intent = new Intent(Adicionar_horario.this,inicio_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
@@ -142,13 +289,13 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(adicionar_horario.this, tabela_horario.class));
+                    startActivity(new Intent(Adicionar_horario.this, tabela_horario.class));
                 }
             });
             meuhor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(adicionar_horario.this, horario_diretor.class));
+                    startActivity(new Intent(Adicionar_horario.this, horario_diretor.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -169,13 +316,13 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
             listarel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(adicionar_horario.this, documentos_diretor.class));
+                    startActivity(new Intent(Adicionar_horario.this, documentos_diretor.class));
                 }
             });
             his.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(adicionar_horario.this, historico.class));
+                    startActivity(new Intent(Adicionar_horario.this, historico.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +355,7 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
             registo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(adicionar_horario.this, Main3Activity.class));
+                    startActivity(new Intent(Adicionar_horario.this, Main3Activity.class));
                 }
             });
             myDialog.show();
@@ -223,13 +370,13 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
             listarec.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(adicionar_horario.this, tabela_reclusos.class));
+                    startActivity(new Intent(Adicionar_horario.this, tabela_reclusos.class));
                 }
             });
             reg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(adicionar_horario.this, Registar_Reclusos.class));
+                    startActivity(new Intent(Adicionar_horario.this, Registar_Reclusos.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -256,13 +403,13 @@ public class adicionar_horario extends AppCompatActivity implements NavigationVi
         guardas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(adicionar_horario.this, tabela_guarda.class));
+                startActivity(new Intent(Adicionar_horario.this, tabela_guarda.class));
             }
         });
         psicologos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(adicionar_horario.this, tabela_psicologo.class));
+                startActivity(new Intent(Adicionar_horario.this, tabela_psicologo.class));
             }
         });
         txtclose.setOnClickListener(new View.OnClickListener() {

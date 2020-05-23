@@ -107,7 +107,7 @@ public class inicio_diretor extends AppCompatActivity
         addhor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(inicio_diretor.this, adicionar_horario.class));
+                startActivity(new Intent(inicio_diretor.this, Adicionar_horario.class));
             }
         });
         txtclose.setOnClickListener(new View.OnClickListener() {

@@ -379,7 +379,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         }
     }
     public void eliminarGua(View view){
-        motivoE = motivo.getText().toString().trim();
+      //  motivoE = motivo.getText().toString().trim();
         EliminarGuarda eliminarGua  =new EliminarGuarda();
         eliminarGua.execute();
         try {
@@ -404,7 +404,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                     String query = "UPDATE Profile SET deleted='1' where scan = '"+ entidadesArrayList.get(posicao).getScan()+ "'";
                     Statement preparedStatement = connection.createStatement();
                     preparedStatement.executeUpdate(query);
-                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', '"+motivoE+"', '"+entidadesArrayList.get(posicao).getScan()+"', 'Guarda');";
+                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', '', '"+entidadesArrayList.get(posicao).getScan()+"', 'Guarda');";
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query2);
                 }
@@ -424,7 +424,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         eliminaGua.setContentView(R.layout.eliminar_g);
         txtclose = (TextView) eliminaGua.findViewById(R.id.txtclose);
         nomeGuarda = (TextView) eliminaGua.findViewById(R.id.nomeG);
-        motivo = (EditText) eliminaGua.findViewById(R.id.motivo);
+       // motivo = (EditText) eliminaGua.findViewById(R.id.motivo);
         eliminar = (ImageView) eliminaGua.findViewById(R.id.imageView20);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override

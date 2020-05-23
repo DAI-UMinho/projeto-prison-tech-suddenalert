@@ -66,7 +66,7 @@
                             android:background="#FFFFFF"
                             android:gravity="center"
                             android:padding="12dp"
-                            android:text="0h-6h"
+                            android:text="Entrada"
                             android:textColor="#000000" />
 
 
@@ -76,7 +76,7 @@
                             android:background="#e5e5e5"
                             android:gravity="center"
                             android:padding="12dp"
-                            android:text="6h-12h"
+                            android:text="Saída"
                             android:textColor="#000000" />
 
 
@@ -86,17 +86,7 @@
                             android:background="#f6f6f6"
                             android:gravity="center"
                             android:padding="12dp"
-                            android:text="12h-18h"
-                            android:textColor="#000000" />
-
-
-                        <TextView
-                            android:layout_width="95dp"
-                            android:layout_height="match_parent"
-                            android:background="#e5e5e5"
-                            android:gravity="center"
-                            android:padding="12dp"
-                            android:text="18h-24h"
+                            android:text="Almoço"
                             android:textColor="#000000" />
 
 
@@ -137,16 +127,6 @@
 
                         <TextView
                             android:id="@+id/seg12"
-                            android:layout_width="70dp"
-                            android:layout_height="90dp"
-                            android:background="#FFFFFF"
-                            android:gravity="center"
-                            android:padding="3dip"
-                            android:text=""
-                            android:textColor="#000000" />
-
-                        <TextView
-                            android:id="@+id/seg18"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
                             android:background="#FFFFFF"
@@ -199,16 +179,6 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <TextView
-                            android:id="@+id/ter18"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:background="#f4f4f4"
-                            android:gravity="center"
-                            android:padding="3dip"
-                            android:text=""
-                            android:textColor="#000000" />
-
                     </TableRow>
 
                     <TableRow>
@@ -244,16 +214,6 @@
 
                         <TextView
                             android:id="@+id/qua12"
-                            android:layout_width="70dp"
-                            android:layout_height="90dp"
-                            android:background="#FFFFFF"
-                            android:gravity="center"
-                            android:padding="3dip"
-                            android:text=""
-                            android:textColor="#000000" />
-
-                        <TextView
-                            android:id="@+id/qua18"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
                             android:background="#FFFFFF"
@@ -306,16 +266,6 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <TextView
-                            android:id="@+id/qui18"
-                            android:layout_width="70dp"
-                            android:layout_height="90dp"
-                            android:background="#f4f4f4"
-                            android:gravity="center"
-                            android:padding="3dip"
-                            android:text=""
-                            android:textColor="#000000" />
-
 
                     </TableRow>
 
@@ -360,15 +310,6 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <TextView
-                            android:id="@+id/sex18"
-                            android:layout_width="70dp"
-                            android:layout_height="90dp"
-                            android:background="#FFFFFF"
-                            android:gravity="center"
-                            android:padding="3dip"
-                            android:text=""
-                            android:textColor="#000000" />
                     </TableRow>
 
                     <TableRow>
@@ -413,15 +354,6 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <TextView
-                            android:id="@+id/sab18"
-                            android:layout_width="70dp"
-                            android:layout_height="90dp"
-                            android:background="#f4f4f4"
-                            android:gravity="center"
-                            android:padding="3dip"
-                            android:text=""
-                            android:textColor="#000000" />
                     </TableRow>
 
                     <TableRow>
@@ -465,15 +397,6 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <TextView
-                            android:id="@+id/dom18"
-                            android:layout_width="70dp"
-                            android:layout_height="90dp"
-                            android:background="#FFFFFF"
-                            android:gravity="center"
-                            android:padding="3dip"
-                            android:text=""
-                            android:textColor="#000000" />
                     </TableRow>
 
                 </TableLayout>
