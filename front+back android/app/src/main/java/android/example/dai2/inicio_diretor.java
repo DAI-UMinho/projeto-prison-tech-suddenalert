@@ -50,6 +50,14 @@ public class inicio_diretor extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main2, menu);
+        MenuItem ajuda = menu.findItem(R.id.ajuda);
+        ajuda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(new Intent(inicio_diretor.this, ajuda.class));
+                return false;
+            }
+        });
         return true;
     }
 
@@ -162,7 +170,7 @@ public class inicio_diretor extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
             return true;
         }
         return super.onOptionsItemSelected(item);

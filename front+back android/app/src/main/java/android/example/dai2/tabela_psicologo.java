@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +42,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class tabela_psicologo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog,eliminarPsi;
@@ -108,7 +113,35 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main2, menu);
+        getMenuInflater().inflate(R.menu.letras, menu);
+        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        MenuItem sort = menu.findItem(R.id.filter);
+        sort.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList();
+                return false;
+            }
+        });
+        SearchView searchView = (SearchView)myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)){
+                    myAppAdapter.filter("");
+                    listView.clearTextFilter();
+                }
+                else{
+                    myAppAdapter.filter(newText);
+                }
+                return false;
+            }
+        });
         return true;
     }
 
@@ -128,7 +161,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -418,6 +451,31 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
 
                 return rowView;
             }
+             public void filter(String charText) {
+                charText = charText.toLowerCase(Locale.getDefault());
+                entidadesList.clear();
+                if(charText.length()==0){
+                    entidadesList.addAll(arrayList);
+                }
+                else{
+                    for (Entidades nome : arrayList ){
+                        if(nome.getNome().toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            entidadesList.add(nome);
+                        }
+                    }
+                }
+                notifyDataSetChanged();
+            }
+            private void sortArrayList(){
+                Collections.sort(entidadesArrayList, new Comparator<Entidades>() {
+                    @Override
+                    public int compare(Entidades o1, Entidades o2) {
+                        return o1.getNome().compareTo(o2.getNome());                    }
+                });
+                myAppAdapter.notifyDataSetChanged();
+            }
+
         }
     }
             public void eliminarPsi(View view){

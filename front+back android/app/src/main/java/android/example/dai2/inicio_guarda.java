@@ -73,13 +73,14 @@ public class inicio_guarda extends AppCompatActivity implements NavigationView.O
 
     public void entrar (View v) {startActivity(new Intent(this, tabela_gua_reclusos.class));}
     public void entrarr (View v) {
-        startActivity(new Intent(this, tabela_meus_alertas.class));
+        startActivity(new Intent(this, documentos_guarda.class));
     }
     public void entrarhor (View v) { startActivity(new Intent(this, horario_guarda.class)); }
     public void entrarperfil (View v) {
         startActivity(new Intent(this, perfil_guarda.class));
     }
     public void entraralert (View v){startActivity(new Intent(this, alerta_guarda.class));}
+
 
 
     @Override
@@ -95,7 +96,7 @@ public class inicio_guarda extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
             return true;
         }
         return super.onOptionsItemSelected(item);

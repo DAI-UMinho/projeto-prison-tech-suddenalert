@@ -55,7 +55,7 @@ public class inicio_psicologo extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main2, menu);
         return true;
     }
-
+/*
     public void entrar (View v) {
         startActivity(new Intent(this, tabela_psi_reclusos.class));
     }
@@ -72,7 +72,7 @@ public class inicio_psicologo extends AppCompatActivity
         startActivity(new Intent(this, tabela_alert.class));
     }
 
-
+*/
 
     @Override
     public void onBackPressed(){
@@ -87,7 +87,7 @@ public class inicio_psicologo extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -154,6 +154,65 @@ public class inicio_psicologo extends AppCompatActivity
 
         startActivity(new Intent(this, MainActivity.class));
     }
+    public void entrarr (View v) {
+        TextView txtclose;
+        Button listarel;
+        Button fazer;
+        myDialog.setContentView(R.layout.relatoriospopup_psi);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        listarel = (Button) myDialog.findViewById(R.id.listarel);
+        fazer = (Button) myDialog.findViewById(R.id.fazer_relatorio);
+        listarel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_psicologo.this, documentos_diretor.class));
+            }
+        });
+        fazer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            startActivity(new Intent(inicio_psicologo.this, fazer_documento_psi.class));
+            }
+        });
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
+    }
+    public void entrarhor (View v) {
+        TextView txtclose;
+        Button listahor;
+        Button meuhor;
+        myDialog.setContentView(R.layout.horariospopup_psi);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        listahor = (Button) myDialog.findViewById(R.id.listahor);
+        meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+        listahor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_psicologo.this, tabela_horario.class));
+            }
+        });
+        meuhor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(inicio_psicologo.this, horario_diretor.class));
+            }
+        });
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
+    }
+    public void entrar (View v) {startActivity(new Intent(this, tabela_psi_reclusos.class));}
+
+    public void entrarperfil (View v) {startActivity(new Intent(this, perfil_psicologo.class));}
 
 
 }

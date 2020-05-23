@@ -1,71 +1,43 @@
 package android.example.dai2;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.ui.AppBarConfiguration;
+
 import com.google.android.material.navigation.NavigationView;
 
-import java.sql.*;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+public class ajuda extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
-public class perfil_diretor extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    TextView localidade;
-    TextView tipo, nome, nascimento, pontos;
-     private String scan = MainActivity.scanValor;
-     private String localizacao, name, typeUser, nascimento1;
-    int tipo1, points;
+    private AppBarConfiguration mAppBarConfiguration;
     Dialog myDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.perfil_diretor);
-        localidade = (TextView) findViewById(R.id.localidaPerfil);
-        tipo = (TextView) findViewById(R.id.tipoPerfil);
-        nome = (TextView) findViewById(R.id.nomePerfil);
-        nascimento = (TextView) findViewById(R.id.nascimentoPerfil);
-       // pontos = (TextView) findViewById(R.id.pontosPerfil);
-
-        CarregaDados carregaDados = new CarregaDados();
-        carregaDados.execute();
-
-        System.out.println(typeUser);
-
-        /*localidade.setText(localizacao);
-        tipo.setText(typeUser);
-        nome.setText(name);
-        nascimento.setText(nascimento1);
-       // pontos.setText(points);*/
+        setContentView(R.layout.ajuda);
         myDialog = new Dialog(this);
-
-       // nascimento.addTextChangedListener(Mask.insert("##/##/####", nascimento));
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,drawer,toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -74,74 +46,27 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
     }
 
 
-
-    private class CarregaDados extends AsyncTask<String,String,String> {
-        boolean success = false;
-        String msg = "";
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(perfil_diretor.this, "Synchronising", "Searching for user data...", true);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            progressDialog.dismiss();
-            localidade.setText(localizacao);
-            tipo.setText(typeUser);
-            nome.setText(name);
-            nascimento.setText(nascimento1);
-           // pontos.setText(String.valueOf(points));
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
-                if (connection ==null){
-                    success = false;
-                } else {
-                    String query = "SELECT location, id_type, name, birthday, points FROM Profile WHERE scan like '"+scan+"'";
-                    Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery(query);
-                    while (resultSet.next()){
-                        System.out.println("Cegou");
-                        localizacao = resultSet.getString("location");
-                        System.out.println("Cegou1");
-                        tipo1 = resultSet.getInt("id_type");
-                        name = resultSet.getString("name");
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-                        nascimento1 = dateFormat.format(resultSet.getDate("birthday"));
-                        points = resultSet.getInt("points");
-                        if(tipo1 <=  3 && tipo1 > 0){
-                            String query1 = "SELECT type FROM Type WHERE id_type like '"+tipo1+"'";
-                            Statement statement1 = connection.createStatement();
-                            ResultSet resultSet1 = statement1.executeQuery(query1);
-                            while (resultSet1.next()) {
-                                typeUser = resultSet1.getString("type");
-                                success = true;
-                            }
-                        } else {
-                            success=false;
-                            msg = "Não foi possivel encontrar dados do Utilizador";
-                        }
-                    }
-                }
-            } catch (SQLException | ClassNotFoundException e){
-                e.printStackTrace();
-            }
-            return msg;
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main2, menu);
+        MenuItem ajuda = menu.findItem(R.id.ajuda);
+        ajuda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(new Intent(android.example.dai2.ajuda.this, ajuda.class));
+                return false;
+            }
+        });
         return true;
     }
+
+
+
+
+
+    public void entrarperfil (View v) {startActivity(new Intent(this, perfil_diretor.class));}
+
 
     @Override
     public void onBackPressed(){
@@ -167,7 +92,7 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Intent intent = new Intent(perfil_diretor.this,inicio_diretor.class);
+            Intent intent = new Intent(ajuda.this, ajuda.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
@@ -180,13 +105,13 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(perfil_diretor.this, tabela_horario.class));
+                    startActivity(new Intent(ajuda.this, tabela_horario.class));
                 }
             });
             meuhor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(perfil_diretor.this, horario_diretor.class));
+                    startActivity(new Intent(ajuda.this, horario_diretor.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -207,13 +132,13 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
             listarel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(perfil_diretor.this, documentos_diretor.class));
+                    startActivity(new Intent(ajuda.this, documentos_diretor.class));
                 }
             });
             his.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(perfil_diretor.this, historico.class));
+                    startActivity(new Intent(ajuda.this, historico.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -223,9 +148,6 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
                 }
             });
             myDialog.show();
-        }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(perfil_diretor.this,perfil_diretor.class);
-            startActivity(intent);
         }else if (id == R.id.nav_entidades){
             TextView txtclose;
             Button listagem;
@@ -249,7 +171,7 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
             registo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(perfil_diretor.this, Main3Activity.class));
+                    startActivity(new Intent(ajuda.this, Main3Activity.class));
                 }
             });
             myDialog.show();
@@ -264,13 +186,13 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
             listarec.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(perfil_diretor.this, tabela_reclusos.class));
+                    startActivity(new Intent(ajuda.this, tabela_reclusos.class));
                 }
             });
             reg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(perfil_diretor.this, Registar_Reclusos.class));
+                    startActivity(new Intent(ajuda.this, Registar_Reclusos.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -286,39 +208,9 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
         return true;
     }
 
-    public void abrirEntidades(View v){
-        TextView txtclose;
-        Button guardas;
-        Button psicologos;
-        myDialog.setContentView(R.layout.entidadespopup);
-        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-        guardas = (Button) myDialog.findViewById(R.id.guardas);
-        psicologos = (Button) myDialog.findViewById(R.id.psicologos);
-        guardas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(perfil_diretor.this, tabela_guarda.class));
-            }
-        });
-        psicologos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(perfil_diretor.this, tabela_psicologo.class));
-            }
-        });
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-    }
 
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
-    }
     public void ShowPopup(View v){
         TextView txtclose;
         Button btnSim;
@@ -342,7 +234,7 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
         btnSim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sair(v);
+            sair(v);
                 alert("Sessão terminada");
             }
         });
@@ -355,4 +247,34 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
 
         startActivity(new Intent(this, MainActivity.class));
     }
+
+public void abrirEntidades(View v){
+    TextView txtclose;
+    Button guardas;
+        Button psicologos;
+        myDialog.setContentView(R.layout.entidadespopup);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        guardas = (Button) myDialog.findViewById(R.id.guardas);
+        psicologos = (Button) myDialog.findViewById(R.id.psicologos);
+        guardas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ajuda.this, tabela_guarda.class));
+            }
+        });
+        psicologos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ajuda.this, tabela_psicologo.class));
+            }
+        });
+    txtclose.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            myDialog.dismiss();
+        }
+    });
+}
+
+
 }
