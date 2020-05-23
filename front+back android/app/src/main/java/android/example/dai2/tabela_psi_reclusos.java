@@ -44,6 +44,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -296,8 +298,22 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
                             recluseList.add(nome);
                         }
                     }
+                    for (ClassListReclusos numero : arrayList ){
+                        if(Integer.toString(numero.getNumero_rec()).toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            recluseList.add(numero);
+                        }
+                    }
                 }
                 notifyDataSetChanged();
+            }
+            private void sortArrayList(){
+                Collections.sort(itemArrayList, new Comparator<ClassListReclusos>() {
+                    @Override
+                    public int compare(ClassListReclusos o1, ClassListReclusos o2) {
+                        return o1.getNomeRec().compareTo(o2.getNomeRec());                    }
+                });
+                myAppAdapter.notifyDataSetChanged();
             }
         }
 
@@ -311,6 +327,14 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.search, menu);
         MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        MenuItem sort = menu.findItem(R.id.filter);
+        sort.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList();
+                return false;
+            }
+        });
         SearchView searchView = (SearchView)myActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

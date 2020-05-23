@@ -308,12 +308,19 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
                     recluseList.addAll(arrayList);
                 }
                 else{
-                    for (ClassListReclusos nome : arrayList){
+                    for (ClassListReclusos nome : arrayList ){
                         if(nome.getNomeRec().toLowerCase(Locale.getDefault())
                                 .contains(charText)){
                             recluseList.add(nome);
                         }
                     }
+                    for (ClassListReclusos numero : arrayList ){
+                        if(Integer.toString(numero.getNumero_rec()).toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            recluseList.add(numero);
+                        }
+                    }
+
                 }
                 notifyDataSetChanged();
             }
