@@ -186,7 +186,6 @@ public class inicio_psicologo extends AppCompatActivity
         TextView txtclose;
         Button listahor;
         Button meuhor;
-        Button addhor;
         myDialog.setContentView(R.layout.horariospopup_psi);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         listahor = (Button) myDialog.findViewById(R.id.listahor);

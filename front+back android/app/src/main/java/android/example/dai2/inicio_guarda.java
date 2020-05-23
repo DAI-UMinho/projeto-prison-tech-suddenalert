@@ -82,6 +82,7 @@ public class inicio_guarda extends AppCompatActivity implements NavigationView.O
     public void entraralert (View v){startActivity(new Intent(this, alerta_guarda.class));}
 
 
+
     @Override
     public void onBackPressed(){
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
