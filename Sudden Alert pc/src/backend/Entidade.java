@@ -10,10 +10,10 @@ package backend;
  * @author Diogo
  */
 public class Entidade {
-    private int id_type, points;
+    private int id_type, points, idSchedule;
     private String scan, location, dataNascimento, email, nome;
     
-    public Entidade (String scan, int id_type, String nome, String location, int points, String dataNascimento, String email)
+    public Entidade (String scan, int id_type, String nome, String location, int points, String dataNascimento, String email, int idSchedule)
     {
 
         this.scan = scan;
@@ -23,8 +23,13 @@ public class Entidade {
         this.dataNascimento = dataNascimento;
         this.email = email;
         this.nome = nome;
+        this.idSchedule = idSchedule;
         
     }   
+
+    public int getIdSchedule() {
+        return idSchedule;
+    }
 
     public String getScan() {
         return scan;
