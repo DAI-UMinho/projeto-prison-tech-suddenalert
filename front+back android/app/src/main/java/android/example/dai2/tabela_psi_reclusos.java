@@ -33,7 +33,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -44,7 +43,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -462,7 +460,7 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         numeorRec = String.valueOf(itemArrayList.get(posicao).getNumero_rec());
         id_recluso = itemArrayList.get(posicao).getId_recluse();
         System.out.println(numeorRec);
-        startActivity(new Intent(this, alerta_guarda.class));
+        startActivity(new Intent(this, Alerta_guarda.class));
     }
 
     public void iniciar_relatorio (View v) {
