@@ -19,13 +19,13 @@ import static javax.swing.text.html.HTML.Tag.I;
  *
  * @author Catarina
  */
-public class Documentos extends javax.swing.JFrame implements Serializable {
+public class ListRelatorios extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
     
     /**
      * Creates new form Reclusos
      */
-    public Documentos() {
+    public ListRelatorios() {
         initComponents();
         setIcon();
         jTable1.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
@@ -51,7 +51,6 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
         jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -111,7 +110,14 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
         jTable1.setVerifyInputWhenFocusTarget(false);
         jScrollPane2.setViewportView(jTable1);
 
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jTextField1.setText("Pesquisar...");
         jTextField1.setInheritsPopupMenu(true);
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -119,8 +125,6 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
         });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
-
-        jLabel1.setText("Filtrar Lista Por:");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome do Relatório", "Nível de Gravidade", "Nome do Psicólogo", "Email do Psicólogo", "Data" }));
         jComboBox1.setInheritsPopupMenu(true);
@@ -186,11 +190,9 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
                         .addGap(115, 115, 115))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(44, 44, 44)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(169, 169, 169))))
         );
@@ -199,8 +201,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -675,6 +676,10 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
         this.home.setSelected(false);
     }//GEN-LAST:event_entMousePressed
 
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -689,7 +694,6 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel39;

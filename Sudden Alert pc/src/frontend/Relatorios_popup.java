@@ -219,7 +219,7 @@ public class Relatorios_popup extends javax.swing.JFrame implements Serializable
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        Documentos xDocumentos = new Documentos();
+        ListRelatorios xDocumentos = new ListRelatorios();
         xDocumentos.setLocationRelativeTo(null);
         xDocumentos.setVisible(true);
         this.dispose();
