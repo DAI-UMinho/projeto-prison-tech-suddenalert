@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import static javax.swing.text.html.HTML.Tag.I;
 import net.proteanit.sql.DbUtils;
 
@@ -38,6 +39,9 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
      */
     public ListHorarios() {
         initComponents();
+        jComboP.setBackground(Color.white);
+        modeloTabela = (DefaultTableModel) jTable_hor.getModel();
+        jTable_hor.setRowSorter(new TableRowSorter(modeloTabela));
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -64,7 +68,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query1 = "SELECT * FROM Profile where deleted='0' and id_type='1'";
+            String query1 = "SELECT * FROM Profile where deleted='0' and id_type='1' or id_type='2'";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query1);
             Entidade guarda;
@@ -88,6 +92,63 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             model.addRow(row);
         }
     }
+    
+    private void pesquisar() {
+        String sql = "SELECT name as Nome, email as Email FROM Profile where deleted='0' and (id_type='1' or id_type='2') and name like ?";
+        String sqlemail = "SELECT name as Nome, email as Email FROM Profile where deleted='0' and (id_type='1' or id_type='2') and email like ?";
+        //String sqlname = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.name like ?";
+        String itemText = (String) jComboP.getSelectedItem();
+        if ("Nome".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sql);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_hor.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+        if ("Email".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlemail);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_hor.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+        /*if ("Nome do Psicólogo".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlname);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_relatorio.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }*/
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,8 +168,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         jTable_hor = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboP = new javax.swing.JComboBox<>();
         BackButton = new javax.swing.JButton();
         hor_guarda = new javax.swing.JButton();
         sidepane9 = new javax.swing.JPanel();
@@ -147,16 +207,17 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTable_hor.setAutoCreateRowSorter(true);
         jTable_hor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Ana Costa", "ana_costa7364@gmail.com"}
+
             },
             new String [] {
-                "Nome", "Email"
+                "Nome", "Email", "Número do Horário"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -189,15 +250,12 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
         jLabel3.setText("jLabel3");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel1.setText("Filtrar Lista Por:");
-
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Email" }));
-        jComboBox1.setInheritsPopupMenu(true);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboP.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Email", "Número do Horário" }));
+        jComboP.setInheritsPopupMenu(true);
+        jComboP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboPActionPerformed(evt);
             }
         });
 
@@ -236,12 +294,10 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(183, 183, 183))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,11 +307,11 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -694,9 +750,9 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboPActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         Menu xMenu = new Menu();
@@ -713,7 +769,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_hor_guardaActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        //pesquisar();
+        pesquisar();
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
@@ -731,8 +787,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JButton hor_guarda;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> jComboP;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel39;

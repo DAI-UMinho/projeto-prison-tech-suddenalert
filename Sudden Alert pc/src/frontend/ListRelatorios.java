@@ -5,6 +5,9 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -12,26 +15,172 @@ import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import static javax.swing.text.html.HTML.Tag.I;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
  * @author Catarina
  */
-public class Documentos extends javax.swing.JFrame implements Serializable {
+public class ListRelatorios extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     
     /**
      * Creates new form Reclusos
      */
-    public Documentos() {
+    public ListRelatorios() {
         initComponents();
+        jComboP.setBackground(Color.white);
+        DefaultTableModel modelo = (DefaultTableModel) jTable_relatorio.getModel();
+        jTable_relatorio.setRowSorter(new TableRowSorter(modelo));
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         setIcon();
-        jTable1.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
-        jTable1.getTableHeader().setOpaque(false);
-        jTable1.getTableHeader().setBackground(new Color(176,2,37));
-        jTable1.getTableHeader().setForeground(new Color(255,255,255));
+        jTable_relatorio.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
+        jTable_relatorio.getTableHeader().setOpaque(false);
+        jTable_relatorio.getTableHeader().setBackground(new Color(176,2,37));
+        jTable_relatorio.getTableHeader().setForeground(new Color(255,255,255));
+        show_Relatorio();
+        
+    }
+    public ArrayList<Report> relatorioList() {
+        ArrayList<Report> relatorioList = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1 = "Select Report.idReport, Report.title, Profile.name, Report.date, Report.gravidade, Profile.email , Report.report from Report inner join Profile on Report.scan = Profile.scan;";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query1);
+            Report relatorio;
+            while (rs.next()) {
+                relatorio = new Report(rs.getString("title"), rs.getString("gravidade"), rs.getString("name"), rs.getString("email"), rs.getString("date"),rs.getInt("idReport"));
+                relatorioList.add(relatorio);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return relatorioList;
+    }
+    public void show_Relatorio() {
+        ArrayList<Report> list = relatorioList();
+        DefaultTableModel model = (DefaultTableModel) jTable_relatorio.getModel();
+        Object[] row = new Object[5];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getTitulo();
+            row[1] = list.get(i).getGravidade();
+            row[2] = list.get(i).getNomeP();
+            row[3] = list.get(i).getEmailP();
+            row[4] = list.get(i).getData();
+            model.addRow(row);
+        }
+    }
+    
+    private void pesquisar() {
+        String sql = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.title like ?";
+        String sqlg = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.gravidade like ?";
+        String sqlname = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.name like ?";
+        String sqlemail = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.email like ?";
+        String sqldata = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.date like ?";
+        String itemText = (String) jComboP.getSelectedItem();
+        if ("Título do Relatório".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sql);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_relatorio.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+        if ("Nível de Gravidade".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlg);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_relatorio.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+        if ("Nome do Psicólogo".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlname);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_relatorio.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+        if ("Email do Psicólogo".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlemail);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_relatorio.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+        if ("Data".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqldata);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_relatorio.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
     }
 
     /**
@@ -48,11 +197,10 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
         label1 = new java.awt.Label();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable_relatorio = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboP = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
@@ -91,12 +239,13 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_relatorio.setAutoCreateRowSorter(true);
+        jTable_relatorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Relatório nº2", "Médio", "Ana Costa", "ana_costa7364@gmail.com", "12/03/2019"}
+
             },
             new String [] {
-                "Nome do Relatório", "Nível de Gravidade", "Nome do Psicólogo", "Email do Psicólogo", "Data"
+                "Título do Relatório", "Nível de Gravidade", "Nome do Psicólogo", "Email do Psicólogo", "Data"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -107,26 +256,36 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setSelectionBackground(new java.awt.Color(255, 102, 102));
-        jTable1.setVerifyInputWhenFocusTarget(false);
-        jScrollPane2.setViewportView(jTable1);
+        jTable_relatorio.setSelectionBackground(new java.awt.Color(255, 102, 102));
+        jTable_relatorio.setVerifyInputWhenFocusTarget(false);
+        jScrollPane2.setViewportView(jTable_relatorio);
 
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jTextField1.setText("Pesquisar...");
         jTextField1.setInheritsPopupMenu(true);
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
 
-        jLabel1.setText("Filtrar Lista Por:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome do Relatório", "Nível de Gravidade", "Nome do Psicólogo", "Email do Psicólogo", "Data" }));
-        jComboBox1.setInheritsPopupMenu(true);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Título do Relatório", "Nível de Gravidade", "Nome do Psicólogo", "Email do Psicólogo", "Data" }));
+        jComboP.setInheritsPopupMenu(true);
+        jComboP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboPActionPerformed(evt);
             }
         });
 
@@ -186,23 +345,21 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
                         .addGap(115, 115, 115))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(169, 169, 169))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -402,9 +559,9 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboPActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -675,6 +832,14 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
         this.home.setSelected(false);
     }//GEN-LAST:event_entMousePressed
 
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1MouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        pesquisar();
+    }//GEN-LAST:event_jTextField1KeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -688,8 +853,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> jComboP;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel39;
@@ -698,7 +862,7 @@ public class Documentos extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable_relatorio;
     private javax.swing.JTextField jTextField1;
     private java.awt.Label label1;
     private rsbuttom.RSButtonMetro recl;

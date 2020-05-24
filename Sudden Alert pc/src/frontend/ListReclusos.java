@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import static javax.swing.text.html.HTML.Tag.I;
 import net.proteanit.sql.DbUtils;
 
@@ -37,6 +38,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
      */
     public ListReclusos() {
         initComponents();
+        jComboP.setBackground(Color.white);
+        modeloTabela = (DefaultTableModel) jTable_Display_Reclusos.getModel();
+        jTable_Display_Reclusos.setRowSorter(new TableRowSorter(modeloTabela));
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -250,7 +254,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         jTable_Display_Reclusos = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jComboP = new javax.swing.JComboBox<>();
         BackButton = new javax.swing.JButton();
         sidepane9 = new javax.swing.JPanel();
@@ -289,6 +292,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTable_Display_Reclusos.setAutoCreateRowSorter(true);
         jTable_Display_Reclusos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -337,9 +341,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
         jLabel3.setText("jLabel3");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel1.setText("Filtrar Lista Por:");
-
         jComboP.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Nº do recluso", "Ala", "Piso" }));
         jComboP.setInheritsPopupMenu(true);
@@ -371,11 +372,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                         .addGap(147, 147, 147))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(43, 43, 43)
                         .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(183, 183, 183))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -388,7 +387,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -906,7 +904,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JComboBox<String> jComboP;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel39;
