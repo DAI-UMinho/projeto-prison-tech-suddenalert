@@ -39,7 +39,6 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
      */
     public ListPsicologos() {
         initComponents();
-        jComboP.setBackground(Color.white);
         DefaultTableModel modelo = (DefaultTableModel) jTable_Display_Psicologos.getModel();
         jTable_Display_Psicologos.setRowSorter(new TableRowSorter(modelo));
         try {
@@ -72,7 +71,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
             ResultSet rs = st.executeQuery(query1);
             Entidade psicologo;
             while (rs.next()) {
-                psicologo = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+                psicologo = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"), rs.getInt("idSchedule"));
                 psicologosList.add(psicologo);
             }
         } catch (Exception e) {

@@ -36,7 +36,6 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
 
     public ListGuardas() {
         initComponents();
-        jComboP.setBackground(Color.white);
         DefaultTableModel modelo = (DefaultTableModel) jTable_Display_Guardas.getModel();
         jTable_Display_Guardas.setRowSorter(new TableRowSorter(modelo));
         try {
@@ -69,7 +68,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             ResultSet rs = st.executeQuery(query1);
             Entidade guarda;
             while (rs.next()) {
-                guarda = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+                guarda = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"), rs.getInt("idSchedule"));
                 guardasList.add(guarda);
             }
         } catch (Exception e) {

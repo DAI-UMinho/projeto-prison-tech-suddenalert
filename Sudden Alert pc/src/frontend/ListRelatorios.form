@@ -151,7 +151,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jTextField1" min="-2" pref="103" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                              <Component id="jComboP" min="-2" pref="135" max="-2" attributes="0"/>
+                              <Component id="jComboBox1" min="-2" pref="135" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -165,7 +165,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel3" alignment="1" pref="25" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jComboP" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="jComboBox1" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -192,14 +192,23 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="jTable_relatorio">
                   <Properties>
-                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="0">
-                        <Column editable="true" title="T&#xed;tulo do Relat&#xf3;rio" type="java.lang.Object"/>
-                        <Column editable="true" title="N&#xed;vel de Gravidade" type="java.lang.Object"/>
-                        <Column editable="false" title="Nome do Psic&#xf3;logo" type="java.lang.Object"/>
-                        <Column editable="false" title="Email do Psic&#xf3;logo" type="java.lang.Object"/>
-                        <Column editable="false" title="Data" type="java.lang.Object"/>
+                      <Table columnCount="5" rowCount="1">
+                        <Column editable="true" title="Nome do Relat&#xf3;rio" type="java.lang.Object">
+                          <Data value="Relat&#xf3;rio n&#xba;2"/>
+                        </Column>
+                        <Column editable="true" title="N&#xed;vel de Gravidade" type="java.lang.Object">
+                          <Data value="M&#xe9;dio"/>
+                        </Column>
+                        <Column editable="false" title="Nome do Psic&#xf3;logo" type="java.lang.Object">
+                          <Data value="Ana Costa"/>
+                        </Column>
+                        <Column editable="false" title="Email do Psic&#xf3;logo" type="java.lang.Object">
+                          <Data value="ana_costa7364@gmail.com"/>
+                        </Column>
+                        <Column editable="false" title="Data" type="java.lang.Object">
+                          <Data value="12/03/2019"/>
+                        </Column>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -253,7 +262,6 @@
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextField1MouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
-                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField1KeyReleased"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
@@ -263,11 +271,11 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboP">
+            <Component class="javax.swing.JComboBox" name="jComboBox1">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="5">
-                    <StringItem index="0" value="T&#xed;tulo do Relat&#xf3;rio"/>
+                    <StringItem index="0" value="Nome do Relat&#xf3;rio"/>
                     <StringItem index="1" value="N&#xed;vel de Gravidade"/>
                     <StringItem index="2" value="Nome do Psic&#xf3;logo"/>
                     <StringItem index="3" value="Email do Psic&#xf3;logo"/>
@@ -277,7 +285,7 @@
                 <Property name="inheritsPopupMenu" type="boolean" value="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboPActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
