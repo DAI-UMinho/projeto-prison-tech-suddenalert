@@ -36,6 +36,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
 
     public ListGuardas() {
         initComponents();
+        jComboP.setBackground(Color.white);
         DefaultTableModel modelo = (DefaultTableModel) jTable_Display_Guardas.getModel();
         jTable_Display_Guardas.setRowSorter(new TableRowSorter(modelo));
         try {

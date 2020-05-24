@@ -37,6 +37,7 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
      */
     public ListRelatorios() {
         initComponents();
+        jComboP.setBackground(Color.white);
         DefaultTableModel modelo = (DefaultTableModel) jTable_relatorio.getModel();
         jTable_relatorio.setRowSorter(new TableRowSorter(modelo));
         try {
@@ -92,11 +93,11 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
     }
     
     private void pesquisar() {
-        String sql = "Select Report.title as Título, Report.gravidade as Gravidade, Profile.name as Nome, Profile.email as Email, Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.title like ?";
-        String sqlg = "Select Report.title as Título, Report.gravidade as Gravidade, Profile.name as Nome, Profile.email as Email, Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.gravidade like ?";
-        String sqlname = "Select Report.title as Título, Report.gravidade as Gravidade, Profile.name as Nome, Profile.email as Email, Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.name like ?";
-        String sqlemail = "Select Report.title as Título, Report.gravidade as Gravidade, Profile.name as Nome, Profile.email as Email, Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.email like ?";
-        String sqldata = "Select Report.title as Título, Report.gravidade as Gravidade, Profile.name as Nome, Profile.email as Email, Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.date like ?";
+        String sql = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.title like ?";
+        String sqlg = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.gravidade like ?";
+        String sqlname = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.name like ?";
+        String sqlemail = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.email like ?";
+        String sqldata = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.date like ?";
         String itemText = (String) jComboP.getSelectedItem();
         if ("Título do Relatório".equals(itemText)) {
             try {

@@ -39,6 +39,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
      */
     public ListPsicologos() {
         initComponents();
+        jComboP.setBackground(Color.white);
         DefaultTableModel modelo = (DefaultTableModel) jTable_Display_Psicologos.getModel();
         jTable_Display_Psicologos.setRowSorter(new TableRowSorter(modelo));
         try {
