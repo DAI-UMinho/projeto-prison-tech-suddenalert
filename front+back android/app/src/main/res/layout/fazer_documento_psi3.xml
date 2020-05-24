@@ -86,21 +86,6 @@
     </RadioGroup>
 
     <EditText
-        android:id="@+id/identificacao"
-        android:layout_width="315dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="48dp"
-        android:ems="10"
-        android:hint="Nome do Recluso"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.354" />
-
-    <EditText
         android:id="@+id/tituloRel"
         android:layout_width="315dp"
         android:layout_height="51dp"
@@ -127,23 +112,24 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.464" />
+        app:layout_constraintVertical_bias="0.36" />
 
     <EditText
         android:id="@+id/relatorio"
-        android:layout_width="311dp"
-        android:layout_height="111dp"
-        android:layout_marginLeft="48dp"
+        android:layout_width="310dp"
+        android:layout_height="185dp"
+        android:layout_marginTop="37dp"
         android:ems="10"
         android:hint="Relatório"
         android:inputType="textPersonName"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.636" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloRel"
+        app:layout_constraintVertical_bias="0.195" />
 
     <Button
         android:id="@+id/submeter"
@@ -165,19 +151,20 @@
         android:id="@+id/textView61"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="108dp"
         android:text="Insira o nível de gravidade"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relatorio" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.752" />
 
     <TextView
         android:id="@+id/textView67"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="136dp"
+        android:layout_marginEnd="132dp"
         android:text="(1- pouco grave, 5- muito grave)"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"

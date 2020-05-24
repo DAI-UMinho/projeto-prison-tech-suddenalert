@@ -25,8 +25,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 public class inicio_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private AppBarConfiguration mAppBarConfiguration;
@@ -79,7 +77,7 @@ public class inicio_guarda extends AppCompatActivity implements NavigationView.O
     public void entrarperfil (View v) {
         startActivity(new Intent(this, perfil_guarda.class));
     }
-    public void entraralert (View v){startActivity(new Intent(this, alerta_guarda.class));}
+    public void entraralert (View v){startActivity(new Intent(this, Alerta_guarda.class));}
 
 
 

@@ -30,7 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 
 
 import java.io.PrintWriter;
@@ -489,7 +488,7 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
         numeorRec = String.valueOf(itemArrayList.get(posicao).getNumero_rec());
         id_recluso = itemArrayList.get(posicao).getId_recluse();
         System.out.println(numeorRec);
-        startActivity(new Intent(this, alerta_guarda.class));
+        startActivity(new Intent(this, Alerta_guarda.class));
     }
 
     @Override

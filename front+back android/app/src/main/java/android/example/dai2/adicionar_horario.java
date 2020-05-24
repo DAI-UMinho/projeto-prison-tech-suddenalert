@@ -208,20 +208,20 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
                         System.out.println(query);
                         stmt.executeUpdate(query);
                     }
-                        String query2 = "select idSchedule from Schedule where Entrada like '"+Entrda+"'and  Saida like '"+Saida+"' and Almoco like '"+Almoco+"'and Folga like '"+Folga+"';";
-                        System.out.println(query2);
-                        Statement statement = conn.createStatement();
-                        ResultSet resultSet1 = statement.executeQuery(query2);
-                        System.out.println(resultSet1);
-                        while (resultSet1.next()){
-                            idHor = resultSet1.getInt("idSchedule");
-                        }
-                        String query3 = "update suddenalert.Profile set idSchedule='"+idHor+"' where scan  like '"+Scan+"'";
-                        Statement statement2 = conn.createStatement();
-                        statement2.executeUpdate(query3);
-                        msg = "Inserting Successfull!!!!";
-                        System.out.println("aqui");
-                        sucess = true;
+                    String query2 = "select idSchedule from Schedule where Entrada like '"+Entrda+"'and  Saida like '"+Saida+"' and Almoco like '"+Almoco+"'and Folga like '"+Folga+"';";
+                    System.out.println(query2);
+                    Statement statement = conn.createStatement();
+                    ResultSet resultSet1 = statement.executeQuery(query2);
+                    System.out.println(resultSet1);
+                    while (resultSet1.next()){
+                        idHor = resultSet1.getInt("idSchedule");
+                    }
+                    String query3 = "update suddenalert.Profile set idSchedule='"+idHor+"' where scan  like '"+Scan+"'";
+                    Statement statement2 = conn.createStatement();
+                    statement2.executeUpdate(query3);
+                    msg = "Inserting Successfull!!!!";
+                    System.out.println("aqui");
+                    sucess = true;
 
                 }
                 conn.close();

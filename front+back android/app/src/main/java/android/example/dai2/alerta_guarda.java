@@ -27,7 +27,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class alerta_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Alerta_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
    private  EditText  descricao, numeroR;
    private  String numeroRec, gravidadeA, descricaoA;
@@ -166,19 +166,19 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Intent intent = new Intent(alerta_guarda.this,inicio_guarda.class);
+            Intent intent = new Intent(Alerta_guarda.this,inicio_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(alerta_guarda.this,horario_guarda.class);
+            Intent intent = new Intent(Alerta_guarda.this,horario_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(alerta_guarda.this, tabela_meus_alertas.class);
+            Intent intent = new Intent(Alerta_guarda.this, tabela_meus_alertas.class);
             startActivity(intent);
         }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(alerta_guarda.this, perfil_guarda.class);
+            Intent intent = new Intent(Alerta_guarda.this, perfil_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_reclusos){
-            Intent intent = new Intent(alerta_guarda.this, tabela_gua_reclusos.class);
+            Intent intent = new Intent(Alerta_guarda.this, tabela_gua_reclusos.class);
             startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);

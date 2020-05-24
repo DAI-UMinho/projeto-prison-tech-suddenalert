@@ -26,12 +26,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class fazer_documento_psi extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private EditText   relatorioo, tituloRel, identificacao, nome;
-    private String t_gravidade, t_relatorio, t_titulo;
+    private EditText   relatorioo, tituloRel, identificacao;
+    private String t_gravidade, t_relatorio, t_titulo, t_identificacao;
     private boolean sucess = false;
     Button regRelat;
    // Este relatório não provem de nenhuma situação de alerta
-    private int id_alerta = tabela_alert.id_alert;
     private RadioGroup gravidade;
 
 
@@ -43,7 +42,6 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
         identificacao = (EditText) findViewById(R.id.numeroRecl);
         relatorioo = (EditText) findViewById(R.id.relatorio);
         tituloRel = (EditText) findViewById(R.id.tituloRel);
-        nome = (EditText) findViewById(R.id.identificacao);
         gravidade= (RadioGroup) findViewById(R.id.rgroup);
         regRelat = (Button) findViewById(R.id.submeter);
         regRelat.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +50,6 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
                 register();
             }
         });
-        nome.setText(tabela_alert.nomeRecluso);
-        identificacao.setText(String.valueOf(tabela_alert.numeroRecluso));
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -130,6 +126,7 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
 
             } else {
                 Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
+                identificacao.setError("Número de recluso inexistente");
             }
         }
     }
@@ -152,11 +149,16 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
             tituloRel.setError("Introduz um titulo");
             valid = false;
         }
+        if (t_identificacao.isEmpty()){
+            identificacao.setError("Introduza um número de recluso");
+            valid = false;
+        }
         return valid;
     }
     public void intialize(){
         t_relatorio = relatorioo.getText().toString().trim();
         t_titulo = tituloRel.getText().toString().trim();
+        t_identificacao = identificacao.getText().toString().trim();
     }
 
     @Override
@@ -180,21 +182,27 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
                     sucess = false;
                     msg = "Não foi possível realizar connection";
                 } else {
-                    String query1 = "SELECT id_recluse FROM Recluse WHERE numero_recluso like '" + tabela_alert.numeroRecluso + "';";
-                    Statement statement1 = connection.createStatement();
-                    ResultSet resultSet1 = statement1.executeQuery(query1);
-                    while (resultSet1.next()) {
-                        valor = resultSet1.getInt("id_recluse");
-                    }
-                    String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`, `title`, `gravidade`, `id_alertsituation`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + valor + "', '" + t_titulo + "', '" + t_gravidade + "', '" + id_alerta + "');";
-                    Statement statement = connection.createStatement();
-                    statement.executeUpdate(query);
-
-                    String query2 = "UPDATE AlertSituation SET relatorio ='1' WHERE id_alertsituation='" + id_alerta + "'";
+                    String query2 = "SELECT COUNT(1) FROM Recluse WHERE numero_recluso like '" + t_identificacao + "' and deleted like 0;";
                     Statement statement2 = connection.createStatement();
-                    statement2.executeUpdate(query2);
-                    msg = "Inserido com sucesso";
-                    sucess = true;
+                    ResultSet resultSet2 = statement2.executeQuery(query2);
+                    while (resultSet2.next()) {
+                        valor = resultSet2.getInt("COUNT(1)");
+                    }
+                    if (valor == 1) {
+                        String query1 = "SELECT id_recluse FROM Recluse WHERE numero_recluso like '" + t_identificacao + "';";
+                        Statement statement1 = connection.createStatement();
+                        ResultSet resultSet1 = statement1.executeQuery(query1);
+                        while (resultSet1.next()) {
+                            valor = resultSet1.getInt("id_recluse");
+                        }
+                        String query = "INSERT INTO Report (`report`, `scan`, `id_recluse`, `title`, `gravidade`) VALUES ('" + t_relatorio + "', '" + scan + "', '" + valor + "', '" + t_titulo + "', '" + t_gravidade + "');";
+                        Statement statement = connection.createStatement();
+                        statement.executeUpdate(query);
+                        msg = "Inserido com sucesso";
+                        sucess = true;
+                    } else {
+                        sucess =false;
+                    }
 
                 }
 
