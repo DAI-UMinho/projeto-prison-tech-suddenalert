@@ -5,6 +5,9 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -12,8 +15,12 @@ import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import static javax.swing.text.html.HTML.Tag.I;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -21,17 +28,67 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class ListRelatorios extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     
     /**
      * Creates new form Reclusos
      */
     public ListRelatorios() {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) jTable_relatorio.getModel();
+        jTable_relatorio.setRowSorter(new TableRowSorter(modelo));
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         setIcon();
-        jTable1.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
-        jTable1.getTableHeader().setOpaque(false);
-        jTable1.getTableHeader().setBackground(new Color(176,2,37));
-        jTable1.getTableHeader().setForeground(new Color(255,255,255));
+        jTable_relatorio.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
+        jTable_relatorio.getTableHeader().setOpaque(false);
+        jTable_relatorio.getTableHeader().setBackground(new Color(176,2,37));
+        jTable_relatorio.getTableHeader().setForeground(new Color(255,255,255));
+        show_Relatorio();
+        
+    }
+    public ArrayList<Report> relatorioList() {
+        ArrayList<Report> relatorioList = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1 = "Select Report.idReport, Report.title, Profile.name, Report.date, Report.gravidade, Profile.email , Report.report from Report inner join Profile on Report.scan = Profile.scan;";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query1);
+            Report relatorio;
+            while (rs.next()) {
+                relatorio = new Report(rs.getString("title"), rs.getString("gravidade"), rs.getString("name"), rs.getString("email"), rs.getString("date"),rs.getInt("idReport"));
+                relatorioList.add(relatorio);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return relatorioList;
+    }
+    public void show_Relatorio() {
+        ArrayList<Report> list = relatorioList();
+        DefaultTableModel model = (DefaultTableModel) jTable_relatorio.getModel();
+        Object[] row = new Object[5];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getTitulo();
+            row[1] = list.get(i).getGravidade();
+            row[2] = list.get(i).getNomeP();
+            row[3] = list.get(i).getEmailP();
+            row[4] = list.get(i).getData();
+            model.addRow(row);
+        }
     }
 
     /**
@@ -48,7 +105,7 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
         label1 = new java.awt.Label();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable_relatorio = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -90,7 +147,7 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_relatorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Relatório nº2", "Médio", "Ana Costa", "ana_costa7364@gmail.com", "12/03/2019"}
             },
@@ -106,9 +163,9 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setSelectionBackground(new java.awt.Color(255, 102, 102));
-        jTable1.setVerifyInputWhenFocusTarget(false);
-        jScrollPane2.setViewportView(jTable1);
+        jTable_relatorio.setSelectionBackground(new java.awt.Color(255, 102, 102));
+        jTable_relatorio.setVerifyInputWhenFocusTarget(false);
+        jScrollPane2.setViewportView(jTable_relatorio);
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jTextField1.setText("Pesquisar...");
@@ -200,10 +257,11 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -702,7 +760,7 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable_relatorio;
     private javax.swing.JTextField jTextField1;
     private java.awt.Label label1;
     private rsbuttom.RSButtonMetro recl;

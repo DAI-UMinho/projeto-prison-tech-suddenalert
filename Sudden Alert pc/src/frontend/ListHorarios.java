@@ -67,7 +67,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query1 = "SELECT * FROM Profile where deleted='0' and id_type='1'";
+            String query1 = "SELECT * FROM Profile where deleted='0' and id_type='1' or id_type='2'";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query1);
             Entidade guarda;
