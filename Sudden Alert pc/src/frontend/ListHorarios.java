@@ -152,14 +152,14 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         jTable_hor.setAutoCreateRowSorter(true);
         jTable_hor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Ana Costa", "ana_costa7364@gmail.com"}
+
             },
             new String [] {
-                "Nome", "Email"
+                "Nome", "Email", "Número do Horário"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
