@@ -672,32 +672,32 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (nome1.getText().equals("")) {
+        if (nome1.getText().equals("") || nome1.getText().equals("Insira aqui o nome")) {
             nome1.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Nome é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (data_nascimento.getText().equals("")) {
+        if (data_nascimento.getText().equals("") || data_nascimento.getText().equals("Ano/Mês/Dia")) {
             data_nascimento.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Data de Nascimento é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (email1.getText().equals("")) {
+        if (email1.getText().equals("") || email1.getText().equals("Insira aqui o email")) {
             email1.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Email é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (latitude.getText().equals("")) {
+        if (latitude.getText().equals("") || latitude.getText().equals("Insira aqui a latitude")) {
             latitude.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Latitude é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (longitude.getText().equals("")) {
+        if (longitude.getText().equals("") || longitude.getText().equals("Insira aqui a longitude")) {
             longitude.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Longitude é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (scan1.getText().equals("")) {
+        if (scan1.getText().equals("") || scan1.getText().equals("Insira aqui o valor do Scan")) {
             scan1.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Scan é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;

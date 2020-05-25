@@ -502,22 +502,22 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (scan.getText().equals("")) {
+        if (scan.getText().equals("") || scan.getText().equals("Insira aqui o scan")) {
             scan.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Scan é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (entrada.getText().equals("")) {
+        if (entrada.getText().equals("") || entrada.getText().equals("Hora:Min")) {
             entrada.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Hora de entrada é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (saida.getText().equals("")) {
+        if (saida.getText().equals("") || saida.getText().equals("Hora:Min")) {
             saida.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Hora de saída é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (almoco.getText().equals("")) {
+        if (almoco.getText().equals("") || almoco.getText().equals("Hora:Min")) {
             almoco.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Hora de almoço é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
