@@ -30,8 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import static javax.swing.text.html.HTML.Tag.I;
-import java.text.SimpleDateFormat;  
-import java.util.Date;  
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JFileChooser;
 
 /**
@@ -49,7 +49,7 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
     public RegistHorario() {
         initComponents();
         setIcon();
-        
+
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension tamTela = kit.getScreenSize();
 
@@ -64,8 +64,7 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
         ImageIcon i = new ImageIcon(img2);
         jButton1.setIcon(i);*/
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,17 +81,17 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
         jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        email1 = new javax.swing.JTextField();
+        scan = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        entrada = new javax.swing.JTextField();
-        saida = new javax.swing.JTextField();
-        almoco = new javax.swing.JTextField();
         jComboBoxFolga = new javax.swing.JComboBox<>();
+        entrada = new javax.swing.JFormattedTextField();
+        saida = new javax.swing.JFormattedTextField();
+        almoco = new javax.swing.JFormattedTextField();
         BackButton1 = new javax.swing.JButton();
         label1 = new java.awt.Label();
         jLabel2 = new javax.swing.JLabel();
@@ -139,18 +138,19 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
         jPanel4.setForeground(new java.awt.Color(212, 13, 19));
 
         jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
-        jLabel6.setText("Email:");
+        jLabel6.setText("Scan:");
 
-        email1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        email1.setText("Insira aqui o email");
-        email1.addMouseListener(new java.awt.event.MouseAdapter() {
+        scan.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        scan.setText("Insira aqui o scan");
+        scan.setSelectionColor(new java.awt.Color(255, 255, 255));
+        scan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                email1MouseClicked(evt);
+                scanMouseClicked(evt);
             }
         });
-        email1.addActionListener(new java.awt.event.ActionListener() {
+        scan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                email1ActionPerformed(evt);
+                scanActionPerformed(evt);
             }
         });
 
@@ -172,47 +172,41 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
         jLabel17.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel17.setText("Folga:");
 
+        jComboBoxFolga.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        jComboBoxFolga.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta ", "Sábado ", "Domingo" }));
+
+        entrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        entrada.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        entrada.setText("Hora:Min");
         entrada.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        entrada.setText("Insira aqui a hora");
+        entrada.setSelectionColor(new java.awt.Color(255, 255, 255));
         entrada.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 entradaMouseClicked(evt);
             }
         });
-        entrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                entradaActionPerformed(evt);
-            }
-        });
 
+        saida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        saida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        saida.setText("Hora:Min");
         saida.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        saida.setText("Insira aqui a hora");
+        saida.setSelectionColor(new java.awt.Color(255, 255, 255));
         saida.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 saidaMouseClicked(evt);
             }
         });
-        saida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saidaActionPerformed(evt);
-            }
-        });
 
+        almoco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        almoco.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        almoco.setText("Hora:Min");
         almoco.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        almoco.setText("Insira aqui a hora");
+        almoco.setSelectionColor(new java.awt.Color(255, 255, 255));
         almoco.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 almocoMouseClicked(evt);
             }
         });
-        almoco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                almocoActionPerformed(evt);
-            }
-        });
-
-        jComboBoxFolga.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        jComboBoxFolga.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta ", "Sábado ", "Domingo" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -233,17 +227,16 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                        .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(scan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(48, 48, 48)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jComboBoxFolga, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(almoco, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(entrada, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                            .addComponent(saida)
+                            .addComponent(almoco))
+                        .addContainerGap(79, Short.MAX_VALUE))))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +253,7 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scan, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel12)
@@ -272,11 +265,11 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(almoco, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
-                .addGap(35, 35, 35)
+                    .addComponent(jLabel16)
+                    .addComponent(almoco, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jComboBoxFolga, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -509,12 +502,53 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (email1.getText().equals("")) {
-            email1.requestFocus();
-            JOptionPane.showMessageDialog(null, "O campo Email é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if (scan.getText().equals("")) {
+            scan.requestFocus();
+            JOptionPane.showMessageDialog(null, "O campo Scan é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+        if (entrada.getText().equals("")) {
+            entrada.requestFocus();
+            JOptionPane.showMessageDialog(null, "O campo Hora de entrada é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (saida.getText().equals("")) {
+            saida.requestFocus();
+            JOptionPane.showMessageDialog(null, "O campo Hora de saída é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (almoco.getText().equals("")) {
+            almoco.requestFocus();
+            JOptionPane.showMessageDialog(null, "O campo Hora de almoço é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            ProgressBar xProgress = new ProgressBar();
+            xProgress.setLocationRelativeTo(null);
+            xProgress.setVisible(true);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int num = 1; num <= 100; num++) {
+                        try {
+                            xProgress.jp_progress.UpdateProgress(num);
+                            xProgress.jp_progress.repaint();
+                            Thread.sleep(7);
+                            scan.setText("");
+                            entrada.setText("");
+                            saida.setText("");
+                            almoco.setText("");
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(RegistR.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }).start();
+        } catch (Exception err) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
         /*ListEnt_popup xListEnt_popup = new ListEnt_popup();
         xListEnt_popup.setLocationRelativeTo(null);
         xListEnt_popup.setVisible(true);*/
@@ -769,37 +803,29 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
         this.dispose();
     }//GEN-LAST:event_BackButton1ActionPerformed
 
-    private void email1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_email1MouseClicked
-        email1.setText("");
-    }//GEN-LAST:event_email1MouseClicked
+    private void scanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scanMouseClicked
+        scan.setText("");
+        scan.setDocument(new TeclasPermitNum());
+    }//GEN-LAST:event_scanMouseClicked
 
-    private void email1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_email1ActionPerformed
+    private void scanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_email1ActionPerformed
+    }//GEN-LAST:event_scanActionPerformed
 
     private void entradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entradaMouseClicked
+        entrada.setDocument(new TeclasPermitHora());
         entrada.setText("");
     }//GEN-LAST:event_entradaMouseClicked
 
-    private void entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entradaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_entradaActionPerformed
-
     private void saidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saidaMouseClicked
+        saida.setDocument(new TeclasPermitHora());
         saida.setText("");
     }//GEN-LAST:event_saidaMouseClicked
 
-    private void saidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saidaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saidaActionPerformed
-
     private void almocoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_almocoMouseClicked
+        almoco.setDocument(new TeclasPermitHora());
         almoco.setText("");
     }//GEN-LAST:event_almocoMouseClicked
-
-    private void almocoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_almocoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_almocoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -807,12 +833,11 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton1;
-    private javax.swing.JTextField almoco;
+    private javax.swing.JFormattedTextField almoco;
     private javax.swing.ButtonGroup buttonGroup1;
     private rsbuttom.RSButtonMetro doc;
-    private javax.swing.JTextField email1;
     private rsbuttom.RSButtonMetro ent;
-    private javax.swing.JTextField entrada;
+    private javax.swing.JFormattedTextField entrada;
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JButton jButton2;
@@ -833,7 +858,8 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel4;
     private java.awt.Label label1;
     private rsbuttom.RSButtonMetro recl;
-    private javax.swing.JTextField saida;
+    private javax.swing.JFormattedTextField saida;
+    private javax.swing.JTextField scan;
     private javax.swing.JPanel sidepane4;
     // End of variables declaration//GEN-END:variables
 
