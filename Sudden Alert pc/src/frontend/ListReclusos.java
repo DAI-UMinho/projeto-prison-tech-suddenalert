@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import static javax.swing.text.html.HTML.Tag.I;
 import net.proteanit.sql.DbUtils;
 
@@ -37,6 +38,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
      */
     public ListReclusos() {
         initComponents();
+        jComboP.setBackground(Color.white);
+        modeloTabela = (DefaultTableModel) jTable_Display_Reclusos.getModel();
+        jTable_Display_Reclusos.setRowSorter(new TableRowSorter(modeloTabela));
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -162,10 +166,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         String sqlid = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and numero_recluso like ?";
         String sqlwing = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and wing like ?";
         String sqlfloor = "select numero_recluso as Número, name as Nome, wing as Ala, floor as Piso from Recluse where deleted='0' and floor like ?";
-        String itemText = (String)jComboP.getSelectedItem( );
+        String itemText = (String) jComboP.getSelectedItem();
         if ("Nome".equals(itemText)) {
-        try {
-            if (jTextField1.getText().matches("^[0-9]+$")) {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
                 String user = "suddenalertuser";
@@ -176,27 +179,13 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 pst.setString(1, jTextField1.getText() + "%");
                 rs = pst.executeQuery();
                 jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
-
-            } else {
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-                String user = "suddenalertuser";
-                String pass = "Suddenalert.0";
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                pst = con.prepareStatement(sql);
-                pst.setString(1, jTextField1.getText() + "%");
-                rs = pst.executeQuery();
-                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
         }
-    }
-     
-         if ("Nº do recluso".equals(itemText)) {
-        try {
-            if (jTextField1.getText().matches("^[0-9]+$")) {
+
+        if ("Nº do recluso".equals(itemText)) {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
                 String user = "suddenalertuser";
@@ -207,27 +196,13 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 pst.setString(1, jTextField1.getText() + "%");
                 rs = pst.executeQuery();
                 jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
-
-            } else {
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-                String user = "suddenalertuser";
-                String pass = "Suddenalert.0";
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                pst = con.prepareStatement(sqlid);
-                pst.setString(1, jTextField1.getText() + "%");
-                rs = pst.executeQuery();
-                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
         }
-    }
-    
-     if ("Ala".equals(itemText)) {
-        try {
-            if (jTextField1.getText().matches("^[0-9]+$")) {
+
+        if ("Ala".equals(itemText)) {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
                 String user = "suddenalertuser";
@@ -238,26 +213,12 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 pst.setString(1, jTextField1.getText() + "%");
                 rs = pst.executeQuery();
                 jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
-
-            } else {
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-                String user = "suddenalertuser";
-                String pass = "Suddenalert.0";
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                pst = con.prepareStatement(sqlwing);
-                pst.setString(1, jTextField1.getText() + "%");
-                rs = pst.executeQuery();
-                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
         }
-    }
-             if ("Piso".equals(itemText)) {
-        try {
-            if (jTextField1.getText().matches("^[0-9]+$")) {
+        if ("Piso".equals(itemText)) {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
                 String user = "suddenalertuser";
@@ -268,24 +229,10 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 pst.setString(1, jTextField1.getText() + "%");
                 rs = pst.executeQuery();
                 jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
-
-            } else {
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-                String user = "suddenalertuser";
-                String pass = "Suddenalert.0";
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                pst = con.prepareStatement(sqlfloor);
-                pst.setString(1, jTextField1.getText() + "%");
-                rs = pst.executeQuery();
-                jTable_Display_Reclusos.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
         }
-    }
-    
     }
 
 
@@ -307,7 +254,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
         jTable_Display_Reclusos = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jComboP = new javax.swing.JComboBox<>();
         BackButton = new javax.swing.JButton();
         sidepane9 = new javax.swing.JPanel();
@@ -346,6 +292,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTable_Display_Reclusos.setAutoCreateRowSorter(true);
         jTable_Display_Reclusos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -362,6 +309,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 return canEdit [columnIndex];
             }
         });
+        jTable_Display_Reclusos.setRowHeight(20);
         jTable_Display_Reclusos.setSelectionBackground(new java.awt.Color(255, 102, 102));
         jTable_Display_Reclusos.setVerifyInputWhenFocusTarget(false);
         jTable_Display_Reclusos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -392,9 +340,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
         jLabel3.setText("jLabel3");
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel1.setText("Filtrar Lista Por:");
 
         jComboP.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Nº do recluso", "Ala", "Piso" }));
@@ -427,11 +372,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                         .addGap(147, 147, 147))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(43, 43, 43)
                         .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(183, 183, 183))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -444,7 +387,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -806,9 +748,9 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_horMousePressed
 
     private void horActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horActionPerformed
-        ListHorarios xListHorarios = new ListHorarios();
-        xListHorarios.setLocationRelativeTo(null);
-        xListHorarios.setVisible(true);
+        Horarios_popup xHorarios = new Horarios_popup();
+        xHorarios.setLocationRelativeTo(null);
+        xHorarios.setVisible(true);
         this.dispose();
         if (!this.hor.isSelected()) {
             this.home.setColorNormal(new Color(243, 243, 243));
@@ -962,7 +904,6 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JComboBox<String> jComboP;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel39;

@@ -27,7 +27,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class alerta_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Alerta_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
    private  EditText  descricao, numeroR;
    private  String numeroRec, gravidadeA, descricaoA;
@@ -37,6 +37,7 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
     private boolean sucess;
     RadioGroup gravidade;
     RadioButton rb;
+    private int estatuto = MainActivity.estatuto;
 
 
 
@@ -87,7 +88,7 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
             criarRelatorio.execute();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             }
             catch (Exception e){
                 System.out.print("erro");
@@ -96,7 +97,12 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
             if (sucess == true) {
                 Toast.makeText(this, "Situação criada com sucesso!", Toast.LENGTH_SHORT).show();
                 numeroR.setText("");
-                startActivity(new Intent(this, android.example.dai2.inicio_guarda.class));
+                if (estatuto == 1) {
+                    startActivity(new Intent(this, android.example.dai2.inicio_guarda.class));
+                }
+                if (estatuto == 2){
+                    startActivity(new Intent(this, android.example.dai2.inicio_psicologo.class));
+                }
 
             } else {
                 Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
@@ -149,7 +155,8 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
+            startActivity(new Intent(Alerta_guarda.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -160,19 +167,19 @@ public class alerta_guarda extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Intent intent = new Intent(alerta_guarda.this,inicio_guarda.class);
+            Intent intent = new Intent(Alerta_guarda.this,inicio_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(alerta_guarda.this,horario_guarda.class);
+            Intent intent = new Intent(Alerta_guarda.this,horario_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(alerta_guarda.this, tabela_meus_alertas.class);
+            Intent intent = new Intent(Alerta_guarda.this, tabela_meus_alertas.class);
             startActivity(intent);
         }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(alerta_guarda.this, perfil_guarda.class);
+            Intent intent = new Intent(Alerta_guarda.this, perfil_guarda.class);
             startActivity(intent);
         }else if (id == R.id.nav_reclusos){
-            Intent intent = new Intent(alerta_guarda.this, tabela_gua_reclusos.class);
+            Intent intent = new Intent(Alerta_guarda.this, tabela_gua_reclusos.class);
             startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);

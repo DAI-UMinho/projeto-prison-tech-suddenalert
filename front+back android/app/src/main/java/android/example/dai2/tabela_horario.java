@@ -31,18 +31,18 @@ import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class tabela_horario extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
-    public static ArrayList<Entidades> entidadesArrayList;
+    public static ArrayList<ListaHorarios> entidadesArrayList;
     private SyncDataPsico.MyAppAdapter myAppAdapter;
     private ListView listView;
     private boolean sucess = false;
     private int posicao;
+    public static int id_schedule;
+    public static String nomeAl, scanAl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
         listView = (ListView) findViewById(R.id.lvHor);
         myDialog = new Dialog(this);
 
-        entidadesArrayList = new ArrayList<Entidades>();
+        entidadesArrayList = new ArrayList<ListaHorarios>();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 /*
@@ -119,7 +119,8 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.ajuda) {
+            startActivity(new Intent(tabela_horario.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -135,21 +136,21 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
             Button listahor;
-            Button meuhor;
+            Button addhor;
             myDialog.setContentView(R.layout.horariospopup);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listahor = (Button) myDialog.findViewById(R.id.listahor);
-            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            addhor = (Button) myDialog.findViewById(R.id.meuhor);
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(tabela_horario.this, tabela_horario.class));
                 }
             });
-            meuhor.setOnClickListener(new View.OnClickListener() {
+            addhor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(tabela_horario.this, horario_diretor.class));
+                    startActivity(new Intent(tabela_horario.this, Adicionar_horario.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -343,14 +344,13 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT name, email, points, scan FROM Profile WHERE id_type like 2 AND deleted like 0";
+                    String query = "SELECT scan, name, idschedule FROM Profile WHERE id_type not like 3 AND deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                System.out.println("3");
-                                entidadesArrayList.add(new Entidades(rs.getString("name"), rs.getString("email"), rs.getString("scan"), rs.getString("points")));
+                                entidadesArrayList.add(new ListaHorarios(rs.getString("scan"), rs.getString("name"), rs.getInt("idSchedule")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -391,16 +391,17 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
         public class MyAppAdapter extends BaseAdapter {
             public class ViewHolder {
                 TextView nomeHor;
+                TextView numHor;
             }
 
-            public List<Entidades> entidadesList;
+            public ArrayList<ListaHorarios> entidadesList;
             public Context context;
-            ArrayList<Entidades> arrayList;
+            ArrayList<ListaHorarios> arrayList;
 
-            public MyAppAdapter(List<Entidades> entidadesList, Context context) {
+            public MyAppAdapter(ArrayList<ListaHorarios> entidadesList, Context context) {
                 this.entidadesList = entidadesList;
                 this.context = context;
-                arrayList = new ArrayList<Entidades>();
+                arrayList = new ArrayList<ListaHorarios>();
                 arrayList.addAll(entidadesList);
             }
 
@@ -428,16 +429,27 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
                     rowView = inflater.inflate(R.layout.linha_horario, parent, false);
                     viewHolder = new ViewHolder();
                     viewHolder.nomeHor = (TextView) rowView.findViewById(R.id.nomeHor);
-                    //viewHolder.email = (TextView) rowView.findViewById(R.id.email);
+                    viewHolder.numHor = (TextView) rowView.findViewById(R.id.numHor);
                     rowView.setTag(viewHolder);
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
-                viewHolder.nomeHor.setText(entidadesList.get(position).getNome());
-                //  viewHolder.email.setText(entidadesList.get(position).getEmail());
+                viewHolder.nomeHor.setText(entidadesList.get(position).getNomeHor());
+                try {
+                    viewHolder.numHor.setText(String.valueOf(entidadesList.get(position).getId_hor()));
+                } catch (Exception e){
 
+                }
                 return rowView;
             }
         }
+    }
+    //verHorario de cada entidade
+    public void verHorario(View v){
+        posicao = listView.getPositionForView(v);
+        id_schedule = entidadesArrayList.get(posicao).getId_hor();
+        nomeAl = entidadesArrayList.get(posicao).getNomeHor();
+        scanAl = entidadesArrayList.get(posicao).getScanHor();
+        startActivity(new Intent(this, ver_horario.class));
     }
 }

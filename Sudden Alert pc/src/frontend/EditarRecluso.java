@@ -33,6 +33,7 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
         setIcon();
         numero_editar.setEditable(false);
         data_nascimento_editar.setEditable(false);
+        data_entrada_editar.setEditable(false);
     }
 
     /**

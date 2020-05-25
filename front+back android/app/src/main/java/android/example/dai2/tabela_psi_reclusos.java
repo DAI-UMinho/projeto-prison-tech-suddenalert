@@ -33,7 +33,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -44,6 +43,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -272,8 +273,12 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
                 viewHolder.nome.setText(recluseList.get(position).getNomeRec() + "");
                 viewHolder.bumeroRec.setText(recluseList.get(position).getNumero_rec() + "");
                 byte[] img = recluseList.get(position).getImg();
-                Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
-                viewHolder.imageView.setImageBitmap(bitmap);
+                try {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                    viewHolder.imageView.setImageBitmap(bitmap);
+                } catch (Exception e){
+
+                }
                 return rowView;
 
 
@@ -292,8 +297,33 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
                             recluseList.add(nome);
                         }
                     }
+                    for (ClassListReclusos numero : arrayList ){
+                        if(Integer.toString(numero.getNumero_rec()).toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            recluseList.add(numero);
+                        }
+                    }
                 }
                 notifyDataSetChanged();
+            }
+            private void sortArrayList(){
+                Collections.sort(itemArrayList, new Comparator<ClassListReclusos>() {
+                    @Override
+                    public int compare(ClassListReclusos o1, ClassListReclusos o2) {
+                        return o1.getNomeRec().compareTo(o2.getNomeRec());                    }
+                });
+                myAppAdapter.notifyDataSetChanged();
+            }
+            private void sortArrayList2(){
+                Collections.sort(itemArrayList, new Comparator<ClassListReclusos>() {
+                    @Override
+                    public int compare(ClassListReclusos o1, ClassListReclusos o2) {
+                        return o1.getNumero_rec() - o2.getNumero_rec();
+                    }
+
+
+                });
+                myAppAdapter.notifyDataSetChanged();
             }
         }
 
@@ -307,6 +337,22 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.search, menu);
         MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        MenuItem sort = menu.findItem(R.id.filter);
+        MenuItem numero = menu.findItem(R.id.numero);
+        sort.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList();
+                return false;
+            }
+        });
+        numero.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList2();
+                return false;
+            }
+        });
         SearchView searchView = (SearchView)myActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -341,7 +387,7 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -414,7 +460,7 @@ public class tabela_psi_reclusos extends AppCompatActivity implements Navigation
         numeorRec = String.valueOf(itemArrayList.get(posicao).getNumero_rec());
         id_recluso = itemArrayList.get(posicao).getId_recluse();
         System.out.println(numeorRec);
-        startActivity(new Intent(this, alerta_guarda.class));
+        startActivity(new Intent(this, Alerta_guarda.class));
     }
 
     public void iniciar_relatorio (View v) {

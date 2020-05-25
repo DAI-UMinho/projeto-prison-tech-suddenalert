@@ -14,16 +14,16 @@
         tools:layout_editor_absoluteY="-2dp">
 
         <LinearLayout
-            android:layout_width="219dp"
+            android:layout_width="280dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/nome"
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:text="Nome"
                 android:textAlignment="center"
@@ -47,19 +47,10 @@
             android:layout_height="63dp"
             android:layout_gravity="center"
             android:orientation="horizontal"
-            android:layout_marginRight="7dp"
+            android:layout_marginRight="13dp"
             tools:layout_editor_absoluteX="438dp"
             tools:layout_editor_absoluteY="-2dp">
 
-
-            <ImageView
-                android:id="@+id/horario"
-                android:layout_width="43dp"
-                android:layout_height="39dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="5dp"
-                android:onClick="verhorarioP"
-                android:src="@drawable/horarios_foreground" />
 
             <ImageView
                 android:id="@+id/EliminarPsicologo"

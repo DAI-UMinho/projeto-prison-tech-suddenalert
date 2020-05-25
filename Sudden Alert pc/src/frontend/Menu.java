@@ -202,9 +202,9 @@ setSize(larg,alt);
     }//GEN-LAST:event_formWindowActivated
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ListHorarios xListHorarios = new ListHorarios();
-        xListHorarios.setLocationRelativeTo(null);
-        xListHorarios.setVisible(true);
+        Horarios_popup xHor = new Horarios_popup();
+        xHor.setLocationRelativeTo(null);
+        xHor.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

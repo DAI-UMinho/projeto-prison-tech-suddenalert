@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private String latitudePris;
     private String longitudePris;
     private String coordenadas;
-    private int estatuto;
+    public static int estatuto;
     private ImageView imageView11;
     private ImageView imageView9;
     private ImageView imageView12;
@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 catch (Exception e){
                     System.out.print("erro");
                 }
-
                 if (sucess == true) {
                     Toast.makeText(getApplicationContext(), "Utilizador encontrado!", Toast.LENGTH_SHORT).show();
                     btnGetLocation.setEnabled(true);
@@ -338,7 +337,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
              }
 
             } else {
-             System.out.println("aquimal");
                  if (sucess==false) {
                     Toast.makeText(getApplicationContext(), "Erro na Procura de Utilizador!", Toast.LENGTH_SHORT).show();
                 } else {

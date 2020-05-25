@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +33,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class documentos_diretor extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
@@ -68,8 +73,43 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
+        getMenuInflater().inflate(R.menu.search, menu);
+        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        MenuItem sort = menu.findItem(R.id.filter);
+        MenuItem numero = menu.findItem(R.id.numero);
+        sort.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList();
+                return false;
+            }
+        });
+        numero.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList2();
+                return false;
+            }
+        });
+        SearchView searchView = (SearchView)myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)){
+                    myAppAdapter.filter("");
+                    listView.clearTextFilter();
+                }
+                else{
+                    myAppAdapter.filter(newText);
+                }
+                return false;
+            }
+        });
         return true;
     }
 
@@ -86,7 +126,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -102,21 +142,21 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
             Button listahor;
-            Button meuhor;
+            Button addhor;
             myDialog.setContentView(R.layout.horariospopup);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listahor = (Button) myDialog.findViewById(R.id.listahor);
-            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            addhor = (Button) myDialog.findViewById(R.id.meuhor);
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(documentos_diretor.this, tabela_horario.class));
                 }
             });
-            meuhor.setOnClickListener(new View.OnClickListener() {
+            addhor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(documentos_diretor.this, horario_diretor.class));
+                    startActivity(new Intent(documentos_diretor.this, Adicionar_horario.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -445,6 +485,44 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
                 // viewHolder.gravidade.setText(reportList.get(position).getgravidade());
                 return rowView;
 
+            }
+            public void filter(String charText) {
+                charText = charText.toLowerCase(Locale.getDefault());
+                reportList.clear();
+                if(charText.length()==0){
+                    reportList.addAll(arrayList);
+                }
+                else{
+                    for (Documentos nome : arrayList ){
+                        if(nome.getNomeRel().toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            reportList.add(nome);
+                        }
+                    }
+                    for (Documentos data : arrayList ){
+                        if(data.getData().toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            reportList.add(data);
+                        }
+                    }
+                }
+                notifyDataSetChanged();
+            }
+            private void sortArrayList(){
+                Collections.sort(documentosArrayList, new Comparator<Documentos>() {
+                    @Override
+                    public int compare(Documentos o1, Documentos o2) {
+                        return o1.getNomeRel().compareTo(o2.getNomeRel());                    }
+                });
+                myAppAdapter.notifyDataSetChanged();
+            }
+            private void sortArrayList2(){
+                Collections.sort(documentosArrayList, new Comparator<Documentos>() {
+                    @Override
+                    public int compare(Documentos o1, Documentos o2) {
+                        return o1.getData().compareTo(o2.getData());                    }
+                });
+                myAppAdapter.notifyDataSetChanged();
             }
     /*
     public void lerRelatorio(View view){

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +41,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class tabela_guarda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog, eliminaGua;
@@ -104,8 +109,43 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
+        getMenuInflater().inflate(R.menu.letras, menu);
+        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        MenuItem sort = menu.findItem(R.id.filter);
+       // MenuItem numero = menu.findItem(R.id.numero);
+        sort.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList();
+                return false;
+            }
+        });
+       /* numero.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                myAppAdapter.sortArrayList2();
+                return false;
+            }
+        });*/
+        SearchView searchView = (SearchView)myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)){
+                    myAppAdapter.filter("");
+                    listView.clearTextFilter();
+                }
+                else{
+                    myAppAdapter.filter(newText);
+                }
+                return false;
+            }
+        });
         return true;
     }
     /*
@@ -129,7 +169,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -376,10 +416,51 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                 viewHolder.pontos.setText(entidadesList.get(position).getPontos());
                 return rowView;
             }
+            public void filter(String charText) {
+                charText = charText.toLowerCase(Locale.getDefault());
+                entidadesList.clear();
+                if(charText.length()==0){
+                    entidadesList.addAll(arrayList);
+                }
+                else{
+                    for (Entidades nome : arrayList ){
+                        if(nome.getNome().toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            entidadesList.add(nome);
+                        }
+                    }
+                    for (Entidades pontos : arrayList ){
+                        if(pontos.getPontos().toLowerCase(Locale.getDefault())
+                                .contains(charText)){
+                            entidadesList.add(pontos);
+                        }
+                    }
+                }
+                notifyDataSetChanged();
+            }
+            private void sortArrayList(){
+                Collections.sort(entidadesArrayList, new Comparator<Entidades>() {
+                    @Override
+                    public int compare(Entidades o1, Entidades o2) {
+                        return o1.getNome().compareTo(o2.getNome());                    }
+                });
+                myAppAdapter.notifyDataSetChanged();
+            }
+           /* private void sortArrayList2(){
+                Collections.sort(entidadesList, new Comparator<Entidades>() {
+                    @Override
+                    public int compare(Entidades o1, Entidades o2) {
+                        return o1.getPontos() - o2.getPontos();
+                    }
+
+
+                });
+                myAppAdapter.notifyDataSetChanged();
+            }*/
         }
     }
     public void eliminarGua(View view){
-        motivoE = motivo.getText().toString().trim();
+      //  motivoE = motivo.getText().toString().trim();
         EliminarGuarda eliminarGua  =new EliminarGuarda();
         eliminarGua.execute();
         try {
@@ -404,7 +485,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
                     String query = "UPDATE Profile SET deleted='1' where scan = '"+ entidadesArrayList.get(posicao).getScan()+ "'";
                     Statement preparedStatement = connection.createStatement();
                     preparedStatement.executeUpdate(query);
-                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', '"+motivoE+"', '"+entidadesArrayList.get(posicao).getScan()+"', 'Guarda');";
+                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', '', '"+entidadesArrayList.get(posicao).getScan()+"', 'Guarda');";
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query2);
                 }
@@ -424,7 +505,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         eliminaGua.setContentView(R.layout.eliminar_g);
         txtclose = (TextView) eliminaGua.findViewById(R.id.txtclose);
         nomeGuarda = (TextView) eliminaGua.findViewById(R.id.nomeG);
-        motivo = (EditText) eliminaGua.findViewById(R.id.motivo);
+       // motivo = (EditText) eliminaGua.findViewById(R.id.motivo);
         eliminar = (ImageView) eliminaGua.findViewById(R.id.imageView20);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -442,7 +523,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
         eliminaGua.show();
     }
     public void alterarH(View v){
-        startActivity(new Intent(this, horario_diretor.class));
+        startActivity(new Intent(this, Alterar_horario.class));
     }
 
 }

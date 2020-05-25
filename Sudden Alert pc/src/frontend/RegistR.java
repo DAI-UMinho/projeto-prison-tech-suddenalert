@@ -595,32 +595,32 @@ try{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(registar_nome.getText().equals("")){
+        if(registar_nome.getText().equals("") || registar_nome.getText().equals("Insira aqui o nome")){
             registar_nome.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Nome é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_numero.getText().equals("")){
+        if(registar_numero.getText().equals("") || registar_numero.getText().equals("Insira aqui o número")){
             registar_numero.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Número é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_ala.getText().equals("")){
+        if(registar_ala.getText().equals("") || registar_ala.getText().equals("Insira aqui a ala")){
             registar_ala.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Ala é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_piso.getText().equals("")){
+        if(registar_piso.getText().equals("") || registar_piso.getText().equals("Insira aqui o piso")){
             registar_piso.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Piso é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_data_nascimento.getText().equals("")){
+        if(registar_data_nascimento.getText().equals("") || registar_data_nascimento.getText().equals("Ano/Mês/Dia")){
             registar_data_nascimento.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Data de Nascimento é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(registar_data_entrada.getText().equals("")){
+        if(registar_data_entrada.getText().equals("") || registar_data_entrada.getText().equals("Ano/Mês/Dia")){
             registar_data_entrada.requestFocus();
             JOptionPane.showMessageDialog(null,"O campo Data de Entrega é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
@@ -916,9 +916,9 @@ try{
     }//GEN-LAST:event_horMousePressed
 
     private void horActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horActionPerformed
-        ListHorarios xListHorarios = new ListHorarios();
-        xListHorarios.setLocationRelativeTo(null);
-        xListHorarios.setVisible(true);
+        Horarios_popup xHorarios = new Horarios_popup();
+        xHorarios.setLocationRelativeTo(null);
+        xHorarios.setVisible(true);
         this.dispose();
         if (!this.hor.isSelected()) {
             this.home.setColorNormal(new Color(243, 243, 243));

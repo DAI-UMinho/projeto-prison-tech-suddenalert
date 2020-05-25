@@ -29,8 +29,8 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import static javax.swing.text.html.HTML.Tag.I;
-import java.text.SimpleDateFormat;  
-import java.util.Date;  
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JFileChooser;
 
 /**
@@ -61,83 +61,81 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         ImageIcon i = new ImageIcon(img2);
         jButton1.setIcon(i);*/
     }
-    
-    public void RegistarEntidade(String scan, int id_type, String nome, String location, int points, String dataNascimento, String email){
-try{
+
+    public void RegistarEntidade(String scan, int id_type, String nome, String location, int points, String dataNascimento, String email) {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            if (con==null) {
-                JOptionPane.showMessageDialog(null,"Ocorreu um erro com a conexão","Aviso",JOptionPane.ERROR_MESSAGE);
-            }
-            else {
-              String query1 = "SELECT COUNT(1) FROM Profile WHERE scan like'"+scan+"'"; 
-              Statement statement1 = con.createStatement();
-              ResultSet resultSet = statement1.executeQuery(query1);
-              while (resultSet.next()) {
-                  valor = resultSet.getInt("COUNT(1)");
-              }
-            if (valor==0) {
-            String query = "Insert into Profile(scan, id_type, name, location, points, birthday, email)values(?,?,?,?,?,?,?)";          
-            PreparedStatement pst = con.prepareStatement(query);
-            pst.setString(1, scan);
-            pst.setInt(2, id_type);
-            pst.setString(3, nome);
-            pst.setString(4, location);
-            pst.setInt(5, points);
-            pst.setString(6, dataNascimento);
-            pst.setString(7, email);
-            pst.executeUpdate();
-            if (id_type==1){
-            String query2 = "Insert into Historico (acao, motivo, scan, tipo) values ('Inserção', '', '"+scan+"', 'Guarda')";          
-            PreparedStatement psta = con.prepareStatement(query2);
-            psta.executeUpdate(); }
-            else {
-            String query3 = "Insert into Historico (acao, motivo, scan, tipo) values ('Inserção', '', '"+scan+"', 'Psicólogo')";          
-            PreparedStatement psta = con.prepareStatement(query3);
-            psta.executeUpdate();
-            }
-            try {
-            ProgressBar xProgress = new ProgressBar();
-            xProgress.setLocationRelativeTo(null);
-            xProgress.setVisible(true);
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int num = 1; num <= 100; num++) {
-                        try {
-                            xProgress.jp_progress.UpdateProgress(num);
-                            xProgress.jp_progress.repaint();
-                            Thread.sleep(7);
-                            scan1.setText("");
-                            nome1.setText("");
-                            data_nascimento.setText("");
-                            email1.setText("");
-                            buttonGroup1.clearSelection();
-                            latitude.setText("");
-                            longitude.setText("");
-                        } catch (InterruptedException ex) {
-                            java.util.logging.Logger.getLogger(RegistEnt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                        }
-                    }
+            if (con == null) {
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro com a conexão", "Aviso", JOptionPane.ERROR_MESSAGE);
+            } else {
+                String query1 = "SELECT COUNT(1) FROM Profile WHERE scan like'" + scan + "'";
+                Statement statement1 = con.createStatement();
+                ResultSet resultSet = statement1.executeQuery(query1);
+                while (resultSet.next()) {
+                    valor = resultSet.getInt("COUNT(1)");
                 }
-            }).start();
-        } catch (Exception err) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
-        }
-            } 
-            else {
-                JOptionPane.showMessageDialog(null,"Scan já usado por outra Entidade","Aviso",JOptionPane.ERROR_MESSAGE);
+                if (valor == 0) {
+                    String query = "Insert into Profile(scan, id_type, name, location, points, birthday, email)values(?,?,?,?,?,?,?)";
+                    PreparedStatement pst = con.prepareStatement(query);
+                    pst.setString(1, scan);
+                    pst.setInt(2, id_type);
+                    pst.setString(3, nome);
+                    pst.setString(4, location);
+                    pst.setInt(5, points);
+                    pst.setString(6, dataNascimento);
+                    pst.setString(7, email);
+                    pst.executeUpdate();
+                    if (id_type == 1) {
+                        String query2 = "Insert into Historico (acao, motivo, scan, tipo) values ('Inserção', '', '" + scan + "', 'Guarda')";
+                        PreparedStatement psta = con.prepareStatement(query2);
+                        psta.executeUpdate();
+                    } else {
+                        String query3 = "Insert into Historico (acao, motivo, scan, tipo) values ('Inserção', '', '" + scan + "', 'Psicólogo')";
+                        PreparedStatement psta = con.prepareStatement(query3);
+                        psta.executeUpdate();
+                    }
+                    try {
+                        ProgressBar xProgress = new ProgressBar();
+                        xProgress.setLocationRelativeTo(null);
+                        xProgress.setVisible(true);
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int num = 1; num <= 100; num++) {
+                                    try {
+                                        xProgress.jp_progress.UpdateProgress(num);
+                                        xProgress.jp_progress.repaint();
+                                        Thread.sleep(7);
+                                        scan1.setText("");
+                                        nome1.setText("");
+                                        data_nascimento.setText("");
+                                        email1.setText("");
+                                        buttonGroup1.clearSelection();
+                                        latitude.setText("");
+                                        longitude.setText("");
+                                    } catch (InterruptedException ex) {
+                                        java.util.logging.Logger.getLogger(RegistEnt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }
+                        }).start();
+                    } catch (Exception err) {
+                        JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Scan já usado por outra Entidade", "Aviso", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            }
-}
-     catch(Exception e) {
-           JOptionPane.showMessageDialog(null, e); 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -674,53 +672,82 @@ try{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (nome1.getText().equals("")) {
+        if (nome1.getText().equals("") || nome1.getText().equals("Insira aqui o nome")) {
             nome1.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Nome é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (data_nascimento.getText().equals("")) {
+        if (data_nascimento.getText().equals("") || data_nascimento.getText().equals("Ano/Mês/Dia")) {
             data_nascimento.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Data de Nascimento é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (email1.getText().equals("")) {
+        if (email1.getText().equals("") || email1.getText().equals("Insira aqui o email")) {
             email1.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Email é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (latitude.getText().equals("")) {
+        if (latitude.getText().equals("") || latitude.getText().equals("Insira aqui a latitude")) {
             latitude.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Latitude é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (longitude.getText().equals("")) {
+        if (longitude.getText().equals("") || longitude.getText().equals("Insira aqui a longitude")) {
             longitude.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Longitude é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (scan1.getText().equals("")) {
+        if (scan1.getText().equals("") || scan1.getText().equals("Insira aqui o valor do Scan")) {
             scan1.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Scan é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
+        try {
+            ProgressBar xProgress = new ProgressBar();
+            xProgress.setLocationRelativeTo(null);
+            xProgress.setVisible(true);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int num = 1; num <= 100; num++) {
+                        try {
+                            xProgress.jp_progress.UpdateProgress(num);
+                            xProgress.jp_progress.repaint();
+                            Thread.sleep(7);
+                            nome1.setText("");
+                            data_nascimento.setText("");
+                            email1.setText("");
+                            latitude.setText("");
+                            longitude.setText("");
+                            scan1.setText("");
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(RegistR.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }).start();
+        } catch (Exception err) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
+
         String s = scan1.getText();
         String no = nome1.getText();
         String dn = data_nascimento.getText();
         int id_type = 0;
-        if (Psicólogo.isSelected()){
-        id_type = 2;
-    }
-        if(Guarda.isSelected()) {
+        if (Psicólogo.isSelected()) {
+            id_type = 2;
+        }
+        if (Guarda.isSelected()) {
             id_type = 1;
         }
         String la = latitude.getText();
         String lo = longitude.getText();
-        String location = la+","+lo;
+        String location = la + "," + lo;
         String e = email1.getText();
         int p = 0;
-        
+
         RegistarEntidade(s, id_type, no, location, p, dn, e);
         /*ListEnt_popup xListEnt_popup = new ListEnt_popup();
         xListEnt_popup.setLocationRelativeTo(null);
@@ -900,9 +927,9 @@ try{
     }//GEN-LAST:event_horMousePressed
 
     private void horActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horActionPerformed
-        ListHorarios xListHorarios = new ListHorarios();
-        xListHorarios.setLocationRelativeTo(null);
-        xListHorarios.setVisible(true);
+        Horarios_popup xHorarios = new Horarios_popup();
+        xHorarios.setLocationRelativeTo(null);
+        xHorarios.setVisible(true);
         this.dispose();
         if (!this.hor.isSelected()) {
             this.home.setColorNormal(new Color(243, 243, 243));
@@ -1024,7 +1051,7 @@ try{
     }//GEN-LAST:event_scan1ActionPerformed
 
     private void scan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scan1MouseClicked
-       scan1.setText("");
+        scan1.setText("");
     }//GEN-LAST:event_scan1MouseClicked
 
     /**

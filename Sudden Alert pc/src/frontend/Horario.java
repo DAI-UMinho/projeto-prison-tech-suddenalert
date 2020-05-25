@@ -5,6 +5,9 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -12,8 +15,11 @@ import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -21,18 +27,249 @@ import static javax.swing.text.html.HTML.Tag.I;
  */
 public class Horario extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
-    
+    private int tipoHor;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    String inicio, folga, almoco, fim;
     /**
      * Creates new form Reclusos
      */
     public Horario() {
         initComponents();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         setIcon();
+        nome.setEditable(false);
+        tipo.setEditable(false);
         jTable_h.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,15));
         jTable_h.getTableHeader().setOpaque(false);
         jTable_h.getTableHeader().setBackground(new Color(176,2,37));
         jTable_h.getTableHeader().setForeground(new Color(255,255,255));
         jTable_h.setRowHeight(61);
+        show_Horario();
+    }
+     public void show_Horario(){
+         
+       
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            
+            
+            tipoHor = ListHorarios.id;
+            
+                
+                
+            
+            String query2 = "Select Entrada, Saida, Almoco, Folga from Schedule where idSchedule like '"+tipoHor+"'";
+            Statement st2 = con.createStatement();
+            ResultSet rs2 = st2.executeQuery(query2);
+            while (rs2.next()) {
+               inicio = rs2.getString("Entrada");
+               fim = rs2.getString("Saida");
+               almoco = rs2.getString("Almoco");
+               folga = rs2.getString("Folga");
+              }
+            if(folga.equals("Segunda")){
+            jTable_h.getModel().setValueAt("Folga", 0, 0);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            
+            }
+            else if (folga.equals("Terça")){
+            jTable_h.getModel().setValueAt("Folga", 1, 0);
+            
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Quarta")){
+            jTable_h.getModel().setValueAt("Folga", 2, 0);
+            
+            jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Quinta")){
+            jTable_h.getModel().setValueAt("Folga", 3, 0);
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Sexta")){
+            jTable_h.getModel().setValueAt("Folga", 4, 0);
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Sabado")){
+            jTable_h.getModel().setValueAt("Folga", 5, 0);
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 6, 0);
+            jTable_h.getModel().setValueAt(fim, 6, 1);
+            jTable_h.getModel().setValueAt(almoco, 6, 2);
+            }
+            else if (folga.equals("Domingo")){
+            jTable_h.getModel().setValueAt("Folga", 6, 0);
+             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(fim, 0, 1);
+            jTable_h.getModel().setValueAt(almoco, 0, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 1, 0);
+            jTable_h.getModel().setValueAt(fim, 1, 1);
+            jTable_h.getModel().setValueAt(almoco, 1, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 2, 0);
+            jTable_h.getModel().setValueAt(fim, 2, 1);
+            jTable_h.getModel().setValueAt(almoco, 2, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 3, 0);
+            jTable_h.getModel().setValueAt(fim, 3, 1);
+            jTable_h.getModel().setValueAt(almoco, 3, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 4, 0);
+            jTable_h.getModel().setValueAt(fim, 4, 1);
+            jTable_h.getModel().setValueAt(almoco, 4, 2);
+            
+            jTable_h.getModel().setValueAt(inicio, 5, 0);
+            jTable_h.getModel().setValueAt(fim, 5, 1);
+            jTable_h.getModel().setValueAt(almoco, 5, 2);     
+            }   
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        } 
     }
 
     /**
@@ -61,8 +298,11 @@ public class Horario extends javax.swing.JFrame implements Serializable {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        tipo = new javax.swing.JTextField();
+        nome = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -114,23 +354,23 @@ public class Horario extends javax.swing.JFrame implements Serializable {
 
         jTable_h.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "0h-6h", "6h-12h", "12h-18h", "18h-24h"
+                "Entrada", "Saída", "Almoço"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -225,6 +465,17 @@ public class Horario extends javax.swing.JFrame implements Serializable {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/delete.png"))); // NOI18N
+        jButton3.setText("Remover");
+        jButton3.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -235,8 +486,10 @@ public class Horario extends javax.swing.JFrame implements Serializable {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 999, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(143, 143, 143)
+                .addGap(121, 121, 121)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackButton)
                 .addGap(65, 65, 65))
@@ -248,16 +501,27 @@ public class Horario extends javax.swing.JFrame implements Serializable {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2))
-                .addGap(18, 31, Short.MAX_VALUE)
+                .addGap(18, 25, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
 
-        jLabel3.setText("Tipo");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Tipo:");
 
-        jLabel4.setText("Nome");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setText("Nome:");
+
+        tipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tipo.setText("tipo");
+        tipo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        nome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        nome.setText("nome");
+        nome.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -266,14 +530,18 @@ public class Horario extends javax.swing.JFrame implements Serializable {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(321, 321, 321)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(299, 299, 299)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 354, Short.MAX_VALUE)
+                        .addGap(126, 126, 126)
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(159, 159, 159))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -288,9 +556,12 @@ public class Horario extends javax.swing.JFrame implements Serializable {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -323,6 +594,10 @@ public class Horario extends javax.swing.JFrame implements Serializable {
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -331,6 +606,7 @@ public class Horario extends javax.swing.JFrame implements Serializable {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -348,6 +624,8 @@ public class Horario extends javax.swing.JFrame implements Serializable {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable_h;
     private java.awt.Label label1;
+    private javax.swing.JTextField nome;
+    private javax.swing.JTextField tipo;
     // End of variables declaration//GEN-END:variables
 
     private void setIcon() {

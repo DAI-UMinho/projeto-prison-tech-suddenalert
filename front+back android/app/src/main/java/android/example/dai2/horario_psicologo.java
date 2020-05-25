@@ -330,7 +330,8 @@ private TextView s1, s2, s3, t1, t2, t3, q1, q2, q3, qi1, qi2, qi3, sx1, sx2, sx
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
+            startActivity(new Intent(horario_psicologo.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

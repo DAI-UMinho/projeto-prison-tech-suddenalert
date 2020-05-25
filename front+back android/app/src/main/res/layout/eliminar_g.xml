@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
-    android:layout_height="250dp"
+    android:layout_height="150dp"
     android:layout_gravity="center"
     android:background="@color/cinza_background"
     android:orientation="vertical"
@@ -13,32 +13,15 @@
         android:id="@+id/Nome"
         android:layout_width="78dp"
         android:layout_height="27dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="256dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginEnd="240dp"
+        android:layout_marginBottom="37dp"
         android:gravity="center"
         android:text="Nome:"
         android:textAllCaps="true"
         android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
-
-    <TextView
-        android:id="@+id/nome"
-        android:layout_width="78dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="128dp"
-        android:layout_marginEnd="256dp"
-        android:gravity="center"
-        android:text="Motivo:"
-        android:textAllCaps="true"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView26"
@@ -51,19 +34,6 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/motivo"
-        android:layout_width="235dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="19dp"
-        android:gravity="center"
-        android:text="Motivo"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView20"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeG" />
 
     <TextView
         android:id="@+id/txtclose"
@@ -106,12 +76,10 @@
         android:id="@+id/nomeG"
         android:layout_width="166dp"
         android:layout_height="28dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="46dp"
-        android:layout_marginBottom="15dp"
         android:text="Nome do guarda"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/motivo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
 

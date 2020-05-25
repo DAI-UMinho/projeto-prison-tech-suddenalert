@@ -96,7 +96,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
                 return false;
             }
         });*/
-        /*Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -107,7 +107,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);*/
+        navigationView.setNavigationItemSelectedListener(this);
         btnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,9 +173,15 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
 
             if (sucess == true) {
                 Toast.makeText(this, "Entidade criada com sucesso!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, android.example.dai2.inicio_diretor.class));
+                if(tipo.equals("Guarda")){
 
-            } else {
+                    startActivity(new Intent(this, android.example.dai2.tabela_guarda.class));
+
+                }
+                else {                startActivity(new Intent(this, android.example.dai2.tabela_psicologo.class));
+                }
+            }
+               else {
                 Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
             }
         }
@@ -373,7 +379,8 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
+            startActivity(new Intent(Main3Activity.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -389,21 +396,21 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
             Button listahor;
-            Button meuhor;
+            Button addhor;
             myDialog.setContentView(R.layout.horariospopup);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listahor = (Button) myDialog.findViewById(R.id.listahor);
-            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            addhor = (Button) myDialog.findViewById(R.id.meuhor);
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(Main3Activity.this, tabela_horario.class));
                 }
             });
-            meuhor.setOnClickListener(new View.OnClickListener() {
+            addhor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(Main3Activity.this, horario_diretor.class));
+                    startActivity(new Intent(Main3Activity.this, Adicionar_horario.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {

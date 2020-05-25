@@ -30,6 +30,7 @@ import javax.swing.table.TableModel;
 import static javax.swing.text.html.HTML.Tag.I;
 import net.proteanit.sql.DbUtils;
 import java.util.Date;
+import javax.swing.table.TableRowSorter;
 
 
 /**
@@ -38,12 +39,27 @@ import java.util.Date;
  */
 public class Historico extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     
     /**
      * Creates new form Reclusos
      */
     public Historico(){
         initComponents();
+        jComboP.setBackground(Color.white);
+        DefaultTableModel modelo = (DefaultTableModel) jTable_h.getModel();
+        jTable_h.setRowSorter(new TableRowSorter(modelo));
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            java.sql.Connection con = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         setIcon();
         jTable_h.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,12));
         jTable_h.getTableHeader().setOpaque(false);
@@ -107,6 +123,97 @@ public class Historico extends javax.swing.JFrame implements Serializable {
         }
     }
     
+        private void pesquisar() {
+        String sqldata = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.title like ?";
+        String sqlacao = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.gravidade like ?";
+        String sqlname = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.name like ?";
+        String sqltipo = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.email like ?";
+        String sqlmotivo = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.date like ?";
+        String itemText = (String) jComboP.getSelectedItem();
+        if ("Data".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqldata);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_h.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+        if ("Ação".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlacao);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_h.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+        if ("Nome".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlname);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_h.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+        if ("Tipo".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqltipo);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_h.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+        if ("Motivo".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlmotivo);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_h.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+    
 
 
     /**
@@ -124,12 +231,12 @@ public class Historico extends javax.swing.JFrame implements Serializable {
         jPanel4 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboP = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_h = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         sidepane9 = new javax.swing.JPanel();
         ent = new rsbuttom.RSButtonMetro();
@@ -165,22 +272,33 @@ public class Historico extends javax.swing.JFrame implements Serializable {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jTextField1.setText("Pesquisar...");
         jTextField1.setInheritsPopupMenu(true);
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
 
-        jLabel1.setText("Filtrar Lista Por:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome do Relatório", "Nível de Gravidade", "Nome do Psicólogo", "Email do Psicólogo", "Data" }));
-        jComboBox1.setInheritsPopupMenu(true);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboP.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Data", "Ação", "Nome", "Tipo", "Motivo" }));
+        jComboP.setInheritsPopupMenu(true);
+        jComboP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboPActionPerformed(evt);
             }
         });
 
@@ -205,6 +323,7 @@ public class Historico extends javax.swing.JFrame implements Serializable {
             }
         });
 
+        jTable_h.setAutoCreateRowSorter(true);
         jTable_h.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -230,13 +349,29 @@ public class Historico extends javax.swing.JFrame implements Serializable {
         });
         jTable_h.setFocusable(false);
         jTable_h.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        jTable_h.setRowHeight(24);
-        jTable_h.setSelectionBackground(new java.awt.Color(243, 243, 243));
+        jTable_h.setRowHeight(20);
+        jTable_h.setSelectionBackground(new java.awt.Color(255, 102, 102));
         jTable_h.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable_h.setShowGrid(true);
         jTable_h.getTableHeader().setReorderingAllowed(false);
         jTable_h.setVerifyInputWhenFocusTarget(false);
+        jTable_h.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable_hKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable_h);
+
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/delete.png"))); // NOI18N
+        jButton3.setText("Remover");
+        jButton3.setToolTipText("");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -245,18 +380,18 @@ public class Historico extends javax.swing.JFrame implements Serializable {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(121, 121, 121)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackButton)
                 .addGap(128, 128, 128))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(167, 167, 167))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
@@ -267,18 +402,20 @@ public class Historico extends javax.swing.JFrame implements Serializable {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48))
         );
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/historico.png"))); // NOI18N
@@ -469,9 +606,9 @@ public class Historico extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboPActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -586,9 +723,9 @@ public class Historico extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_reclMousePressed
 
     private void horActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horActionPerformed
-        ListHorarios xListHorarios = new ListHorarios();
-        xListHorarios.setLocationRelativeTo(null);
-        xListHorarios.setVisible(true);
+        Horarios_popup xHorarios = new Horarios_popup();
+        xHorarios.setLocationRelativeTo(null);
+        xHorarios.setVisible(true);
         this.dispose();
         if (!this.hor.isSelected()) {
             this.home.setColorNormal(new Color(243, 243, 243));
@@ -735,6 +872,22 @@ public class Historico extends javax.swing.JFrame implements Serializable {
         this.home.setSelected(false);
     }//GEN-LAST:event_entMousePressed
 
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1MouseClicked
+
+    private void jTable_hKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable_hKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable_hKeyReleased
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        //pesquisar();
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -747,8 +900,8 @@ public class Historico extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> jComboP;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel39;

@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import static javax.swing.text.html.HTML.Tag.I;
 import net.proteanit.sql.DbUtils;
 
@@ -35,6 +36,9 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
 
     public ListGuardas() {
         initComponents();
+        jComboP.setBackground(Color.white);
+        DefaultTableModel modelo = (DefaultTableModel) jTable_Display_Guardas.getModel();
+        jTable_Display_Guardas.setRowSorter(new TableRowSorter(modelo));
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -65,7 +69,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             ResultSet rs = st.executeQuery(query1);
             Entidade guarda;
             while (rs.next()) {
-                guarda = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+                guarda = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"), rs.getInt("idSchedule"));
                 guardasList.add(guarda);
             }
         } catch (Exception e) {
@@ -110,21 +114,11 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
 
     private void pesquisar() {
         String sql = "select name as Nome, email as Email, points as Pontos from Profile where deleted='0' and id_type='1' and name like ?";
+        String sqle = "select name as Nome, email as Email, points as Pontos from Profile where deleted='0' and id_type='1' and email like ?";
         String sqlp = "select name as Nome, email as Email, points as Pontos from Profile where deleted='0' and id_type='1' and points like ?";
-        try {
-            if (jTextField1.getText().matches("^[0-9]+$")) {
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
-                String user = "suddenalertuser";
-                String pass = "Suddenalert.0";
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                pst = con.prepareStatement(sqlp);
-                pst.setString(1, jTextField1.getText() + "%");
-                rs = pst.executeQuery();
-                jTable_Display_Guardas.setModel(DbUtils.resultSetToTableModel(rs));
-
-            } else {
+        String itemText = (String) jComboP.getSelectedItem();
+        if ("Nome".equals(itemText)) {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
                 String user = "suddenalertuser";
@@ -135,9 +129,43 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
                 pst.setString(1, jTextField1.getText() + "%");
                 rs = pst.executeQuery();
                 jTable_Display_Guardas.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        }
+
+        if ("Email".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqle);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_Display_Guardas.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+        
+        if ("Pontos".equals(itemText)) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+                String user = "suddenalertuser";
+                String pass = "Suddenalert.0";
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                pst = con.prepareStatement(sqlp);
+                pst.setString(1, jTextField1.getText() + "%");
+                rs = pst.executeQuery();
+                jTable_Display_Guardas.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
     }
 
@@ -159,8 +187,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         jTable_Display_Guardas = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboP = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -200,6 +227,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTable_Display_Guardas.setAutoCreateRowSorter(true);
         jTable_Display_Guardas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -216,6 +244,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
                 return canEdit [columnIndex];
             }
         });
+        jTable_Display_Guardas.setRowHeight(20);
         jTable_Display_Guardas.setSelectionBackground(new java.awt.Color(255, 102, 102));
         jTable_Display_Guardas.setVerifyInputWhenFocusTarget(false);
         jTable_Display_Guardas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -246,22 +275,19 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/pesquisar.png"))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel1.setText("Filtrar Lista Por:");
-
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Email", "Pontos" }));
-        jComboBox1.setInheritsPopupMenu(true);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboP.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Email", "Pontos" }));
+        jComboP.setInheritsPopupMenu(true);
+        jComboP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboPActionPerformed(evt);
             }
         });
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/delete.png"))); // NOI18N
-        jButton1.setText("Eliminar");
+        jButton1.setText("Remover");
         jButton1.setInheritsPopupMenu(true);
         jButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButton1.setMaximumSize(new java.awt.Dimension(69, 79));
@@ -300,12 +326,10 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(175, 175, 175))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -317,11 +341,11 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboP, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -570,9 +594,9 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboPActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int i = jTable_Display_Guardas.getSelectedRow();
@@ -707,9 +731,9 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_horMousePressed
 
     private void horActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horActionPerformed
-        ListHorarios xListHorarios = new ListHorarios();
-        xListHorarios.setLocationRelativeTo(null);
-        xListHorarios.setVisible(true);
+        Horarios_popup xHorarios = new Horarios_popup();
+        xHorarios.setLocationRelativeTo(null);
+        xHorarios.setVisible(true);
         this.dispose();
         if (!this.hor.isSelected()) {
             this.home.setColorNormal(new Color(243, 243, 243));
@@ -816,8 +840,7 @@ public class ListGuardas extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro home;
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> jComboP;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel39;

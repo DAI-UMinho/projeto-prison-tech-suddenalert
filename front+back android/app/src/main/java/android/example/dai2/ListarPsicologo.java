@@ -26,7 +26,6 @@ public class ListarPsicologo extends ArrayAdapter<Entidades> {
         View rowView = inflater.inflate(R.layout.linha_psicologo, parent, false);
         TextView nome = (TextView) rowView.findViewById(R.id.nome);
        TextView email = (TextView) rowView.findViewById(R.id.email);
-        ImageView horario = (ImageView) rowView.findViewById(R.id.horario) ;
       //  TextView funcao = (TextView) rowView.findViewById(R.id.funcao);
 
 

@@ -344,7 +344,7 @@ public class Relatorio extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_nomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Documentos xDocumentos = new Documentos();
+        ListRelatorios xDocumentos = new ListRelatorios();
         xDocumentos.setLocationRelativeTo(null);
         xDocumentos.setVisible(true);
         this.dispose();

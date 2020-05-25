@@ -50,6 +50,14 @@ public class inicio_diretor extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main2, menu);
+        MenuItem ajuda = menu.findItem(R.id.ajuda);
+        ajuda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(new Intent(inicio_diretor.this, ajuda.class));
+                return false;
+            }
+        });
         return true;
     }
 
@@ -85,21 +93,21 @@ public class inicio_diretor extends AppCompatActivity
     public void entrarhor (View v) {
         TextView txtclose;
         Button listahor;
-        Button meuhor;
+        Button addhor;
         myDialog.setContentView(R.layout.horariospopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         listahor = (Button) myDialog.findViewById(R.id.listahor);
-        meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+        addhor = (Button) myDialog.findViewById(R.id.addhor);
         listahor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(inicio_diretor.this, tabela_horario.class));
             }
         });
-        meuhor.setOnClickListener(new View.OnClickListener() {
+        addhor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(inicio_diretor.this, horario_diretor.class));
+                startActivity(new Intent(inicio_diretor.this, Adicionar_horario.class));
             }
         });
         txtclose.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +162,7 @@ public class inicio_diretor extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.ajuda){
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -170,21 +178,21 @@ public class inicio_diretor extends AppCompatActivity
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
             Button listahor;
-            Button meuhor;
+            Button addhor;
             myDialog.setContentView(R.layout.horariospopup);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listahor = (Button) myDialog.findViewById(R.id.listahor);
-            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            addhor = (Button) myDialog.findViewById(R.id.addhor);
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(inicio_diretor.this, tabela_horario.class));
                 }
             });
-            meuhor.setOnClickListener(new View.OnClickListener() {
+            addhor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(inicio_diretor.this, horario_diretor.class));
+                    startActivity(new Intent(inicio_diretor.this, Adicionar_horario.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
