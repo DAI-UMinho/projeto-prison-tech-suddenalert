@@ -85,7 +85,7 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
         label1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label1.setFont(new java.awt.Font("Tw Cen MT", 1, 35)); // NOI18N
         label1.setForeground(new java.awt.Color(204, 204, 204));
-        label1.setText("Eliminar Recluso");
+        label1.setText("Remover Recluso");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/Reck.jpg"))); // NOI18N
 
@@ -117,7 +117,7 @@ public class EliminarR extends javax.swing.JFrame implements Serializable {
 
         jLabel3.setBackground(new java.awt.Color(243, 243, 243));
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel3.setText("Deseja mesmo eliminar este recluso? ");
+        jLabel3.setText("Deseja mesmo remover este recluso? ");
 
         motivo_remoção.setText("Insira aqui o motivo");
         motivo_remoção.addActionListener(new java.awt.event.ActionListener() {

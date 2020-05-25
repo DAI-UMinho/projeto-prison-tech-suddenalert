@@ -86,7 +86,7 @@ public class Relatorios_popup extends javax.swing.JFrame implements Serializable
 
         jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Listagem Relatórios");
+        jLabel13.setText("Listagem de Relatórios");
 
         jPanel8.setBackground(new java.awt.Color(212, 13, 19));
 
