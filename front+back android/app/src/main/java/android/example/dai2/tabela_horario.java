@@ -42,6 +42,7 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
     private boolean sucess = false;
     private int posicao;
     public static int id_schedule;
+    public static String nomeAl, scanAl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -343,13 +344,13 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT name, idschedule FROM Profile WHERE id_type not like 3 AND deleted like 0";
+                    String query = "SELECT scan, name, idschedule FROM Profile WHERE id_type not like 3 AND deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                entidadesArrayList.add(new ListaHorarios(rs.getString("name"), rs.getInt("idSchedule")));
+                                entidadesArrayList.add(new ListaHorarios(rs.getString("scan"), rs.getString("name"), rs.getInt("idSchedule")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -447,6 +448,8 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
     public void verHorario(View v){
         posicao = listView.getPositionForView(v);
         id_schedule = entidadesArrayList.get(posicao).getId_hor();
+        nomeAl = entidadesArrayList.get(posicao).getNomeHor();
+        scanAl = entidadesArrayList.get(posicao).getScanHor();
         startActivity(new Intent(this, ver_horario.class));
     }
 }

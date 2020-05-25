@@ -112,7 +112,6 @@
                             android:background="#FFFFFF"
                             android:gravity="bottom"
                             android:padding="15dp"
-                            android:text="Começa as 5h"
                             android:textColor="#000000" />
 
                         <TextView

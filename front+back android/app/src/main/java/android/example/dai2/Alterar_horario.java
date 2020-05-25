@@ -29,15 +29,16 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.ParseException;
 
-class Alterar_horario extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Alterar_horario extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
     EditText entrada, saida, almoco;
     RadioGroup rg;
     TextView nome, tipoE;
-    RadioButton rb;
-    String Entrda, Saida, Almoco, Folga, tipo;
+    RadioButton rb1, rb2, rb3, rb4, rb5, rb6, rb7;
+    private String Entrda, Saida, Almoco, Folga, tipo, folgaAL;
     private boolean sucess;
     private ImageView adicionar;
+
 
 
     @Override
@@ -52,8 +53,42 @@ class Alterar_horario extends AppCompatActivity implements NavigationView.OnNavi
         saida = (EditText) findViewById(R.id.horasaida);
         almoco = (EditText) findViewById(R.id.almocoHor);
         rg = (RadioGroup) findViewById(R.id.folga);
-        rb = (RadioButton) findViewById(R.id.segunda);
+        rb1 = (RadioButton) findViewById(R.id.segunda);
+        rb2 = (RadioButton) findViewById(R.id.terca);
+        rb3 = (RadioButton) findViewById(R.id.quarta);
+        rb4 = (RadioButton) findViewById(R.id.quinta);
+        rb5 = (RadioButton) findViewById(R.id.sexta);
+        rb6 = (RadioButton) findViewById(R.id.sabado);
+        rb7 = (RadioButton) findViewById(R.id.domingo);
         adicionar = (ImageView) findViewById(R.id.imageView17);
+        nome.setText(tabela_horario.nomeAl);
+        entrada.setText(ver_horario.inicio);
+        saida.setText(ver_horario.fim);
+        almoco.setText(ver_horario.almoco);
+        folgaAL = ver_horario.folga;
+        System.out.println(folgaAL);
+        if (folgaAL.equals("Segunda")) {
+            rg.check(rb1.getId());
+        }
+        if (folgaAL.equals("Terça")) {
+            rg.check(rb2.getId());
+        }
+        if (folgaAL.equals("Quarta")) {
+            rg.check(rb3.getId());
+        }
+        if (folgaAL.equals("Quinta")) {
+            rg.check(rb4.getId());
+        }
+        if (folgaAL.equals("Sexta")) {
+            rg.check(rb5.getId());
+        }
+        if (folgaAL.equals("Sabado")) {
+            rg.check(rb6.getId());
+        }
+        if (folgaAL.equals("Domingo")) {
+            rg.check(rb7.getId());
+        }
+
 /*
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -110,13 +145,12 @@ class Alterar_horario extends AppCompatActivity implements NavigationView.OnNavi
             valid = false;
         }
         if (Almoco.isEmpty() | Almoco.equals(":")){
-            rb.setError("Introduz uma hora de Almoço");
+            almoco.setError("Introduz uma hora de Almoço");
             valid = false;
         }
         int radiobuttonid = rg.getCheckedRadioButtonId();
-        System.out.println(radiobuttonid);
         if (radiobuttonid == -1){
-            rb.setError("Selecione o dia de Folga");
+            rb1.setError("Selecione o dia de Folga");
             valid = false;
         } else {
             RadioButton rb = (RadioButton) findViewById(radiobuttonid);
@@ -152,8 +186,8 @@ class Alterar_horario extends AppCompatActivity implements NavigationView.OnNavi
         if (!validate()) {
             Toast.makeText(this, "Campos em falta", Toast.LENGTH_LONG).show();
         } else {
-           // Adicionar_horario.AdicionarHor adicionarHor = new Adicionar_horario.AdicionarHor();
-            //adicionarHor.execute();
+            AdicionarHor adicionarHor = new AdicionarHor();
+            adicionarHor.execute();
             try {
                 Thread.sleep(2000);
             } catch (Exception e) {
@@ -161,7 +195,7 @@ class Alterar_horario extends AppCompatActivity implements NavigationView.OnNavi
             }
 
             if (sucess == true) {
-                Toast.makeText(this, "Horário criado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Horário alterado com sucesso!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, android.example.dai2.inicio_diretor.class));
 
             } else {
@@ -212,9 +246,9 @@ class Alterar_horario extends AppCompatActivity implements NavigationView.OnNavi
                     while (resultSet1.next()){
                         idHor = resultSet1.getInt("idSchedule");
                     }
-                 //   String query3 = "update suddenalert.Profile set idSchedule='"+idHor+"' where scan  like '"+Scan+"'";
+                    String query3 = "update suddenalert.Profile set idSchedule='"+idHor+"' where scan  like '"+tabela_horario.scanAl+"'";
                     Statement statement2 = conn.createStatement();
-                   // statement2.executeUpdate(query3);
+                    statement2.executeUpdate(query3);
                     msg = "Inserting Successfull!!!!";
                     System.out.println("aqui");
                     sucess = true;

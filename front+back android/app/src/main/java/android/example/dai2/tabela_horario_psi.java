@@ -343,13 +343,13 @@ public class tabela_horario_psi extends AppCompatActivity implements NavigationV
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "SELECT name, idschedule FROM Profile WHERE id_type not like 3 AND deleted like 0";
+                    String query = "SELECT scan, name, idschedule FROM Profile WHERE id_type not like 3 AND deleted like 0";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) {
                         while (rs.next()) {
                             try {
-                                entidadesArrayList.add(new ListaHorarios(rs.getString("name"), rs.getInt("idSchedule")));
+                                entidadesArrayList.add(new ListaHorarios(rs.getString("scan"), rs.getString("name"), rs.getInt("idSchedule")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }

@@ -259,6 +259,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="rbclick"
                     android:text="Domingo" />
+
             </RadioGroup>
         </LinearLayout>
 
