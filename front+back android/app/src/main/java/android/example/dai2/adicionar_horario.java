@@ -266,6 +266,7 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda) {
+            startActivity(new Intent(Adicionar_horario.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

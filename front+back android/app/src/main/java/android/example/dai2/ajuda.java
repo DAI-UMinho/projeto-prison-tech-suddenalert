@@ -2,11 +2,14 @@ package android.example.dai2;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +22,20 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class ajuda extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class ajuda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private AppBarConfiguration mAppBarConfiguration;
     Dialog myDialog;
+    private ImageView enviar;
+    private EditText titulo, relato;
+    private String t_titulo, t_relato;
+    private boolean sucess;
+    private int tipo = MainActivity.estatuto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +55,88 @@ public class ajuda extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        enviar = (ImageView) findViewById(R.id.imageView17);
+        titulo = (EditText) findViewById(R.id.editText2);
+        relato = (EditText) findViewById(R.id.editText4);
+        enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               register();
+            }
+        });
     }
+    public void register(){
+        intialize();
+        if (!validate()){
+            Toast.makeText(this, "Campos em falta!", Toast.LENGTH_SHORT).show();
+        } else {
+            EnviarErro criarRelatorio = new EnviarErro();
+            criarRelatorio.execute();
 
+            try {
+                Thread.sleep(1000);
+            }
+            catch (Exception e){
+                System.out.print("erro");
+            }
+
+            if (sucess == true) {
+                Toast.makeText(this, "Enviado com sucesso!", Toast.LENGTH_SHORT).show();
+                if (tipo == 2) {
+                    startActivity(new Intent(this, inicio_psicologo.class));
+                }
+                if (tipo == 1) {
+                    startActivity(new Intent(this, inicio_guarda.class));
+                }
+                if (tipo == 3) {
+                    startActivity(new Intent(this, inicio_diretor.class));
+                }
+
+            } else {
+                Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    public  boolean validate(){
+        boolean valid = true;
+        if (t_titulo.isEmpty()){
+            titulo.setError("Introduz um titulo");
+            valid = false;
+        }
+        if (t_relato.isEmpty()){
+            relato.setError("Introduz uma descrição");
+            valid = false;
+        }
+        return valid;
+    }
+    public void intialize(){
+        t_relato = relato.getText().toString().trim();
+        t_titulo = titulo.getText().toString().trim();
+    }
+    private class EnviarErro extends AsyncTask<String, String, String> {
+        String msg = "";
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null){
+                    sucess = false;
+                    msg = "Não foi possível realizar connection";
+                } else {
+                    String query2 = "INSERT INTO Help (`erro`, `relato`) VALUES ('"+t_titulo+"', '"+t_relato+"');";
+                    Statement statement2 = connection.createStatement();
+                    statement2.executeUpdate(query2);
+                    sucess = true;
+                }
+                connection.close();
+            } catch (Exception e){
+                msg = "Connection correu mal";
+                sucess = false;
+            }
+            return msg;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,7 +174,7 @@ public class ajuda extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
-            return true;
+            startActivity(new Intent(ajuda.this, ajuda.class));
         }
         return super.onOptionsItemSelected(item);
     }

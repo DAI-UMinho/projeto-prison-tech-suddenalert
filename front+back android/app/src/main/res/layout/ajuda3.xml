@@ -15,8 +15,8 @@
         android:layout_marginTop="47dp"
         android:layout_marginEnd="42dp"
         android:ems="10"
+        android:hint="Relato"
         android:inputType="textPersonName"
-        android:text="Relato"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView76" />
@@ -106,8 +106,8 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="42dp"
         android:ems="10"
+        android:hint="Insira o nome do erro"
         android:inputType="textPersonName"
-        android:text="Insira o nome do erro"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView70" />

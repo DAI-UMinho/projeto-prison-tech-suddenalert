@@ -361,6 +361,7 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(Registar_Reclusos.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

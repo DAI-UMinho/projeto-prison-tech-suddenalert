@@ -309,6 +309,7 @@ public class horario_guarda extends AppCompatActivity implements NavigationView.
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(horario_guarda.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

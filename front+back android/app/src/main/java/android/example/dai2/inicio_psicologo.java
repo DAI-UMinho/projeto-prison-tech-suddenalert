@@ -67,12 +67,12 @@ public class inicio_psicologo extends AppCompatActivity
     }
     public void entrarperfil (View v) {
         startActivity(new Intent(this, perfil_psicologo.class));
-    }
+    }*/
     public void entraralert (View v) {
         startActivity(new Intent(this, tabela_alert.class));
     }
 
-*/
+
 
     @Override
     public void onBackPressed(){
@@ -88,6 +88,7 @@ public class inicio_psicologo extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(inicio_psicologo.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
