@@ -32,7 +32,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
     Connection con = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    
+    public static int id;
 
     /**
      * Creates new form Reclusos
@@ -57,10 +57,11 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         jTable_hor.getTableHeader().setBackground(new Color(176, 2, 37));
         jTable_hor.getTableHeader().setForeground(new Color(255, 255, 255));
         jTable_hor.setRowHeight(24);
-        
+
         show_Guarda();
     }
-        public ArrayList<Entidade> guardaList() {
+
+    public ArrayList<Entidade> guardaList() {
         ArrayList<Entidade> guardasList = new ArrayList<>();
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -68,12 +69,12 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query1 = "SELECT * FROM Profile where deleted='0' and id_type='1' or id_type='2'";
+            String query1 = "SELECT * FROM Profile where idSchedule IS NOT NULL and (id_type='1' or id_type='2') and deleted='0'";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query1);
             Entidade guarda;
             while (rs.next()) {
-                guarda = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"));
+                guarda = new Entidade(rs.getString("scan"), rs.getInt("id_type"), rs.getString("name"), rs.getString("location"), rs.getInt("points"), rs.getString("birthday"), rs.getString("email"), rs.getInt("idSchedule"));
                 guardasList.add(guarda);
             }
         } catch (Exception e) {
@@ -81,18 +82,21 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         }
         return guardasList;
     }
-    public void show_Guarda() {
+
+     public void show_Guarda() {
         ArrayList<Entidade> list = guardaList();
         DefaultTableModel model = (DefaultTableModel) jTable_hor.getModel();
-        Object[] row = new Object[2];
+        Object[] row = new Object[3];
         for (int i = 0; i < list.size(); i++) {
             row[0] = list.get(i).getNome();
             row[1] = list.get(i).getEmail();
+            row[2] = list.get(i).getIdSchedule();
+            
             
             model.addRow(row);
         }
     }
-    
+
     private void pesquisar() {
         String sql = "SELECT name as Nome, email as Email FROM Profile where deleted='0' and (id_type='1' or id_type='2') and name like ?";
         String sqlemail = "SELECT name as Nome, email as Email FROM Profile where deleted='0' and (id_type='1' or id_type='2') and email like ?";
@@ -762,6 +766,9 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_BackButtonActionPerformed
 
     private void hor_guardaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hor_guardaActionPerformed
+        int row = jTable_hor.getSelectedRow();
+        id = (int) jTable_hor.getValueAt(row, 2);
+        
         Horario xHorario = new Horario();
         xHorario.setLocationRelativeTo(null);
         xHorario.setVisible(true);
@@ -773,7 +780,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
-         jTextField1.setText("");
+        jTextField1.setText("");
     }//GEN-LAST:event_jTextField1MouseClicked
 
     /**

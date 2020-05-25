@@ -55,25 +55,24 @@ public class Horario extends javax.swing.JFrame implements Serializable {
         show_Horario();
     }
      public void show_Horario(){
-             
+         
+       
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query1 = "SELECT idSchedule FROM Profile WHERE  scan='10'";
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query1);
-            Entidade psicologo;
-            while (rs.next()) {
-                tipoHor = rs.getInt("idSchedule");
-                System.out.println(tipoHor);
+            
+            
+            tipoHor = ListHorarios.id;
+            
                 
-            }
+                
+            
             String query2 = "Select Entrada, Saida, Almoco, Folga from Schedule where idSchedule like '"+tipoHor+"'";
             Statement st2 = con.createStatement();
-            ResultSet rs2 = st.executeQuery(query2);
+            ResultSet rs2 = st2.executeQuery(query2);
             while (rs2.next()) {
                inicio = rs2.getString("Entrada");
                fim = rs2.getString("Saida");
@@ -264,24 +263,12 @@ public class Horario extends javax.swing.JFrame implements Serializable {
             
             jTable_h.getModel().setValueAt(inicio, 5, 0);
             jTable_h.getModel().setValueAt(fim, 5, 1);
-            jTable_h.getModel().setValueAt(almoco, 5, 2);
-            
-            }
-            
-               
-           
-            
+            jTable_h.getModel().setValueAt(almoco, 5, 2);     
+            }   
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-        }
-        
+        } 
     }
-    
-
-
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

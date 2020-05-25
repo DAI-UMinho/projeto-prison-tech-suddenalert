@@ -130,7 +130,7 @@ public class Historico extends javax.swing.JFrame implements Serializable {
         String sqltipo = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Profile.email like ?";
         String sqlmotivo = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.date like ?";
         String itemText = (String) jComboP.getSelectedItem();
-        if ("Título do Relatório".equals(itemText)) {
+        if ("Data".equals(itemText)) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -147,7 +147,7 @@ public class Historico extends javax.swing.JFrame implements Serializable {
             }
         }
 
-        if ("Nível de Gravidade".equals(itemText)) {
+        if ("Ação".equals(itemText)) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -164,7 +164,7 @@ public class Historico extends javax.swing.JFrame implements Serializable {
             }
         }
 
-        if ("Nome do Psicólogo".equals(itemText)) {
+        if ("Nome".equals(itemText)) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -180,7 +180,7 @@ public class Historico extends javax.swing.JFrame implements Serializable {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-        if ("Email do Psicólogo".equals(itemText)) {
+        if ("Tipo".equals(itemText)) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
@@ -196,7 +196,7 @@ public class Historico extends javax.swing.JFrame implements Serializable {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-        if ("Data".equals(itemText)) {
+        if ("Motivo".equals(itemText)) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
