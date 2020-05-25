@@ -172,21 +172,21 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
             Button listahor;
-            Button meuhor;
+            Button addhor;
             myDialog.setContentView(R.layout.horariospopup);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listahor = (Button) myDialog.findViewById(R.id.listahor);
-            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            addhor = (Button) myDialog.findViewById(R.id.meuhor);
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(perfil_diretor.this, tabela_horario.class));
                 }
             });
-            meuhor.setOnClickListener(new View.OnClickListener() {
+            addhor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(perfil_diretor.this, horario_diretor.class));
+                    startActivity(new Intent(perfil_diretor.this, Adicionar_horario.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {

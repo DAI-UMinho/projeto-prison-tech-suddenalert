@@ -26,16 +26,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class horario_diretor extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ver_horario_psi extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Dialog myDialog;
     private String inicio, fim, almoco, folga;
-    private int tipoHor;
+    private int tipoHor=tabela_horario.id_schedule;
     private TextView s1, s2, s3, t1, t2, t3, q1, q2, q3, qi1, qi2, qi3, sx1, sx2, sx3, sa1, sa2, sa3, d1, d2, d3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.horario_d);
+        setContentView(R.layout.ver_horariop);
         myDialog = new Dialog(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -51,7 +51,6 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         s1 = (TextView) findViewById(R.id.seg0);
         s2 = (TextView) findViewById(R.id.seg6);
         s3 = (TextView) findViewById(R.id.seg12);
@@ -74,9 +73,9 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
         d2 = (TextView) findViewById(R.id.dom6);
         d3 = (TextView) findViewById(R.id.dom12);
 
+
         Horario horario = new Horario();
         horario.execute();
-
     }
     private class Horario extends AsyncTask<String, String, String> {
         String msg = "Horário não encontrado";
@@ -84,7 +83,7 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(horario_diretor.this, "Sincronizar", "Há procura do horário", true);
+            progressDialog = ProgressDialog.show(ver_horario_psi.this, "Sincronizar", "Há procura do horário", true);
         }
 
         @Override
@@ -264,13 +263,9 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
                 if (connection == null){
 
                 }else {
-                    String query = "SELECT idSchedule FROM Profile WHERE scan like '"+MainActivity.scanValor+"'";
-                    Statement statement = connection.createStatement();
-                    ResultSet rs = statement.executeQuery(query);
-                    while (rs.next()) {
-                        tipoHor = rs.getInt("idSchedule");
-                    }
+
                     String query1 = "Select Entrada, Saida, Almoco, Folga from Schedule where idSchedule like '"+tipoHor+"'";
+                    Statement statement = connection.createStatement();
                     ResultSet resultSet = statement.executeQuery(query1);
                     while (resultSet.next()){
                         inicio = resultSet.getString("Entrada");
@@ -309,7 +304,7 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
-            startActivity(new Intent(horario_diretor.this, ajuda.class));
+            startActivity(new Intent(ver_horario_psi.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -320,11 +315,11 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Intent intent = new Intent(horario_diretor.this,inicio_diretor.class);
+            Intent intent = new Intent(ver_horario_psi.this,inicio_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
 
-            startActivity(new Intent(horario_diretor.this, tabela_horario.class));
+            startActivity(new Intent(ver_horario_psi.this, tabela_horario.class));
 
         }else if (id == R.id.nav_doc) {
             TextView txtclose;
@@ -337,13 +332,13 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
             listarel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(horario_diretor.this, documentos_diretor.class));
+                    startActivity(new Intent(ver_horario_psi.this, documentos_diretor.class));
                 }
             });
             his.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(horario_diretor.this, historico.class));
+                    startActivity(new Intent(ver_horario_psi.this, historico.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -353,6 +348,9 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
                 }
             });
             myDialog.show();
+        }else if (id == R.id.nav_perfil){
+            Intent intent = new Intent(ver_horario_psi.this,perfil_diretor.class);
+            startActivity(intent);
         }else if (id == R.id.nav_entidades){
             TextView txtclose;
             Button listagem;
@@ -376,7 +374,7 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
             registo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(horario_diretor.this, Main3Activity.class));
+                    startActivity(new Intent(ver_horario_psi.this, Main3Activity.class));
                 }
             });
             myDialog.show();
@@ -391,13 +389,13 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
             listarec.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(horario_diretor.this, tabela_reclusos.class));
+                    startActivity(new Intent(ver_horario_psi.this, tabela_reclusos.class));
                 }
             });
             reg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(horario_diretor.this, Registar_Reclusos.class));
+                    startActivity(new Intent(ver_horario_psi.this, Registar_Reclusos.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -424,13 +422,13 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
         guardas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(horario_diretor.this, tabela_guarda.class));
+                startActivity(new Intent(ver_horario_psi.this, tabela_guarda.class));
             }
         });
         psicologos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(horario_diretor.this, tabela_psicologo.class));
+                startActivity(new Intent(ver_horario_psi.this, tabela_psicologo.class));
             }
         });
         txtclose.setOnClickListener(new View.OnClickListener() {
@@ -480,5 +478,8 @@ public class horario_diretor extends AppCompatActivity implements NavigationView
     public void sair (View v) {
 
         startActivity(new Intent(this, MainActivity.class));
+    }
+    public void alterarH(View v){
+        startActivity(new Intent(this, Alterar_horario.class));
     }
 }

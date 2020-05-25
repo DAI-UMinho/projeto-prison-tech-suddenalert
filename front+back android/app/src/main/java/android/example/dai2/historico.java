@@ -341,21 +341,13 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
             Button listahor;
-            Button meuhor;
             myDialog.setContentView(R.layout.horariospopup);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listahor = (Button) myDialog.findViewById(R.id.listahor);
-            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(historico.this, tabela_horario.class));
-                }
-            });
-            meuhor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(historico.this, horario_diretor.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {

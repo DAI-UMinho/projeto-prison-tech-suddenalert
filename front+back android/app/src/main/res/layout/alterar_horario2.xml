@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".horario_diretor">
+    tools:context=".Alterar_horario">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/horario_d3" />
+    <include layout="@layout/alterar_horario3" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

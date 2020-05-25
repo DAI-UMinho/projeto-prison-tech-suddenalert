@@ -194,13 +194,13 @@ public class inicio_psicologo extends AppCompatActivity
         listahor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(inicio_psicologo.this, tabela_horario.class));
+                startActivity(new Intent(inicio_psicologo.this, tabela_horario_psi.class));
             }
         });
         meuhor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(inicio_psicologo.this, horario_diretor.class));
+                startActivity(new Intent(inicio_psicologo.this, horario_psicologo.class));
             }
         });
         txtclose.setOnClickListener(new View.OnClickListener() {

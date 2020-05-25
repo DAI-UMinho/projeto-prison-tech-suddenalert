@@ -87,7 +87,7 @@ public class Main2Activity extends AppCompatActivity
         startActivity(new Intent(this, android.example.dai2.documentos_diretor.class));
     }
     public void entrarhor (View v) {
-        startActivity(new Intent(this, android.example.dai2.horario_diretor.class));
+        startActivity(new Intent(this, android.example.dai2.horario_psicologo.class));
     }
     public void entrarperfil (View v) {
         startActivity(new Intent(this, android.example.dai2.perfil_diretor.class));
@@ -121,7 +121,7 @@ public class Main2Activity extends AppCompatActivity
             startActivity(intent);*/
             Toast.makeText(Main2Activity.this,"Teste", Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(Main2Activity.this,horario_diretor.class);
+            Intent intent = new Intent(Main2Activity.this,horario_psicologo.class);
             startActivity(intent);
         }else if (id == R.id.nav_doc) {
             Intent intent = new Intent(Main2Activity.this,fazer_documentos.class);

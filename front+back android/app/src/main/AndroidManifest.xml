@@ -63,10 +63,6 @@
             android:label="@string/title_inicio_guarda"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".horario_diretor"
-            android:label="@string/title_inicio_guarda"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".documentos_diretor"
             android:label="@string/title_inicio_guarda"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -131,7 +127,19 @@
             android:label="@string/title_inicio_guarda"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".tabela_alert"
+        android:name=".tabela_alert"
+        android:label="@string/title_inicio_guarda"
+        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tabela_horario_psi"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ver_horario_psi"
+            android:label="@string/title_inicio_guarda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Alterar_horario"
             android:label="@string/title_inicio_guarda"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">

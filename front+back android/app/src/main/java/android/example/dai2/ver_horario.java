@@ -480,6 +480,6 @@ public class ver_horario extends AppCompatActivity implements NavigationView.OnN
         startActivity(new Intent(this, MainActivity.class));
     }
     public void alterarH(View v){
-        startActivity(new Intent(this, horario_diretor.class));
+        startActivity(new Intent(this, Alterar_horario.class));
     }
 }

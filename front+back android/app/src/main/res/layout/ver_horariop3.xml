@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/horario_d2">
+    tools:showIn="@layout/ver_horariop2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,10 +27,11 @@
             android:textStyle="bold"
             android:visibility="visible" />
 
+
         <ScrollView
             android:id="@+id/layout"
             android:layout_width="match_parent"
-            android:layout_height="536dp"
+            android:layout_height="595dp"
             android:layout_marginTop="10dp"
             android:fillViewport="true"
             android:scrollbarStyle="outsideInset"
@@ -45,7 +47,7 @@
 
                 <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="510dp"
+                    android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
@@ -103,19 +105,17 @@
                             android:text="Segunda"
                             android:textColor="#FFFFFF" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/seg0"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
                             android:background="#FFFFFF"
-                            android:gravity="center"
+                            android:gravity="bottom"
                             android:padding="15dp"
                             android:text="Começa as 5h"
-                            android:textAlignment="center"
-                            android:textColor="#000000"
-                            android:textSize="12sp" />
+                            android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/seg6"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -125,7 +125,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/seg12"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -149,7 +149,7 @@
                             android:text="Terça"
                             android:textColor="#FFFFFF" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/ter0"
                             android:layout_width="90dp"
                             android:layout_height="90dp"
@@ -159,7 +159,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/ter6"
                             android:layout_width="90dp"
                             android:layout_height="90dp"
@@ -169,7 +169,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/ter12"
                             android:layout_width="90dp"
                             android:layout_height="90dp"
@@ -192,18 +192,17 @@
                             android:text="Quarta"
                             android:textColor="#FFFFFF" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/qua0"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
                             android:background="#FFFFFF"
+                            android:gravity="bottom"
                             android:padding="3dip"
-                            android:textSize="12sp"
-                            android:gravity="center"
                             android:text="Hora de almoço das 13h-14h"
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/qua6"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -213,7 +212,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/qua12"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -237,7 +236,7 @@
                             android:text="Quinta"
                             android:textColor="#FFFFFF" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/qui0"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -247,7 +246,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/qui6"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -257,7 +256,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/qui12"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -281,7 +280,7 @@
                             android:text="Sexta"
                             android:textColor="#FFFFFF" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/sex0"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -291,7 +290,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/sex6"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -301,7 +300,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/sex12"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -320,11 +319,12 @@
                             android:layout_height="90dp"
                             android:background="@color/colorPrimaryDark"
                             android:gravity="center"
+                            android:onClick="alterarH"
                             android:padding="3dip"
                             android:text="Sábado"
                             android:textColor="#FFFFFF" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/sab0"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -334,7 +334,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/sab6"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -344,7 +344,7 @@
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/sab12"
                             android:layout_width="70dp"
                             android:layout_height="90dp"
@@ -367,30 +367,30 @@
                             android:text="Domingo"
                             android:textColor="#FFFFFF" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/dom0"
-                            android:layout_width="96dp"
-                            android:layout_height="87dp"
+                            android:layout_width="70dp"
+                            android:layout_height="90dp"
                             android:background="#FFFFFF"
                             android:gravity="center"
                             android:padding="3dip"
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/dom6"
-                            android:layout_width="110dp"
-                            android:layout_height="85dp"
+                            android:layout_width="70dp"
+                            android:layout_height="90dp"
                             android:background="#FFFFFF"
                             android:gravity="center"
                             android:padding="3dip"
                             android:text=""
                             android:textColor="#000000" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/dom12"
-                            android:layout_width="117dp"
-                            android:layout_height="87dp"
+                            android:layout_width="70dp"
+                            android:layout_height="90dp"
                             android:background="#FFFFFF"
                             android:gravity="center"
                             android:padding="3dip"
@@ -403,29 +403,6 @@
             </HorizontalScrollView>
         </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageView17"
-                android:layout_width="58dp"
-                android:layout_marginLeft="240dp"
-                android:layout_height="49dp"
-                app:srcCompat="@drawable/save_foreground"
-                />
-
-            <TextView
-                android:id="@+id/txtAlterar2"
-                android:layout_width="78dp"
-                android:layout_height="31dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="4dp"
-                android:text="Guardar" />
-        </LinearLayout>
-
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
