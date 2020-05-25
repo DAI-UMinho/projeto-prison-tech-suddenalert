@@ -277,7 +277,7 @@ public class ListPsicologos extends javax.swing.JFrame implements Serializable {
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/delete.png"))); // NOI18N
-        jButton1.setText("Eliminar");
+        jButton1.setText("Remover");
         jButton1.setInheritsPopupMenu(true);
         jButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButton1.setMaximumSize(new java.awt.Dimension(69, 79));

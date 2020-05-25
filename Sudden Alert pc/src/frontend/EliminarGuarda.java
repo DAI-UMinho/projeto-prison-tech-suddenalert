@@ -83,7 +83,7 @@ public class EliminarGuarda extends javax.swing.JFrame implements Serializable {
         label1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label1.setFont(new java.awt.Font("Tw Cen MT", 1, 35)); // NOI18N
         label1.setForeground(new java.awt.Color(204, 204, 204));
-        label1.setText("Eliminar Guarda");
+        label1.setText("Remover Guarda");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ent.png"))); // NOI18N
 
@@ -115,7 +115,7 @@ public class EliminarGuarda extends javax.swing.JFrame implements Serializable {
 
         jLabel3.setBackground(new java.awt.Color(243, 243, 243));
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel3.setText("Deseja mesmo eliminar este guarda? ");
+        jLabel3.setText("Deseja mesmo remover este guarda? ");
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jLabel5.setText("Nome");
