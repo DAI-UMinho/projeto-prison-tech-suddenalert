@@ -33,7 +33,7 @@ public class ver_horario extends AppCompatActivity implements NavigationView.OnN
     private int tipoHor=tabela_horario.id_schedule;
     private TextView s1, s2, s3, t1, t2, t3, q1, q2, q3, qi1, qi2, qi3, sx1, sx2, sx3, sa1, sa2, sa3, d1, d2, d3;
     public static int posicao;
-   // public static String entradaAl, saidaAl, almocoAl, folgaAl, nomeAl;
+   private boolean sucess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -490,5 +490,42 @@ public class ver_horario extends AppCompatActivity implements NavigationView.OnN
     }
     public void alterarH(View v){
         startActivity(new Intent(ver_horario.this, Alterar_horario.class));
+    }
+    public  void eleminaHor(View v){
+        EliminarHor eliminarHor = new EliminarHor();
+        eliminarHor.execute();
+    }
+    private class EliminarHor extends AsyncTask<String, String, String> {
+        String msg = "";
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(ver_horario.this, "Horário removido com sucesso!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ver_horario.this, tabela_horario.class));
+            ver_horario.this.finish();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null){
+                    sucess = false;
+                    msg = "Não foi possível realizar connection";
+                } else {
+                    String query1 = "UPDATE `suddenalert`.`Profile` SET `idSchedule` = default WHERE (`scan` = '"+tabela_horario.scanAl+"');";
+                    Statement statement1 = connection.createStatement();
+                    statement1.executeUpdate(query1);
+                        msg = "Inserido com sucesso";
+                        sucess = true;
+                }
+                connection.close();
+            } catch (Exception e){
+                msg = "Connection correu mal";
+                sucess = false;
+            }
+            return msg;
+        }
     }
 }

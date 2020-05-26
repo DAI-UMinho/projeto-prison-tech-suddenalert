@@ -157,6 +157,8 @@ public class perfil_diretor extends AppCompatActivity implements NavigationView.
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(perfil_diretor.this, ajuda.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);

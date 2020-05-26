@@ -127,6 +127,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(documentos_diretor.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -146,7 +147,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
             myDialog.setContentView(R.layout.horariospopup);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listahor = (Button) myDialog.findViewById(R.id.listahor);
-            addhor = (Button) myDialog.findViewById(R.id.meuhor);
+            addhor = (Button) myDialog.findViewById(R.id.addhor);
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

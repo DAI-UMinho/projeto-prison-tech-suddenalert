@@ -447,9 +447,13 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
     //verHorario de cada entidade
     public void verHorario(View v){
         posicao = listView.getPositionForView(v);
-        id_schedule = entidadesArrayList.get(posicao).getId_hor();
-        nomeAl = entidadesArrayList.get(posicao).getNomeHor();
-        scanAl = entidadesArrayList.get(posicao).getScanHor();
-        startActivity(new Intent(this, ver_horario.class));
+        if (entidadesArrayList.get(posicao).getId_hor() == 0) {
+            Toast.makeText(tabela_horario.this, "Não tem horário atribuído!", Toast.LENGTH_SHORT).show();
+        } else {
+            id_schedule = entidadesArrayList.get(posicao).getId_hor();
+            nomeAl = entidadesArrayList.get(posicao).getNomeHor();
+            scanAl = entidadesArrayList.get(posicao).getScanHor();
+            startActivity(new Intent(this, ver_horario.class));
+        }
     }
 }

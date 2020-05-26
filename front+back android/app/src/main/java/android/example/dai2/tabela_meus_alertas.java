@@ -93,11 +93,12 @@ public class tabela_meus_alertas extends AppCompatActivity implements Navigation
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(tabela_meus_alertas.this, ajuda.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);

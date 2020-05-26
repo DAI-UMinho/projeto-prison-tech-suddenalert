@@ -107,6 +107,8 @@ public class Main2Activity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(Main2Activity.this, ajuda.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);

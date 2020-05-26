@@ -343,6 +343,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                      Toast.makeText(getApplicationContext(), "Erro na Localização de Utilizador!", Toast.LENGTH_SHORT).show();
                 }
          }
+
     }
 }
 

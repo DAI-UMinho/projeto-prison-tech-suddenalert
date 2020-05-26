@@ -28,10 +28,10 @@
         android:id="@+id/imageView3"
         android:layout_width="197dp"
         android:layout_height="152dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="188dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="392dp"
         android:onClick="entrar"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/pp_recluso_foreground" />
 
@@ -39,10 +39,10 @@
         android:id="@+id/imageView4"
         android:layout_width="161dp"
         android:layout_height="153dp"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="184dp"
+        android:layout_marginEnd="30dp"
         android:onClick="entrarhor"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/pp_horario_foreground" />
 
@@ -59,14 +59,13 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="164dp"
-        android:layout_height="146dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="172dp"
+        android:layout_height="148dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="144dp"
         android:onClick="entrarperfil"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.746"
         app:srcCompat="@mipmap/pp_perfil_foreground" />
 
 

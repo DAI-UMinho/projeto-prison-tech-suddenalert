@@ -174,12 +174,12 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             if (sucess == true) {
                 Toast.makeText(this, "Entidade criada com sucesso!", Toast.LENGTH_SHORT).show();
                 if(tipo.equals("Guarda")){
-
                     startActivity(new Intent(this, android.example.dai2.tabela_guarda.class));
-
                 }
-                else {                startActivity(new Intent(this, android.example.dai2.tabela_psicologo.class));
+                else {
+                    startActivity(new Intent(this, android.example.dai2.tabela_psicologo.class));
                 }
+                Main3Activity.this.finish();
             }
                else {
                 Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();

@@ -444,9 +444,13 @@ public class tabela_horario_psi extends AppCompatActivity implements NavigationV
         }
     }
     //verHorario de cada entidade
-    public void verHorario(View v){
+    public void verHorario(View v) {
         posicao = listView.getPositionForView(v);
-        id_schedule = entidadesArrayList.get(posicao).getId_hor();
-        startActivity(new Intent(this, ver_horario_psi.class));
+        if (entidadesArrayList.get(posicao).getId_hor() == 0) {
+            Toast.makeText(tabela_horario_psi.this, "Não tem horário atribuído!", Toast.LENGTH_SHORT).show();
+        } else {
+            id_schedule = entidadesArrayList.get(posicao).getId_hor();
+            startActivity(new Intent(this, ver_horario_psi.class));
+        }
     }
 }

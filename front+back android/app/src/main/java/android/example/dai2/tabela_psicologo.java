@@ -162,6 +162,8 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(tabela_psicologo.this, ajuda.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);

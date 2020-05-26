@@ -184,7 +184,7 @@ public class ajuda extends AppCompatActivity implements NavigationView.OnNavigat
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Intent intent = new Intent(ajuda.this, ajuda.class);
+            Intent intent = new Intent(ajuda.this,inicio_diretor.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
@@ -193,7 +193,7 @@ public class ajuda extends AppCompatActivity implements NavigationView.OnNavigat
             myDialog.setContentView(R.layout.horariospopup);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listahor = (Button) myDialog.findViewById(R.id.listahor);
-            addhor = (Button) myDialog.findViewById(R.id.meuhor);
+            addhor = (Button) myDialog.findViewById(R.id.addhor);
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -314,7 +314,6 @@ public class Registar_Reclusos extends AppCompatActivity implements NavigationVi
                     } else {
                         sucess = false;
                         msg = "Identificação de Recluso inválida!";
-                        //numeroRec.setError("Numero já utilizado");
                     }
                 }
                 conn.close();

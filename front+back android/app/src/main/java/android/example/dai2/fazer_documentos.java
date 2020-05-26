@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +52,16 @@ public class fazer_documentos extends AppCompatActivity {
         });
         nome.setText(tabela_alert.nomeRecluso);
         identificacao.setText(String.valueOf(tabela_alert.numeroRecluso));
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.ajuda){
+            startActivity(new Intent(fazer_documentos.this, ajuda.class));
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
     public void register(){
         intialize();
