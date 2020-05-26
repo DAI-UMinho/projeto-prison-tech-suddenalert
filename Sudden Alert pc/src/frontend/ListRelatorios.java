@@ -70,7 +70,7 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
             ResultSet rs = st.executeQuery(query1);
             Report relatorio;
             while (rs.next()) {
-                relatorio = new Report(rs.getString("title"), rs.getString("gravidade"), rs.getString("name"), rs.getString("email"), rs.getString("date"),rs.getInt("idReport"));
+                relatorio = new Report(rs.getString("title"), rs.getString("gravidade"), rs.getString("name"), rs.getString("email"), rs.getString("date"),rs.getInt("idReport"), rs.getString("report"));
                 relatorioList.add(relatorio);
             }
         } catch (Exception e) {
@@ -568,10 +568,31 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Relatorio xRelatorio = new Relatorio();
-        xRelatorio.setLocationRelativeTo(null);
-        xRelatorio.setVisible(true);
-        this.dispose();
+        int row_selecionada = jTable_relatorio.getSelectedRow();
+        if (row_selecionada >= 0) {
+            ArrayList<Report> lista = relatorioList();
+            Report R = lista.get(row_selecionada);
+            String titulo = R.getTitulo();
+            String gravidade = R.getGravidade();
+            String nome = R.getNomeP();
+            String email = R.getEmailP();
+            String data = R.getData();
+            String relato = R.getRelato();
+
+            Relatorio x = new Relatorio();
+            x.nome.setText(nome);
+            x.email.setText(email);
+            x.data.setText(data);
+            x.gravidade.setText(gravidade);
+            x.relato.setText(relato);
+            
+            x.setLocationRelativeTo(null);
+            x.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha");
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed

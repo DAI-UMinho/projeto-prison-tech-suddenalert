@@ -365,6 +365,13 @@ public class EditarRecluso extends javax.swing.JFrame implements Serializable {
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         LerRecluso xLerRecluso = new LerRecluso();
+            xLerRecluso.nome.setText(nome_editar.getText());
+            xLerRecluso.numero.setText(numero_editar.getText());
+            xLerRecluso.data_nascimento.setText(data_nascimento_editar.getText());
+            xLerRecluso.data_entrada.setText(data_entrada_editar.getText());
+            xLerRecluso.ala.setText(ala_editar.getText());
+            xLerRecluso.piso.setText(piso_editar.getText());
+            xLerRecluso.doenças.setText(doenças_editar.getText());
         xLerRecluso.setLocationRelativeTo(null);
         xLerRecluso.setVisible(true);
         this.dispose();

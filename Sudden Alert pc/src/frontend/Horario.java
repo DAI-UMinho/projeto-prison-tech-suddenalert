@@ -47,8 +47,8 @@ public class Horario extends javax.swing.JFrame implements Serializable {
             JOptionPane.showMessageDialog(null, e);
         }
         setIcon();
-        nome.setEditable(false);
-        tipo.setEditable(false);
+        nomex.setEditable(false);
+        tipox.setEditable(false);
         jTable_h.getTableHeader().setFont(new Font("Century Gothic", Font.BOLD,15));
         jTable_h.getTableHeader().setOpaque(false);
         jTable_h.getTableHeader().setBackground(new Color(176,2,37));
@@ -301,8 +301,8 @@ public class Horario extends javax.swing.JFrame implements Serializable {
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        tipo = new javax.swing.JTextField();
-        nome = new javax.swing.JTextField();
+        tipox = new javax.swing.JTextField();
+        nomex = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -515,13 +515,13 @@ public class Horario extends javax.swing.JFrame implements Serializable {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Nome:");
 
-        tipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        tipo.setText("tipo");
-        tipo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tipox.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tipox.setText("tipo");
+        tipox.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        nome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        nome.setText("nome");
-        nome.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        nomex.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        nomex.setText("nome");
+        nomex.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -533,11 +533,11 @@ public class Horario extends javax.swing.JFrame implements Serializable {
                         .addGap(321, 321, 321)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tipox, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nomex, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(126, 126, 126)
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -557,10 +557,10 @@ public class Horario extends javax.swing.JFrame implements Serializable {
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tipox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nomex, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -581,9 +581,14 @@ public class Horario extends javax.swing.JFrame implements Serializable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        EditarHorario xEditarHorario = new EditarHorario();
-        xEditarHorario.setLocationRelativeTo(null);
-        xEditarHorario.setVisible(true);
+        EditarHorario x = new EditarHorario();
+        x.almoco.setText(almoco);
+        x.entrada.setText(inicio);
+        x.nome.setText(nomex.getText());
+        x.tipo.setText(tipox.getText());
+        x.saida.setText(fim);
+        x.setLocationRelativeTo(null);
+        x.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -624,8 +629,8 @@ public class Horario extends javax.swing.JFrame implements Serializable {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable_h;
     private java.awt.Label label1;
-    private javax.swing.JTextField nome;
-    private javax.swing.JTextField tipo;
+    public javax.swing.JTextField nomex;
+    public javax.swing.JTextField tipox;
     // End of variables declaration//GEN-END:variables
 
     private void setIcon() {

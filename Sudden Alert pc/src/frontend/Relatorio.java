@@ -113,7 +113,6 @@ public class Relatorio extends javax.swing.JFrame implements Serializable {
         jLabel3.setText("Email da entidade:");
 
         nome.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        nome.setText("Nuno");
         nome.setBorder(null);
         nome.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         nome.setSelectionColor(new java.awt.Color(255, 255, 255));
@@ -124,7 +123,6 @@ public class Relatorio extends javax.swing.JFrame implements Serializable {
         });
 
         email.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        email.setText("123@gmail.com");
         email.setBorder(null);
         email.setSelectionColor(new java.awt.Color(255, 255, 255));
 
@@ -136,9 +134,13 @@ public class Relatorio extends javax.swing.JFrame implements Serializable {
 
         gravidade.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         gravidade.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        gravidade.setText("Alta");
         gravidade.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         gravidade.setSelectionColor(new java.awt.Color(255, 255, 255));
+        gravidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gravidadeActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         jLabel4.setText("Nome da entidade:");
@@ -246,7 +248,6 @@ public class Relatorio extends javax.swing.JFrame implements Serializable {
 
         data.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         data.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        data.setText("2020/02/13");
         data.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         data.setSelectionColor(new java.awt.Color(255, 255, 255));
 
@@ -349,6 +350,10 @@ public class Relatorio extends javax.swing.JFrame implements Serializable {
         xDocumentos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void gravidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gravidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gravidadeActionPerformed
 
     /**
      * @param args the command line arguments
