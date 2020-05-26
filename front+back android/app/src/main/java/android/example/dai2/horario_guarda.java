@@ -89,171 +89,176 @@ public class horario_guarda extends AppCompatActivity implements NavigationView.
 
         @Override
         protected void onPostExecute(String s) {
-            if (folga.equals("Segunda")){
-                s1.setText("Folga");
-                s2.setText("Folga");
-                s3.setText("Folga");
-                t1.setText(inicio);
-                q1.setText(inicio);
-                qi1.setText(inicio);
-                sx1.setText(inicio);
-                sa1.setText(inicio);
-                d1.setText(inicio);
-                t2.setText(fim);
-                q2.setText(fim);
-                qi2.setText(fim);
-                sx2.setText(fim);
-                sa2.setText(fim);
-                d2.setText(fim);
-                t3.setText(almoco);
-                q3.setText(almoco);
-                qi3.setText(almoco);
-                sx3.setText(almoco);
-                sa3.setText(almoco);
-                d3.setText(almoco);
-            }
-            if (folga.equals("Terça")){
-                t1.setText("Folga");
-                t2.setText("Folga");
-                t3.setText("Folga");
-                s1.setText(inicio);
-                q1.setText(inicio);
-                qi1.setText(inicio);
-                sx1.setText(inicio);
-                sa1.setText(inicio);
-                d1.setText(inicio);
-                s2.setText(fim);
-                q2.setText(fim);
-                qi2.setText(fim);
-                sx2.setText(fim);
-                sa2.setText(fim);
-                d2.setText(fim);
-                s3.setText(almoco);
-                q3.setText(almoco);
-                qi3.setText(almoco);
-                sx3.setText(almoco);
-                sa3.setText(almoco);
-                d3.setText(almoco);
+            if (tipoHor == 0) {
+                Toast.makeText(horario_guarda.this, "Sem horário atribuído", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            } else {
+                if (folga.equals("Segunda")) {
+                    s1.setText("Folga");
+                    s2.setText("Folga");
+                    s3.setText("Folga");
+                    t1.setText(inicio);
+                    q1.setText(inicio);
+                    qi1.setText(inicio);
+                    sx1.setText(inicio);
+                    sa1.setText(inicio);
+                    d1.setText(inicio);
+                    t2.setText(fim);
+                    q2.setText(fim);
+                    qi2.setText(fim);
+                    sx2.setText(fim);
+                    sa2.setText(fim);
+                    d2.setText(fim);
+                    t3.setText(almoco);
+                    q3.setText(almoco);
+                    qi3.setText(almoco);
+                    sx3.setText(almoco);
+                    sa3.setText(almoco);
+                    d3.setText(almoco);
+                }
+                if (folga.equals("Terça")) {
+                    t1.setText("Folga");
+                    t2.setText("Folga");
+                    t3.setText("Folga");
+                    s1.setText(inicio);
+                    q1.setText(inicio);
+                    qi1.setText(inicio);
+                    sx1.setText(inicio);
+                    sa1.setText(inicio);
+                    d1.setText(inicio);
+                    s2.setText(fim);
+                    q2.setText(fim);
+                    qi2.setText(fim);
+                    sx2.setText(fim);
+                    sa2.setText(fim);
+                    d2.setText(fim);
+                    s3.setText(almoco);
+                    q3.setText(almoco);
+                    qi3.setText(almoco);
+                    sx3.setText(almoco);
+                    sa3.setText(almoco);
+                    d3.setText(almoco);
 
-            }
-            if (folga.equals("Quarta")){
-                q1.setText("Folga");
-                q2.setText("Folga");
-                q3.setText("Folga");
-                t1.setText(inicio);
-                s1.setText(inicio);
-                qi1.setText(inicio);
-                sx1.setText(inicio);
-                sa1.setText(inicio);
-                d1.setText(inicio);
-                t2.setText(fim);
-                s2.setText(fim);
-                qi2.setText(fim);
-                sx2.setText(fim);
-                sa2.setText(fim);
-                d2.setText(fim);
-                t3.setText(almoco);
-                s3.setText(almoco);
-                qi3.setText(almoco);
-                sx3.setText(almoco);
-                sa3.setText(almoco);
-                d3.setText(almoco);
-            }
-            if (folga.equals("Quinta")){
-                qi1.setText("Folga");
-                qi2.setText("Folga");
-                qi3.setText("Folga");
-                t1.setText(inicio);
-                s1.setText(inicio);
-                q1.setText(inicio);
-                sx1.setText(inicio);
-                sa1.setText(inicio);
-                d1.setText(inicio);
-                t2.setText(fim);
-                s2.setText(fim);
-                q2.setText(fim);
-                sx2.setText(fim);
-                sa2.setText(fim);
-                d2.setText(fim);
-                t3.setText(almoco);
-                s3.setText(almoco);
-                q3.setText(almoco);
-                sx3.setText(almoco);
-                sa3.setText(almoco);
-                d3.setText(almoco);
-            }
-            if (folga.equals("Sexta")){
-                sx1.setText("Folga");
-                sx2.setText("Folga");
-                sx3.setText("Folga");
-                t1.setText(inicio);
-                s1.setText(inicio);
-                q1.setText(inicio);
-                qi1.setText(inicio);
-                sa1.setText(inicio);
-                d1.setText(inicio);
-                t2.setText(fim);
-                s2.setText(fim);
-                q2.setText(fim);
-                qi2.setText(fim);
-                sa2.setText(fim);
-                d2.setText(fim);
-                t3.setText(almoco);
-                s3.setText(almoco);
-                q3.setText(almoco);
-                qi3.setText(almoco);
-                sa3.setText(almoco);
-                d3.setText(almoco);
+                }
+                if (folga.equals("Quarta")) {
+                    q1.setText("Folga");
+                    q2.setText("Folga");
+                    q3.setText("Folga");
+                    t1.setText(inicio);
+                    s1.setText(inicio);
+                    qi1.setText(inicio);
+                    sx1.setText(inicio);
+                    sa1.setText(inicio);
+                    d1.setText(inicio);
+                    t2.setText(fim);
+                    s2.setText(fim);
+                    qi2.setText(fim);
+                    sx2.setText(fim);
+                    sa2.setText(fim);
+                    d2.setText(fim);
+                    t3.setText(almoco);
+                    s3.setText(almoco);
+                    qi3.setText(almoco);
+                    sx3.setText(almoco);
+                    sa3.setText(almoco);
+                    d3.setText(almoco);
+                }
+                if (folga.equals("Quinta")) {
+                    qi1.setText("Folga");
+                    qi2.setText("Folga");
+                    qi3.setText("Folga");
+                    t1.setText(inicio);
+                    s1.setText(inicio);
+                    q1.setText(inicio);
+                    sx1.setText(inicio);
+                    sa1.setText(inicio);
+                    d1.setText(inicio);
+                    t2.setText(fim);
+                    s2.setText(fim);
+                    q2.setText(fim);
+                    sx2.setText(fim);
+                    sa2.setText(fim);
+                    d2.setText(fim);
+                    t3.setText(almoco);
+                    s3.setText(almoco);
+                    q3.setText(almoco);
+                    sx3.setText(almoco);
+                    sa3.setText(almoco);
+                    d3.setText(almoco);
+                }
+                if (folga.equals("Sexta")) {
+                    sx1.setText("Folga");
+                    sx2.setText("Folga");
+                    sx3.setText("Folga");
+                    t1.setText(inicio);
+                    s1.setText(inicio);
+                    q1.setText(inicio);
+                    qi1.setText(inicio);
+                    sa1.setText(inicio);
+                    d1.setText(inicio);
+                    t2.setText(fim);
+                    s2.setText(fim);
+                    q2.setText(fim);
+                    qi2.setText(fim);
+                    sa2.setText(fim);
+                    d2.setText(fim);
+                    t3.setText(almoco);
+                    s3.setText(almoco);
+                    q3.setText(almoco);
+                    qi3.setText(almoco);
+                    sa3.setText(almoco);
+                    d3.setText(almoco);
 
-            }
-            if (folga.equals("Sabado")){
-                sa1.setText("Folga");
-                sa2.setText("Folga");
-                sa3.setText("Folga");
-                t1.setText(inicio);
-                s1.setText(inicio);
-                q1.setText(inicio);
-                qi1.setText(inicio);
-                sx1.setText(inicio);
-                d1.setText(inicio);
-                t2.setText(fim);
-                s2.setText(fim);
-                q2.setText(fim);
-                qi2.setText(fim);
-                sx2.setText(fim);
-                d2.setText(fim);
-                t3.setText(almoco);
-                s3.setText(almoco);
-                q3.setText(almoco);
-                qi3.setText(almoco);
-                sx3.setText(almoco);
-                d3.setText(almoco);
+                }
+                if (folga.equals("Sabado")) {
+                    sa1.setText("Folga");
+                    sa2.setText("Folga");
+                    sa3.setText("Folga");
+                    t1.setText(inicio);
+                    s1.setText(inicio);
+                    q1.setText(inicio);
+                    qi1.setText(inicio);
+                    sx1.setText(inicio);
+                    d1.setText(inicio);
+                    t2.setText(fim);
+                    s2.setText(fim);
+                    q2.setText(fim);
+                    qi2.setText(fim);
+                    sx2.setText(fim);
+                    d2.setText(fim);
+                    t3.setText(almoco);
+                    s3.setText(almoco);
+                    q3.setText(almoco);
+                    qi3.setText(almoco);
+                    sx3.setText(almoco);
+                    d3.setText(almoco);
 
+                }
+                if (folga.equals("Domingo")) {
+                    d1.setText("Folga");
+                    d2.setText("Folga");
+                    d3.setText("Folga");
+                    t1.setText(inicio);
+                    s1.setText(inicio);
+                    q1.setText(inicio);
+                    qi1.setText(inicio);
+                    sa1.setText(inicio);
+                    sx1.setText(inicio);
+                    t2.setText(fim);
+                    s2.setText(fim);
+                    q2.setText(fim);
+                    qi2.setText(fim);
+                    sa2.setText(fim);
+                    sx2.setText(fim);
+                    t3.setText(almoco);
+                    s3.setText(almoco);
+                    q3.setText(almoco);
+                    qi3.setText(almoco);
+                    sa3.setText(almoco);
+                    sx3.setText(almoco);
+                }
+                progressDialog.dismiss();
             }
-            if (folga.equals("Domingo")){
-                d1.setText("Folga");
-                d2.setText("Folga");
-                d3.setText("Folga");
-                t1.setText(inicio);
-                s1.setText(inicio);
-                q1.setText(inicio);
-                qi1.setText(inicio);
-                sa1.setText(inicio);
-                sx1.setText(inicio);
-                t2.setText(fim);
-                s2.setText(fim);
-                q2.setText(fim);
-                qi2.setText(fim);
-                sa2.setText(fim);
-                sx2.setText(fim);
-                t3.setText(almoco);
-                s3.setText(almoco);
-                q3.setText(almoco);
-                qi3.setText(almoco);
-                sa3.setText(almoco);
-                sx3.setText(almoco);
-            }
-            progressDialog.dismiss();
         }
 
         @Override
@@ -264,19 +269,23 @@ public class horario_guarda extends AppCompatActivity implements NavigationView.
                 if (connection == null){
 
                 }else {
-                    String query = "SELECT idSchedule FROM Profile WHERE scan like '"+MainActivity.scanValor+"'";
+                    String query = "SELECT idSchedule FROM Profile WHERE scan like '" + MainActivity.scanValor + "'";
                     Statement statement = connection.createStatement();
                     ResultSet rs = statement.executeQuery(query);
                     while (rs.next()) {
                         tipoHor = rs.getInt("idSchedule");
                     }
-                    String query1 = "Select Entrada, Saida, Almoco, Folga from Schedule where idSchedule like '"+tipoHor+"'";
-                    ResultSet resultSet = statement.executeQuery(query1);
-                    while (resultSet.next()){
-                        inicio = resultSet.getString("Entrada");
-                        fim = resultSet.getString("Saida");
-                        almoco = resultSet.getString("Almoco");
-                        folga = resultSet.getString("Folga");
+                    if (tipoHor == 0) {
+
+                    } else {
+                        String query1 = "Select Entrada, Saida, Almoco, Folga from Schedule where idSchedule like '" + tipoHor + "'";
+                        ResultSet resultSet = statement.executeQuery(query1);
+                        while (resultSet.next()) {
+                            inicio = resultSet.getString("Entrada");
+                            fim = resultSet.getString("Saida");
+                            almoco = resultSet.getString("Almoco");
+                            folga = resultSet.getString("Folga");
+                        }
                     }
                 }
             } catch (ClassNotFoundException e) {
