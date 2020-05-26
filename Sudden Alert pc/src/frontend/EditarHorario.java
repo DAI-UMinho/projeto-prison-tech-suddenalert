@@ -416,10 +416,10 @@ public class EditarHorario extends javax.swing.JFrame implements Serializable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
-    private javax.swing.JFormattedTextField almoco;
-    private javax.swing.JFormattedTextField entrada;
+    public javax.swing.JFormattedTextField almoco;
+    public javax.swing.JFormattedTextField entrada;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBoxFolga;
+    public javax.swing.JComboBox<String> jComboBoxFolga;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -434,9 +434,9 @@ public class EditarHorario extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private java.awt.Label label1;
-    private javax.swing.JTextField nome;
-    private javax.swing.JFormattedTextField saida;
-    private javax.swing.JTextField tipo;
+    public javax.swing.JTextField nome;
+    public javax.swing.JFormattedTextField saida;
+    public javax.swing.JTextField tipo;
     // End of variables declaration//GEN-END:variables
 
     private void setIcon() {

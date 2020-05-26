@@ -123,6 +123,26 @@ public class Historico extends javax.swing.JFrame implements Serializable {
         }
     }
     
+    public void EliminarRowTabela(String i) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query = "UPDATE Historico SET deleted='1' WHERE data='" + i + "'";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.executeUpdate();
+            DefaultTableModel model = (DefaultTableModel) jTable_h.getModel();
+            model.setRowCount(0);
+            show_historico();
+            JOptionPane.showMessageDialog(null,"Eliminado com Sucesso");
+            
+        } catch(Exception e) {
+           JOptionPane.showMessageDialog(null, e); 
+        }
+    }
+    
         private void pesquisar() {
         String sqldata = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.title like ?";
         String sqlacao = "Select Report.title as 'Título do Relatório', Report.gravidade as 'Nível de Gravidade', Profile.name as'Nome do Psicólogo', Profile.email as 'Email do Psicólogo', Report.date as Data from Report inner join Profile on Report.scan = Profile.scan where Report.gravidade like ?";
@@ -885,7 +905,14 @@ public class Historico extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+      int row_selecionada = jTable_h.getSelectedRow();
+      if (row_selecionada >= 0) {  
+        ArrayList<HistoricoBack> lista = historicoList();
+        String i = lista.get(row_selecionada).getDate();
+        EliminarRowTabela(i);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

@@ -10,16 +10,17 @@ package backend;
  * @author Diogo
  */
 public class Report {
-     private String titulo, gravidade, nomeP, emailP, data;
+     private String titulo, gravidade, nomeP, emailP, data, relato;
     private int idReport;
 
-    public Report(String titulo, String gravidade, String nomeP, String emailP, String data, int idReport) {
+    public Report(String titulo, String gravidade, String nomeP, String emailP, String data, int idReport, String relato) {
         this.titulo = titulo;
         this.gravidade = gravidade;
         this.nomeP = nomeP;
         this.emailP = emailP;
         this.data = data;
         this.idReport = idReport;
+        this.relato= relato;
     }
 
     public String getTitulo() {
@@ -44,5 +45,9 @@ public class Report {
 
     public int getIdReport() {
         return idReport;
+    }
+    
+    public String getRelato() {
+        return relato;
     }
 }

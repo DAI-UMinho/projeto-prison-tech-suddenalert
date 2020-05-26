@@ -767,12 +767,29 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
 
     private void hor_guardaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hor_guardaActionPerformed
         int row = jTable_hor.getSelectedRow();
-        id = (int) jTable_hor.getValueAt(row, 2);
-        
-        Horario xHorario = new Horario();
-        xHorario.setLocationRelativeTo(null);
-        xHorario.setVisible(true);
-        this.dispose();
+        if (row >= 0) {
+            id = (int) jTable_hor.getValueAt(row, 2);
+            ArrayList<Entidade> List = guardaList();
+            Entidade e = List.get(row);
+            String nome = e.getNome();
+            String tipo = null;
+            int IDtipo = e.getId_type();
+            if (IDtipo == 1) {
+            tipo = "Guarda";
+                    }
+            else {
+                tipo = "Psicólogo";
+            }
+            Horario xHorario = new Horario();
+            xHorario.tipox.setText(tipo);
+            xHorario.nomex.setText(nome);
+            xHorario.setLocationRelativeTo(null);
+            xHorario.setVisible(true);
+            this.dispose();
+       }
+        else {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha");
+        }
     }//GEN-LAST:event_hor_guardaActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
