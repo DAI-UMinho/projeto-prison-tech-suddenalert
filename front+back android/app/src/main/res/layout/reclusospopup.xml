@@ -42,7 +42,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:onClick="reg"
         android:shadowColor="@color/colorPrimary"
-        android:text="Registo de um recluso"
+        android:text="Registar recluso"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

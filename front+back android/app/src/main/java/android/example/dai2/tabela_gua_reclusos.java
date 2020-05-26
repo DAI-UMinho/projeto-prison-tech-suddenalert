@@ -411,11 +411,12 @@ public class tabela_gua_reclusos extends AppCompatActivity implements Navigation
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(tabela_gua_reclusos.this, ajuda.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);

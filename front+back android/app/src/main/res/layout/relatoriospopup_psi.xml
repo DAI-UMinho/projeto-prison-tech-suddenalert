@@ -15,8 +15,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="127dp"
         android:layout_height="53dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="15dp"
         android:layout_weight="1"
         android:backgroundTint="@color/colorPrimary"
         android:onClick="listarel"
@@ -26,17 +25,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/fazer_relatorio"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="127dp"
         android:layout_height="52dp"
-        android:layout_marginTop="70dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="22dp"
+        android:layout_marginBottom="15dp"
         android:layout_weight="1"
         android:backgroundTint="@color/colorPrimary"
         android:onClick="rel"
@@ -45,9 +42,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView26"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/txtclose"

@@ -151,6 +151,7 @@
                 android:background="#FFFFFF"
                 android:backgroundTint="@color/colorwhite"
                 android:text="relato"
+android:gravity="center"
                 android:textAlignment="center" />
 
         </LinearLayout>

@@ -78,6 +78,8 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(fazer_documento_psi.this, ajuda.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);

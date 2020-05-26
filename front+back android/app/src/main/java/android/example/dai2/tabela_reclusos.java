@@ -134,7 +134,7 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Button buttonSort= findViewById(R.id.button11);
+       // Button buttonSort= findViewById(R.id.button11);
         //buttonSort.setOnClickListener(new View.OnClickListener() {
             //@Override
            // public void onClick(View v) {
@@ -446,7 +446,9 @@ public class tabela_reclusos extends AppCompatActivity implements NavigationView
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.ajuda) {
+        if (id == R.id.ajuda){
+            startActivity(new Intent(tabela_reclusos.this, ajuda.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);

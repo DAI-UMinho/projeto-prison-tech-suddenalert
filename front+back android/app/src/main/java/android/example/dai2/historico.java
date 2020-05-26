@@ -321,11 +321,12 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(historico.this, ajuda.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -341,13 +342,21 @@ public class historico extends AppCompatActivity implements NavigationView.OnNav
         }else if (id == R.id.nav_hor) {
             TextView txtclose;
             Button listahor;
+            Button addhor;
             myDialog.setContentView(R.layout.horariospopup);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listahor = (Button) myDialog.findViewById(R.id.listahor);
+            addhor = (Button) myDialog.findViewById(R.id.addhor);
             listahor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(historico.this, tabela_horario.class));
+                }
+            });
+            addhor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(historico.this, Adicionar_horario.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {

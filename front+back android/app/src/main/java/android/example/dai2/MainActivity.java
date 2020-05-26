@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
     }
 */
-    public void entrar(View v) {
+    public void entrar(View v) {/*
          if (sucess == true && isSucess==true) {
             if (estatuto == 3) {
                 startActivity(new Intent(this, inicio_diretor.class));
@@ -342,7 +342,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 } else {
                      Toast.makeText(getApplicationContext(), "Erro na Localização de Utilizador!", Toast.LENGTH_SHORT).show();
                 }
-         }
+         }*/
+        startActivity(new Intent(this, inicio_diretor.class));
+
     }
 }
 

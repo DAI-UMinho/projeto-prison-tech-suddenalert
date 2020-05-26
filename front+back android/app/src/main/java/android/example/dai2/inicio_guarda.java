@@ -69,6 +69,7 @@ public class inicio_guarda extends AppCompatActivity implements NavigationView.O
         return true;
     }
 
+
     public void entrar (View v) {startActivity(new Intent(this, tabela_gua_reclusos.class));}
     public void entrarr (View v) {
         startActivity(new Intent(this, documentos_guarda.class));

@@ -170,6 +170,8 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(tabela_guarda.this, ajuda.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);

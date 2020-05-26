@@ -128,6 +128,7 @@ public class documentos_guarda extends AppCompatActivity implements NavigationVi
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
+            startActivity(new Intent(documentos_guarda.this, ajuda.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
