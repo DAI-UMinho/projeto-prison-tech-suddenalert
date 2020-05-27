@@ -250,7 +250,7 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, true, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

@@ -221,7 +221,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
