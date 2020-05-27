@@ -204,6 +204,7 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         sidepane9 = new javax.swing.JPanel();
         ent = new rsbuttom.RSButtonMetro();
@@ -325,6 +326,21 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/delete.png"))); // NOI18N
+        jButton3.setText("Remover");
+        jButton3.setInheritsPopupMenu(true);
+        jButton3.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton3.setMaximumSize(new java.awt.Dimension(69, 79));
+        jButton3.setMinimumSize(new java.awt.Dimension(69, 79));
+        jButton3.setPreferredSize(new java.awt.Dimension(69, 79));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -332,6 +348,8 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -366,7 +384,8 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
@@ -861,6 +880,10 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
         pesquisar();
     }//GEN-LAST:event_jTextField1KeyReleased
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -874,6 +897,7 @@ public class ListRelatorios extends javax.swing.JFrame implements Serializable {
     private rsbuttom.RSButtonMetro hor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboP;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
