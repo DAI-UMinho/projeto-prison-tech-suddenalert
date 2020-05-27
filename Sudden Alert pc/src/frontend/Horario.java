@@ -587,6 +587,9 @@ public class Horario extends javax.swing.JFrame implements Serializable {
         x.nome.setText(nomex.getText());
         x.tipo.setText(tipox.getText());
         x.saida.setText(fim);
+        x.folga1.setText(folga);
+        String s = String.valueOf(tipoHor); 
+        x.HorAtual.setText(s);
         x.setLocationRelativeTo(null);
         x.setVisible(true);
         this.dispose();
