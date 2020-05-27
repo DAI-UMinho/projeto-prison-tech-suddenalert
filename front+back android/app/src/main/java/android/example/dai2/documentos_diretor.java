@@ -44,6 +44,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
     private documentos_diretor.SyncDataDoc.MyAppAdapter myAppAdapter;
     private ListView listView;
     private boolean sucess = false;
+    private static int idReport;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -387,7 +388,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "Select  Report.idReport, Report.title, Profile.name, Report.date, Report.gravidade, Profile.email , Report.report from Report inner join Profile on Report.scan = Profile.scan;";
+                    String query = "Select  Report.idReport, Report.title, Profile.name, Report.date, Report.gravidade, Profile.email , Report.report from Report inner join Profile on Report.scan = Profile.scan where Report.deleted like '0';";
                     Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery(query);
                     System.out.println("ali");
@@ -577,5 +578,46 @@ public void onClick(View v) {
         });
         myDialog.show();
         }
+        public void eliminarRelatorio(View view){
+        int posicao = listView.getPositionForView(view);
+        idReport = documentosArrayList.get(posicao).getId_report();
+            EliminarRelatorio eliminarRelatorio = new EliminarRelatorio();
+            eliminarRelatorio.execute();
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e){
+                System.out.println(e);
+            }
+            myDialog.dismiss();
+            startActivity(new Intent(this, documentos_diretor.class));
+            documentos_diretor.this.finish();
+
+        }
+    private class EliminarRelatorio extends AsyncTask<String, String, String>{
+        String msg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(BD.getBdUrl(), BD.getUSER(), BD.getPASS());
+                if (connection == null){
+                    msg = "Connect failed";
+                } else {
+                    String query = "UPDATE Report SET deleted='1' where idReport = '"+idReport+ "'";
+                    Statement preparedStatement = connection.createStatement();
+                    preparedStatement.executeUpdate(query);
+                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', 'IdReport:"+idReport+"', '"+MainActivity.scanValor+"', 'Relatorio');";
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(query2);
+                }
+                connection.close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return msg;
+        }
+    }
 }
 

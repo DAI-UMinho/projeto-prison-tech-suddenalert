@@ -76,7 +76,7 @@ public class tabela_alert extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(tabela_alert.this, "Lista de reclusos", "A carregar...", true);
+            progress = ProgressDialog.show(tabela_alert.this, "Lista de situações de alerta", "A carregar...", true);
         }
 
         @Override
