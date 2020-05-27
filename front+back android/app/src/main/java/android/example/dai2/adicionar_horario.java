@@ -39,7 +39,7 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
     String Entrda, Saida, Almoco, Folga, Scan, tipo;
     private boolean sucess;
     private ImageView adicionar;
-    private boolean scanEnc = false;
+    private boolean scanEnc = false, horAtrib = false;
 
 
     @Override
@@ -175,6 +175,9 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
                 }else {
                     Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
                 }
+                if (horAtrib == false){
+                    Toast.makeText(this, "Scan já com horário atribuído", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -188,7 +191,7 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
     }
     private class AdicionarHor extends AsyncTask<String,String,String> {
         String msg = "";
-        int valor = 0, idHor = 0, valorProc = 0;
+        int valor = 0, idHor = 0, valorProc = 0, valorTerHor;
 
 
 
@@ -208,33 +211,45 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
                         valorProc = resultSet3.getInt("COUNT(1)");
                     }
                     if (valorProc == 1) {
-                        String query1 = "select count(1) from Schedule where Entrada like '" + Entrda + "'and  Saida like '" + Saida + "' and Almoco like '" + Almoco + "'and Folga like '" + Folga + "';";
-                        Statement statement1 = conn.createStatement();
-                        ResultSet resultSet = statement1.executeQuery(query1);
-                        while (resultSet.next()) {
-                            valor = resultSet.getInt("COUNT(1)");
-                        }
-                        if (valor == 0) {
-                            String query = "insert into Schedule (`Entrada`, `Saida`, `Almoco`, `Folga`) Values ('" + Entrda + "', '" + Saida + "', '" + Almoco + "', '" + Folga + "');";
-                            Statement stmt = conn.createStatement();
-                            System.out.println(query);
-                            stmt.executeUpdate(query);
-                        }
-                        String query2 = "select idSchedule from Schedule where Entrada like '" + Entrda + "'and  Saida like '" + Saida + "' and Almoco like '" + Almoco + "'and Folga like '" + Folga + "';";
-                        System.out.println(query2);
+                        String query5 = "SELECT COUNT(1) FROM Profile WHERE scan like '" + Scan + "' and idSchedule like 0;";
                         Statement statement = conn.createStatement();
-                        ResultSet resultSet1 = statement.executeQuery(query2);
-                        System.out.println(resultSet1);
-                        while (resultSet1.next()) {
-                            idHor = resultSet1.getInt("idSchedule");
+                        ResultSet resultSet1 = statement.executeQuery(query5);
+                        while (resultSet3.next()) {
+                            valorTerHor = resultSet1.getInt("COUNT(1)");
                         }
-                        String query4 = "update suddenalert.Profile set idSchedule='" + idHor + "' where scan  like '" + Scan + "'";
-                        Statement statement2 = conn.createStatement();
-                        statement2.executeUpdate(query4);
-                        msg = "Inserting Successfull!!!!";
-                        System.out.println("aqui");
-                        sucess = true;
-                        scanEnc = true;
+                        if (valorTerHor == 0) {
+                            String query1 = "select count(1) from Schedule where Entrada like '" + Entrda + "'and  Saida like '" + Saida + "' and Almoco like '" + Almoco + "'and Folga like '" + Folga + "';";
+                            Statement statement1 = conn.createStatement();
+                            ResultSet resultSet = statement1.executeQuery(query1);
+                            while (resultSet.next()) {
+                                valor = resultSet.getInt("COUNT(1)");
+                            }
+                            if (valor == 0) {
+                                String query = "insert into Schedule (`Entrada`, `Saida`, `Almoco`, `Folga`) Values ('" + Entrda + "', '" + Saida + "', '" + Almoco + "', '" + Folga + "');";
+                                Statement stmt = conn.createStatement();
+                                System.out.println(query);
+                                stmt.executeUpdate(query);
+                            }
+                            String query2 = "select idSchedule from Schedule where Entrada like '" + Entrda + "'and  Saida like '" + Saida + "' and Almoco like '" + Almoco + "'and Folga like '" + Folga + "';";
+                            System.out.println(query2);
+                            Statement statement4 = conn.createStatement();
+                            ResultSet resultSet4 = statement4.executeQuery(query2);
+                            while (resultSet4.next()) {
+                                idHor = resultSet1.getInt("idSchedule");
+                            }
+                            String query4 = "update suddenalert.Profile set idSchedule='" + idHor + "' where scan  like '" + Scan + "'";
+                            Statement statement2 = conn.createStatement();
+                            statement2.executeUpdate(query4);
+                            msg = "Inserting Successfull!!!!";
+                            System.out.println("aqui");
+                            sucess = true;
+                            scanEnc = true;
+                            horAtrib = true;
+                        } else {
+                            sucess = false;
+                            scanEnc = true;
+                            horAtrib = false;
+                        }
 
                     } else {
                         sucess = false;
