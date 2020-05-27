@@ -606,7 +606,7 @@ public void onClick(View v) {
                     String query = "UPDATE Report SET deleted='1' where idReport = '"+idReport+ "'";
                     Statement preparedStatement = connection.createStatement();
                     preparedStatement.executeUpdate(query);
-                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `id_recluse`, `tipo`) VALUES ('Remoção', '', '', 'Relatorio');";
+                    String query2 = "INSERT INTO Historico (`acao`, `motivo`, `scan`, `tipo`) VALUES ('Remoção', 'IdReport:"+idReport+"', '"+MainActivity.scanValor+"', 'Relatorio');";
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query2);
                 }
