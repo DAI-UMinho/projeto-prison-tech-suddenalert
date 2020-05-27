@@ -284,6 +284,7 @@ try{
             }
         });
 
+        entrada.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         entrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         entrada.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         entrada.setSelectionColor(new java.awt.Color(255, 255, 255));
@@ -293,6 +294,7 @@ try{
             }
         });
 
+        saida.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         saida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         saida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         saida.setSelectionColor(new java.awt.Color(255, 255, 255));
@@ -307,6 +309,7 @@ try{
             }
         });
 
+        almoco.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         almoco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         almoco.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         almoco.setSelectionColor(new java.awt.Color(255, 255, 255));
@@ -330,6 +333,7 @@ try{
         jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel7.setText("Número de Horário:");
 
+        folga1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         folga1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         folga1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         folga1.setSelectionColor(new java.awt.Color(255, 255, 255));
