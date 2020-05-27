@@ -270,7 +270,7 @@ public class documentos_psicologo extends AppCompatActivity implements Navigatio
                 if (conn == null) {
                     sucess = false;
                 } else {
-                    String query = "Select  Report.idReport, Report.title, Profile.name, Report.date, Report.gravidade, Profile.email , Report.report from Report inner join Profile on Report.scan = Profile.scan;";
+                    String query = "Select  Report.idReport, Report.title, Profile.name, Report.date, Report.gravidade, Profile.email , Report.report from Report inner join Profile on Report.scan = Profile.scan where Report.deleted like '0';";
                     Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery(query);
                     if (resultSet != null) {

@@ -166,7 +166,7 @@ public class inicio_psicologo extends AppCompatActivity
         listarel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(inicio_psicologo.this, documentos_diretor.class));
+                startActivity(new Intent(inicio_psicologo.this, documentos_psicologo.class));
             }
         });
         fazer.setOnClickListener(new View.OnClickListener() {
