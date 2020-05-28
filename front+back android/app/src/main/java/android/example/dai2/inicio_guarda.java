@@ -72,7 +72,7 @@ public class inicio_guarda extends AppCompatActivity implements NavigationView.O
 
     public void entrar (View v) {startActivity(new Intent(this, tabela_gua_reclusos.class));}
     public void entrarr (View v) {
-        startActivity(new Intent(this, documentos_psicologo.class));
+        startActivity(new Intent(this, documentos_guarda.class));
     }
     public void entrarhor (View v) { startActivity(new Intent(this, horario_guarda.class)); }
     public void entrarperfil (View v) {
