@@ -331,7 +331,7 @@ public class tabela_horario extends AppCompatActivity implements NavigationView.
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(tabela_horario.this, "Synchronising", "ListView Loading wait...", true);
+            progress = ProgressDialog.show(tabela_horario.this, "Listagem de horários", "A carregar...", true);
         }
 
         @Override

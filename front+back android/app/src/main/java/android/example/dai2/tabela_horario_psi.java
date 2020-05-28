@@ -330,7 +330,7 @@ public class tabela_horario_psi extends AppCompatActivity implements NavigationV
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(tabela_horario_psi.this, "Synchronising", "ListView Loading wait...", true);
+            progress = ProgressDialog.show(tabela_horario_psi.this, "Listagem de horários", "A carregar...", true);
         }
 
         @Override

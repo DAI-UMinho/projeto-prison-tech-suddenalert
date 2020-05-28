@@ -172,10 +172,8 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
             } else {
                 if (scanEnc == false) {
                     Toast.makeText(this, "Scan Inválido", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
                 }
-                if (horAtrib == false){
+                if (horAtrib == true){
                     Toast.makeText(this, "Scan já com horário atribuído", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -211,10 +209,10 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
                         valorProc = resultSet3.getInt("COUNT(1)");
                     }
                     if (valorProc == 1) {
-                        String query5 = "SELECT COUNT(1) FROM Profile WHERE scan like '" + Scan + "' and idSchedule like 0;";
+                        String query5 = "SELECT COUNT(1) FROM Profile WHERE scan like '" + Scan + "' and idSchedule is not null;";
                         Statement statement = conn.createStatement();
                         ResultSet resultSet1 = statement.executeQuery(query5);
-                        while (resultSet3.next()) {
+                        while (resultSet1.next()) {
                             valorTerHor = resultSet1.getInt("COUNT(1)");
                         }
                         if (valorTerHor == 0) {
@@ -235,25 +233,25 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
                             Statement statement4 = conn.createStatement();
                             ResultSet resultSet4 = statement4.executeQuery(query2);
                             while (resultSet4.next()) {
-                                idHor = resultSet1.getInt("idSchedule");
+                                idHor = resultSet4.getInt("idSchedule");
                             }
                             String query4 = "update suddenalert.Profile set idSchedule='" + idHor + "' where scan  like '" + Scan + "'";
                             Statement statement2 = conn.createStatement();
                             statement2.executeUpdate(query4);
                             msg = "Inserting Successfull!!!!";
-                            System.out.println("aqui");
                             sucess = true;
                             scanEnc = true;
-                            horAtrib = true;
+                            horAtrib = false;
                         } else {
                             sucess = false;
                             scanEnc = true;
-                            horAtrib = false;
+                            horAtrib = true;
                         }
 
                     } else {
                         sucess = false;
                         scanEnc = false;
+                        horAtrib = false;
                     }
                 }
                 conn.close();
@@ -262,6 +260,7 @@ public class Adicionar_horario extends AppCompatActivity implements NavigationVi
                 e.printStackTrace();
                 sucess = false;
             }
+            System.out.println(scanEnc+"       "+horAtrib);
             return msg;
         }
 

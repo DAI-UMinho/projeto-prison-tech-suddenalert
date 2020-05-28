@@ -348,7 +348,7 @@ public class tabela_psicologo extends AppCompatActivity implements NavigationVie
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(tabela_psicologo.this, "Synchronising", "ListView Loading wait...", true);
+            progress = ProgressDialog.show(tabela_psicologo.this, "Lista de psicólogos", "A carregar ...", true);
         }
 
         @Override

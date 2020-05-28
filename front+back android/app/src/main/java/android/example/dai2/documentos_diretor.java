@@ -376,7 +376,7 @@ public class documentos_diretor extends AppCompatActivity implements NavigationV
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(documentos_diretor.this, "Synchronising", "ListView Loading wait...", true);
+            progressDialog = ProgressDialog.show(documentos_diretor.this, "Listagem de relatórios", "A carregar...", true);
         }
 
         @Override
@@ -578,21 +578,57 @@ public void onClick(View v) {
         });
         myDialog.show();
         }
-        public void eliminarRelatorio(View view){
+    public void eliminarRelatorio(final View view){
+        myDialog.setContentView(R.layout.eliminar_rel);
         int posicao = listView.getPositionForView(view);
         idReport = documentosArrayList.get(posicao).getId_report();
-            EliminarRelatorio eliminarRelatorio = new EliminarRelatorio();
-            eliminarRelatorio.execute();
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                System.out.println(e);
+        Button Sim;
+        Button Nao;
+        TextView txtclose;
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        Sim = (Button) myDialog.findViewById(R.id.eliminaRel);
+        Nao = (Button) myDialog.findViewById(R.id.Naoelimina);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
             }
-            myDialog.dismiss();
-            startActivity(new Intent(this, documentos_diretor.class));
-            documentos_diretor.this.finish();
+        });
+        Nao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        Sim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eliminarRel(view);
+            }
+        });
 
+        myDialog.show();
+
+
+
+
+    }
+    public void eliminarRel(View view){
+      /*  int posicao = listView.getPositionForView(view);
+        idReport = documentosArrayList.get(posicao).getId_report();*/
+        EliminarRelatorio eliminarRelatorio = new EliminarRelatorio();
+        eliminarRelatorio.execute();
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e){
+            System.out.println(e);
         }
+        myDialog.dismiss();
+        startActivity(new Intent(this, documentos_diretor.class));
+        documentos_diretor.this.finish();
+
+    }
+
     private class EliminarRelatorio extends AsyncTask<String, String, String>{
         String msg;
         @Override

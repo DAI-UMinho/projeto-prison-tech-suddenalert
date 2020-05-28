@@ -51,17 +51,17 @@
             android:id="@+id/imageView3"
             android:layout_width="53dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:onClick="mostrarRelatorio"
             app:srcCompat="@mipmap/ic_ver_foreground" />
 
         <ImageView
-            android:id="@+id/apagarRel"
+            android:id="@+id/eliminarRelatorio"
             android:layout_width="52dp"
             android:layout_height="56dp"
             android:layout_weight="1"
             android:onClick="eliminarRelatorio"
+            android:layout_marginRight="10dp"
             app:srcCompat="@drawable/ic_delete_foreground" />
 
     </LinearLayout>

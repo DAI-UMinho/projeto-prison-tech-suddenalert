@@ -255,7 +255,7 @@ public class documentos_guarda extends AppCompatActivity implements NavigationVi
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(documentos_guarda.this, "Synchronising", "ListView Loading wait...", true);
+            progressDialog = ProgressDialog.show(documentos_guarda.this, "Listagem de relatórios", "A carregar...", true);
         }
 
         @Override
