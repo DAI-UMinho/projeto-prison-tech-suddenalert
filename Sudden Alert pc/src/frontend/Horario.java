@@ -68,6 +68,7 @@ public class Horario extends javax.swing.JFrame implements Serializable {
             
             
             tipoHor = ListHorarios.id;
+            System.out.println(tipoHor);
             
                 
                 
@@ -241,9 +242,9 @@ public class Horario extends javax.swing.JFrame implements Serializable {
             jTable_h.getModel().setValueAt(fim, 6, 1);
             jTable_h.getModel().setValueAt(almoco, 6, 2);
             }
-            else if (folga.equals("Domingo")){
+            else if(folga.equals("Domingo")){
             jTable_h.getModel().setValueAt("Folga", 6, 0);
-             jTable_h.getModel().setValueAt(inicio, 0, 0);
+            jTable_h.getModel().setValueAt(inicio, 0, 0);
             jTable_h.getModel().setValueAt(fim, 0, 1);
             jTable_h.getModel().setValueAt(almoco, 0, 2);
             

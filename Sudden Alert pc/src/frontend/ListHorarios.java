@@ -770,6 +770,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         int row = jTable_hor.getSelectedRow();
         if (row >= 0) {
             id = (int) jTable_hor.getValueAt(row, 2);
+            
             ArrayList<Entidade> List = guardaList();
             Entidade e = List.get(row);
             scan = e.getScan();

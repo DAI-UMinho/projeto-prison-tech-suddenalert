@@ -347,7 +347,7 @@
                         <StringItem index="2" value="Quarta"/>
                         <StringItem index="3" value="Quinta"/>
                         <StringItem index="4" value="Sexta "/>
-                        <StringItem index="5" value="S&#xe1;bado "/>
+                        <StringItem index="5" value="Sabado "/>
                         <StringItem index="6" value="Domingo"/>
                       </StringArray>
                     </Property>

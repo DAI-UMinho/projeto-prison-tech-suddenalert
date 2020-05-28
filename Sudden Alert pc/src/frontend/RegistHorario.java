@@ -42,6 +42,8 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
 
     private DefaultTableModel modeloTabela;
     int valor = 0;
+    int id;
+    int idSchedule;
 
     /**
      * Creates new form Reclusos
@@ -64,6 +66,45 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
         ImageIcon i = new ImageIcon(img2);
         jButton1.setIcon(i);*/
     }
+    public void RegistarHorario(String entrada, String saida, String almoco, String folga){
+try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query = "Insert into Schedule(Entrada, Saida, Almoco, Folga)values(?,?,?,?)";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, entrada);
+            pst.setString(2, saida);
+            pst.setString(3, almoco);
+            pst.setString(4, folga);
+            pst.executeUpdate();
+            TimeUnit.SECONDS.sleep(1);
+            String query2 = "SELECT idSchedule FROM Schedule ORDER BY idSchedule DESC LIMIT 1";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query2);
+            while (rs.next()) {
+                idSchedule = rs.getInt("idSchedule");
+            }
+            String query3 = "UPDATE Profile SET idSchedule = '"+idSchedule+"' WHERE scan ='"+id+"'";
+            PreparedStatement pst3 = con.prepareStatement(query3);
+            pst3.executeUpdate();
+            
+            
+            
+            
+            
+                    
+            //JOptionPane.showMessageDialog(null,"Recluso registado com Sucesso");
+    }                                        
+     catch(ClassNotFoundException | SQLException ed) {
+           JOptionPane.showMessageDialog(null, ed); 
+        } catch (InterruptedException ex) {
+            Logger.getLogger(RegistHorario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,7 +214,7 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
         jLabel17.setText("Folga:");
 
         jComboBoxFolga.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        jComboBoxFolga.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta ", "Sábado ", "Domingo" }));
+        jComboBoxFolga.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta ", "Sabado ", "Domingo" }));
 
         entrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         entrada.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -549,6 +590,12 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
         } catch (Exception err) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
+        id = Integer.parseInt(scan.getText());
+        String e = entrada.getText();
+        String s = saida.getText();
+        String a = almoco.getText();
+        String f = jComboBoxFolga.getSelectedItem().toString();
+        RegistarHorario(e, s, a, f);
         /*ListEnt_popup xListEnt_popup = new ListEnt_popup();
         xListEnt_popup.setLocationRelativeTo(null);
         xListEnt_popup.setVisible(true);*/
