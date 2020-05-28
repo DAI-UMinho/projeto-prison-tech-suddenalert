@@ -259,7 +259,7 @@ public class documentos_psicologo extends AppCompatActivity implements Navigatio
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(documentos_psicologo.this, "Synchronising", "ListView Loading wait...", true);
+            progressDialog = ProgressDialog.show(documentos_psicologo.this, "Listagem de relatórios", "A carregar...", true);
         }
 
         @Override

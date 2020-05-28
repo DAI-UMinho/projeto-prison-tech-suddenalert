@@ -315,7 +315,7 @@ public class tabela_guarda extends AppCompatActivity implements NavigationView.O
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(tabela_guarda.this, "Synchronising", "ListView Loading wait...", true);
+            progress = ProgressDialog.show(tabela_guarda.this, "Lista de guardas", "A carregar...", true);
         }
 
         @Override
