@@ -349,7 +349,7 @@ public class documentos_guarda extends AppCompatActivity implements NavigationVi
                 ViewHolder viewHolder = null;
                 if (rowView == null) {
                     LayoutInflater inflater = getLayoutInflater();
-                    rowView = inflater.inflate(R.layout.linharel, parent, false);
+                    rowView = inflater.inflate(R.layout.linhadoc, parent, false);
                     viewHolder = new ViewHolder();
                     viewHolder.titulo = (TextView) rowView.findViewById(R.id.nomeRelatorio);
                     // viewHolder.id = (TextView) rowView.findViewById(R.id.nomeEnt);
@@ -408,7 +408,7 @@ public class documentos_guarda extends AppCompatActivity implements NavigationVi
             }
         }
     }
-    public void mostrarRelatorio(View view){
+    public void verRelatorio(View view){
         int posicao = listView.getPositionForView(view);
 
         TextView txtclose;
