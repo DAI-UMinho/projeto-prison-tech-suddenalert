@@ -874,7 +874,7 @@ public class ListReclusos extends javax.swing.JFrame implements Serializable {
                     xEditar.jLabel2.setIcon(newImage);
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+                JOptionPane.showMessageDialog(null, "Este recluso não possui imagem", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
 
             xEditar.setLocationRelativeTo(null);

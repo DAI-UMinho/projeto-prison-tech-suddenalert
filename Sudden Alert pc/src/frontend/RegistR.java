@@ -625,6 +625,11 @@ try{
             JOptionPane.showMessageDialog(null,"O campo Data de Entrega é obrigatório","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if (imagem == null  || imagem.length == 0){
+            registar_data_entrada.requestFocus();
+            JOptionPane.showMessageDialog(null,"Por favor insira uma imagem","Aviso",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         try{
         ProgressBar xProgress = new ProgressBar();
         xProgress.setLocationRelativeTo(null);

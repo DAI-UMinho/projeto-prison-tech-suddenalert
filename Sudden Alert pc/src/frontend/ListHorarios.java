@@ -58,7 +58,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         jTable_hor.getTableHeader().setBackground(new Color(176, 2, 37));
         jTable_hor.getTableHeader().setForeground(new Color(255, 255, 255));
         jTable_hor.setRowHeight(24);
-
+        guardaList();
         show_Guarda();
     }
 
