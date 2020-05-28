@@ -2,6 +2,8 @@ package android.example.dai2;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.DownloadManager;
 import android.content.Intent;
@@ -52,6 +54,15 @@ public class fazer_documentos extends AppCompatActivity {
         });
         nome.setText(tabela_alert.nomeRecluso);
         identificacao.setText(String.valueOf(tabela_alert.numeroRecluso));
+    }
+    @Override
+    public void onBackPressed(){
+        DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -159,4 +170,6 @@ public class fazer_documentos extends AppCompatActivity {
         RadioButton rb = (RadioButton) findViewById(radiobuttonid);
         Toast.makeText(getBaseContext(), rb.getText(), Toast.LENGTH_SHORT).show();
     }
+
+
 }
