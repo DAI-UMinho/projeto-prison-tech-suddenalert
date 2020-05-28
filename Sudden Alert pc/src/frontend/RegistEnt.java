@@ -41,6 +41,8 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
 
     private DefaultTableModel modeloTabela;
     int valor = 0;
+    ArrayList<String> emailV = new ArrayList<>();
+    private String e;
 
     /**
      * Creates new form Reclusos
@@ -77,6 +79,19 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
                 ResultSet resultSet = statement1.executeQuery(query1);
                 while (resultSet.next()) {
                     valor = resultSet.getInt("COUNT(1)");
+                }
+                String query4="Select email FROM Profile";
+                Statement statement4 = con.createStatement();
+                ResultSet resultSet4 = statement4.executeQuery(query4);
+                while (resultSet4.next()){
+                    emailV.add(resultSet4.getString("email"));
+                }
+                for(int counter = 0; counter < emailV.size(); counter++){
+                    
+                    if(e.equals(emailV.get(counter))){
+                        JOptionPane.showMessageDialog(null, "Este email já existe", "Aviso", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 }
                 if (valor == 0) {
                     String query = "Insert into Profile(scan, id_type, name, location, points, birthday, email)values(?,?,?,?,?,?,?)";
@@ -703,35 +718,6 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
             return;
         }
 
-        try {
-            ProgressBar xProgress = new ProgressBar();
-            xProgress.setLocationRelativeTo(null);
-            xProgress.setVisible(true);
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int num = 1; num <= 100; num++) {
-                        try {
-                            xProgress.jp_progress.UpdateProgress(num);
-                            xProgress.jp_progress.repaint();
-                            Thread.sleep(7);
-                            nome1.setText("");
-                            data_nascimento.setText("");
-                            email1.setText("");
-                            latitude.setText("");
-                            longitude.setText("");
-                            scan1.setText("");
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(RegistR.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-            }).start();
-        } catch (Exception err) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
-        }
-
         String s = scan1.getText();
         String no = nome1.getText();
         String dn = data_nascimento.getText();
@@ -745,7 +731,7 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         String la = latitude.getText();
         String lo = longitude.getText();
         String location = la + "," + lo;
-        String e = email1.getText();
+        e = email1.getText();
         int p = 0;
 
         RegistarEntidade(s, id_type, no, location, p, dn, e);

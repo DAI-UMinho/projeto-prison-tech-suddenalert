@@ -33,6 +33,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
     PreparedStatement pst = null;
     ResultSet rs = null;
     public static int id;
+    public static String scan;
 
     /**
      * Creates new form Reclusos
@@ -769,8 +770,11 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         int row = jTable_hor.getSelectedRow();
         if (row >= 0) {
             id = (int) jTable_hor.getValueAt(row, 2);
+            
             ArrayList<Entidade> List = guardaList();
             Entidade e = List.get(row);
+            scan = e.getScan();
+            
             String nome = e.getNome();
             String tipo = null;
             int IDtipo = e.getId_type();
