@@ -5,18 +5,24 @@
  */
 package frontend;
 
+import backend.*;
+import java.sql.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.Serializable;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.text.Normalizer.Form;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import static javax.swing.text.html.HTML.Tag.I;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -263,7 +269,39 @@ public class Ajuda extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_BackButtonActionPerformed
 
     private void jbutton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton2ActionPerformed
+         if (erro.getText().equals("") || erro.getText().equals("Insira aqui o erro")) {
+            erro.requestFocus();
+            JOptionPane.showMessageDialog(null, "Por favor reporte um erro.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (relato.getText().equals("") || relato.getText().equals("Relato")) {
+            relato.requestFocus();
+            JOptionPane.showMessageDialog(null, "Por favor escreva o que aconteceu.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String err = erro.getText();
+        String relat = relato.getText();
         
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://193.136.11.180:3306/suddenalert?useSSL=false";
+            String user = "suddenalertuser";
+            String pass = "Suddenalert.0";
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String query1 = "INSERT INTO Help (erro, relato) values (?,?)";
+            PreparedStatement pst = con.prepareStatement(query1);
+            pst.setString(1, err);
+            pst.setString(2, relat);
+            pst.executeUpdate();    
+            
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Ajuda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Menu xMenu = new Menu();
+        xMenu.setLocationRelativeTo(null); 
+        xMenu.setVisible(true);
+        this.dispose(); 
     }//GEN-LAST:event_jbutton2ActionPerformed
 
     private void relatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_relatoMouseClicked
