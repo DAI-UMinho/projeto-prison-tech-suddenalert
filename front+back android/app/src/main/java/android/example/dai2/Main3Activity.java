@@ -51,7 +51,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
     RadioButton rb;
     EditText nome, nascimento, scan, email;
     TextView localização;
-    private String nomeE, nascimentoE, localizaçãoE, tipoE, scanE, emailE;
+    private String nomeE, nascimentoE, localizaçãoE = "", tipoE, scanE, emailE;
     Dialog myDialog;
     private Button registar, btnGetLocation;
     ProgressBar progressBar;
@@ -199,20 +199,30 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             valid = false;
         }
         if (emailE.isEmpty()){
-            email.setError("Introduz um Nome");
+            email.setError("Introduz um Email");
             valid = false;
         }
-        if (tipoE.isEmpty()){
-            rb.setError("Tem de escolher o Tipo de Entidade");
-            valid = false;
-        }
-        if (localizaçãoE.isEmpty()){
-            localização.setError("tem de ativar Localização");
+        if (localizaçãoE.equals("")){
+            localização.setError("Localização inválida");
             valid = false;
         }
         if (scanE.isEmpty()){
             scan.setError("Tem de preencher scan");
             valid = false;
+        }
+        int radiobuttonid = rg.getCheckedRadioButtonId();
+        RadioButton rv = (RadioButton) findViewById(radiobuttonid);
+        if (radiobuttonid == -1){
+            rb.setError("Selecione um tipo de entidade");
+            valid = false;
+        } else {
+            tipo = rv.getText().toString().trim();
+            System.out.println(tipo);
+            if (tipo.equals("Guarda")) {
+                tipoE = "1";
+            } else {
+                tipoE = "2";
+            }
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(emailE).matches()) {
             email.setError("Email inválido");
@@ -220,12 +230,16 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         }
         SimpleDateFormat dates = new SimpleDateFormat("yyyy-MM-dd");
         nascimentoEnt = dates.parse(nascimentoE);
+        if (nascimentoEnt.equals("")){
+            nascimento.setText("Introduza uma data de nascimento");
+            valid = false;
+        }
         int ano = nascimentoEnt.getYear()+1900;
         int mes = nascimentoEnt.getMonth();
         int dia = nascimentoEnt.getDay();
         System.out.println(ano);
         if (getAge(ano, mes, dia)<18){
-            nascimento.setError("Entidade ainda é menor");
+            nascimento.setError("Data de Nascimento inválida");
             valid = false;
         }
 
@@ -259,16 +273,8 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         nomeE = nome.getText().toString().trim();
         nascimentoE = nascimento.getText().toString().trim();
         emailE = email.getText().toString().trim();
-        int radiobuttonid = rg.getCheckedRadioButtonId();
-        RadioButton rb = (RadioButton) findViewById(radiobuttonid);
-         tipo = rb.getText().toString().trim();
-        System.out.println(tipo);
-        if (tipo.equals("Guarda")){
-            tipoE = "1";
-        } else {
-            tipoE = "2";
-        }
         scanE = scan.getText().toString().trim();
+       // localizaçãoE = localização.getText().toString().trim();
     }
 
     public void ShowPopup3(View v){
