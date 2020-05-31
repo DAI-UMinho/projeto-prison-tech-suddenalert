@@ -42,8 +42,9 @@ public class RegistHorario extends javax.swing.JFrame implements Serializable {
 
     private DefaultTableModel modeloTabela;
     int valor = 0;
-    int id;
+    int id,valorProc,valorTerHor;
     int idSchedule;
+    boolean sucesso = false;
 
     /**
      * Creates new form Reclusos
@@ -73,23 +74,61 @@ try{
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query = "Insert into Schedule(Entrada, Saida, Almoco, Folga)values(?,?,?,?)";
-            PreparedStatement pst = con.prepareStatement(query);
-            pst.setString(1, entrada);
-            pst.setString(2, saida);
-            pst.setString(3, almoco);
-            pst.setString(4, folga);
-            pst.executeUpdate();
-            TimeUnit.SECONDS.sleep(1);
-            String query2 = "SELECT idSchedule FROM Schedule ORDER BY idSchedule DESC LIMIT 1";
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query2);
-            while (rs.next()) {
-                idSchedule = rs.getInt("idSchedule");
+            String query3 ="Select COUNT(1) FROM Profile WHERE scan like '" + id + "' and deleted like 0";
+            Statement st3 = con.createStatement();
+            ResultSet rs3 = st3.executeQuery(query3);
+            while(rs3.next()){
+                valorProc = rs3.getInt("COUNT(1)");
             }
-            String query3 = "UPDATE Profile SET idSchedule = '"+idSchedule+"' WHERE scan ='"+id+"'";
-            PreparedStatement pst3 = con.prepareStatement(query3);
-            pst3.executeUpdate();
+            if(valorProc == 0){
+                    JOptionPane.showMessageDialog(null, "Este scan é inválido", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            if(valorProc == 1){
+                String query5 = "Select COUNT(1) FROM Profile WHERE scan like '" + id + "' and idSchedule is not null";
+                Statement st5 = con.createStatement();
+                ResultSet rs5 = st5.executeQuery(query5);
+                while(rs5.next()){
+                    valorTerHor = rs5.getInt("COUNT(1)");
+                }
+                if(valorTerHor == 1){
+                    JOptionPane.showMessageDialog(null, "Este utilizador ja tem horário", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if(valorTerHor == 0){
+                    String query1 = "select count(1) from Schedule where Entrada like '" + entrada + "'and  Saida like '" + saida + "' and Almoco like '" + almoco + "'and Folga like '" + folga + "';";
+                    Statement st1 = con.createStatement();
+                    ResultSet rs1 = st5.executeQuery(query1);
+                    while(rs1.next()){
+                        valor = rs1.getInt("COUNT(1)");
+                }
+                    
+                if(valor == 0){
+                  String query = "insert into Schedule (`Entrada`, `Saida`, `Almoco`, `Folga`) Values ('" + entrada + "', '" + saida + "', '" + almoco + "', '" + folga + "');";
+                  Statement stmt = con.createStatement();
+                  stmt.executeUpdate(query);
+                  
+                }
+                String query2 = "select idSchedule from Schedule where Entrada like '" + entrada + "'and  Saida like '" + saida + "' and Almoco like '" + almoco + "'and Folga like '" + folga + "';";
+                
+                Statement statement4 = con.createStatement();
+                ResultSet resultSet4 = statement4.executeQuery(query2);
+                while (resultSet4.next()) {
+                idSchedule = resultSet4.getInt("idSchedule");
+                }
+                String query4 = "update suddenalert.Profile set idSchedule='" + idSchedule + "' where scan  like '" + id + "'";
+                Statement statement2 = con.createStatement();
+                statement2.executeUpdate(query4);
+                
+                sucesso = true;
+                
+                
+                
+                }
+                
+                
+            }
+           
             
             
             
@@ -100,8 +139,6 @@ try{
     }                                        
      catch(ClassNotFoundException | SQLException ed) {
            JOptionPane.showMessageDialog(null, ed); 
-        } catch (InterruptedException ex) {
-            Logger.getLogger(RegistHorario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -604,7 +641,15 @@ try{
             return;
         }
 
-        try {
+        
+        id = Integer.parseInt(scan.getText());
+        String e = entrada.getText();
+        String s = saida.getText();
+        String a = almoco.getText();
+        String f = jComboBoxFolga.getSelectedItem().toString();
+        RegistarHorario(e, s, a, f);
+        if (sucesso == true){
+         try {
             ProgressBar xProgress = new ProgressBar();
             xProgress.setLocationRelativeTo(null);
             xProgress.setVisible(true);
@@ -629,13 +674,10 @@ try{
             }).start();
         } catch (Exception err) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
+            
         }
-        id = Integer.parseInt(scan.getText());
-        String e = entrada.getText();
-        String s = saida.getText();
-        String a = almoco.getText();
-        String f = jComboBoxFolga.getSelectedItem().toString();
-        RegistarHorario(e, s, a, f);
+        }
+        
         /*ListEnt_popup xListEnt_popup = new ListEnt_popup();
         xListEnt_popup.setLocationRelativeTo(null);
         xListEnt_popup.setVisible(true);*/

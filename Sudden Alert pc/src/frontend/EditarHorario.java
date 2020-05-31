@@ -204,7 +204,7 @@ try{
         label1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label1.setFont(new java.awt.Font("Tw Cen MT", 1, 38)); // NOI18N
         label1.setForeground(new java.awt.Color(204, 204, 204));
-        label1.setText("Horário");
+        label1.setText("Atualizar Horário");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/hor.png"))); // NOI18N
 
@@ -293,6 +293,11 @@ try{
                 entradaMouseClicked(evt);
             }
         });
+        entrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entradaActionPerformed(evt);
+            }
+        });
 
         saida.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         saida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
@@ -340,6 +345,11 @@ try{
         folga1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 folga1MouseClicked(evt);
+            }
+        });
+        folga1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                folga1ActionPerformed(evt);
             }
         });
 
@@ -476,13 +486,13 @@ try{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 557, Short.MAX_VALUE)
+                .addGap(103, 103, 103)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(159, 159, 159))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 32, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -541,15 +551,15 @@ try{
     }//GEN-LAST:event_nomeActionPerformed
 
     private void entradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entradaMouseClicked
-        entrada.setDocument(new TeclasPermitHora());
+        
     }//GEN-LAST:event_entradaMouseClicked
 
     private void saidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saidaMouseClicked
-        saida.setDocument(new TeclasPermitHora());
+        
     }//GEN-LAST:event_saidaMouseClicked
 
     private void almocoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_almocoMouseClicked
-        almoco.setDocument(new TeclasPermitHora());
+        
     }//GEN-LAST:event_almocoMouseClicked
 
     private void saidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saidaActionPerformed
@@ -575,6 +585,14 @@ try{
     private void HorAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HorAtualActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_HorAtualActionPerformed
+
+    private void entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entradaActionPerformed
+
+    private void folga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folga1ActionPerformed
+        
+    }//GEN-LAST:event_folga1ActionPerformed
 
     /**
      * @param args the command line arguments
