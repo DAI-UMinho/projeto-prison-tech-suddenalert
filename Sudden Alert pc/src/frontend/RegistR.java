@@ -800,7 +800,7 @@ try{
 
     private void registar_nomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_nomeMouseClicked
         registar_nome.setText("");
-        //jTextField3.setDocument(new TeclasPermitNome());
+        registar_nome.setDocument(new TeclasPermitNome());
     }//GEN-LAST:event_registar_nomeMouseClicked
 
     private void registar_numeroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_numeroMouseClicked

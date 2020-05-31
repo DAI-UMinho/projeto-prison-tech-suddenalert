@@ -848,6 +848,7 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
 
     private void nome1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nome1MouseClicked
         nome1.setText("");
+        nome1.setDocument(new TeclasPermitNome());
     }//GEN-LAST:event_nome1MouseClicked
 
     private void data_nascimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_nascimentoMouseClicked
