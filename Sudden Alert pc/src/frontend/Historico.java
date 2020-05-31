@@ -299,6 +299,8 @@ public class Historico extends javax.swing.JFrame implements Serializable {
         jLabel39 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         home = new rsbuttom.RSButtonMetro();
+        jPanel18 = new javax.swing.JPanel();
+        ajuda = new rsbuttom.RSButtonMetro();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -592,6 +594,38 @@ public class Historico extends javax.swing.JFrame implements Serializable {
             }
         });
 
+        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel18.setPreferredSize(new java.awt.Dimension(0, 3));
+        jPanel18.setRequestFocusEnabled(false);
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1, Short.MAX_VALUE)
+        );
+
+        ajuda.setForeground(new java.awt.Color(153, 153, 153));
+        ajuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_ajuda.png"))); // NOI18N
+        ajuda.setText("        Ajuda");
+        ajuda.setColorTextNormal(new java.awt.Color(153, 153, 153));
+        ajuda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ajuda.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ajuda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ajudaMousePressed(evt);
+            }
+        });
+        ajuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajudaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout sidepane9Layout = new javax.swing.GroupLayout(sidepane9);
         sidepane9.setLayout(sidepane9Layout);
         sidepane9Layout.setHorizontalGroup(
@@ -603,6 +637,8 @@ public class Historico extends javax.swing.JFrame implements Serializable {
             .addComponent(recl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ajuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
         );
         sidepane9Layout.setVerticalGroup(
             sidepane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -620,6 +656,10 @@ public class Historico extends javax.swing.JFrame implements Serializable {
                 .addComponent(recl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86)
+                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ajuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -930,6 +970,17 @@ public class Historico extends javax.swing.JFrame implements Serializable {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void ajudaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajudaMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ajudaMousePressed
+
+    private void ajudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajudaActionPerformed
+        Ajuda xAjuda = new Ajuda();
+        xAjuda.setLocationRelativeTo(null);
+        xAjuda.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ajudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -937,6 +988,7 @@ public class Historico extends javax.swing.JFrame implements Serializable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
+    private rsbuttom.RSButtonMetro ajuda;
     private rsbuttom.RSButtonMetro doc;
     private rsbuttom.RSButtonMetro ent;
     private rsbuttom.RSButtonMetro home;
@@ -948,6 +1000,7 @@ public class Historico extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel39;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
