@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.Normalizer.Form;
+import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +31,7 @@ import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import static javax.swing.text.html.HTML.Tag.I;
 import java.text.SimpleDateFormat;  
+import java.util.Calendar;
 import java.util.Date;  
 import javax.swing.JFileChooser;
  
@@ -43,6 +45,7 @@ public class RegistR extends javax.swing.JFrame implements Serializable {
     String filename = null;
     byte[] imagem = null;
     int valor = 0;
+    Date nascimentoRec, entradaRec;
 
     /**
      * Creates new form Reclusos
@@ -59,6 +62,28 @@ public class RegistR extends javax.swing.JFrame implements Serializable {
         setSize(larg, alt);
  
         
+    }
+     private int getAge(int year, int month, int day){
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
+            age--;
+        }
+        else
+        {
+            if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
+                age--;
+            }
+        }
+
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+        return ageInt;
     }
     
     public void RegistarRecluso(String numero_recluso, String name, String birthday, String date_entry, String wing, String floor, String disease, byte[] imagem){
@@ -710,11 +735,39 @@ try{
             JOptionPane.showMessageDialog(null,"Por favor insira uma imagem","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
+        String dn = registar_data_nascimento.getText();
+        String de = registar_data_entrada.getText();
+        SimpleDateFormat dates = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+             nascimentoRec = dates.parse(dn);
+             entradaRec = dates.parse(de);
+             
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Formato de data invalido", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+        int ano = nascimentoRec.getYear()+1900;
+        int mes = nascimentoRec.getMonth();
+        int dia = nascimentoRec.getDay();
+        if (getAge(ano, mes, dia)<18){
+            JOptionPane.showMessageDialog(null, "Recluso menor que 18 anos", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+            
+        }else{
+            int anoE = entradaRec.getYear()+1900;
+            int mesE = entradaRec.getMonth();
+            int diaE = entradaRec.getDay();
+            int diff =getAge(anoE, mesE, diaE)- getAge(ano, mes, dia);
+            if(diff > 0){
+                JOptionPane.showMessageDialog(null, "Data de entrada menor que data de nascimento", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+        }
         
         String s = registar_numero.getText();
         String no = registar_nome.getText();
-        String dn = registar_data_nascimento.getText();
-        String de = registar_data_entrada.getText();
+        
+        
         String a = registar_ala.getText();
         String p = registar_piso.getText();
         String d = registar_doenças.getText();
@@ -800,7 +853,7 @@ try{
 
     private void registar_nomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_nomeMouseClicked
         registar_nome.setText("");
-        registar_nome.setDocument(new TeclasPermitNome());
+        //jTextField3.setDocument(new TeclasPermitNome());
     }//GEN-LAST:event_registar_nomeMouseClicked
 
     private void registar_numeroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registar_numeroMouseClicked

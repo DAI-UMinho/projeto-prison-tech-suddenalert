@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import static javax.swing.text.html.HTML.Tag.I;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 
 /**
@@ -63,6 +64,19 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         ImageIcon i = new ImageIcon(img2);
         jButton1.setIcon(i);*/
     }
+    public static boolean isValid(String email) 
+    { 
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
+                            "[a-zA-Z0-9_+&*-]+)*@" + 
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
+                            "A-Z]{2,7}$"; 
+                              
+        Pattern pat = Pattern.compile(emailRegex); 
+        if (email == null) 
+            return false; 
+        return pat.matcher(email).matches(); 
+    }
+    
 
     public void RegistarEntidade(String scan, int id_type, String nome, String location, int points, String dataNascimento, String email) {
         try {
@@ -79,6 +93,10 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
                 ResultSet resultSet = statement1.executeQuery(query1);
                 while (resultSet.next()) {
                     valor = resultSet.getInt("COUNT(1)");
+                }
+                if(valor != 0){
+                JOptionPane.showMessageDialog(null, "Scan já usado por outra Entidade", "Aviso", JOptionPane.ERROR_MESSAGE);
+                return;
                 }
                 String query4="Select email FROM Profile";
                 Statement statement4 = con.createStatement();
@@ -142,9 +160,7 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
                     } catch (Exception err) {
                         JOptionPane.showMessageDialog(null, "Ocorreu um erro", "Aviso", JOptionPane.ERROR_MESSAGE);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Scan já usado por outra Entidade", "Aviso", JOptionPane.ERROR_MESSAGE);
-                }
+                } 
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -742,6 +758,11 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
             JOptionPane.showMessageDialog(null, "O campo Email é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        e = email1.getText();
+       if(!isValid(e)){
+       JOptionPane.showMessageDialog(null, "O Email não é válido", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return;
+       }
         if (latitude.getText().equals("") || latitude.getText().equals("Insira aqui a latitude")) {
             latitude.requestFocus();
             JOptionPane.showMessageDialog(null, "O campo Latitude é obrigatório", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -771,7 +792,7 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
         String la = latitude.getText();
         String lo = longitude.getText();
         String location = la + "," + lo;
-        e = email1.getText();
+        
         int p = 0;
 
         if (Psicólogo.isSelected()) {
@@ -848,7 +869,6 @@ public class RegistEnt extends javax.swing.JFrame implements Serializable {
 
     private void nome1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nome1MouseClicked
         nome1.setText("");
-        nome1.setDocument(new TeclasPermitNome());
     }//GEN-LAST:event_nome1MouseClicked
 
     private void data_nascimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_nascimentoMouseClicked
