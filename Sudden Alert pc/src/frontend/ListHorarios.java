@@ -280,7 +280,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         hor_guarda.setBackground(new java.awt.Color(255, 255, 255));
         hor_guarda.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         hor_guarda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frontend/imagens/ic_horario.png"))); // NOI18N
-        hor_guarda.setText("Ver horário");
+        hor_guarda.setText("Ver mais");
         hor_guarda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hor_guardaActionPerformed(evt);
