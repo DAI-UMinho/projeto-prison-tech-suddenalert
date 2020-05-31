@@ -42,6 +42,7 @@ public class RegistR extends javax.swing.JFrame implements Serializable {
     private DefaultTableModel modeloTabela;
     String filename = null;
     byte[] imagem = null;
+    int valor = 0;
 
     /**
      * Creates new form Reclusos
@@ -67,6 +68,45 @@ try{
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
+            String query2 = "SELECT COUNT(1) FROM Recluse WHERE numero_recluso like'" + numero_recluso + "'";
+                Statement statement2 = con.createStatement();
+                ResultSet resultSet = statement2.executeQuery(query2);
+                while (resultSet.next()) {
+                    valor = resultSet.getInt("COUNT(1)");
+                }
+            if(valor != 0 ){
+                JOptionPane.showMessageDialog(null,"Já existe um recluso com este número","Aviso",JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            try{
+        ProgressBar xProgress = new ProgressBar();
+        xProgress.setLocationRelativeTo(null);
+        xProgress.setVisible(true);
+        
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int num = 1; num<=100; num++) {
+                    try {
+                        xProgress.jp_progress.UpdateProgress(num);
+                        xProgress.jp_progress.repaint();
+                        Thread.sleep(7);
+                        registar_nome.setText("");
+                        registar_numero.setText("");
+                        registar_ala.setText("");
+                        registar_piso.setText("");
+                        registar_data_nascimento.setText("");
+                        registar_data_entrada.setText("");
+                        registar_doenças.setText("");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(RegistR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }).start();
+        }catch(Exception err){
+            JOptionPane.showMessageDialog(null,"Ocorreu um erro","Aviso",JOptionPane.ERROR_MESSAGE);
+        }
             String query = "Insert into Recluse(numero_recluso, name, birthday, date_entry, wing, floor, disease,imagem)values(?,?,?,?,?,?,?,?)";          
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, numero_recluso);
@@ -670,35 +710,7 @@ try{
             JOptionPane.showMessageDialog(null,"Por favor insira uma imagem","Aviso",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        try{
-        ProgressBar xProgress = new ProgressBar();
-        xProgress.setLocationRelativeTo(null);
-        xProgress.setVisible(true);
         
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int num = 1; num<=100; num++) {
-                    try {
-                        xProgress.jp_progress.UpdateProgress(num);
-                        xProgress.jp_progress.repaint();
-                        Thread.sleep(7);
-                        registar_nome.setText("");
-                        registar_numero.setText("");
-                        registar_ala.setText("");
-                        registar_piso.setText("");
-                        registar_data_nascimento.setText("");
-                        registar_data_entrada.setText("");
-                        registar_doenças.setText("");
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(RegistR.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }).start();
-        }catch(Exception err){
-            JOptionPane.showMessageDialog(null,"Ocorreu um erro","Aviso",JOptionPane.ERROR_MESSAGE);
-        }
         String s = registar_numero.getText();
         String no = registar_nome.getText();
         String dn = registar_data_nascimento.getText();
