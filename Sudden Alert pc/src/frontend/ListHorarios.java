@@ -70,7 +70,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             String user = "suddenalertuser";
             String pass = "Suddenalert.0";
             Connection con = DriverManager.getConnection(url, user, pass);
-            String query1 = "SELECT * FROM Profile where idSchedule IS NOT NULL and (id_type='1' or id_type='2') and deleted='0'";
+            String query1 = "SELECT * FROM Profile WHERE id_type not like 3 AND deleted like 0";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query1);
             Entidade guarda;
@@ -811,6 +811,10 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
         int row = jTable_hor.getSelectedRow();
         if (row >= 0) {
             id = (int) jTable_hor.getValueAt(row, 2);
+            if(id == 0){
+                JOptionPane.showMessageDialog(null, "Não tem horário atribuido");
+                return;
+            }
             
             ArrayList<Entidade> List = guardaList();
             Entidade e = List.get(row);
@@ -831,6 +835,7 @@ public class ListHorarios extends javax.swing.JFrame implements Serializable {
             xHorario.setLocationRelativeTo(null);
             xHorario.setVisible(true);
             this.dispose();
+            
        }
         else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
