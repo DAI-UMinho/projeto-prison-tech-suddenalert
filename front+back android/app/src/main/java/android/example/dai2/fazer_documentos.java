@@ -4,12 +4,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.ui.AppBarConfiguration;
 
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,13 +22,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class fazer_documentos extends AppCompatActivity {
+public class fazer_documentos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private EditText   relatorioo, tituloRel;
     private String t_gravidade, t_relatorio, t_titulo;
     private boolean sucess = false;
@@ -33,6 +38,10 @@ public class fazer_documentos extends AppCompatActivity {
     private int id_alerta = tabela_alert.id_alert;
     private TextView identificacao, nome;
     private RadioGroup gravidade;
+    Dialog myDialog;
+    private AppBarConfiguration mAppBarConfiguration;
+
+
 
 
 
@@ -40,6 +49,7 @@ public class fazer_documentos extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fazer_documento);
+        myDialog = new Dialog(this);
         identificacao = (TextView) findViewById(R.id.numeroRecl);
         relatorioo = (EditText) findViewById(R.id.relatorio);
         tituloRel = (EditText) findViewById(R.id.tituloRel);
@@ -170,6 +180,83 @@ public class fazer_documentos extends AppCompatActivity {
         RadioButton rb = (RadioButton) findViewById(radiobuttonid);
         Toast.makeText(getBaseContext(), rb.getText(), Toast.LENGTH_SHORT).show();
     }
-
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.nav_home){
+            Intent intent = new Intent(fazer_documentos.this,inicio_psicologo.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_hor) {
+            TextView txtclose;
+            Button listahor;
+            Button meuhor;
+            myDialog.setContentView(R.layout.horariospopup_psi);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listahor = (Button) myDialog.findViewById(R.id.listahor);
+            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            listahor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(fazer_documentos.this, tabela_horario_psi.class));
+                }
+            });
+            meuhor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(fazer_documentos.this, horario_psicologo.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
+        }else if (id == R.id.nav_doc) {
+            TextView txtclose;
+            Button listarel;
+            Button fazer;
+            myDialog.setContentView(R.layout.relatoriospopup_psi);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarel = (Button) myDialog.findViewById(R.id.listarel);
+            fazer = (Button) myDialog.findViewById(R.id.fazer_relatorio);
+            listarel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(fazer_documentos.this, documentos_psicologo.class));
+                }
+            });
+            fazer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(fazer_documentos.this, fazer_documentos.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
+        }else if (id == R.id.nav_perfil){
+            Intent intent = new Intent(fazer_documentos.this,perfil_psicologo.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_reclusos){
+            Intent intent = new Intent(fazer_documentos.this,tabela_psi_reclusos.class);
+            startActivity(intent);
+        }
+        DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main2, menu);
+        return true;
+    }
 
 }

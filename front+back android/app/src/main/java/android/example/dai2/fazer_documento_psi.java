@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -33,6 +35,8 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
     Button regRelat;
    // Este relatório não provem de nenhuma situação de alerta
     private RadioGroup gravidade;
+    private AppBarConfiguration mAppBarConfiguration;
+
     Dialog myDialog;
 
 
@@ -78,6 +82,12 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main2, menu);
+        return true;
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.ajuda){
@@ -87,7 +97,8 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
         }
         return super.onOptionsItemSelected(item);
     }
-
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
