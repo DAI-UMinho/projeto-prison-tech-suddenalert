@@ -541,7 +541,7 @@ try{
     }//GEN-LAST:event_nomeActionPerformed
 
     private void entradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entradaMouseClicked
-        entrada.setDocument(new TeclasPermitHora());
+       entrada.setDocument(new TeclasPermitHora());
     }//GEN-LAST:event_entradaMouseClicked
 
     private void saidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saidaMouseClicked
