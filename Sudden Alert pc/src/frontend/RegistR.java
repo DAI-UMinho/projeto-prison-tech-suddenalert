@@ -649,7 +649,7 @@ try{
                         registar_piso.setText("");
                         registar_data_nascimento.setText("");
                         registar_data_entrada.setText("");
-                        registar_doenças.setText("Doenças");
+                        registar_doenças.setText("");
                     } catch (InterruptedException ex) {
                         Logger.getLogger(RegistR.class.getName()).log(Level.SEVERE, null, ex);
                     }
