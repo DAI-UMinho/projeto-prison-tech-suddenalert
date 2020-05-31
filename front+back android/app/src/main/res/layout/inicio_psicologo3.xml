@@ -30,7 +30,9 @@
         android:layout_height="152dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="392dp"
+        android:layout_marginBottom="131dp"
         android:onClick="entrar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/pp_recluso_foreground" />
@@ -62,7 +64,7 @@
         android:layout_width="172dp"
         android:layout_height="148dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="144dp"
+        android:layout_marginBottom="137dp"
         android:onClick="entrarperfil"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

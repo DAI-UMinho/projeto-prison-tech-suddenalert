@@ -1,5 +1,6 @@
 package android.example.dai2;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
     Button regRelat;
    // Este relatório não provem de nenhuma situação de alerta
     private RadioGroup gravidade;
+    Dialog myDialog;
 
 
 
@@ -39,6 +41,7 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fazer_documento_psi);
+        myDialog = new Dialog(this);
         identificacao = (EditText) findViewById(R.id.numeroRecl);
         relatorioo = (EditText) findViewById(R.id.relatorio);
         tituloRel = (EditText) findViewById(R.id.tituloRel);
@@ -91,13 +94,61 @@ public class fazer_documento_psi extends AppCompatActivity implements Navigation
             Intent intent = new Intent(fazer_documento_psi.this,inicio_psicologo.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(fazer_documento_psi.this,horario_psicologo.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listahor;
+            Button meuhor;
+            myDialog.setContentView(R.layout.horariospopup_psi);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listahor = (Button) myDialog.findViewById(R.id.listahor);
+            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            listahor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(fazer_documento_psi.this, tabela_horario_psi.class));
+                }
+            });
+            meuhor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(fazer_documento_psi.this, horario_psicologo.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(fazer_documento_psi.this,documentos_psicologo.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarel;
+            Button fazer;
+            myDialog.setContentView(R.layout.relatoriospopup_psi);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarel = (Button) myDialog.findViewById(R.id.listarel);
+            fazer = (Button) myDialog.findViewById(R.id.fazer_relatorio);
+            listarel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(fazer_documento_psi.this, documentos_psicologo.class));
+                }
+            });
+            fazer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(fazer_documento_psi.this, fazer_documento_psi.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(fazer_documento_psi.this,perfil_guarda.class);
+            Intent intent = new Intent(fazer_documento_psi.this,perfil_psicologo.class);
             startActivity(intent);
         }else if (id == R.id.nav_reclusos){
             Intent intent = new Intent(fazer_documento_psi.this,tabela_psi_reclusos.class);

@@ -146,11 +146,59 @@ public class documentos_psicologo extends AppCompatActivity implements Navigatio
             Intent intent = new Intent(documentos_psicologo.this,inicio_psicologo.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-            Intent intent = new Intent(documentos_psicologo.this, horario_psicologo.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listahor;
+            Button meuhor;
+            myDialog.setContentView(R.layout.horariospopup_psi);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listahor = (Button) myDialog.findViewById(R.id.listahor);
+            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            listahor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_psicologo.this, tabela_horario_psi.class));
+                }
+            });
+            meuhor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_psicologo.this, horario_psicologo.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_doc) {
-            Intent intent = new Intent(documentos_psicologo.this, documentos_psicologo.class);
-            startActivity(intent);
+            TextView txtclose;
+            Button listarel;
+            Button fazer;
+            myDialog.setContentView(R.layout.relatoriospopup_psi);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listarel = (Button) myDialog.findViewById(R.id.listarel);
+            fazer = (Button) myDialog.findViewById(R.id.fazer_relatorio);
+            listarel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_psicologo.this, documentos_psicologo.class));
+                }
+            });
+            fazer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(documentos_psicologo.this, fazer_documento_psi.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_perfil){
             Intent intent = new Intent(documentos_psicologo.this,perfil_psicologo.class);
             startActivity(intent);

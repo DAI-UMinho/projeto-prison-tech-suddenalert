@@ -491,11 +491,11 @@ public class ver_horario extends AppCompatActivity implements NavigationView.OnN
     public void alterarH(View v){
         startActivity(new Intent(ver_horario.this, Alterar_horario.class));
     }
-    public  void eleminaHor(View v){
+   /* public  void eleminaHor(View v){
         EliminarHor eliminarHor = new EliminarHor();
         eliminarHor.execute();
-    }
-    private class EliminarHor extends AsyncTask<String, String, String> {
+    }*/
+    /*private class EliminarHor extends AsyncTask<String, String, String> {
         String msg = "";
 
         @Override
@@ -527,5 +527,5 @@ public class ver_horario extends AppCompatActivity implements NavigationView.OnN
             }
             return msg;
         }
-    }
+    }*/
 }

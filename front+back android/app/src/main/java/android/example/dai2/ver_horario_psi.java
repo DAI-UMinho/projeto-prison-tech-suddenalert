@@ -320,30 +320,53 @@ public class ver_horario_psi extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Intent intent = new Intent(ver_horario_psi.this,inicio_diretor.class);
+            Intent intent = new Intent(ver_horario_psi.this,inicio_psicologo.class);
             startActivity(intent);
         }else if (id == R.id.nav_hor) {
-
-            startActivity(new Intent(ver_horario_psi.this, tabela_horario.class));
-
+            TextView txtclose;
+            Button listahor;
+            Button meuhor;
+            myDialog.setContentView(R.layout.horariospopup_psi);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            listahor = (Button) myDialog.findViewById(R.id.listahor);
+            meuhor = (Button) myDialog.findViewById(R.id.meuhor);
+            listahor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ver_horario_psi.this, tabela_horario_psi.class));
+                }
+            });
+            meuhor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ver_horario_psi.this, horario_psicologo.class));
+                }
+            });
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.show();
         }else if (id == R.id.nav_doc) {
             TextView txtclose;
             Button listarel;
-            Button his;
-            myDialog.setContentView(R.layout.relatoriospopup);
+            Button fazer;
+            myDialog.setContentView(R.layout.relatoriospopup_psi);
             txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
             listarel = (Button) myDialog.findViewById(R.id.listarel);
-            his = (Button) myDialog.findViewById(R.id.his);
+            fazer = (Button) myDialog.findViewById(R.id.fazer_relatorio);
             listarel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(ver_horario_psi.this, documentos_diretor.class));
+                    startActivity(new Intent(ver_horario_psi.this, documentos_psicologo.class));
                 }
             });
-            his.setOnClickListener(new View.OnClickListener() {
+            fazer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(ver_horario_psi.this, historico.class));
+                    startActivity(new Intent(ver_horario_psi.this, fazer_documento_psi.class));
                 }
             });
             txtclose.setOnClickListener(new View.OnClickListener() {
@@ -354,62 +377,11 @@ public class ver_horario_psi extends AppCompatActivity implements NavigationView
             });
             myDialog.show();
         }else if (id == R.id.nav_perfil){
-            Intent intent = new Intent(ver_horario_psi.this,perfil_diretor.class);
+            Intent intent = new Intent(ver_horario_psi.this,perfil_psicologo.class);
             startActivity(intent);
-        }else if (id == R.id.nav_entidades){
-            TextView txtclose;
-            Button listagem;
-            Button registo;
-            myDialog.setContentView(R.layout.entidadesinicio);
-            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-            listagem = (Button) myDialog.findViewById(R.id.listagem);
-            registo = (Button) myDialog.findViewById(R.id.registo);
-            txtclose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    myDialog.dismiss();
-                }
-            });
-            listagem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    abrirEntidades(v);
-                }
-            });
-            registo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(ver_horario_psi.this, Main3Activity.class));
-                }
-            });
-            myDialog.show();
         }else if (id == R.id.nav_reclusos){
-            TextView txtclose;
-            Button listarec;
-            Button reg;
-            myDialog.setContentView(R.layout.reclusospopup);
-            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-            listarec = (Button) myDialog.findViewById(R.id.listarec);
-            reg = (Button) myDialog.findViewById(R.id.reg);
-            listarec.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(ver_horario_psi.this, tabela_reclusos.class));
-                }
-            });
-            reg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(ver_horario_psi.this, Registar_Reclusos.class));
-                }
-            });
-            txtclose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    myDialog.dismiss();
-                }
-            });
-            myDialog.show();
+            Intent intent = new Intent(ver_horario_psi.this,tabela_psi_reclusos.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
